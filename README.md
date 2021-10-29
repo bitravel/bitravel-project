@@ -6,6 +6,7 @@ Bitravel Project Main Repository
 
 
 ## 구글 드라이브 확인하기 (이전 자료 확인)
+https://drive.google.com/drive/folders/1GLdlyGAbaI5SaU-8C8fxhEjy3ugmNAp-
 
 ## 일정표 확인하기 (매일매일!)
 https://docs.google.com/spreadsheets/d/1xrJY5oFsCTjjSEwxY2uCujWKFVm5Q1uY/edit?rtpof=true
