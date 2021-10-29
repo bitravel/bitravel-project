@@ -2,6 +2,7 @@
 Bitravel Project Main Repository
 * Bitravel 폴더 : Spring Project
 * Bitravel_resource : 그 외 어떤 자료건 업로드 가능
+
 처음 사용하실 때는 웹 위주로 작동 방식을 익히셔도 좋습니다.
 
 
