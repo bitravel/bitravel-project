@@ -5,6 +5,17 @@ Bitravel Project Main Repository
 
 처음 사용하실 때는 웹 위주로 작동 방식을 익히셔도 좋습니다.
 
+## 사용 스택 (updating..)
+* Java (Spring Boot)
+* Python(Pandas, Numpy)
+* HTML/CSS
+* MySQL
+* Windows 10
+* Linux Ubuntu
+* Visual Studio Code
+* Eclipse EE
+* to be updated...
+
 
 ## 구글 드라이브 확인하기 (이전 자료 확인)
 https://drive.google.com/drive/folders/1GLdlyGAbaI5SaU-8C8fxhEjy3ugmNAp-
