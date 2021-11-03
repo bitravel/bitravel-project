@@ -42,6 +42,8 @@ for index, row in travel_df.iterrows():
         if row['전화번호'] != row['문의 및 안내']:
             row['문의 및 안내'] = row['전화번호']+"<br>"+row['문의 및 안내']
             print(index, row['문의 및 안내'])
+    if row['광역지자체'] == '세종':
+        row['기초지자체'] = '세종시'
 # print(travel_df["상세정보"])
 travel_df = travel_df.drop(['전화번호'], axis=1)
 
