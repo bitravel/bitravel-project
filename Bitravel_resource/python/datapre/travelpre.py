@@ -40,11 +40,9 @@ travel_df["문의 및 안내"] = travel_df["문의 및 안내"].str.replace('\n'
 for index, row in travel_df.iterrows():
     if row['전화번호'] != '':
         if row['전화번호'] != row['문의 및 안내']:
-            row['문의 및 안내'] = row['전화번호']+"<br>"+row['문의 및 안내']
-            print(index, row['문의 및 안내'])
+            travel_df.loc[index, '문의 및 안내'] = row['전화번호']+"<br>"+row['문의 및 안내']
     if row['광역지자체'] == '세종':
-        row['기초지자체'] = '세종시'
-# print(travel_df["상세정보"])
+        travel_df.loc[index, '기초지자체'] = '세종시'
 travel_df = travel_df.drop(['전화번호'], axis=1)
 
 with pd.ExcelWriter('../preprocessing/outputtest.xlsx', mode='w') as writer:

@@ -40,11 +40,9 @@ for index, row in culture_df.iterrows():
     if row['전화번호'] != '':
         if row['전화번호'] != row['문의 및 안내']:
             row['문의 및 안내'] = row['전화번호']+"<br>"+row['문의 및 안내']
-            print(index, row['문의 및 안내'])
     if row['광역지자체'] == '세종':
         row['기초지자체'] = '세종시'
 culture_df = culture_df.drop(['전화번호'], axis=1)
-
 with pd.ExcelWriter('../preprocessing/outputculture.xlsx', mode='w') as writer:
     culture_df.to_excel(writer, sheet_name='page1')
 
