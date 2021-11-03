@@ -10,7 +10,10 @@ Bitravel Project Main Repository
 * Python(Pandas, Numpy)
 * HTML/CSS
 * MySQL
+* Windows 10
 * Linux Ubuntu
+* Visual Studio Code
+* Eclipse EE
 * to be updated...
 
 
