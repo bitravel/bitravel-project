@@ -7,7 +7,7 @@ Bitravel Project Main Repository
 
 ## 사용 스택 (updating..)
 * Java (Spring Boot)
-* Python(Pandas, Numpy)
+* Python(Pandas, Numpy, Selenium)
 * HTML/CSS
 * MySQL
 * Windows 10
