@@ -19,6 +19,7 @@ for i in range(0, 5):
     elem.send_keys(Keys.RETURN)
     driver.implicitly_wait(time_to_wait=5)
     address.append(driver.find_element_by_xpath('//*[@id="info.search.place.list"]/li[1]/div[5]/div[2]/p[1]').text)
+    driver.quit()
     print(address[i])
     i = i+1
 
