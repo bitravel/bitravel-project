@@ -40,11 +40,16 @@ for i in range(28, 29):
         if len(row) < 6:
             name = travel_df.loc[j, '명칭']
             travel_df.loc[j, '주소'] = get_address(name)
-        for char in row:
-            if char.encode().isalpha():
-                name = travel_df.loc[j, '명칭']
-                travel_df.loc[j, '주소'] = get_address(name)
-                break
+        else:
+            k = -1
+            for char in row:
+                k = k+1
+                if char.encode().isalpha():
+                    name = travel_df.loc[j, '명칭']
+                    travel_df.loc[j, '주소'] = get_address(name)
+                    break
+                elif k > 5:
+                    break
         j = j + 1
     tmp_list = travel_df["주소"].str.split(' ')
 
