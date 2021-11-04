@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import pandas as pd
 import numpy as np
 from selenium import webdriver
@@ -24,14 +26,14 @@ def get_address(row_name):
     return result
 
 
-for i in range(28, 29):
+for i in range(1, 3):
     filename = '../travelspots/2021113_'
     if i == 20 or i == 44 or i == 27 or i == 28:
         filename = filename + str(i) + '.xlsx'
     else:
         filename = filename + str(i) + '.xls'
     print(filename)
-    travel_df = pd.read_excel(filename)
+    travel_df = pd.read_excel(filename, encoding='utf8')
     travel_df = travel_df.drop(["우편번호", "관리자", " 유산구분", "개장일", "쉬는날", "체험안내", "체험가능연령", "수용인원", "이용시기", "이용시간"], axis=1)
 
     tmp_list = travel_df["주소"].values.tolist()
@@ -43,7 +45,7 @@ for i in range(28, 29):
         else:
             k = -1
             for char in row:
-                k = k+1
+                k = k + 1
                 if char.encode().isalpha():
                     name = travel_df.loc[j, '명칭']
                     travel_df.loc[j, '주소'] = get_address(name)
@@ -75,8 +77,8 @@ for i in range(28, 29):
             if row[1] == '시' or row[1] == '군' or row[1] == '구':
                 travel_df.loc[j, '기초지자체'] = row[0:2]
 
-#    index_special = travel_df[travel_df['명칭'].str.contains("특구")].index
-#    travel_df = travel_df.drop(index_special)
+    #    index_special = travel_df[travel_df['명칭'].str.contains("특구")].index
+    #    travel_df = travel_df.drop(index_special)
 
     travel_df["광역지자체"] = travel_df["광역지자체"].replace('경상북도', '경북')
     travel_df["광역지자체"] = travel_df["광역지자체"].replace('경상남도', '경남')
@@ -121,6 +123,6 @@ for i in range(28, 29):
             travel_df.to_excel(writer)
     else:
         with pd.ExcelWriter('../preprocessing/outputtravel.xlsx', mode='a', if_sheet_exists='replace') as writer:
-            sheet_name = 'page'+str(i)
+            sheet_name = 'page' + str(i)
             travel_df.to_excel(writer, sheet_name=sheet_name)
     print(i, 'is done.')
