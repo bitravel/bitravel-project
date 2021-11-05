@@ -18,5 +18,5 @@ for i in sheetList:
     now_df.drop(['Unnamed: 0'], axis=1, inplace=True)
     now_df.replace("\u119e", '', inplace=True)
     now_df.replace(np.NaN, '', inplace=True)
-    now_df.to_csv('../preprocessing/travel.csv', sep=',', mode='a', header=False, index=False, encoding='utf-8-sig')
+    now_df.to_csv('../preprocessing/travel.csv', sep=',', mode='a', header=False, index=False, encoding='cp949')
     print(i, 'is done.')

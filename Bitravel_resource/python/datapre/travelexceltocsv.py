@@ -2,7 +2,6 @@ import openpyxl
 import pandas as pd
 import numpy as np
 
-
 # pandas
 
 xlsx_file = '../preprocessing/outputtravel.xlsx'
@@ -19,7 +18,7 @@ for i in sheetList:
     now_df.replace("\u119e", '', inplace=True)
     now_df.replace(np.NaN, '', inplace=True)
     if i == 'page1':
-        now_df.to_csv('../preprocessing/travel.csv', sep=',', mode='w', header=True, index=False, encoding='utf-8-sig')
+        now_df.to_csv('../preprocessing/travel.csv', sep=',', mode='w', header=True, index=False, encoding='cp949')
     else:
-        now_df.to_csv('../preprocessing/travel.csv', sep=',', mode='a', header=False, index=False, encoding='utf-8-sig')
+        now_df.to_csv('../preprocessing/travel.csv', sep=',', mode='a', header=False, index=False, encoding='cp949')
     print(i, 'is done.')
