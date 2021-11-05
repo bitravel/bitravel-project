@@ -120,7 +120,8 @@ for i in range(1, 3):
 
     if i == 1:
         with pd.ExcelWriter('../preprocessing/outputtravel.xlsx', mode='w') as writer:
-            travel_df.to_excel(writer)
+            sheet_name = 'page' + str(i)
+            travel_df.to_excel(writer, sheet_name=sheet_name)
     else:
         with pd.ExcelWriter('../preprocessing/outputtravel.xlsx', mode='a', if_sheet_exists='replace') as writer:
             sheet_name = 'page' + str(i)
