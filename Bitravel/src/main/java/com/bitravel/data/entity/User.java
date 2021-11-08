@@ -19,16 +19,19 @@ import lombok.Setter;
 @Setter
 @Getter
 public class User {
+	// 초안 기준 1차 설계 진행중
  
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private @Column(name = "userId") Long userId;
     private @Column(name = "userName") String userName;
+    private @Column(name = "nickname") String nickname;
+    private @Column(name = "email") String email;
+    
     
     @CreationTimestamp
     private @Column(name = "userDate") Timestamp userDate;
      
-  /*  @UpdateTimestamp
-    private @Column(name = "udate") Timestamp udate; */
+  
 }
 
