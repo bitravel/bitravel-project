@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,6 +18,9 @@ public class UserServiceImpl implements UserService {
  
     @Autowired
     UserRepository userRepository;
+    
+    @Autowired
+    private PasswordEncoder passwordEncoder;
      
     @Override
     @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
@@ -33,6 +37,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     public void insertUser(User user) {
+    	String encodedPassword = passwordEncoder.encode(user.getPassword());
+    	user.setPassword(encodedPassword);
         userRepository.save(user);
     }
  
