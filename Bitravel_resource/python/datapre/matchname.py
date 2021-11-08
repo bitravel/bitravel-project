@@ -1,8 +1,7 @@
 import re
 import pandas as pd
-import numpy as np
 
-# 제주자연 파일에 있는 관광지명을 전체 여행지 db에서 검색하여 index를 구하는 코드
+# 엑셀 파일에 있는 관광지명을 전체 여행지 db에서 검색하여 index를 구하는 코드
 
 category_df = pd.read_excel('../searchcount/category_file.xlsx')
 
