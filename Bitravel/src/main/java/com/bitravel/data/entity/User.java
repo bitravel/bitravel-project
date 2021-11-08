@@ -27,7 +27,10 @@ public class User {
     private @Column(name = "userName") String userName;
     private @Column(name = "nickname") String nickname;
     private @Column(name = "email") String email;
-    
+    private @Column(name = "pwd") String password;
+    private @Column(name = "point") Long point;
+    private @Column(name = "gender") String gender;
+    private @Column(name = "age") Integer age;
     
     @CreationTimestamp
     private @Column(name = "userDate") Timestamp userDate;
