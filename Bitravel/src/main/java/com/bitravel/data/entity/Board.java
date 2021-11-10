@@ -44,6 +44,10 @@ public class Board {
     @Column(name = "boardRecom", columnDefinition = "int default 0")
     private Long boardRecom;
     
+    @NotNull
+    private @Column(name = "boardLevel") Integer boardLevel;
+    // 글 쓸때는 레벨 0, 댓글은 1 -> 대댓 기능은 연구한 뒤 진행
+    
     @NotBlank(message = "글의 내용을 기입해주세요.")
     @Size(min=10, message = "글의 내용은 최소 10자 이상이어야 합니다.")
     private @Column(name = "boardContent") String boardContent;
