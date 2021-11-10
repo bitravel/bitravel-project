@@ -19,8 +19,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @RestController
-@RequestMapping(value = "/")
-@Api(value = "BitravelController")
+@RequestMapping(value = "/user")
+@Api(value = "UserController")
 public class UserController {
  
     @Autowired
