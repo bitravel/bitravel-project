@@ -17,7 +17,7 @@ public interface UserService {
      * @param uid
      * @return
      */
-    public Optional<User> selectUser(Long uid);
+    public Optional<User> selectUser(String uid);
      
     /**
      * 사용자 등록
@@ -35,5 +35,13 @@ public interface UserService {
      * 사용자 삭제
      * @param uid
      */
-    public void deleteUser(Long uid);
+    public void deleteUser(String uid);
+    
+    /**
+     * 로그인
+     * @param id
+     * @param pwd
+     * @return
+     */
+    public boolean validationLogin(String id, String pwd);
 }

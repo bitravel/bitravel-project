@@ -12,46 +12,58 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bitravel.data.entity.User;
 import com.bitravel.data.repository.UserRepository;
- 
+
 @Service
 public class UserServiceImpl implements UserService {
- 
-    @Autowired
-    UserRepository userRepository;
-    
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-     
-    @Override
-    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-    public List<User> selectUserList() {
-        return (List<User>) userRepository.findAll();
-    }
- 
-    @Override
-    @Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-    public Optional<User> selectUser(Long uid) {
-        return userRepository.findById(uid);
-    }
- 
-    @Override
-    @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-    public void insertUser(User user) {
-    	String encodedPassword = passwordEncoder.encode(user.getPassword());
-    	user.setPassword(encodedPassword);
-        userRepository.save(user);
-    }
- 
-    @Override
-    @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-    public void updateUser(User user) {
-        userRepository.save(user);
-    }
- 
-    @Override
-    @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-    public void deleteUser(Long uid) {
-        userRepository.deleteById(uid);
- 
-    }
+
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	@Override
+	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public List<User> selectUserList() {
+		return (List<User>) userRepository.findAll();
+	}
+
+	@Override
+	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public Optional<User> selectUser(String uid) {
+		return userRepository.findById(uid);
+	}
+
+	@Override
+	//@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public void insertUser(User user) {
+		String encodedPassword = passwordEncoder.encode(user.getPassword());
+		user.setPassword(encodedPassword);
+		userRepository.save(user);
+	}
+
+	@Override
+	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public void updateUser(User user) {
+		userRepository.save(user);
+	}
+
+	@Override
+	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public void deleteUser(String uid) {
+		userRepository.deleteById(uid);
+
+	}
+
+	@Override
+	public boolean validationLogin (String inputid, String inputpwd) {
+		User loginUser = userRepository.findUser(inputid);
+		if(loginUser==null) {
+			return false;
+		}
+		if(!passwordEncoder.matches(inputpwd, loginUser.getPassword())) {
+			return false;
+		}
+		return true;
+	}
 }

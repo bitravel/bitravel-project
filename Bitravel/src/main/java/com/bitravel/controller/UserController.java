@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,7 +18,9 @@ import com.bitravel.service.UserService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/user")
 @Api(value = "UserController")
@@ -37,7 +40,7 @@ public class UserController {
  
     @RequestMapping(value = "/{uid}", method = RequestMethod.GET)
     @ApiOperation(value = "사용자 정보 조회", notes = "사용자의 정보를 조회하는 API. User entity 클래스의 uid값을 기준으로 데이터를 가져온다.")
-    public Optional<User> getUser( @PathVariable("uid") Long uid ){
+    public Optional<User> getUser( @PathVariable("uid") String uid ){
         return userService.selectUser(uid);
     }
  
@@ -51,6 +54,7 @@ public class UserController {
             userService.insertUser(user);
         } catch(Exception ex){
             message = new ApiResponseMessage("Failed", "사용자 등록에 실패하였습니다.", "ERROR00001", "Fail to registration for user information.");
+            log.error("error: "+ex);
             response = new ResponseEntity<ApiResponseMessage>(message, HttpStatus.INTERNAL_SERVER_ERROR);
         }
          
@@ -75,7 +79,7 @@ public class UserController {
  
     @RequestMapping(value = "/{uid}", method = RequestMethod.DELETE)
     @ApiOperation(value = "사용자 정보 삭제", notes = "사용자 정보를 삭제하는 API. User entity 클래스의 uid 값으로 데이터를 삭제한다.")
-    public ResponseEntity<ApiResponseMessage> deleteUser( @PathVariable("uid") Long uid ){
+    public ResponseEntity<ApiResponseMessage> deleteUser( @PathVariable("uid") String uid ){
         ApiResponseMessage message = new ApiResponseMessage("Success", "등록되었습니다.", "", "");
         ResponseEntity<ApiResponseMessage> response = new ResponseEntity<ApiResponseMessage>(message, HttpStatus.OK);
          
@@ -87,5 +91,13 @@ public class UserController {
         }
          
         return response;
+    }
+    
+    @PostMapping("/signIn")
+    public String signIn(String id, String pwd) {
+    	if(userService.validationLogin(id, pwd)) {
+    		return "OK";
+    	}
+    	return "Fail";
     }
 }
