@@ -98,6 +98,7 @@ public class UserController {
     	if(userService.validationLogin(id, pwd)) {
     		return "OK";
     	}
+    	log.error("틀린 비밀번호");
     	return "Fail";
     }
 }
