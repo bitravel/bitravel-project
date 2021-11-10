@@ -3,6 +3,9 @@ package com.bitravel.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,19 +35,19 @@ public class UserController {
     // DB 연결 테스트용 링크 -> 포트번호만 상황에 따라 바꾸어서 사용하세요. http://localhost:8080/swagger-ui/
      
  
-    @RequestMapping(value = "", method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ApiOperation(value = "사용자 목록 조회", notes = "사용자 목록을 조회하는 API.")
     public List<User> getUserList(){
         return userService.selectUserList();
     }
  
-    @RequestMapping(value = "/{uid}", method = RequestMethod.GET)
+    @RequestMapping(value = "/view/{uid}", method = RequestMethod.GET)
     @ApiOperation(value = "사용자 정보 조회", notes = "사용자의 정보를 조회하는 API. User entity 클래스의 uid값을 기준으로 데이터를 가져온다.")
     public Optional<User> getUser( @PathVariable("uid") String uid ){
         return userService.selectUser(uid);
     }
  
-    @RequestMapping(value = "", method = RequestMethod.POST)
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
     @ApiOperation(value = "사용자 정보 등록", notes = "사용자 정보를 저장하는 API. User entity 클래스로 데이터를 저장한다.")
     public ResponseEntity<ApiResponseMessage> insertUser( User user ){
         ApiResponseMessage message = new ApiResponseMessage("Success", "등록되었습니다.", "", "");
@@ -61,7 +64,7 @@ public class UserController {
         return response;
     }
      
-    @RequestMapping(value = "", method = RequestMethod.PUT)
+    @RequestMapping(value = "/modify", method = RequestMethod.PUT)
     @ApiOperation(value = "사용자 정보 수정", notes = "사용자 정보를 수정하는 API. User entity 클래스로 데이터를 수정한다.<br>이때엔 정보를 등록할 때와는 다르게 uid 값을 함깨 보내줘야한다.")
     public ResponseEntity<ApiResponseMessage> updateUser( User user ){
         ApiResponseMessage message = new ApiResponseMessage("Success", "등록되었습니다.", "", "");
@@ -77,7 +80,7 @@ public class UserController {
         return response;
     }
  
-    @RequestMapping(value = "/{uid}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/delete/{uid}", method = RequestMethod.DELETE)
     @ApiOperation(value = "사용자 정보 삭제", notes = "사용자 정보를 삭제하는 API. User entity 클래스의 uid 값으로 데이터를 삭제한다.")
     public ResponseEntity<ApiResponseMessage> deleteUser( @PathVariable("uid") String uid ){
         ApiResponseMessage message = new ApiResponseMessage("Success", "등록되었습니다.", "", "");
@@ -94,8 +97,11 @@ public class UserController {
     }
     
     @PostMapping("/signIn")
-    public String signIn(String id, String pwd) {
+    public String signIn(String id, String pwd, HttpServletRequest request) {
     	if(userService.validationLogin(id, pwd)) {
+    		
+    		HttpSession session = request.getSession();
+    		session.setAttribute("user", userService.selectUser(id));
     		return "OK";
     	}
     	log.error("틀린 비밀번호");
