@@ -13,11 +13,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public PasswordEncoder getPasswordEncoder() {
+		// BCrypt 자체가 내부에 랜덤 Salt를 만드는 방식
 		return new BCryptPasswordEncoder();
 	}
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.cors().disable().csrf().disable().formLogin().disable().headers().frameOptions().disable();
+		http.cors().disable()
+		.csrf().disable()
+		.formLogin().disable()
+		.headers().frameOptions().disable();
 	}
 }
