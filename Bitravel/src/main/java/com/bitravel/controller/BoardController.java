@@ -17,7 +17,9 @@ import com.bitravel.service.BoardService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/board")
 @Api(value = "BoardController")
@@ -50,10 +52,11 @@ public class BoardController {
         try {
             boardService.insertBoard(board);
         } catch(Exception ex){
+        	log.error("error: "+ex);
             message = new ApiResponseMessage("Failed", "게시물 등록에 실패하였습니다.", "ERROR00001", "Fail to registration for board information.");
             response = new ResponseEntity<ApiResponseMessage>(message, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-         
+        
         return response;
     }
      
