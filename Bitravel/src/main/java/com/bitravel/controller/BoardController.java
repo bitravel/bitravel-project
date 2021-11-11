@@ -3,7 +3,6 @@ package com.bitravel.controller;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -17,15 +16,16 @@ import com.bitravel.service.BoardService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
+@AllArgsConstructor
 @RequestMapping(value = "/board")
 @Api(value = "BoardController")
 public class BoardController {
  
-    @Autowired
     BoardService boardService;
     
     // DB 연결 테스트용 링크 -> 포트번호만 상황에 따라 바꾸어서 사용하세요. http://localhost:8080/swagger-ui/
