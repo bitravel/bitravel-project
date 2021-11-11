@@ -1,0 +1,30 @@
+<!DOCTYPE HTML5>
+<html>
+  <head>
+	<meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="./style.css">
+  </head>
+
+  <body style="width:100%; height:100%;">
+    <form action="/login" method="post" class="loginForm">
+      <h2>Login</h2>
+      <div class="idForm">
+        <input type="text" class="id" name="id" placeholder="아이디">
+      </div>
+      <div class="passForm">
+        <input type="password" class="pwd" name="pwd" placeholder="비밀번호">
+      </div>
+      <button type="submit" class="btn">
+        LOG IN
+      </button>
+      <script>
+      	let button = () => {
+        	alert('login Button !')
+        }
+      </script>
+      <div class="bottomText">
+        Don't you have ID? <a href="/registerView">sign up</a>
+      </div>
+    </form>
+  </body>
+</html>
