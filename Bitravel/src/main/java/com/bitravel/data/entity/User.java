@@ -56,7 +56,7 @@ public class User {
     @JsonIgnore
     private @Column(name = "password") String password;
     
-    @Column(name = "point", nullable = false, columnDefinition = "INT DEFAULT 0")
+    @Column(name = "point")
     private Integer point;
     
     private @Column(name = "gender") String gender;
