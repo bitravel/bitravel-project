@@ -34,10 +34,10 @@ public class UserController {
 		return ResponseEntity.ok(userService.getMyUserWithAuthorities().get());
 	}
 	
-	@GetMapping("/user/{userid}")
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-	public ResponseEntity<User> getUserInfo(@PathVariable String email) {
-		return ResponseEntity.ok(userService.getUserWithAuthorities(email).get());
+	//@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	@GetMapping("/user/{uid}")
+	public ResponseEntity<User> getUserInfo(@PathVariable("uid") Long uid) {
+		return ResponseEntity.ok(userService.selectUser(uid).get());
 	}
 	
 }

@@ -5,6 +5,8 @@ import java.util.Optional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bitravel.data.dto.UserDto;
@@ -17,7 +19,7 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class UserService /* implements UserDetailsService */ {
+public class UserService {
     
 	private UserRepository userRepository;
 	private PasswordEncoder passwordEncoder;
@@ -45,8 +47,8 @@ public class UserService /* implements UserDetailsService */ {
 				.age(userDto.getAge())
 				.gender(userDto.getGender())
 				.realName(userDto.getRealname())
-				.authorities(Collections.singleton(authority))
 				.point(0)
+				.authorities(Collections.singleton(authority))
 				.activated(true)
 				.build();
 		return userRepository.save(user);
@@ -60,5 +62,10 @@ public class UserService /* implements UserDetailsService */ {
 	@Transactional(readOnly = true)
 	public Optional<User> getMyUserWithAuthorities() {
 		return SecurityUtil.getCurrentEmail().flatMap(userRepository::findOneWithAuthoritiesByEmail);
+	}
+	
+	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public Optional<User> selectUser(Long id) {
+		return userRepository.findById(id);
 	}
 }
