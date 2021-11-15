@@ -1,39 +1,70 @@
 package com.bitravel.service;
-
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.bitravel.data.dto.BoardRequestDto;
+import com.bitravel.data.dto.BoardResponseDto;
 import com.bitravel.data.entity.Board;
- 
-public interface BoardService {
+import com.bitravel.data.repository.BoardRepository;
+import com.bitravel.exception.CustomException;
+import com.bitravel.exception.ErrorCode;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class BoardService {
+	private final BoardRepository boardRepository;
+
     /**
-     * 글 목록 조회
-     * @return
+     * 게시글 생성
      */
-    public List<Board> selectBoardList();
-     
+    @Transactional
+    public Long save(final BoardRequestDto params) {
+
+        Board entity = boardRepository.save(params.toEntity());
+        return entity.getBoardId();
+    }
+
     /**
-     * 글 읽기
-     * @param bid
-     * @return
+     * 게시글 리스트 조회
      */
-    public Optional<Board> selectBoard(Long bid);
-     
+    public List<BoardResponseDto> findAll() {
+
+        Sort sort = Sort.by(Direction.DESC, "boardId", "boardDate");
+        List<Board> list = boardRepository.findAll(sort);
+        return list.stream().map(BoardResponseDto::new).collect(Collectors.toList());
+    }
+    
     /**
-     * 글 작성
-     * @param board
+     * 게시글 상세 정보 조회
      */
-    public void insertBoard(Board board);
-     
+    @Transactional(readOnly = true)
+    public Board detail(Long id) {
+    	return boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+    }
+
     /**
-     * 글 수정
-     * @param board
+     * 게시글 수정
      */
-    public void updateBoard(Board board);
-     
+    @Transactional
+    public Long update(final Long id, final BoardRequestDto params) {
+
+        Board entity = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+        entity.update(params.getBoardTitle(), params.getBoardContent());
+        return id;
+    }
+    
     /**
-     * 글 삭제
-     * @param bid
+     * 게시글 삭제
      */
-    public void deleteBoard(Long bid);
+    @Transactional
+    public void deleteById(Long id) {
+    	boardRepository.deleteById(id);
+    }
 }

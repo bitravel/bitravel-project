@@ -1,23 +1,35 @@
 package com.bitravel.data.entity;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.Builder;
  
 @Entity
 @Table(name = "Board")
 @Setter
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board {
 	// 초안 기준 1차 설계 진행중
  
@@ -35,9 +47,9 @@ public class Board {
     //@JoinColumn (name = "userId")
     //private User user;
     
-    @Column(name = "boardView")
+    @Column(name = "boardView") //조회수
     private Integer boardView = 0;
-    @Column(name = "boardRecom")
+    @Column(name = "boardRecom") //추천수
     private Integer boardRecom = 0;
     
     private @Column(name = "boardLevel") Integer boardLevel = 0;
@@ -49,7 +61,24 @@ public class Board {
     
     @Column(name = "boardDate", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp boardDate;
-     
+    
+    private String userId; //작성자
+    @Builder
+    public Board(String boardTitle, String boardContent, String userId,Long boardId, int boardView, int boardRecom, int boardLevel, Timestamp boardDate) {
+    	this.boardTitle = boardTitle;
+    	this.boardContent = boardContent;
+    	this.boardId = boardId;
+    	this.boardView = boardView;
+    	this.boardLevel = boardLevel;
+    	this.boardRecom = boardRecom;
+    	this.boardDate = boardDate;
+    	this.userId = userId;
+    }
+    
+    public void update(String boardTitle, String boardContent) {
+    	this.boardTitle = boardTitle;
+    	this.boardContent = boardContent;
+    }
   
 }
 
