@@ -37,7 +37,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable()
+		http
+		.httpBasic().disable()
+		.csrf().disable()
+		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+		.and()
 		.exceptionHandling()
 		.authenticationEntryPoint(jwtAuthenticationEntryPoint)
 		.accessDeniedHandler(jwtAccessDeniedHandler)
@@ -52,8 +56,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		.and()
 		.authorizeRequests()
-		.antMatchers("/api/**", "/**").permitAll()
-		.anyRequest().authenticated()
+		.antMatchers("/user/**", "/board/**").authenticated()
+		.anyRequest().permitAll()
 		
 		.and()
 		.apply(new JwtSecurityConfig(tokenProvider));

@@ -6,10 +6,10 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -20,22 +20,24 @@ import com.bitravel.data.entity.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 public class TokenProvider implements InitializingBean {
-	
-	private final Logger log = LoggerFactory.getLogger(TokenProvider.class);
 	
 	private static final String AUTHORITIES_KEY = "auth";
 	
 	private final String secret;
 	private final long tokenValidityInMilliseconds;
+	private final StringRedisTemplate redisTemplate;
 	
 	private Key key;
 	
@@ -45,6 +47,7 @@ public class TokenProvider implements InitializingBean {
 			) {
 		this.secret = secret;
 		this.tokenValidityInMilliseconds = tokenValidityInSeconds*1000;
+		this.redisTemplate = new StringRedisTemplate();
 	}
 	
 	
@@ -63,6 +66,7 @@ public class TokenProvider implements InitializingBean {
 		
 		return Jwts.builder().setSubject(authentication.getName())
 				.claim(AUTHORITIES_KEY, authorites)
+				.setIssuedAt(new Date(now))
 				.signWith(key, SignatureAlgorithm.HS512)
 				.setExpiration(validity)
 				.compact();
@@ -84,10 +88,19 @@ public class TokenProvider implements InitializingBean {
 		return new UsernamePasswordAuthenticationToken(principal, token, authorities);
 	}
 	
+	public String getUserPk(String token) {
+		return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
+	}
+	
 	public boolean validateToken(String token) {
 		try {
-			Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-			return true;
+			Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+			ValueOperations<String, String> logoutValueOperations = redisTemplate.opsForValue();
+			if(logoutValueOperations.get(token) != null) {
+				log.info("로그아웃된 토큰");
+				return false;
+			}
+			return !claims.getBody().getExpiration().before(new Date());
 		} catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
 			log.info("잘못된 jwt 서명");
 		} catch (ExpiredJwtException e) {
@@ -99,5 +112,4 @@ public class TokenProvider implements InitializingBean {
 		}
 		return false;
 	}
-	
 }
