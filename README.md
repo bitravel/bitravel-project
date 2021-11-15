@@ -11,7 +11,7 @@ Bitravel Project Main Repository
 * HTML/CSS
 * MySQL
 * Windows 10
-* Linux Ubuntu
+* Linux Ubuntu(Redis)
 * Visual Studio Code
 * Eclipse EE
 * to be updated...
