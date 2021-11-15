@@ -37,7 +37,7 @@ out/
 .vscode/
 
 ### Bootstrap
-static/css/
-static/font/
-static/plugin/
-static/scripts/
+/static/css/
+/static/font/
+/static/plugin/
+/static/scripts/
