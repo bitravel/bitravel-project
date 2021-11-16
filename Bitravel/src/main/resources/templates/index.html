@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 <meta charset="UTF-8">
 <title>Index</title>
 </head>
 <body>
-<h1 th:text="${id}">ID</h1>
+<h1 sec:authorize>회원님</h1>
 Hello world
 <br>
-<a href="/loginView">로그인하러가기</a>
+<button type="button" sec:authorize="isAnonymous()" id="login" onclick="location.href = '/login'">로그인하러가기</button>
+<form action="/api/logout" sec:authorize="isAuthenticated()" method="post" class="token">
+<button type="submit" sec:authorize="isAuthenticated()">로그아웃하기</button>
+</form>
 </body>
 </html>
