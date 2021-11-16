@@ -6,9 +6,9 @@ import javax.validation.Valid;
 
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
@@ -48,9 +48,15 @@ public class UserController {
 	public String login(@Valid LoginDto loginDto, HttpServletResponse response) {
 		UsernamePasswordAuthenticationToken authenticationToken = 
 				new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
+		
+		try {
+			Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+		} catch (BadCredentialsException e) {
+			return "loginPage";
+		}
+		
 		Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-
 		String jwt = tokenProvider.createToken(authentication);
 		//HttpHeaders httpheaders = new HttpHeaders();
 		//httpheaders.setConnection("http://localhost:8080");
