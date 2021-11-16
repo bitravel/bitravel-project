@@ -17,11 +17,11 @@ import lombok.Setter;
 public class LoginDto {
 	
 	@NotNull
-	@Size(min=5, max=50)
+	@Size(min=1, max=50)
 	private String email;
 	
 	@NotNull
-    @Size(min=4, max=100)
+    @Size(min=1, max=100)
 	private String password;
 
 }

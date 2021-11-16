@@ -47,7 +47,7 @@ public class UserController {
 	@PostMapping("/login")
 	public String login(@Valid LoginDto loginDto, HttpServletResponse response) {
 		UsernamePasswordAuthenticationToken authenticationToken = 
-				new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
+				new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());		
 		Authentication authentication;
 		try {
 			authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
@@ -77,7 +77,8 @@ public class UserController {
 				tokenProvider.getAuthentication(jwt).getPrincipal();
 		log.info("로그아웃 유저 아이디 : '{}', 유저 이름 : '{}'", user.getEmail(),
 				user.getNickname());
-
+		
+		// 실제 구현 완료하고 나면 반드시 redirect해야 함
 		return "redirect:/";
 	}
 
