@@ -48,14 +48,12 @@ public class UserController {
 	public String login(@Valid LoginDto loginDto, HttpServletResponse response) {
 		UsernamePasswordAuthenticationToken authenticationToken = 
 				new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
-		
+		Authentication authentication;
 		try {
-			Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+			authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 		} catch (BadCredentialsException e) {
 			return "loginPage";
 		}
-		
-		Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		String jwt = tokenProvider.createToken(authentication);
 		//HttpHeaders httpheaders = new HttpHeaders();
