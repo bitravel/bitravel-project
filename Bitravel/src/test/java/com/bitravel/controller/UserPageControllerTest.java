@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(MainController.class)public class UserControllerTest {
+@WebMvcTest(UserController.class)public class UserPageControllerTest {
     @Autowired
     MockMvc mockMvc;
 
