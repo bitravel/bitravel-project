@@ -7,6 +7,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CustomException extends RuntimeException {
 
-    private final ErrorCode errorCode;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1330263549017261897L;
+	private final ErrorCode errorCode;
 
 }
