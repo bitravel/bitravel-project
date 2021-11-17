@@ -16,12 +16,14 @@ import com.bitravel.data.dto.BoardResponseDto;
 import com.bitravel.data.entity.Board;
 import com.bitravel.service.BoardService;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@Api(value = "BoardController")
 public class BoardController {
 
     private final BoardService boardService;
@@ -68,4 +70,5 @@ public class BoardController {
     public Boolean deleteById(@PathVariable Long id) {	
     	return boardService.deleteById(id);
     }
+    
 }

@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
  
 @Entity
-@Table(name = "Board")
+@Table(name = "board")
 @Setter
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -27,25 +27,28 @@ public class Board {
  
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private @Column (name = "boardId") Long boardId;
+    @Column (name = "boardId")
+    private Long boardId;
     
     @NotBlank(message = "글의 제목을 기입해주세요.")
     @Size (max=30, message = "제목은 30자 이내로 기입해 주세요.")
-    private @Column(name = "boardTitle") String boardTitle;
+    @Column(name = "boardTitle")
+    private String boardTitle;
     
-    // 글쓰기 창으로 진입하는 코드를 짜기 전에는 쉽게 꺼낼 수가 없다...ㅠ
+    // 꼭 필요할지 확인
     // Request에 자동으로 user를 넘겨야 하는 건데...
     //@ManyToOne
     //@JoinColumn (name = "userId")
     //private User user;
     
     @Column(name = "boardView") //조회수
-    private Integer boardView = 0;
+    private Integer boardView;
     @Column(name = "boardRecom") //추천수
-    private Integer boardRecom = 0;
+    private Integer boardRecom;
     
-    private @Column(name = "boardLevel") Integer boardLevel = 0;
-    // 글 쓸때는 레벨 0, 댓글은 1 -> 대댓 기능은 연구한 뒤 진행
+    @Column(name = "boardLevel")
+    private Integer boardLevel;
+    // 답글/대댓글용S
     
     @NotBlank(message = "글의 내용을 기입해주세요.")
     @Size(min=10, message = "글의 내용은 최소 10자 이상이어야 합니다.")
@@ -55,6 +58,7 @@ public class Board {
     private Timestamp boardDate;
     
     private String userEmail; //작성자
+    
     @Builder
     public Board(String boardTitle, String boardContent, String userEmail,Long boardId, int boardView, int boardRecom, int boardLevel, Timestamp boardDate) {
     	this.boardTitle = boardTitle;

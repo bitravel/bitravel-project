@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class BoardService {
 	private final BoardRepository boardRepository;
-
+	
     /**
      * 게시글 생성
      */
@@ -86,4 +86,5 @@ public class BoardService {
     	boardRepository.deleteById(id);
     	return true;
     }
+    
 }
