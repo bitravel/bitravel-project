@@ -3,6 +3,7 @@ package com.bitravel.data.dto;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.bitravel.data.entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -43,5 +44,17 @@ public class UserDto {
 	
 	@NotNull
 	private Integer age;
+	
+	public UserDto(User entity) {
+		this.email = entity.getEmail();
+		this.password = "unknown";
+		this.nickname = entity.getNickname();
+		this.realname = entity.getRealName();
+		this.point = entity.getPoint();
+		this.gender = entity.getGender();
+		this.age = entity.getAge();
+	}
+	
+	
 	
 }
