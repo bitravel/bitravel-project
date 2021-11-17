@@ -105,4 +105,5 @@ public class UserController {
 	public ResponseEntity<Boolean> deleteUser(String email) {
 		return ResponseEntity.ok(userService.deleteUser(email));
 	}
+	
 }
