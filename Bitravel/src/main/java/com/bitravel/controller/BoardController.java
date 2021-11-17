@@ -49,7 +49,7 @@ public class BoardController {
      */
     @PatchMapping("/boards/{id}")
     @ApiOperation(value = "글 수정", notes = "글 내용을 수정하는 API. Board entity 클래스로 데이터를 수정한다.<br>이때엔 정보를 등록할 때와는 다르게 bid 값을 함깨 보내줘야한다.")
-    public Long save(@PathVariable final Long id, @RequestBody final BoardRequestDto params) {
+    public Boolean save(@PathVariable final Long id, @RequestBody final BoardRequestDto params) {
         return boardService.update(id, params);
     }
     /**
@@ -65,8 +65,7 @@ public class BoardController {
      */
     @DeleteMapping("/boards/{id}")
     @ApiOperation(value = "글 삭제", notes = "글 내용을 삭제하는 API. Board entity 클래스의 bid 값으로 데이터를 삭제한다.")
-    public Long deleteById(@PathVariable Long id) {
-    	boardService.deleteById(id);
-    	return id;
+    public Boolean deleteById(@PathVariable Long id) {	
+    	return boardService.deleteById(id);
     }
 }

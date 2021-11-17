@@ -13,9 +13,12 @@ import com.bitravel.data.entity.Board;
 import com.bitravel.data.repository.BoardRepository;
 import com.bitravel.exception.CustomException;
 import com.bitravel.exception.ErrorCode;
+import com.bitravel.util.SecurityUtil;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BoardService {
@@ -25,8 +28,9 @@ public class BoardService {
      * 게시글 생성
      */
     @Transactional
-    public Long save(final BoardRequestDto params) {
-
+    public Long save(BoardRequestDto params) {
+    	// JWT 구현 전에는 anonymousUser로 기록됨
+    	params.setUserEmail(SecurityUtil.getCurrentEmail().get());
         Board entity = boardRepository.save(params.toEntity());
         return entity.getBoardId();
     }
@@ -53,18 +57,33 @@ public class BoardService {
      * 게시글 수정
      */
     @Transactional
-    public Long update(final Long id, final BoardRequestDto params) {
-
+    public Boolean update(final Long id, final BoardRequestDto params) {
         Board entity = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+        // 글쓴이 또는 admin만 수정할 수 있게 함
+        if(SecurityUtil.getCurrentEmail().get().equals("admin")) {
+        	log.info("관리자 권한으로 글을 수정합니다. 글 번호 : "+id);
+        } else if(!entity.getUserEmail().equals(SecurityUtil.getCurrentEmail().get())) {
+        	log.info("유효하지 않은 수정 요청입니다.");
+        	return false;
+        }
         entity.update(params.getBoardTitle(), params.getBoardContent());
-        return id;
+        return true;
     }
     
     /**
      * 게시글 삭제
      */
     @Transactional
-    public void deleteById(Long id) {
+    public Boolean deleteById(Long id) {
+        Board entity = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+        // 글쓴이 또는 admin만 수정할 수 있게 함
+        if(SecurityUtil.getCurrentEmail().get().equals("admin")) {
+        	log.info("관리자 권한으로 글을 삭제합니다. 글 번호 : "+id);
+        } else if(!entity.getUserEmail().equals(SecurityUtil.getCurrentEmail().get())) {
+        	log.info("유효하지 않은 삭제 요청입니다.");
+        	return false;
+        }
     	boardRepository.deleteById(id);
+    	return true;
     }
 }
