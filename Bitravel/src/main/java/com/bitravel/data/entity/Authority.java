@@ -20,6 +20,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Authority {
 	@Id
-	@Column(name = "role_name", length=50)
+	@Column(name = "roleName", length=50)
 	private String roleName;
 }

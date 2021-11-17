@@ -42,7 +42,7 @@ public class User {
 
 	@JsonIgnore
 	@Id
-	@Column(name="user_id")
+	@Column(name="userId")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long userId;
     
@@ -72,8 +72,8 @@ public class User {
     @ManyToMany
     @JoinTable(
             name = "user_authority",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "user_id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_name", referencedColumnName = "role_name")})
+            joinColumns = {@JoinColumn(name = "userId", referencedColumnName = "userId")},
+            inverseJoinColumns = {@JoinColumn(name = "roleName", referencedColumnName = "roleName")})
     private Set<Authority> authorities;
 
 }
