@@ -96,7 +96,7 @@ public class UserController {
 	
 	@PostMapping("/user/modifyPassword")
 	//@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-	public ResponseEntity<String> modifyUserPassword (String email, String password) {
+	public ResponseEntity<Boolean> modifyUserPassword (String email, String password) {
 		return ResponseEntity.ok(userService.updateUserPassword(email, password));
 	}
 	

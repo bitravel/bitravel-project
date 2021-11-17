@@ -112,7 +112,7 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
-	// 이메일(PK)로 찾기
+	// 회원 이메일로 찾기
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Optional<UserDto> getUserWithAuthorities(String email) {
 		return userRepository.findOneWithAuthoritiesByEmail(email).map(UserDto::new);
@@ -127,7 +127,7 @@ public class UserService {
 		return userRepository.findOneWithAuthoritiesByEmail(Optional.ofNullable("admin").get()).map(UserDto::new);
 	}
 
-	// 아이디(회원 일련번호)로 찾기
+	// 아이디(회원 일련번호-PK)로 찾기
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Optional<UserDto> getAnyUserById(Long id) {
 		Optional<User> user = userRepository.findById(id);
@@ -162,15 +162,15 @@ public class UserService {
 
 	// 비밀번호만 수정하기
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-	public String updateUserPassword(String email, String password) {
+	public Boolean updateUserPassword(String email, String password) {
 		Optional<User> userTemp = userRepository.findOneWithAuthoritiesByEmail(email);
 		if(userTemp.isEmpty()) {
-			return null;
+			return false;
 		}
 		User user = userTemp.get();
 		user.setPassword(passwordEncoder.encode(password));
 		userRepository.save(user);
-		return user.getPassword();
+		return true;
 	}
 
 	// 회원정보 삭제하기
