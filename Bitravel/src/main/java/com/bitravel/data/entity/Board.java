@@ -1,29 +1,21 @@
 package com.bitravel.data.entity;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.Builder;
  
 @Entity
 @Table(name = "Board")
@@ -62,9 +54,9 @@ public class Board {
     @Column(name = "boardDate", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp boardDate;
     
-    private String userId; //작성자
+    private String userEmail; //작성자
     @Builder
-    public Board(String boardTitle, String boardContent, String userId,Long boardId, int boardView, int boardRecom, int boardLevel, Timestamp boardDate) {
+    public Board(String boardTitle, String boardContent, String userEmail,Long boardId, int boardView, int boardRecom, int boardLevel, Timestamp boardDate) {
     	this.boardTitle = boardTitle;
     	this.boardContent = boardContent;
     	this.boardId = boardId;
@@ -72,7 +64,7 @@ public class Board {
     	this.boardLevel = boardLevel;
     	this.boardRecom = boardRecom;
     	this.boardDate = boardDate;
-    	this.userId = userId;
+    	this.userEmail = userEmail;
     }
     
     public void update(String boardTitle, String boardContent) {

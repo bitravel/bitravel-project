@@ -4,16 +4,14 @@ import java.sql.Timestamp;
 
 import com.bitravel.data.entity.Board;
 
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Getter
 
 public class BoardResponseDto {
 	
 	private Long boardId; // PK
-	private String userId; // 작성자
+	private String userEmail; // 작성자
     private String boardTitle; // 제목
     private String boardContent; // 내용
     private int boardLevel; // 레벨
@@ -29,6 +27,6 @@ public class BoardResponseDto {
     	this.boardLevel = entity.getBoardLevel();
     	this.boardRecom = entity.getBoardRecom();
     	this.boardDate = entity.getBoardDate();
-    	this.userId = entity.getUserId();
+    	this.userEmail = entity.getUserEmail();
     }
 }

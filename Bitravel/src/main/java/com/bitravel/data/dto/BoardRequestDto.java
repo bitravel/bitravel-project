@@ -1,7 +1,5 @@
 package com.bitravel.data.dto;
 
-import java.sql.Timestamp;
-
 import com.bitravel.data.entity.Board;
 
 import lombok.AccessLevel;
@@ -13,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 public class BoardRequestDto {
 
-	private String userId; // 작성자
+	private String userEmail; // 작성자 (이메일)
     private String boardTitle; // 제목
     private String boardContent; // 내용
 
@@ -21,8 +19,12 @@ public class BoardRequestDto {
         return Board.builder()
                 .boardTitle(boardTitle)
                 .boardContent(boardContent)
-                .userId(userId)
+                .userEmail(userEmail)
                 .boardView(0)
                 .build();
     }
+
+	public void setUserEmail(String email) {
+		this.userEmail = email;
+	}
 }
