@@ -56,6 +56,7 @@ public class User {
     @JsonIgnore
     private @Column(name = "password") String password;
     
+    // 회원정보 수정하는 경우 있음
     @Column(name = "point")
     private Integer point;
     

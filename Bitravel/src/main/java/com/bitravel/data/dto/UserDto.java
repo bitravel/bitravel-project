@@ -26,7 +26,7 @@ public class UserDto {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@NotNull
     @Size(min=4, max=100)
-	private String password;
+	private String password; // 회원가입 시에만 사용함
 	
 	@NotNull
 	@Size(min=2, max=20)
@@ -45,9 +45,10 @@ public class UserDto {
 	@NotNull
 	private Integer age;
 	
+	// Response로 User Entity를 가져오는 경우
 	public UserDto(User entity) {
 		this.email = entity.getEmail();
-		this.password = "unknown";
+		this.password = null;
 		this.nickname = entity.getNickname();
 		this.realname = entity.getRealName();
 		this.point = entity.getPoint();
