@@ -114,8 +114,8 @@ public class UserService {
 
 	// 이메일(PK)로 찾기
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-	public Optional<User> getUserWithAuthorities(String email) {
-		return userRepository.findOneWithAuthoritiesByEmail(email);
+	public Optional<UserDto> getUserWithAuthorities(String email) {
+		return userRepository.findOneWithAuthoritiesByEmail(email).map(UserDto::new);
 	}
 
 	// 자기 자신 (로그인된 정보) 불러오기
