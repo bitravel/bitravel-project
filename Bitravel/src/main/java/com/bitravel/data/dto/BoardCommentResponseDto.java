@@ -1,6 +1,5 @@
 package com.bitravel.data.dto;
 
-import com.bitravel.data.entity.Board;
 import com.bitravel.data.entity.BoardComment;
 
 import lombok.AccessLevel;

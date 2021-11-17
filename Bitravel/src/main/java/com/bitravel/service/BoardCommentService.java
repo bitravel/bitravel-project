@@ -3,12 +3,15 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.bitravel.data.dto.BoardCommentRequestDto;
 import com.bitravel.data.dto.BoardCommentResponseDto;
 import com.bitravel.data.entity.Board;
 import com.bitravel.data.entity.BoardComment;
 import com.bitravel.data.repository.BoardCommentRepository;
+import com.bitravel.exception.CustomException;
+import com.bitravel.exception.ErrorCode;
 import com.bitravel.util.SecurityUtil;
 
 import lombok.AllArgsConstructor;
@@ -42,4 +45,38 @@ public class BoardCommentService {
         BoardComment entity = bCommentRepository.save(params.toEntity());
         return entity.getBCommentId();
 	}
+	
+    /**
+     * 댓글 수정
+     */
+    @Transactional
+    public Boolean update(final Long id, final BoardCommentRequestDto params) {
+        BoardComment entity = bCommentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+        // 글쓴이 또는 admin만 수정할 수 있게 함
+        if(SecurityUtil.getCurrentEmail().get().equals("admin")) {
+        	log.info("관리자 권한으로 글을 수정합니다. 글 번호 : "+id);
+        } else if(!entity.getUserEmail().equals(SecurityUtil.getCurrentEmail().get())) {
+        	log.info("유효하지 않은 수정 요청입니다.");
+        	return false;
+        }
+        entity.update(params.getCommentContent());
+        return true;
+    }
+    
+    /**
+     * 댓글 삭제
+     */
+    @Transactional
+    public Boolean deleteById(Long id) {
+        BoardComment entity = bCommentRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+        // 글쓴이 또는 admin만 수정할 수 있게 함
+        if(SecurityUtil.getCurrentEmail().get().equals("admin")) {
+        	log.info("관리자 권한으로 글을 삭제합니다. 글 번호 : "+id);
+        } else if(!entity.getUserEmail().equals(SecurityUtil.getCurrentEmail().get())) {
+        	log.info("유효하지 않은 삭제 요청입니다.");
+        	return false;
+        }
+    	bCommentRepository.deleteById(id);
+    	return true;
+    }
 }
