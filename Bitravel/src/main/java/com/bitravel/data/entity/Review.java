@@ -1,7 +1,7 @@
 package com.bitravel.data.entity;
 
 import java.sql.Timestamp;
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -61,7 +61,7 @@ public class Review {
     private String userEmail; //작성자
     
     @Builder
-    public Review(String reviewTitle, String reviewContent, String userEmail,Long reviewId, int reviewView, int reviewRecom, int reviewLevel, Timestamp reviewDate, List<Travel> travelList) {
+    public Review(String reviewTitle, String reviewContent, String userEmail,Long reviewId, int reviewView, int reviewRecom, int reviewLevel, Timestamp reviewDate, Set<Travel> travelSet) {
     	this.reviewTitle = reviewTitle;
     	this.reviewContent = reviewContent;
     	this.reviewId = reviewId;
@@ -70,21 +70,22 @@ public class Review {
     	this.reviewRecom = reviewRecom;
     	this.reviewDate = reviewDate;
     	this.userEmail = userEmail;
-    	this.travelList = travelList;
+    	this.travelSet = travelSet;
     }
     
-    public void update(String reviewTitle, String reviewContent, List<Travel> travelList) {
+    public void update(String reviewTitle, String reviewContent, Set<Travel> travelSet) {
     	this.reviewTitle = reviewTitle;
     	this.reviewContent = reviewContent;
-    	this.travelList = travelList;
+    	this.travelSet = travelSet;
     }
     
+    // 테이블 간 다대다 연결
     @ManyToMany
     @JoinTable(
             name = "review_travel",
             joinColumns = {@JoinColumn(name = "reviewId", referencedColumnName = "reviewId")},
             inverseJoinColumns = {@JoinColumn(name = "travelId", referencedColumnName = "travelId")})
-    private List<Travel> travelList;
+    private Set<Travel> travelSet;
   
 }
 
