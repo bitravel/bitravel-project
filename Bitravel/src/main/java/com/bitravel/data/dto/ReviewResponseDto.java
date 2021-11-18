@@ -20,7 +20,7 @@ public class ReviewResponseDto {
     private int reviewView; // 조회수
     private Timestamp reviewDate; // 작성날짜
     private int reviewRecom; // 추천수
-    private List<Long> travelId; // 부여된 여행지 정보들
+//    private List<Long> travelId; // 부여된 여행지 정보들
 
     public ReviewResponseDto(Review entity) {
     	this.reviewTitle = entity.getReviewTitle();

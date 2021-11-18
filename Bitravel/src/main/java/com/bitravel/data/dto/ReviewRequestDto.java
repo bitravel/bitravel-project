@@ -17,7 +17,7 @@ public class ReviewRequestDto {
     private String reviewTitle; // 제목
     private String reviewContent; // 내용
     private Integer reviewLevel; // 글 레벨 (답글 여부 확인)
-    private List<Long> travelId; // 부여된 여행지 정보들
+//    private List<Long> travelId; // 부여된 여행지 정보들
     
     
     public Review toEntity() {
