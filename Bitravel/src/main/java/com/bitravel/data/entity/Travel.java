@@ -26,10 +26,10 @@ public class Travel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column (name = "travelId")
-	private long travelId;
+	private Long travelId;
 	
 	@Column(name = "travelName") // 여행지 이름
-	private String taravelName;
+	private String travelName;
 	
 	@Column(name = "travelSummary") // 여행지 요약정보
 	private String travelSummary;
