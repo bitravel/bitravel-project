@@ -1,15 +1,17 @@
 package com.bitravel.data.dto;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import com.bitravel.data.entity.Review;
+import com.bitravel.data.entity.Travel;
 
 import lombok.Getter;
 
 @Getter
-
-// 여행지와의 연결점은 추후 확인 예정 (단순 ID로 하는 것이 좋을지, 외래키로 사용할지)
 public class ReviewResponseDto {
 	
 	private Long reviewId; // PK
@@ -20,7 +22,7 @@ public class ReviewResponseDto {
     private int reviewView; // 조회수
     private Timestamp reviewDate; // 작성날짜
     private int reviewRecom; // 추천수
-    private List<Long> travelId; // 부여된 여행지 정보들
+    private List<TravelReviewDto> travelList;
 
     public ReviewResponseDto(Review entity) {
     	this.reviewTitle = entity.getReviewTitle();
@@ -31,5 +33,16 @@ public class ReviewResponseDto {
     	this.reviewRecom = entity.getReviewRecom();
     	this.reviewDate = entity.getReviewDate();
     	this.userEmail = entity.getUserEmail();
+    	this.travelList = this.extractId(entity.getTravelSet());
     }
+    
+    public List<TravelReviewDto> extractId(Set<Travel> travelSet) {
+    	List<TravelReviewDto> list = new ArrayList<>();
+    	Iterator<Travel> iterator = travelSet.iterator();
+    	while(iterator.hasNext()) {
+    		list.add(new TravelReviewDto(iterator.next()));
+    	}
+    	return list;
+    }
+  
 }
