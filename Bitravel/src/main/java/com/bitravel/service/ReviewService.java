@@ -1,4 +1,5 @@
 package com.bitravel.service;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -10,7 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bitravel.data.dto.ReviewRequestDto;
 import com.bitravel.data.dto.ReviewResponseDto;
 import com.bitravel.data.entity.Review;
+import com.bitravel.data.entity.Travel;
 import com.bitravel.data.repository.ReviewRepository;
+import com.bitravel.data.repository.TravelRepository;
 import com.bitravel.exception.CustomException;
 import com.bitravel.exception.ErrorCode;
 import com.bitravel.util.SecurityUtil;
@@ -23,7 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class ReviewService {
 	private final ReviewRepository reviewRepository;
-	
+	private final TravelRepository travelRepository;
     /**
      * 게시글 생성
      */
@@ -31,6 +34,13 @@ public class ReviewService {
     public Long save(ReviewRequestDto params) {
     	// JWT 구현 전에는 anonymousUser로 기록됨
     	params.setUserEmail(SecurityUtil.getCurrentEmail().get());
+    	List<Travel> travelList = new ArrayList<>();
+    	List<Long> travelIds = params.getTravelId();
+    	int L = travelIds.size();
+    	for(int i=0; i<L; i++) {
+    		travelList.add(travelRepository.getById(travelIds.get(i)));
+    	}
+    	params.setTravelList(travelList);   	
         Review entity = reviewRepository.save(params.toEntity());
         return entity.getReviewId();
     }

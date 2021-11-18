@@ -1,12 +1,16 @@
 package com.bitravel.data.entity;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -57,7 +61,7 @@ public class Review {
     private String userEmail; //작성자
     
     @Builder
-    public Review(String reviewTitle, String reviewContent, String userEmail,Long reviewId, int reviewView, int reviewRecom, int reviewLevel, Timestamp reviewDate) {
+    public Review(String reviewTitle, String reviewContent, String userEmail,Long reviewId, int reviewView, int reviewRecom, int reviewLevel, Timestamp reviewDate, List<Travel> travelList) {
     	this.reviewTitle = reviewTitle;
     	this.reviewContent = reviewContent;
     	this.reviewId = reviewId;
@@ -66,12 +70,20 @@ public class Review {
     	this.reviewRecom = reviewRecom;
     	this.reviewDate = reviewDate;
     	this.userEmail = userEmail;
+    	this.travelList = travelList;
     }
     
     public void update(String reviewTitle, String reviewContent) {
     	this.reviewTitle = reviewTitle;
     	this.reviewContent = reviewContent;
     }
+    
+    @ManyToMany
+    @JoinTable(
+            name = "review_travel",
+            joinColumns = {@JoinColumn(name = "reviewId", referencedColumnName = "reviewId")},
+            inverseJoinColumns = {@JoinColumn(name = "travelId", referencedColumnName = "travelId")})
+    private List<Travel> travelList;
   
 }
 
