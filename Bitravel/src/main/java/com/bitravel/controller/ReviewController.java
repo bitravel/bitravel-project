@@ -30,7 +30,7 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     /**
-     * 게시글 작성
+     * 후기 작성
      */
     @PostMapping("/reviews")
     @ApiOperation(value = "글 작성", notes = "글 내용을 저장하는 API. Review entity 클래스로 데이터를 저장한다.")
@@ -39,7 +39,7 @@ public class ReviewController {
     }
 
     /**
-     * 게시글 리스트 조회
+     * 후기 리스트 조회
      */
     @GetMapping("/reviews")
     @ApiOperation(value = "글 목록 조회", notes = "글 목록을 조회하는 API.")
@@ -48,7 +48,7 @@ public class ReviewController {
     }
 
     /**
-     * 게시글 수정
+     * 후기 수정
      */
     @PatchMapping("/reviews/{id}")
     @ApiOperation(value = "글 수정", notes = "글 내용을 수정하는 API. Review entity 클래스로 데이터를 수정한다.<br>이때엔 정보를 등록할 때와는 다르게 bid 값을 함깨 보내줘야한다.")
@@ -56,7 +56,7 @@ public class ReviewController {
         return reviewService.update(id, params);
     }
     /**
-     * 게시글 상세 정보 조회
+     * 후기 상세 정보 조회
      */
     @GetMapping("/reviews/{id}")
     @ApiOperation(value = "글 내용 조회", notes = "개별 글의 정보를 조회하는 API. Review entity 클래스의 bid값을 기준으로 데이터를 가져온다.")
@@ -64,7 +64,7 @@ public class ReviewController {
     	return reviewService.detail(id);
     }
     /**
-     * 게시글 삭제
+     * 후기 삭제
      */
     @DeleteMapping("/reviews/{id}")
     @ApiOperation(value = "글 삭제", notes = "글 내용을 삭제하는 API. Review entity 클래스의 bid 값으로 데이터를 삭제한다.")
