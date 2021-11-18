@@ -28,7 +28,7 @@ public class ReviewService {
 	private final ReviewRepository reviewRepository;
 	private final TravelRepository travelRepository;
     /**
-     * 게시글 생성
+     * 후기 생성
      */
     @Transactional
     public Long save(ReviewRequestDto params) {
@@ -46,7 +46,7 @@ public class ReviewService {
     }
 
     /**
-     * 게시글 리스트 조회
+     * 후기 리스트 조회
      */
     public List<ReviewResponseDto> findAll() {
 
@@ -56,7 +56,7 @@ public class ReviewService {
     }
     
     /**
-     * 게시글 상세 정보 조회
+     * 후기 상세 정보 조회
      */
     @Transactional(readOnly = true)
     public Review detail(Long id) {
@@ -64,7 +64,7 @@ public class ReviewService {
     }
 
     /**
-     * 게시글 수정
+     * 후기 수정
      */
     @Transactional
     public Boolean update(final Long id, final ReviewRequestDto params) {
@@ -87,7 +87,7 @@ public class ReviewService {
     }
     
     /**
-     * 게시글 삭제
+     * 후기 삭제
      */
     @Transactional
     public Boolean deleteById(Long id) {
