@@ -1,6 +1,7 @@
 package com.bitravel.service;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Sort;
@@ -28,25 +29,25 @@ public class ReviewService {
 	private final ReviewRepository reviewRepository;
 	private final TravelRepository travelRepository;
     /**
-     * 후기 생성
+     * 게시글 생성
      */
     @Transactional
     public Long save(ReviewRequestDto params) {
     	// JWT 구현 전에는 anonymousUser로 기록됨
     	params.setUserEmail(SecurityUtil.getCurrentEmail().get());
-    	List<Travel> travelList = new ArrayList<>();
+    	Set<Travel> travelList = new HashSet<>();
     	List<Long> travelIds = params.getTravelId();
     	int L = travelIds.size();
     	for(int i=0; i<L; i++) {
     		travelList.add(travelRepository.getById(travelIds.get(i)));
     	}
-    	params.setTravelList(travelList);   	
+    	params.setTravel(travelList);
         Review entity = reviewRepository.save(params.toEntity());
         return entity.getReviewId();
     }
 
     /**
-     * 후기 리스트 조회
+     * 게시글 리스트 조회
      */
     public List<ReviewResponseDto> findAll() {
 
@@ -56,7 +57,7 @@ public class ReviewService {
     }
     
     /**
-     * 후기 상세 정보 조회
+     * 게시글 상세 정보 조회
      */
     @Transactional(readOnly = true)
     public Review detail(Long id) {
@@ -64,7 +65,7 @@ public class ReviewService {
     }
 
     /**
-     * 후기 수정
+     * 게시글 수정
      */
     @Transactional
     public Boolean update(final Long id, final ReviewRequestDto params) {
@@ -76,18 +77,18 @@ public class ReviewService {
         	log.info("유효하지 않은 수정 요청입니다.");
         	return false;
         }
-    	List<Travel> travelList = new ArrayList<>();
+    	Set<Travel> travelList = new HashSet<>();
     	List<Long> travelIds = params.getTravelId();
     	int L = travelIds.size();
     	for(int i=0; i<L; i++) {
     		travelList.add(travelRepository.getById(travelIds.get(i)));
-    	}   
+    	}
         entity.update(params.getReviewTitle(), params.getReviewContent(), travelList);
         return true;
     }
     
     /**
-     * 후기 삭제
+     * 게시글 삭제
      */
     @Transactional
     public Boolean deleteById(Long id) {
