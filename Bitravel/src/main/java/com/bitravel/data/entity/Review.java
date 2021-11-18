@@ -73,9 +73,10 @@ public class Review {
     	this.travelList = travelList;
     }
     
-    public void update(String reviewTitle, String reviewContent) {
+    public void update(String reviewTitle, String reviewContent, List<Travel> travelList) {
     	this.reviewTitle = reviewTitle;
     	this.reviewContent = reviewContent;
+    	this.travelList = travelList;
     }
     
     @ManyToMany

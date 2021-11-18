@@ -76,7 +76,13 @@ public class ReviewService {
         	log.info("유효하지 않은 수정 요청입니다.");
         	return false;
         }
-        entity.update(params.getReviewTitle(), params.getReviewContent());
+    	List<Travel> travelList = new ArrayList<>();
+    	List<Long> travelIds = params.getTravelId();
+    	int L = travelIds.size();
+    	for(int i=0; i<L; i++) {
+    		travelList.add(travelRepository.getById(travelIds.get(i)));
+    	}   
+        entity.update(params.getReviewTitle(), params.getReviewContent(), travelList);
         return true;
     }
     
