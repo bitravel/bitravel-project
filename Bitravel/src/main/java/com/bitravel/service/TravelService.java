@@ -49,7 +49,7 @@ public class TravelService {
     }
     
     /**
-     * 여행지 상세 정보 조회 (여행지 이름)
+     * 여행지 목록 조회 (여행지 이름)
      */
     @Transactional(readOnly = true)
     public List<Travel> detailsByName(String name) {
@@ -59,7 +59,31 @@ public class TravelService {
     	}
     	return list;
     }
-
+    
+    /**
+     * 여행지 목록 조회 (광역자치단체)
+     */
+    @Transactional(readOnly = true)
+    public List<Travel> detailsByLargeGov(String largeGov) {
+    	List<Travel> list = travelRepository.findByLargeGov(largeGov);
+    	if(list.size() == 0) {
+    		throw new CustomException(ErrorCode.POSTS_NOT_FOUND);
+    	}
+    	return list;
+    }
+    
+    /**
+     * 여행지 목록 조회 (기초자치단체)
+     */
+    @Transactional(readOnly = true)
+    public List<Travel> detailsBySmallGov(String largeGov, String smallGov) {
+    	List<Travel> list = travelRepository.findByLargeGovAndSmallGov(largeGov, smallGov);
+    	if(list.size() == 0) {
+    		throw new CustomException(ErrorCode.POSTS_NOT_FOUND);
+    	}
+    	return list;
+    }
+    
     /**
      * 여행지 수정
      */

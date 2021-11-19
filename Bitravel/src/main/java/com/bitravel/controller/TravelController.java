@@ -65,9 +65,27 @@ public class TravelController {
      * 여행지 이름 검색
      */
     @GetMapping("/travels/name/{name}")
-    @ApiOperation(value = "여행지 이름 검색", notes = "개별 여행지의 정보를 이름으로 검색하는 API. Travel entity 클래스의 travelName값을 기준으로 데이터를 가져온다.")
+    @ApiOperation(value = "여행지 이름 검색", notes = "여행지 이름으로 검색한 결과를 목록으로 출력하는 API. Travel entity 클래스의 travelName값을 기준으로 데이터를 가져온다.")
     public List<Travel> detailsByName(@PathVariable final String name) {
     	return travelService.detailsByName(name);
+    }
+    
+    /**
+     * 여행지 광역자치단체별 검색
+     */
+    @GetMapping("/travels/region/{name}")
+    @ApiOperation(value = "광역자치단체별 여행지 검색", notes = "광역자치단체별로 검색한 결과를 목록으로 출력하는 API. Travel entity 클래스의 LargeGov값을 기준으로 데이터를 가져온다.")
+    public List<Travel> detailsByLargeGov(@PathVariable final String name) {
+    	return travelService.detailsByLargeGov(name);
+    }
+    
+    /**
+     * 여행지 기초자치단체별 검색
+     */
+    @GetMapping("/travels/region/{large}/{small}")
+    @ApiOperation(value = "기초자치단체별 여행지 검색", notes = "기초자치단체별로 검색한 결과를 목록으로 출력하는 API. Travel entity 클래스의 LargeGov 값과 SmallGov 값 기준으로 데이터를 가져온다.")
+    public List<Travel> detailsBySmallGov(@PathVariable("large") final String largeGov, @PathVariable("small") final String smallGov) {
+    	return travelService.detailsBySmallGov(largeGov, smallGov);
     }
     
     /**
