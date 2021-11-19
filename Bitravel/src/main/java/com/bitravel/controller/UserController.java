@@ -88,6 +88,11 @@ public class UserController {
 		return ResponseEntity.ok(userService.getAllUserList());
 	}
 	
+	@GetMapping("/user/search")
+	public ResponseEntity<List<UserDto>> userListByNickname(String nickname) {
+		return ResponseEntity.ok(userService.getUserListBynickname(nickname));
+	}
+	
 	@PostMapping("/user/modify")
 	//@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	public ResponseEntity<User> modifyUser (UserDto userDto) {

@@ -141,6 +141,15 @@ public class UserService {
 		List<User> list = userRepository.findAll(sort);
 		return list.stream().map(UserDto::new).collect(Collectors.toList());
 	}
+	
+	// 회원 닉네임으로 검색한 결과 불러오기
+	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public List<UserDto> getUserListBynickname(String nickname) {
+		// 인기도 등 다른 조건으로 정렬하는 기능 추가할 수 있음
+		// Sort sort = Sort.by(Direction.ASC, "userId");
+		List<User> list = userRepository.findByNicknameContaining(nickname);
+		return list.stream().map(UserDto::new).collect(Collectors.toList());
+	}
 
 	// 회원정보 입력받은 내용으로 수정하기
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)

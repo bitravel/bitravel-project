@@ -1,5 +1,6 @@
 package com.bitravel.data.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -11,4 +12,6 @@ import com.bitravel.data.entity.User;
 public interface UserRepository extends JpaRepository<User, Long>{
 	@EntityGraph(attributePaths = "authorities")
 	Optional<User> findOneWithAuthoritiesByEmail(String email);
+	
+	List<User> findByNicknameContaining(String keyword);
 }
