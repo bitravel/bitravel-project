@@ -48,7 +48,7 @@ public class Board {
     
     @Column(name = "boardLevel")
     private Integer boardLevel;
-    // 답글/대댓글용S
+    // 답글/대댓글용
     
     @NotBlank(message = "글의 내용을 기입해주세요.")
     @Size(min=10, message = "글의 내용은 최소 10자 이상이어야 합니다.")
@@ -57,10 +57,11 @@ public class Board {
     @Column(name = "boardDate", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp boardDate;
     
-    private String userEmail; //작성자
+    private String userEmail; // 작성자 이메일
+    private String nickname; // 작성자 닉네임
     
     @Builder
-    public Board(String boardTitle, String boardContent, String userEmail,Long boardId, int boardView, int boardRecom, int boardLevel, Timestamp boardDate) {
+    public Board(String boardTitle, String boardContent, String userEmail,Long boardId, int boardView, int boardRecom, int boardLevel, Timestamp boardDate, String nickname) {
     	this.boardTitle = boardTitle;
     	this.boardContent = boardContent;
     	this.boardId = boardId;
@@ -69,6 +70,7 @@ public class Board {
     	this.boardRecom = boardRecom;
     	this.boardDate = boardDate;
     	this.userEmail = userEmail;
+    	this.nickname = nickname;
     }
     
     public void update(String boardTitle, String boardContent) {
