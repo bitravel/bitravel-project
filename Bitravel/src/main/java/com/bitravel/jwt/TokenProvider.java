@@ -112,6 +112,7 @@ public class TokenProvider implements InitializingBean {
 			// 토큰 유효기간이 끝나지 않았다면 true를 반환
 			return !claims.getBody().getExpiration().before(new Date());
 		} catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+			// secret 키가 서버에서 지정한 것과 다른 경우 발생 -> 해킹 시도
 			log.info("잘못된 jwt 서명");
 		} catch (ExpiredJwtException e) {
 			log.info("만료된 jwt 토큰");
