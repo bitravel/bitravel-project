@@ -51,7 +51,7 @@ public class User {
     
     private @Column(name = "realName") String realName;
     
-    private @Column(name = "nickname") String nickname;
+    private @Column(name = "nickname", unique = true) String nickname;
     
     @JsonIgnore
     private @Column(name = "password") String password;
