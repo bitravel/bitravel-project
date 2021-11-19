@@ -64,9 +64,9 @@ public class TravelController {
     /**
      * 여행지 이름 검색
      */
-    @GetMapping("/travels/name/{name}")
+    @GetMapping("/travels/name")
     @ApiOperation(value = "여행지 이름 검색", notes = "여행지 이름으로 검색한 결과를 목록으로 출력하는 API. Travel entity 클래스의 travelName값을 기준으로 데이터를 가져온다.")
-    public List<Travel> detailsByName(@PathVariable final String name) {
+    public List<Travel> detailsByName(final String name) {
     	return travelService.detailsByName(name);
     }
     
