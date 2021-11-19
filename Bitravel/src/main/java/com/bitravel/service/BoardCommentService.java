@@ -10,6 +10,7 @@ import com.bitravel.data.dto.BoardCommentResponseDto;
 import com.bitravel.data.entity.Board;
 import com.bitravel.data.entity.BoardComment;
 import com.bitravel.data.repository.BoardCommentRepository;
+import com.bitravel.data.repository.UserRepository;
 import com.bitravel.exception.CustomException;
 import com.bitravel.exception.ErrorCode;
 import com.bitravel.util.SecurityUtil;
@@ -23,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardCommentService {
 	
 	private final BoardCommentRepository bCommentRepository;
+	private final UserRepository userRepository;
 	private BoardService boardService;
 	
     /**
@@ -39,7 +41,13 @@ public class BoardCommentService {
      */
 	public Long saveComment(BoardCommentRequestDto params) {
     	// JWT 구현 전에는 anonymousUser로 기록됨
-    	params.setUserEmail(SecurityUtil.getCurrentEmail().get());
+    	String nowUserEmail = SecurityUtil.getCurrentEmail().get();
+    	params.setUserEmail(nowUserEmail);
+    	if (SecurityUtil.getCurrentEmail().get().equals("anonymousUser")) {
+    		params.setNickname("비회원");
+    	} else {
+    		params.setNickname(userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get().getNickname());
+    	}
     	Board board = boardService.detail(params.getBoardId());
     	params.setBoard(board);
         BoardComment entity = bCommentRepository.save(params.toEntity());

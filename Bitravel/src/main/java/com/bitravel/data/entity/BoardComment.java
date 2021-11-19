@@ -46,10 +46,11 @@ public class BoardComment {
 	@Column(name = "bCommentDate", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	private Timestamp bCommentDate;
 	
-	private String userEmail; // 작성자
+	private String userEmail; // 작성자 이메일
+	private String nickname; // 작성자 닉네임
 	
 	@Builder
-	public BoardComment(Long commentId, Board board, int commentRecom, int commentLevel, String commentContent, Timestamp date, String userEmail) {
+	public BoardComment(Long commentId, Board board, int commentRecom, int commentLevel, String commentContent, Timestamp date, String userEmail, String nickname) {
 		this.bCommentId = commentId;
 		this.board = board;
 		this.bCommentContent = commentContent;
@@ -57,6 +58,7 @@ public class BoardComment {
 		this.bCommentLevel = commentLevel;
 		this.bCommentRecom = commentRecom;
 		this.userEmail = userEmail;
+		this.nickname = nickname;
 	}
 	
     public void update(String commentContent) {

@@ -13,7 +13,8 @@ import lombok.Setter;
 public class BoardCommentResponseDto {
 	
 	private Long bCommentId;
-	private String userEmail; // 작성자 (이메일)
+	private String userEmail; // 작성자 이메일
+	private String nickname; // 작성자 닉네임
 	private String commentContent; // 내용
 	private Integer commentLevel; // 댓글 레벨 (대댓글 여부 확인)
 	private Long boardId;
@@ -23,6 +24,7 @@ public class BoardCommentResponseDto {
 		this.boardId = bComment.getBoard().getBoardId();
 		this.commentContent = bComment.getBCommentContent();
 		this.userEmail = bComment.getUserEmail();
+		this.nickname = bComment.getNickname();
 		this.commentLevel = bComment.getBCommentLevel();
 	}
 	

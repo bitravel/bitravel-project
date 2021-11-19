@@ -13,7 +13,8 @@ import lombok.Setter;
 public class ReviewCommentResponseDto {
 	
 	private Long rCommentId;
-	private String userEmail; // 작성자 (이메일)
+	private String userEmail; // 작성자 이메일
+	private String nickname; // 작성자 닉네임
 	private String commentContent; // 내용
 	private Integer commentLevel; // 댓글 레벨 (대댓글 여부 확인)
 	private Long reviewId;
@@ -24,6 +25,7 @@ public class ReviewCommentResponseDto {
 		this.commentContent = rComment.getRCommentContent();
 		this.userEmail = rComment.getUserEmail();
 		this.commentLevel = rComment.getRCommentLevel();
+		this.nickname = rComment.getNickname();
 	}
 	
 	public void setUserEmail(String email) {

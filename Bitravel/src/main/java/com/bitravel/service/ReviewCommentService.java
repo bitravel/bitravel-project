@@ -10,6 +10,7 @@ import com.bitravel.data.dto.ReviewCommentResponseDto;
 import com.bitravel.data.entity.Review;
 import com.bitravel.data.entity.ReviewComment;
 import com.bitravel.data.repository.ReviewCommentRepository;
+import com.bitravel.data.repository.UserRepository;
 import com.bitravel.exception.CustomException;
 import com.bitravel.exception.ErrorCode;
 import com.bitravel.util.SecurityUtil;
@@ -23,6 +24,7 @@ import lombok.extern.slf4j.Slf4j;
 public class ReviewCommentService {
 	
 	private final ReviewCommentRepository rCommentRepository;
+	private final UserRepository userRepository;
 	private ReviewService reviewService;
 	
     /**
@@ -39,7 +41,13 @@ public class ReviewCommentService {
      */
 	public Long saveComment(ReviewCommentRequestDto params) {
     	// JWT 구현 전에는 anonymousUser로 기록됨
-    	params.setUserEmail(SecurityUtil.getCurrentEmail().get());
+    	String nowUserEmail = SecurityUtil.getCurrentEmail().get();
+    	params.setUserEmail(nowUserEmail);
+    	if (SecurityUtil.getCurrentEmail().get().equals("anonymousUser")) {
+    		params.setNickname("비회원");
+    	} else {
+    		params.setNickname(userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get().getNickname());
+    	}
     	Review review = reviewService.detail(params.getReviewId());
     	params.setReview(review);
         ReviewComment entity = rCommentRepository.save(params.toEntity());
