@@ -26,7 +26,7 @@ public class ReviewCommentService {
 	private ReviewService reviewService;
 	
     /**
-     * 특정 게시글의 댓글 모두 보기
+     * 특정 후기의 댓글 모두 보기
      */
     public List<ReviewCommentResponseDto> findAllComments(Long bid) {
     	Review review = reviewService.detail(bid);
@@ -35,7 +35,7 @@ public class ReviewCommentService {
     }
 
     /**
-     * 특정 게시물에 댓글 작성
+     * 특정 후기에 댓글 작성
      */
 	public Long saveComment(ReviewCommentRequestDto params) {
     	// JWT 구현 전에는 anonymousUser로 기록됨
