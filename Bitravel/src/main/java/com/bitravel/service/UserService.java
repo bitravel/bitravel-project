@@ -46,16 +46,25 @@ public class UserService {
 	// 로그인
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public TokenDto getUserAuthentication(LoginDto loginDto) {
+		// 로그인 Dto가 들어가면 Dto에 있는 정보들로 이메일-비번 확인 클래스가 확인 시작
 		UsernamePasswordAuthenticationToken authenticationToken = 
-				new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());		
+				new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
+		
+		// 위의 클래스에서 확인한 결과를 기반으로 인증 클래스가 인증 결과 반환
 		Authentication authentication;
 		try {
 			authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 		} catch (BadCredentialsException e) {
 			return null;
 		}
+		
+		// 현재 브라우저에 인증 결과를 바탕으로 권한 설정함 (Admin / user 등)
 		SecurityContextHolder.getContext().setAuthentication(authentication);
+		
+		// 현재 회원임을 증명할 수 있는 토큰 생성
 		String jwt = tokenProvider.createToken(authentication);
+		
+		// 해당 토큰을 Client(Broswer)에게 반환
 		return new TokenDto(jwt);
 	}
 
@@ -63,13 +72,20 @@ public class UserService {
 	@Transactional
 	public boolean CancelUserAuthentication (String jwt) {
 		// 어차피 내부든 쿠키든 저장이 안되므로 소용없음 다시 리셋됨 (11월 17일 현재 상황 기준)
+		
+		// 유저에게 받아온 토큰 맨 앞자리의 'Bearer ' 문자열 삭제
 		if(StringUtils.hasText(jwt) && jwt.startsWith("Bearer "))
 			jwt = jwt.substring(7);
 		else
 			return false;		
 		try {
+			// 로그아웃 후에는 해당 토큰 만료 전이라도 인증할 수 없게 해야 하므로 redis의 예외 테이블에 map 형태로 저장함
+			// redis에서는 유효기간 이후에 토큰이 저절로 사라짐
 			ValueOperations<String, String> logoutValueOperations = redisTemplate.opsForValue();
+			// 검색이 편리하도록 key와 value를 동일하게 설정
 			logoutValueOperations.set(jwt, jwt);
+			
+			// 이 토큰을 쓰고 있던 유저를 검색함 (필수는 아니고 logout 성공 여부 확인용)
 			User user = (User) tokenProvider.getAuthentication(jwt).getPrincipal();
 			log.info("로그아웃 유저 아이디 : '{}', 유저 이름 : '{}'", user.getEmail(),	user.getNickname());
 		} catch(Exception e) {
@@ -82,9 +98,12 @@ public class UserService {
 	// 회원가입
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public User signup(UserDto userDto) {
+		// 이메일 기준으로 회원 중복여부 확인
 		if(userRepository.findOneWithAuthoritiesByEmail(userDto.getEmail()).orElse(null) != null) {
 			throw new RuntimeException("이미 가입되어 있는 회원입니다.");
-		}	
+		}
+		
+		// 회원 맞는 경우 관리자인지 확인 
 		Authority authority;
 		if(userDto.getEmail().equals("admin")) {
 			authority = Authority.builder()
@@ -95,9 +114,11 @@ public class UserService {
 					.roleName("ROLE_USER")
 					.build();
 		}
-
+		
+		// 암호화 시작 전 회원의 비밀번호 확인
 		log.info(userDto.getPassword());
-
+		
+		// user dto의 내용을 토대로 entity 생성
 		User user = User.builder()
 				.email(userDto.getEmail())
 				.password(passwordEncoder.encode(userDto.getPassword()))

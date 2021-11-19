@@ -32,15 +32,20 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class TokenProvider implements InitializingBean {
-	
+	// 토큰 생성 시 내부에서 토큰 내용을 나타낼 이름
 	private static final String AUTHORITIES_KEY = "auth";
 	
+	// 토큰의 유효성 확인에 필요한 비밀 암호문. 오로지 서버 안에만 존재함
 	private final String secret;
+	// 토큰의 유효기간 설정값
 	private final long tokenValidityInMilliseconds;
+	// 로그아웃된 토큰들을 보관하는 redis db에 접근하는 repository
 	private final StringRedisTemplate redisTemplate;
 	
+	// 비밀 암호문을 한 번 더 암호화한 키
 	private Key key;
 	
+	// 이 클래스 생성 시 값을 application.properties 파일에서 가져옴
 	public TokenProvider(
 			@Value("${jwt.secret}") String secret,
 			@Value("${jwt.token-validity-in-seconds}") long tokenValidityInSeconds
@@ -50,20 +55,23 @@ public class TokenProvider implements InitializingBean {
 		this.redisTemplate = new StringRedisTemplate();
 	}
 	
-	
+	// 클래스가 만들어진 직후 바로 실행되어 키값도 만들어냄
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		byte[] keyBytes = Decoders.BASE64.decode(secret);
 		this.key = Keys.hmacShaKeyFor(keyBytes);
 	}
 	
+	// 새로운 jwt를 만드는 메소드
 	public String createToken(Authentication authentication) {
+		// 인증 정보에 저장된 해당 회원의 권한 정보를 불러옴
 		String authorites = authentication.getAuthorities().stream()
 				.map(GrantedAuthority::getAuthority)
 				.collect(Collectors.joining(","));
+		// 현재 시간 기준으로 토큰 만료 일시를 지정함
 		long now = (new Date()).getTime();
 		Date validity = new Date(now + this.tokenValidityInMilliseconds);
-		
+		// 위의 결과를 토대로 새로운 jwt를 하나 만들어냄
 		return Jwts.builder().setSubject(authentication.getName())
 				.claim(AUTHORITIES_KEY, authorites)
 				.setIssuedAt(new Date(now))
@@ -73,22 +81,26 @@ public class TokenProvider implements InitializingBean {
 	}
 	
 	public Authentication getAuthentication(String token) {
+		// client에서 받아온 토큰 문자열을 분해하여 필요한 값만 찾음
 		Claims claims = Jwts
 				.parserBuilder()
 				.setSigningKey(key)
 				.build()
 				.parseClaimsJws(token)
 				.getBody();
+		// 해당 회원의 권한 정보를 얻음
 		Collection<? extends GrantedAuthority> authorities =
 				Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
 				.map(SimpleGrantedAuthority::new)
 				.collect((Collectors.toList()));
-		// 메일, 본명, 닉네임, 포인트, 성별, 나이, 가입일자, 인증
+		// 메일, 본명, 닉네임, 포인트, 성별, 나이, 가입일자, 권한 정보 등 회원 객체를 임시로 생성
 		User principal = new User(claims.getSubject(), authorities);
+		// 해당 유저에 대한 권한을 부여하여 반환
 		return new UsernamePasswordAuthenticationToken(principal, token, authorities);
 	}
 	
 	public String getUserPk(String token) {
+		// 해당 유저의 회원번호를 얻음
 		return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
 	}
 	

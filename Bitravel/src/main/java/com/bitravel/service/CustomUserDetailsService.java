@@ -16,14 +16,15 @@ import org.springframework.stereotype.Component;
 import com.bitravel.data.entity.User;
 import com.bitravel.data.repository.UserRepository;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 @Component("userDetailsService")
 public class CustomUserDetailsService implements UserDetailsService {
-
+// Spring Security 기능을 사용하려면 UserDetailsService interface의 구현이 필요
+// Security 관련 Configuration class들에서만 사용하는 Service
+	
 	private final UserRepository userRepository;
-
-	public CustomUserDetailsService(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
 	
 	@Override
 	@Transactional
