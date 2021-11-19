@@ -1,4 +1,6 @@
 package com.bitravel.service;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,6 +13,7 @@ import com.bitravel.data.dto.BoardRequestDto;
 import com.bitravel.data.dto.BoardResponseDto;
 import com.bitravel.data.entity.Board;
 import com.bitravel.data.repository.BoardRepository;
+import com.bitravel.data.repository.UserRepository;
 import com.bitravel.exception.CustomException;
 import com.bitravel.exception.ErrorCode;
 import com.bitravel.util.SecurityUtil;
@@ -23,6 +26,7 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class BoardService {
 	private final BoardRepository boardRepository;
+	private final UserRepository userRepository;
 	
     /**
      * 게시글 생성
@@ -30,7 +34,13 @@ public class BoardService {
     @Transactional
     public Long save(BoardRequestDto params) {
     	// JWT 구현 전에는 anonymousUser로 기록됨
-    	params.setUserEmail(SecurityUtil.getCurrentEmail().get());
+    	String nowUserEmail = SecurityUtil.getCurrentEmail().get();
+    	params.setUserEmail(nowUserEmail);
+    	if (SecurityUtil.getCurrentEmail().get().equals("anonymousUser")) {
+    		params.setNickname("비회원");
+    	} else {
+    		params.setNickname(userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get().getNickname());
+    	}
         Board entity = boardRepository.save(params.toEntity());
         return entity.getBoardId();
     }
@@ -42,6 +52,70 @@ public class BoardService {
 
         Sort sort = Sort.by(Direction.DESC, "boardId", "boardDate");
         List<Board> list = boardRepository.findAll(sort);
+        return list.stream().map(BoardResponseDto::new).collect(Collectors.toList());
+    }
+    
+    /**
+     * 게시글 통합 검색 결과 조회
+     */
+    @Transactional
+    public List<BoardResponseDto> findBoards(String keyword) {
+
+        List<Board> list = boardRepository.findByNicknameContainingOrBoardTitleContainingOrBoardContentContaining(keyword, keyword, keyword);
+        Collections.sort(list, new Comparator<Board>() {
+			@Override
+			public int compare(Board o1, Board o2) {
+				return (int) (o2.getBoardId()-o1.getBoardId());
+			}
+        });
+        return list.stream().map(BoardResponseDto::new).collect(Collectors.toList());
+    }
+    
+    /**
+     * 게시글 닉네임 검색 결과 조회
+     */
+    @Transactional
+    public List<BoardResponseDto> findBoardsByNickname(String keyword) {
+
+        List<Board> list = boardRepository.findByNicknameContaining(keyword);
+        Collections.sort(list, new Comparator<Board>() {
+			@Override
+			public int compare(Board o1, Board o2) {
+				return (int) (o2.getBoardId()-o1.getBoardId());
+			}
+        });
+        return list.stream().map(BoardResponseDto::new).collect(Collectors.toList());
+    }
+    
+    /**
+     * 게시글 제목 검색 결과 조회
+     */
+    @Transactional
+    public List<BoardResponseDto> findBoardsByTitle(String keyword) {
+
+        List<Board> list = boardRepository.findByBoardTitleContaining(keyword);
+        Collections.sort(list, new Comparator<Board>() {
+			@Override
+			public int compare(Board o1, Board o2) {
+				return (int) (o2.getBoardId()-o1.getBoardId());
+			}
+        });
+        return list.stream().map(BoardResponseDto::new).collect(Collectors.toList());
+    }
+    
+    /**
+     * 게시글 제목+내용 검색 결과 조회
+     */
+    @Transactional
+    public List<BoardResponseDto> findBoardsByTitleAndContent(String keyword) {
+
+        List<Board> list = boardRepository.findByBoardTitleContainingOrBoardContentContaining(keyword, keyword);
+        Collections.sort(list, new Comparator<Board>() {
+			@Override
+			public int compare(Board o1, Board o2) {
+				return (int) (o2.getBoardId()-o1.getBoardId());
+			}
+        });
         return list.stream().map(BoardResponseDto::new).collect(Collectors.toList());
     }
     
