@@ -1,4 +1,6 @@
 package com.bitravel.service;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,6 +17,7 @@ import com.bitravel.data.entity.Review;
 import com.bitravel.data.entity.Travel;
 import com.bitravel.data.repository.ReviewRepository;
 import com.bitravel.data.repository.TravelRepository;
+import com.bitravel.data.repository.UserRepository;
 import com.bitravel.exception.CustomException;
 import com.bitravel.exception.ErrorCode;
 import com.bitravel.util.SecurityUtil;
@@ -28,13 +31,20 @@ import lombok.extern.slf4j.Slf4j;
 public class ReviewService {
 	private final ReviewRepository reviewRepository;
 	private final TravelRepository travelRepository;
-    /**
+    private final UserRepository userRepository;
+	/**
      * 후기 생성
      */
     @Transactional
     public Long save(ReviewRequestDto params) {
     	// JWT 구현 전에는 anonymousUser로 기록됨
-    	params.setUserEmail(SecurityUtil.getCurrentEmail().get());
+    	String nowUserEmail = SecurityUtil.getCurrentEmail().get();
+    	params.setUserEmail(nowUserEmail);
+    	if (SecurityUtil.getCurrentEmail().get().equals("anonymousUser")) {
+    		params.setNickname("비회원");
+    	} else {
+    		params.setNickname(userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get().getNickname());
+    	}
     	Set<Travel> travelSet = new HashSet<>();
     	List<Long> travelIds = params.getTravelId();
     	int L = travelIds.size();
@@ -53,6 +63,70 @@ public class ReviewService {
 
         Sort sort = Sort.by(Direction.DESC, "reviewId", "reviewDate");
         List<Review> list = reviewRepository.findAll(sort);
+        return list.stream().map(ReviewResponseDto::new).collect(Collectors.toList());
+    }
+    
+    /**
+     * 후기 통합 검색 결과 조회
+     */
+    @Transactional
+    public List<ReviewResponseDto> findReviews(String keyword) {
+
+        List<Review> list = reviewRepository.findByNicknameContainingOrReviewTitleContainingOrReviewContentContaining(keyword, keyword, keyword);
+        Collections.sort(list, new Comparator<Review>() {
+			@Override
+			public int compare(Review o1, Review o2) {
+				return (int) (o2.getReviewId()-o1.getReviewId());
+			}
+        });
+        return list.stream().map(ReviewResponseDto::new).collect(Collectors.toList());
+    }
+    
+    /**
+     * 후기 닉네임 검색 결과 조회
+     */
+    @Transactional
+    public List<ReviewResponseDto> findReviewsByNickname(String keyword) {
+
+        List<Review> list = reviewRepository.findByNicknameContaining(keyword);
+        Collections.sort(list, new Comparator<Review>() {
+			@Override
+			public int compare(Review o1, Review o2) {
+				return (int) (o2.getReviewId()-o1.getReviewId());
+			}
+        });
+        return list.stream().map(ReviewResponseDto::new).collect(Collectors.toList());
+    }
+    
+    /**
+     * 후기 제목 검색 결과 조회
+     */
+    @Transactional
+    public List<ReviewResponseDto> findReviewsByTitle(String keyword) {
+
+        List<Review> list = reviewRepository.findByReviewTitleContaining(keyword);
+        Collections.sort(list, new Comparator<Review>() {
+			@Override
+			public int compare(Review o1, Review o2) {
+				return (int) (o2.getReviewId()-o1.getReviewId());
+			}
+        });
+        return list.stream().map(ReviewResponseDto::new).collect(Collectors.toList());
+    }
+    
+    /**
+     * 후기 제목+내용 검색 결과 조회
+     */
+    @Transactional
+    public List<ReviewResponseDto> findReviewsByTitleAndContent(String keyword) {
+
+        List<Review> list = reviewRepository.findByReviewTitleContainingOrReviewContentContaining(keyword, keyword);
+        Collections.sort(list, new Comparator<Review>() {
+			@Override
+			public int compare(Review o1, Review o2) {
+				return (int) (o2.getReviewId()-o1.getReviewId());
+			}
+        });
         return list.stream().map(ReviewResponseDto::new).collect(Collectors.toList());
     }
     

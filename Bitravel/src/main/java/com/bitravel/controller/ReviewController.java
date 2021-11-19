@@ -34,7 +34,7 @@ public class ReviewController {
 	 * 후기 작성
 	 */
 	@PostMapping("/reviews")
-	@ApiOperation(value = "글 작성", notes = "글 내용을 저장하는 API. Review entity 클래스로 데이터를 저장한다.")
+	@ApiOperation(value = "후기 작성", notes = "후기 내용을 저장하는 API. Review entity 클래스로 데이터를 저장한다.")
 	public Long save(@RequestBody final ReviewRequestDto params) {
 		return reviewService.save(params);
 	}
@@ -43,17 +43,53 @@ public class ReviewController {
 	 * 후기 리스트 조회
 	 */
 	@GetMapping("/reviews")
-	@ApiOperation(value = "글 목록 조회", notes = "글 목록을 조회하는 API.")
+	@ApiOperation(value = "후기 목록 조회", notes = "후기 목록을 조회하는 API.")
 	public List<ReviewResponseDto> findAll() {
 		return reviewService.findAll();
 	}
+	
+	/**
+	 * 후기 통합 검색
+	 */
+	@GetMapping("/reviews/search/all")
+	@ApiOperation(value = "후기 통합 검색 목록", notes = "후기를 닉네임 또는 제목 또는 내용으로 조회하는 API.")
+	public List<ReviewResponseDto> findReviews(String keyword) {
+		return reviewService.findReviews(keyword);
+	}
 
+	/**
+	 * 후기 닉네임 검색
+	 */
+	@GetMapping("/reviews/search/nickname")
+	@ApiOperation(value = "후기 닉네임 검색 목록", notes = "후기를 닉네임으로 조회하는 API.")
+	public List<ReviewResponseDto> findReviewsByNickname(String keyword) {
+		return reviewService.findReviewsByNickname(keyword);
+	}
+	
+	/**
+	 * 후기 제목 검색
+	 */
+	@GetMapping("/reviews/search/title")
+	@ApiOperation(value = "후기 제목 검색 목록", notes = "후기를 제목으로 조회하는 API.")
+	public List<ReviewResponseDto> findReviewsByTitle(String keyword) {
+		return reviewService.findReviewsByTitle(keyword);
+	}
+	
+	/**
+	 * 후기 제목+내용 검색
+	 */
+	@GetMapping("/reviews/search/titleandcontent")
+	@ApiOperation(value = "후기 제목+내용 검색 목록", notes = "후기를 제목 또는 내용으로 조회하는 API.")
+	public List<ReviewResponseDto> findReviewsByTitleAndContent(String keyword) {
+		return reviewService.findReviewsByTitleAndContent(keyword);
+	}
+	
 	/**
 	 * 후기 수정
 	 */
 	@PatchMapping("/reviews/{id}")
-	@ApiOperation(value = "글 수정", notes = "글 내용을 수정하는 API. Review entity 클래스로 데이터를 수정한다.<br>이때엔 정보를 등록할 때와는 다르게 bid 값을 함깨 보내줘야한다.")
-	public Boolean save(@PathVariable final Long id, @RequestBody final ReviewRequestDto params) {
+	@ApiOperation(value = "후기 수정", notes = "후기 내용을 수정하는 API. Review entity 클래스로 데이터를 수정한다.<br>이때엔 정보를 등록할 때와는 다르게 bid 값을 함깨 보내줘야한다.")
+	public Boolean update(@PathVariable final Long id, @RequestBody final ReviewRequestDto params) {
 		return reviewService.update(id, params);
 	}
 	/**
@@ -61,7 +97,7 @@ public class ReviewController {
 	 */
 	@Transactional // 객체 생성한 것을 메소드 실행 기간동안 계속 유지해야 할 경우 Transactional을 사용해야 합니다.
 	@GetMapping("/reviews/{id}")
-	@ApiOperation(value = "글 내용 조회", notes = "개별 글의 정보를 조회하는 API. Review entity 클래스의 bid값을 기준으로 데이터를 가져온다.")
+	@ApiOperation(value = "후기 내용 조회", notes = "개별 후기의 정보를 조회하는 API. Review entity 클래스의 bid값을 기준으로 데이터를 가져온다.")
 	public ReviewResponseDto detail(@PathVariable final Long id) {
 		return new ReviewResponseDto(reviewService.detail(id));
 	}
@@ -69,7 +105,7 @@ public class ReviewController {
 	 * 후기 삭제
 	 */
 	@DeleteMapping("/reviews/{id}")
-	@ApiOperation(value = "글 삭제", notes = "글 내용을 삭제하는 API. Review entity 클래스의 bid 값으로 데이터를 삭제한다.")
+	@ApiOperation(value = "후기 삭제", notes = "후기 내용을 삭제하는 API. Review entity 클래스의 bid 값으로 데이터를 삭제한다.")
 	public Boolean deleteById(@PathVariable Long id) {	
 		return reviewService.deleteById(id);
 	}
