@@ -69,4 +69,20 @@ public class Travel {
 
 	// @Column(name = "imageUrl") // 이미지 URL 가능 여부 확인
 	// private String imageUrl;
+	
+	public void update(Travel travel) {
+		this.address = travel.address;
+		this.baby = travel.baby;
+		this.card = travel.card;
+		this.largeGov = travel.largeGov;
+		this.smallGov = travel.smallGov;
+		this.latitude = travel.latitude;
+		this.longitude = travel.longitude;
+		this.parking = travel.parking;
+		this.pet = travel.pet;
+		this.travelName = travel.travelName;
+		this.travelDetail = travel.travelDetail;
+		this.travelSummary = travel.travelSummary;
+		this.travelTel = travel.travelTel;
+	}
 }
