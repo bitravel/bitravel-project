@@ -15,7 +15,8 @@ import lombok.Getter;
 public class ReviewResponseDto {
 	
 	private Long reviewId; // PK
-	private String userEmail; // 작성자
+	private String userEmail; // 작성자 이메일
+	private String nickname; // 작성자 닉네임
     private String reviewTitle; // 제목
     private String reviewContent; // 내용
     private int reviewLevel; // 레벨
@@ -33,6 +34,7 @@ public class ReviewResponseDto {
     	this.reviewRecom = entity.getReviewRecom();
     	this.reviewDate = entity.getReviewDate();
     	this.userEmail = entity.getUserEmail();
+    	this.nickname = entity.getNickname();
     	this.travelList = this.extractId(entity.getTravelSet());
     }
     

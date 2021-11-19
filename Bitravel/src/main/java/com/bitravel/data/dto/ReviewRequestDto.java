@@ -16,7 +16,8 @@ import lombok.NoArgsConstructor;
 
 public class ReviewRequestDto {
 	
-	private String userEmail; // 작성자 (이메일)
+	private String userEmail; // 작성자 이메일
+	private String nickname; // 작성자 닉네임
     private String reviewTitle; // 제목
     private String reviewContent; // 내용
     private Integer reviewLevel; // 글 레벨 (답글 여부 확인)
@@ -31,6 +32,7 @@ public class ReviewRequestDto {
                 .reviewTitle(reviewTitle)
                 .reviewContent(reviewContent)
                 .userEmail(userEmail)
+                .nickname(nickname)
                 .reviewLevel(reviewLevel)
                 .build();
     }
@@ -41,5 +43,9 @@ public class ReviewRequestDto {
 	
 	public void setTravel(Set<Travel> travel) {
 		this.travel =travel;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
 	}
 }

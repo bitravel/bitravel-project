@@ -58,10 +58,12 @@ public class Review {
     @Column(name = "reviewDate", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp reviewDate;
     
-    private String userEmail; //작성자
+    private String userEmail; // 작성자 이메일
+    
+    private String nickname; // 작성자 닉네임
     
     @Builder
-    public Review(String reviewTitle, String reviewContent, String userEmail,Long reviewId, int reviewView, int reviewRecom, int reviewLevel, Timestamp reviewDate, Set<Travel> travelSet) {
+    public Review(String reviewTitle, String reviewContent, String userEmail,Long reviewId, int reviewView, int reviewRecom, int reviewLevel, Timestamp reviewDate, Set<Travel> travelSet, String nickname) {
     	this.reviewTitle = reviewTitle;
     	this.reviewContent = reviewContent;
     	this.reviewId = reviewId;
@@ -70,6 +72,7 @@ public class Review {
     	this.reviewRecom = reviewRecom;
     	this.reviewDate = reviewDate;
     	this.userEmail = userEmail;
+    	this.nickname = nickname;
     	this.travelSet = travelSet;
     }
     
