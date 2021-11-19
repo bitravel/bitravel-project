@@ -22,7 +22,7 @@ public class ReviewResponseDto {
     private int reviewView; // 조회수
     private Timestamp reviewDate; // 작성날짜
     private int reviewRecom; // 추천수
-    private List<TravelReviewDto> travelList;
+    private List<TravelSimpleDto> travelList;
 
     public ReviewResponseDto(Review entity) {
     	this.reviewTitle = entity.getReviewTitle();
@@ -36,11 +36,11 @@ public class ReviewResponseDto {
     	this.travelList = this.extractId(entity.getTravelSet());
     }
     
-    public List<TravelReviewDto> extractId(Set<Travel> travelSet) {
-    	List<TravelReviewDto> list = new ArrayList<>();
+    public List<TravelSimpleDto> extractId(Set<Travel> travelSet) {
+    	List<TravelSimpleDto> list = new ArrayList<>();
     	Iterator<Travel> iterator = travelSet.iterator();
     	while(iterator.hasNext()) {
-    		list.add(new TravelReviewDto(iterator.next()));
+    		list.add(new TravelSimpleDto(iterator.next()));
     	}
     	return list;
     }
