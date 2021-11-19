@@ -67,4 +67,6 @@ public class Travel {
 	@Column(name = "smallGov") // 기초자치단체
 	private String smallGov;
 
+	// @Column(name = "imageUrl") // 이미지 URL 가능 여부 확인
+	// private String imageUrl;
 }
