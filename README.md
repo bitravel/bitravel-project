@@ -6,7 +6,7 @@ Bitravel Project Main Repository
 처음 사용하실 때는 웹 위주로 작동 방식을 익히셔도 좋습니다.
 
 ## 사용 스택 (updating..)
-* Java (Spring Boot)
+* Java (Spring Boot, )
 * Python(Pandas, Numpy, Selenium)
 * HTML/CSS
 * MySQL
