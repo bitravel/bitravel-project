@@ -14,7 +14,7 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class TravelReviewDto {
+public class TravelSimpleDto {
 
 	private Long travelId;
 	private String travelName;
@@ -24,7 +24,7 @@ public class TravelReviewDto {
 	private String largeGov;
 	private String smallGov;
 	
-	public TravelReviewDto(Travel entity) {
+	public TravelSimpleDto(Travel entity) {
 		this.travelId = entity.getTravelId();
 		this.travelName = entity.getTravelName();
 		this.latitude = entity.getLatitude();
