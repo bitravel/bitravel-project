@@ -26,6 +26,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 	
 	private final UserRepository userRepository;
 	
+	// Spring Security 작동 과정에서 사용하는 user email - password를 찾아 인증하고, 인증용 임시 객체를 생성하는 메소드
+	// ID 역할을 하는 것이 아이디건 이메일이건 loadUserByUsername 메소드를 override하여 구현하여야 함
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(final String email) throws UsernameNotFoundException {
@@ -38,6 +40,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		return createUser(email, user);
 	}
 	
+	// 실제 회원을 DB에 새로 생성하는 것이 아니라, 인증 절차에서 사용할 임시 객체를 만들어 두는 것
 	private org.springframework.security.core.userdetails.User createUser(String email, User user) {
 		if(!user.isActivated()) {
 			throw new RuntimeException(email+"-> 활성화되지 않은 계정임");

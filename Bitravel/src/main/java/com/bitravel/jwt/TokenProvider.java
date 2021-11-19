@@ -99,19 +99,17 @@ public class TokenProvider implements InitializingBean {
 		return new UsernamePasswordAuthenticationToken(principal, token, authorities);
 	}
 	
-	public String getUserPk(String token) {
-		// 해당 유저의 회원번호를 얻음
-		return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody().getSubject();
-	}
-	
 	public boolean validateToken(String token) {
 		try {
+			// Client의 header에서 가져온 토큰을 분해하여 정보 추출
 			Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+			// 로그아웃된 토큰 저장소에 존재하는 토큰인지 확인
 			ValueOperations<String, String> logoutValueOperations = redisTemplate.opsForValue();
 			if(logoutValueOperations.get(token) != null) {
 				log.info("로그아웃된 토큰");
 				return false;
 			}
+			// 토큰 유효기간이 끝나지 않았다면 true를 반환
 			return !claims.getBody().getExpiration().before(new Date());
 		} catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
 			log.info("잘못된 jwt 서명");
