@@ -10,25 +10,11 @@
 					<input type="text" id="boardTitle" class="form-control" placeholder="제목을 입력해 주세요." />
 				</div>
 			</div>
-
-		<!--  	<div class="form-group">
-				<label for="nickname" class="col-sm-2 control-label">이름</label>
-				<div class="col-sm-10">
-					<input type="text" id="nickname" class="form-control" placeholder="이름을 입력해 주세요." />
-				</div>
-			</div> 
 			
-			<div class="form-group">
-				<label for="userEmail" class="col-sm-2 control-label">이메일</label>
-				<div class="col-sm-10">
-					<input type="text" id="userEmail" class="form-control" placeholder="이메일을 입력해 주세요." />
-				</div>
-			</div>-->
-
 			<div class="form-group">
 				<label for="boardContent" class="col-sm-2 control-label">내용</label>
 				<div class="col-sm-10">
-					<textarea id="boardContent" class="form-control" placeholder="내용을 입력해 주세요."></textarea>
+					<textarea id="summernote" name="editordata"></textarea>
 				</div>
 			</div>
 
@@ -44,7 +30,17 @@
     <th:block layout:fragment="script">
    <script th:inline="javascript">
 	/*<![CDATA[*/
+		$(document).ready(function() {
+			 $('#summernote').summernote({
+		    		placeholder: '내용을 입력하세요. (10자 이상)',
+		    		minHeight: 370,
+		    		maxHeight: null,
+		    		focus: true,
+		    		lang: 'ko-KR'
+		    	});
+		});
 
+		
 		/**
          * 유효성 검사
          */
@@ -59,17 +55,11 @@
         		return false;
         	}
         
-        	/*if (!form.nickname.value.trim()) {
-        		alert('작성자를 입력해 주세요.');
-        		form.userEmail.value = '';
-        		form.userEmail.focus();
-        		return false;
-        	}*/
         
-        	if (!form.boardContent.value.trim()) {
+        	if (!form.summernote.value.trim()) {
         		alert('내용을 입력해 주세요.');
-        		form.boardContent.value = '';
-        		form.boardContent.focus();
+        		form.summernote.value = '';
+        		form.summernote.focus();
         		return false;
         	}
         
@@ -88,9 +78,7 @@
         	const form = document.getElementById('form');
         	const params = {
         		boardTitle: form.boardTitle.value,
-        		//nickname: form.nickname.value,
-        		boardContent: form.boardContent.value,
-        		//userEmail: form.userEmail.value
+        		boardContent: form.summernote.value,
         	};
         
         	fetch('/api/boards', {
