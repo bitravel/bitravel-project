@@ -35,7 +35,7 @@
 
 
     <th:block layout:fragment="script">
-    <script th:inline="javascript">
+   <script th:inline="javascript">
 	/*<![CDATA[*/
 
 		/**
@@ -45,24 +45,24 @@
         
           	const form = document.getElementById('form');
         
-        	if (!form.title.value.trim()) {
+        	if (!form.boardTitle.value.trim()) {
         		alert('제목을 입력해 주세요.');
-        		form.title.value = '';
-        		form.title.focus();
+        		form.boardTitle.value = '';
+        		form.boardTitle.focus();
         		return false;
         	}
         
-        	if (!form.writer.value.trim()) {
+        	if (!form.userId.value.trim()) {
         		alert('작성자를 입력해 주세요.');
-        		form.writer.value = '';
-        		form.writer.focus();
+        		form.userId.value = '';
+        		form.userId.focus();
         		return false;
         	}
         
-        	if (!form.content.value.trim()) {
+        	if (!form.boardContent.value.trim()) {
         		alert('내용을 입력해 주세요.');
-        		form.content.value = '';
-        		form.content.focus();
+        		form.boardContent.value = '';
+        		form.boardContent.focus();
         		return false;
         	}
         
@@ -80,17 +80,17 @@
         
         	const form = document.getElementById('form');
         	const params = {
-        		title: form.boardTitle.value,
-        		writer: form.userId.value,
-        		content: form.boardContent.value
+        		boardTitle: form.boardTitle.value,
+        		userEmail: form.userId.value,
+        		boardContent: form.boardContent.value
         	};
         
         	fetch('/api/boards', {
-        		method: 'POST',
-        		headers: {
+        		method: 'POST', /*데이터 생성은 무조건 post 방식 이용*/
+        		headers: { 
         			'Content-Type': 'application/json',
-        		},
-        		body: JSON.stringify(params)
+        		}, /*API 호출 시, GET 방식이 아닌 요청은 Content-Type을 application/json으로 설정한다. */
+        		body: JSON.stringify(params) /*데이터 전달에 사용되는 옵션으로, params 객체에 담긴 게시글 정보를 API 서버로 전달한다.*/
         
         	}).then(response => {
         		if (!response.ok) {
@@ -98,7 +98,7 @@
         		}
         
         		alert('저장되었습니다.');
-        		location.href = '/board/list';
+        		location.href = '/board/board';
         
         	}).catch(error => {
         		alert('오류가 발생하였습니다.');

@@ -1,0 +1,102 @@
+//Backgrounds
+
+
+
+//BG pattern dots
+
+.bg-pattern{
+    background-image: radial-gradient(circle, currentColor 1px, rgba(0,0,0,0) 1px);
+    background-size: 1rem 1rem;
+}
+
+//Opacity
+.opacity-0 {
+    opacity: 0 !important;
+  }
+  .opacity-05 {
+    opacity: 0.05 !important;
+  }
+  .opacity-100 {
+    opacity: 1 !important;
+  }
+  @for $i from 1 through 9 {
+    $opacity: ($i / 10);
+    .opacity-#{$i*10} {
+      opacity: $opacity !important;
+    }
+  }
+
+//bg-image
+//background-image styles
+img.bg-image {
+  object-fit: cover;
+}
+.bg-image {
+  &:not([class*="position-absolute"]):not([class*="position-relative"]) {
+    position: absolute;
+  }
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  + * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+  //Gradient-backgrounds
+   // Gradient background
+ @mixin bg-gradients($color: $theme-gradients) {
+    background-image: $color !important;
+  }
+  @each $color, $value in $theme-gradients {
+    .bg-gradient-#{$color} {
+      @include bg-gradients($value);
+    }
+  }
+
+
+  //Light(tint) backgrounds
+  @mixin bg-tint($color: $theme-colors) {
+    background-color: tint-color($color, 94%) !important;
+  }
+  @each $color, $value in $theme-colors {
+    .bg-tint-#{$color} {
+      @include bg-tint($value);
+    }
+  }
+  //Dark(shade) backgrounds for colors
+  @mixin bg-shade($color: $theme-colors) {
+    background-color: shade-color($color, 65%) !important;
+  }
+  @each $color, $value in $theme-colors {
+    .bg-shade-#{$color} {
+      @include bg-shade($value);
+    }
+  }
+
+  //Hover tint background
+  @mixin hover-bg-tint($color: $theme-colors) {
+    background-color: tint-color($color, 97%) !important;
+  }
+  @each $color, $value in $theme-colors {
+    .hover-bg-#{$color} {
+      &:hover{
+        @include hover-bg-tint($value);
+      }
+    }
+  }
+
+  
+  @each $color, $value in $theme-colors {
+    .bg-blur-#{$color} {
+      background-color: rgba($value,.4);
+      backdrop-filter: blur(88px);
+    }
+  }
+
+.bg-currentColor{
+  background-color: currentColor!important;
+}

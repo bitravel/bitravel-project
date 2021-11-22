@@ -1,0 +1,44 @@
+//Quill editor
+
+.ql-editor{
+    min-height:9rem;
+    font-family:inherit;
+  }
+  .ql-toolbar,.ql-container{
+    &.ql-snow{
+      border: 1px solid $border-color;
+      margin-bottom: -1px;
+    }
+  }
+  .ql-container{ 
+    font-size: inherit;
+    font-family: inherit;
+    border-bottom-left-radius:.5rem;
+     border-bottom-right-radius:.5rem;
+    box-shadow:none;
+  }
+  .ql-toolbar.ql-snow{
+    background-color:$light;
+    border-top-left-radius:.5rem;
+     border-top-right-radius:.5rem;
+    .ql-formats{
+      button{
+         .ql-stroke{
+        stroke:$body-color;
+        transition:All .3s ease;
+      }
+        .ql-fill{
+        fill:$body-color;
+        transition:All .3s ease;
+      }
+        &:hover{
+            .ql-stroke{
+        stroke:$primary;
+      }
+        .ql-fill{
+        fill:$primary;
+      }
+        }
+      }
+    }
+  }

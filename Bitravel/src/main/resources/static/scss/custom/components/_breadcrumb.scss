@@ -1,0 +1,23 @@
+//Breadcrumb
+
+.breadcrumb{
+    .breadcrumb-item{
+       + .breadcrumb-item::before{
+        font-family: bootstrap-icons!important;
+        font-weight: bold!important;
+        font-size: 14px;
+        content: $breadcrumb-divider;
+        vertical-align:middle;
+         }
+    }
+}
+.text-white,.text-light{
+    .breadcrumb-item {
+        &.active{
+            color: rgba($white,.54);
+        }
+        + .breadcrumb-item::before{
+            color: rgba($white,.35);
+        }
+    }
+}

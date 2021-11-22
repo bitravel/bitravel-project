@@ -1,0 +1,36 @@
+//Shop product colors
+// Custom colors radio
+
+
+    .shop-product-color{
+        &:before{
+            content: "\f633";
+            display: inline-block;
+            font-family: bootstrap-icons !important;
+            font-style: normal;
+            font-weight: normal !important;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
+            vertical-align: -.125em;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition:all .3s;
+            transform:scale(.5);
+            opacity:0;
+            font-size:$font-size-base * .9375;
+        }
+    }
+    @each $name, $color in $shop-product-colors {
+        .shop-product-color.product-#{$name}{
+            background-color:$color!important;
+          }
+          .btn-check:active+.btn.shop-product-color.product-#{$name}, .btn-check:checked+.btn.shop-product-color.product-#{$name}{
+            box-shadow:none;
+            &:before{
+                transform:scale(1);
+                opacity:1;
+                color:currentColor;
+            }
+        }
+        }

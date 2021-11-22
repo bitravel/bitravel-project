@@ -1,0 +1,26 @@
+//Anime cursor
+
+.v-cursor{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 36px;
+	height: 36px;
+	background-color: transparent;
+	border: 1px solid $white;
+	pointer-events: none;
+	border-radius: 100%;
+	z-index: 9999999;
+	mix-blend-mode: difference;
+}
+.cursor-sm{
+	.v-cursor{
+		width: 16px;
+		height: 16px;
+	}
+}
+@include media-breakpoint-down(md){
+	.v-cursor{
+		display: none;
+	}
+}

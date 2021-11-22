@@ -1,0 +1,136 @@
+// Button variants
+//
+// Easily pump out default styles, as well as :hover, :focus, :active,
+// and disabled options for all buttons
+
+@mixin button-variant(
+  $background,
+  $border,
+  $color: color-contrast($background),
+  $hover-background: if($color == $color-contrast-light, shade-color($background, 15%), tint-color($background, 15%)),
+  $hover-border: if($color == $color-contrast-light, shade-color($border, 08%), tint-color($border, 08%)),
+  $hover-color: color-contrast($hover-background),
+  $active-background: if($color == $color-contrast-light, shade-color($background, 20%), tint-color($background, 20%)),
+  $active-border: if($color == $color-contrast-light, shade-color($border, 25%), tint-color($border, 10%)),
+  $active-color: color-contrast($active-background),
+  $disabled-background: $background,
+  $disabled-border: $border,
+  $disabled-color: color-contrast($disabled-background)
+) {
+  color: $color;
+  border-color: $border;
+  &:hover {
+    color: $hover-color;
+    border-color: $hover-border;
+    @if $enable-shadows {
+      @include box-shadow(0 .5rem 1.25rem rgba(mix($color, $border, 16%), .175));
+    } @else {
+      // Avoid using mixin so we can pass custom focus shadow properly
+      box-shadow: none;
+    }
+  }
+
+  .btn-check:focus + &,
+  &:focus {
+    color: $hover-color;
+    @include gradient-bg($hover-background);
+    border-color: $hover-border;
+    @if $enable-shadows {
+      @include box-shadow(0 1rem 1rem -1rem rgba(mix($color, $border, 8%), .45));
+    } @else {
+      // Avoid using mixin so we can pass custom focus shadow properly
+      box-shadow: none;
+    }
+  }
+
+  .btn-check:checked + &,
+  .btn-check:active + &,
+  &:active,
+  &.active,
+  .show > &.dropdown-toggle {
+    color: $active-color;
+    background-color: $active-background;
+    // Remove CSS gradients if they're enabled
+    background-image: if($enable-gradients, none, null);
+    border-color: $active-border;
+
+    &:focus {
+      @if $enable-shadows {
+        @include box-shadow(0 1rem 1rem -1rem rgba(mix($color, $border, 8%), .45));
+      } @else {
+        // Avoid using mixin so we can pass custom focus shadow properly
+        box-shadow: none;
+      }
+    }
+  }
+
+  &:disabled,
+  &.disabled {
+    color: $disabled-color;
+    background-color: $disabled-background;
+    // Remove CSS gradients if they're enabled
+    background-image: if($enable-gradients, none, null);
+    border-color: $disabled-border;
+  }
+}
+
+@mixin button-outline-variant(
+  $color,
+  $color-hover: color-contrast($color),
+  $active-background: $color,
+  $active-border: $color,
+  $active-color: color-contrast($active-background)
+) {
+  color: $color;
+  border-color: $color;
+
+  &:hover {
+    color: $color-hover;
+    background-color: $active-background;
+    border-color: $active-border;
+    @if $enable-shadows {
+      box-shadow: 0 .5rem 1rem 0 rgba($color, .175);
+    } @else {
+      // Avoid using mixin so we can pass custom focus shadow properly
+      box-shadow: none;
+    }
+  }
+
+  .btn-check:focus + &,
+  &:focus {
+    box-shadow: 0 .5rem 1rem 0 rgba($color, .125);
+  }
+
+  .btn-check:checked + &,
+  .btn-check:active + &,
+  &:active,
+  &.active,
+  &.dropdown-toggle.show {
+    color: $active-color;
+    background-color: $active-background;
+    border-color: $active-border;
+
+    &:focus {
+      @if $enable-shadows {
+        box-shadow: 0 .5rem 1rem 0 rgba($color, .175);
+      } @else {
+        // Avoid using mixin so we can pass custom focus shadow properly
+        box-shadow:none;
+      }
+    }
+  }
+
+  &:disabled,
+  &.disabled {
+    color: $color;
+    background-color: transparent;
+  }
+}
+
+// Button sizes
+@mixin button-size($padding-y, $padding-x, $font-size, $border-radius) {
+  padding: $padding-y $padding-x;
+  @include font-size($font-size);
+  // Manually declare to provide an override to the browser default
+  @include border-radius($border-radius, 0);
+}

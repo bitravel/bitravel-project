@@ -13,7 +13,7 @@ public class BoardPageController {
      */
     @GetMapping("/list")
     public String openBoardList() {
-        return "board/list";
+        return "board/board";
     }
 
     /**

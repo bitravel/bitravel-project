@@ -1,0 +1,46 @@
+//Master Slider.
+.ms-layer {
+    &.ms-title {
+        font-size: 5rem;
+        line-height: 1.1;
+        font-family: $display-font-family;
+        font-weight: $display-font-weight;
+        letter-spacing: $headings-letter-spacing;
+    }
+
+    &.ms-title-alt {
+        font-size: 4rem;
+        line-height: 1.1;
+        font-family: $display-font-family;
+        font-weight: $display-font-weight;
+    }
+
+    &.ms-caption {
+        font-weight: normal;
+        font-size: 2.25rem;
+    }
+}
+
+//master slider button
+.ms-btn {
+    .btn {
+        font-size: $font-size-base;
+        padding:.475rem 1.5rem;
+    }
+}
+
+@include media-breakpoint-up(md) {
+    .ms-btn {
+        .btn {
+            padding: 1rem 1.75rem;
+            font-size: $font-size-base * 1.125;
+        }
+    }
+}
+@include media-breakpoint-down(sm) {
+    .ms-btn {
+        .btn {
+           margin-top: 1.5rem;
+        }
+    }
+}

@@ -1,0 +1,39 @@
+//Mapbox map marker style
+#marker{
+    display: inline-flex;
+    font-family: bootstrap-icons !important;
+    font-style: normal;
+    font-weight: normal !important;
+    position: relative;
+    width: 2.25rem;
+    height: 2.25rem;
+    background-color: $warning;
+    color: $white;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    font-size: 1.125rem;
+    cursor: pointer;
+    border-radius: $border-radius-lg;
+    &::after{
+        content: "\f3e8";
+    }
+}
+.mapboxgl-popup-content{
+    padding: 1.25rem;
+    border-radius: $border-radius-lg;
+    font-family: $font-family-base;
+    font-size: $font-size-base;
+}
+.mapboxgl-popup-close-button{
+    display: flex;
+    margin-right: .25rem;
+    margin-top: .25rem;
+    width: 1rem;
+    align-items: center;
+    justify-content: center;
+    line-height: 1rem;
+    padding: 0;
+    height: 1rem;
+    border-radius: $border-radius-lg;
+}
