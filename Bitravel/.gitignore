@@ -37,7 +37,14 @@ out/
 .vscode/
 
 ### Bootstrap
-**/static/css/**
-**/static/fonts/**
-**/static/plugin/**
-**/static/scripts/**
+**/css/**
+**/fonts/**
+**/plugin/**
+**/scripts/**
+
+### 3rd party themes
+**/scss/**
+**/assets/**
+**/vender/**
+**/videos/**
+**/docs/**
