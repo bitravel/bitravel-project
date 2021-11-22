@@ -37,7 +37,6 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	compile 'org.springframework.boot:spring-boot-devtools' //새로고침 없이 html 적용
-	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'mysql:mysql-connector-java'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	annotationProcessor 'org.projectlombok:lombok'
