@@ -24,7 +24,7 @@ public class BoardRequestDto {
                 .boardContent(boardContent)
                 .userEmail(userEmail)
                 .nickname(nickname)
-                .boardLevel(boardLevel)
+              //  .boardLevel(boardLevel)
                 .build();
     }
 
