@@ -622,7 +622,7 @@
 							<tr>
     							<td>${json.length - idx}</td>
     							<td class="text-left">
-    								<a href="javascript: void(0);">${obj.boardTitle}</a>
+    								<a href='/api/boards/${obj.boardId}'>${obj.boardTitle}</a>
     							</td>
     							<td>${obj.nickname}</td>
     							<td>${moment(obj.boardDate).format('YYYY-MM-DD HH:mm:ss')}</td>
