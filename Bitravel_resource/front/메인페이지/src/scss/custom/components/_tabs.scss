@@ -1,0 +1,16 @@
+//Underline tabs
+.nav-tabs{
+    border-bottom: 2px solid $border-color;
+    .nav-link{
+        margin-bottom: -2px;
+        border-bottom: 2px solid transparent;
+        border-top: 0px;
+        border-left: 0px;
+        border-right: 0px;
+        background-color: transparent;
+        &.active{
+            background-color: transparent;
+            border-bottom-color: $component-active-bg;
+        }
+    }
+}

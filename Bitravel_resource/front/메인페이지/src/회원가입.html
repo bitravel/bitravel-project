@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="icon" href="assets/img/favicon.ico" type="image/ico">
+        <!--Icons-->
+        <link href="assets/fonts/iconsmind/iconsmind.css" rel="stylesheet">
+        <link href="assets/fonts/bootstrap-icons/bootstrap-icons.css" rel="stylesheet"><!--Google fonts-->        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link
+            href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@200;300;400;500;600;700&display=swap"
+            rel="stylesheet">
+        <!-- Main CSS -->
+        <link href="assets/css/theme.min.css" rel="stylesheet">
+
+        <title>BITravel_회원가입</title>
+    </head>
+
+    <body>
+        <!--Preloader Spinner-->
+        <div class="spinner-loader bg-gradient-secondary text-white">
+            <div class="spinner-border text-primary" role="status">
+            </div>
+            <span class="small d-block ms-2">Loading...</span>
+        </div>
+        
+        <!--Main content-->
+        <main>
+            <!--page-hero-->
+            <section class="bg-white position-relative">
+                <div class="bg-pattern text-muted opacity-10 w-100 h-100 start-0 top-0 position-absolute"></div>
+                <div class="bg-gradientwhite flip-y w-50 h-100 start-50 top-0 translate-middle-x position-absolute"></div>
+                <div class="container py-9 pt-lg-12 position-relative z-index-1">
+                    <div class="row align-items-center justify-content-center">
+                        <div class=" col-xl-4 col-lg-5 col-md-6 col-sm-8 z-index-2">
+
+                            <h2 class="mb-1 display-6">
+                                환영합니다
+                            </h2>
+                            <p class="mb-4 text-muted">
+                                회원정보를 입력해주세요.
+                            </p>
+                            <div class="position-relative">
+                                <div>
+                                    <form>
+
+                                        <!--input-with-icon-->
+                                        <div class="input-icon-group mb-3">
+                                            <span class="input-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                    class="bi bi-envelope" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
+                                                </svg>
+                                            </span>
+                                            <input type="text" class="form-control" id="signUpName" autofocus
+                                                placeholder="이름을 입력하세요.">
+                                        </div>
+
+                                        <!--input-with-icon-->
+                                        <div class="input-icon-group mb-3">
+                                            <span class="input-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+                                                    class="bi bi-envelope" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
+                                                </svg>
+                                            </span>
+                                            </span>
+                                            <input type="email" class="form-control" id="signUpMail"
+                                                placeholder="이메일을 입력하세요.">
+                                        </div>
+                                        <!--input-with-icon-->
+                                        <div class="input-icon-group mb-3">
+                                            <span class="input-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z" />
+                                                    <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                                                </svg>
+                                            </span>
+                                            </span>
+                                            <input type="password" class="form-control" id="signUpPassword"
+                                                placeholder="비밀번호를 입력하세요.">
+                                        </div>
+                                        <!--input-with-icon-->
+                                        <div class="input-icon-group mb-3">
+                                            <span class="input-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z" />
+                                                    <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                                                </svg>
+                                            </span>
+                                            </span>
+                                            <input type="password" class="form-control" id="signUpConfirmPassword"
+                                                placeholder="비밀번호를 다시 입력하세요.">
+                                        </div>
+                                        <!--Checkbox-->
+                                        <div class="mb-3 d-flex justify-content-between">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value=""
+                                                    id="flexCheckDefault">
+                                                <label class="form-check-label small text-muted" for="flexCheckDefault">
+                                                    동의 <a href="#!" class="fw-semibold link-decoration">이용약관</a>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <div class="d-grid">
+                                            <button class="btn btn-dark" type="submit">
+                                                회원가입
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                    <!---->
+                                    <p class="pt-3 small text-muted">
+                                        회원이세요? <a href="page-account-signin.html"
+                                            class="ms-2 text-dark fw-semibold link-decoration">로그인</a>
+                                    </p>
+                                    <!--Divider-->
+                                    <div class="d-flex align-items-center py-3">
+                                        <span class="flex-grow-1 border-bottom pt-1"></span>
+                                        <span
+                                            class="d-inline-flex center-both lh-1 size-30 rounded-circle bg-white text-mono">or</span>
+                                        <span class="flex-grow-1 border-bottom pt-1"></span>
+                                    </div>
+                                    <div class="d-grid">
+                                        <a href="#!"
+                                            class="d-flex hover-lift btn-outline-secondary mb-2 btn position-relative center-both">
+                                            <!--Main Icon-->
+                                            <div class="position-relative d-flex align-items-center">
+                                                <img src="" alt="" class="width-20 me-2">
+                                                <span>카카오 계정으로 로그인</span>
+                                            </div>
+                                        </a>
+                                        <a href="#!"
+                                            class="d-flex hover-lift btn-outline-secondary btn position-relative center-both">
+                                            <!--Main Icon-->
+                                            <div class="position-relative d-flex align-items-center">
+                                                <img src="" alt="" class="width-20 me-2">
+                                                <span>네이버 아이디로 로그인</span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+
+        <!-- scripts -->
+        <script src="assets/js/theme.bundle.js"></script>
+    </body>
+
+</html>

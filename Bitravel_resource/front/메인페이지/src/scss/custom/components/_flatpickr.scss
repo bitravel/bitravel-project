@@ -1,0 +1,102 @@
+//flatpickr plugin custom css
+.flatpickr-calendar{
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+    box-shadow: 1px 0 0 $border-color, -1px 0 0 $border-color, 0 1px 0 $border-color, 0 -1px 0 $border-color, 0 3px 13px rgba($dark,.075);
+    &.arrowTop:before{
+        border-bottom-color:$border-color;
+    }
+    span.flatpickr-weekday{
+      font-weight: $font-weight-base;
+    }
+}
+.flatpickr-day.flatpickr-disabled, .flatpickr-day.prevMonthDay, .flatpickr-day.notAllowed, .flatpickr-day.notAllowed.prevMonthDay, .flatpickr-day.notAllowed.nextMonthDay{
+    color: $gray-400;
+    &:hover{
+        background-color: transparent;
+        border-color: transparent;
+        cursor:default;
+    }
+}
+.flatpickr-day{
+    color: $input-color;
+    &.inRange{
+        background-color: $border-color;
+        border-color: $border-color;
+        box-shadow: none;
+    }
+    &.endRange,&.endRange:hover{
+        background-color: $primary;
+        border-color: $primary;
+    }
+    &:hover{
+        background-color: $border-color;
+        border-color: $border-color;
+    }
+    &.selected,&.selected:hover{
+        background-color: $primary;
+        border-color: $primary;
+    }
+}
+.flatpickr-months .flatpickr-month{
+    position:relative;
+    display:flex;
+    flex-grow:1;
+  }
+  .flatpickr-current-month{
+    position:relative;
+    padding:0px;
+    height:32px;
+    font-size:100%;
+    font-weight:600;
+    display:flex;
+    flex-grow:1;
+    left:0;
+        align-items: center;
+      justify-content: space-around;
+    .numInputWrapper{
+      display:inline-flex;
+      height:20px;
+      width:7ch;
+      border-radius:2px;
+      span{
+        border:0px;
+       &.arrowUp:after,&.arrowDown:after{
+          left:50%;
+         top:50%;
+         transform:translate(-50%, -50%);
+        }
+      }
+      &:hover{
+        background-color:$border-color;
+      }
+    }
+  }
+  .flatpickr-current-month .flatpickr-monthDropdown-months{
+    border-radius:4px;
+    font-weight:$font-weight-normal;
+    font-size:$font-size-sm;
+    width:120px;
+    height: 32px;
+    &:hover{
+      background-color:transparent;
+    }
+  }
+  .flatpickr-months{
+    height:auto;
+    padding: .5rem .75rem;
+  }
+  .flatpickr-months .flatpickr-prev-month, .flatpickr-months .flatpickr-next-month{
+    position:relative;
+    display: flex;
+      height: 32px;
+    background-color:$border-color;
+      width: 32px;
+    border-radius:16px;
+      justify-content: center;
+      align-items: center;
+    padding:0px;
+    &:hover svg{
+        fill: $primary;
+    }
+  }
