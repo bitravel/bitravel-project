@@ -29,10 +29,12 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
+	
 	private final ReviewRepository reviewRepository;
 	private final TravelRepository travelRepository;
     private final UserRepository userRepository;
-	/**
+	
+    /**
      * 후기 생성
      */
     @Transactional

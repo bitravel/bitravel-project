@@ -8,7 +8,7 @@ public class UserPageController {
 	
     @GetMapping("/login")
     public String openLoginPage() {
-        return "/loginPage";
+        return "/user/login";
     }
     
     @GetMapping("")
@@ -18,7 +18,7 @@ public class UserPageController {
     
     @GetMapping("/register")
     public String openRegisterPage() {
-    	return "/registerPage";
+    	return "/user/signUp";
     }
 	
 }

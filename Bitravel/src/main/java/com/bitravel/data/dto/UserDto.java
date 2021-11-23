@@ -34,14 +34,16 @@ public class UserDto {
 	@NotNull
 	private String realname;
 	
-	@NotNull
 	private Integer point;
 	
 	@NotNull
 	private String gender;
 	
 	@NotNull
-	private Integer age;
+	private String ageString;
+	
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	private int age;
 	
 	// Response로 User Entity를 가져오는 경우
 	public UserDto(User entity) {
@@ -52,6 +54,7 @@ public class UserDto {
 		this.point = entity.getPoint();
 		this.gender = entity.getGender();
 		this.age = entity.getAge();
+		this.ageString = Integer.toString(this.age);
 	}
 	
 }

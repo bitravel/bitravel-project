@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/assets/img/favicon.ico" type="image/ico">
+<!--Icons-->
+<link href="/assets/fonts/iconsmind/iconsmind.css" rel="stylesheet">
+<link href="/assets/fonts/bootstrap-icons/bootstrap-icons.css"
+	rel="stylesheet">
+<!--Google fonts-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@200;300;400;500;600;700&display=swap"
+	rel="stylesheet">
+<!-- Main CSS -->
+<link href="/assets/css/theme.min.css" rel="stylesheet">
+<title>BITravel 회원가입</title>
+</head>
+
+<body>
+	<!--Preloader Spinner-->
+	<div class="spinner-loader bg-gradient-secondary text-white">
+		<div class="spinner-border text-primary" role="status"></div>
+		<span class="small d-block ms-2">Loading...</span>
+	</div>
+
+	<!--Main content-->
+	<main>
+		<!--page-hero-->
+		<section class="bg-white position-relative">
+			<div
+				class="bg-pattern text-muted opacity-10 w-100 h-100 start-0 top-0 position-absolute"></div>
+			<div
+				class="bg-gradientwhite flip-y w-50 h-100 start-50 top-0 translate-middle-x position-absolute"></div>
+			<div class="container py-9 pt-lg-12 position-relative z-index-1">
+				<div class="row align-items-center justify-content-center">
+					<div class=" col-xl-4 col-lg-5 col-md-6 col-sm-8 z-index-2">
+
+						<h2 class="mb-1 display-6">Welcome to BITravel!</h2>
+						<p class="mb-4 text-muted">회원 정보를 입력해주세요.</p>
+						<div class="position-relative" style="text-align: center">
+							<div>
+								<form id="signup-form" method="post">
+									<!--input-with-icon-->
+									<div class="input-icon-group mb-3">
+										<span class="input-icon"> <svg
+												xmlns="http://www.w3.org/2000/svg" fill="currentColor"
+												class="bi bi-envelope" viewBox="0 0 16 16">
+                                                    <path
+													d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
+                                                </svg>
+										</span> </span> <input type="email" class="form-control" id="signUpMail"
+											name="email" autofocus placeholder="이메일을 입력하세요.">
+									</div>
+									<!--input-with-icon-->
+									<div class="input-icon-group mb-3">
+										<span class="input-icon"> <svg
+												xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+												fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
+                                                    <path
+													d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z" />
+                                                    <path
+													d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                                                </svg>
+										</span> </span> <input type="password" class="form-control"
+											id="signUpPassword" name="password"
+											placeholder="비밀번호를 입력하세요.">
+									</div>
+									<!--input-with-icon-->
+									<div class="input-icon-group mb-3">
+										<span class="input-icon"> <svg
+												xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+												fill="currentColor" class="bi bi-person-circle"
+												viewBox="0 0 16 16">
+											  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+											  <path fill-rule="evenodd"
+													d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+											</svg>
+										</span> <input type="text" class="form-control" id="signUpRealName"
+											name="realname" placeholder="이름(실명)을 입력하세요.">
+									</div>
+									<!--input-with-icon-->
+									<div class="input-icon-group mb-3">
+										<span class="input-icon"> <svg
+												xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+												fill="currentColor" class="bi bi-person-badge"
+												viewBox="0 0 16 16">
+  												<path
+													d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+  													<path
+													d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0h-7zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492V2.5z" />
+												</svg>
+										</span>
+										<input type="text" class="form-control" id="signUpNickname"
+											name="nickname" autofocus placeholder="닉네임을 입력하세요." aria-describedby="basic-addon2">
+									</div>
+									<div class="input-icon-group mb-3">
+										    <button class="btn btn-dark" style="width:100%;text-align:center" type="button" id="nicknameCheck" onclick="isValidNickname()">닉네임 중복 확인</button>
+								    </div>
+									<input type="hidden" name="nicknameValidation" value="unchecked">
+									<br>
+									<!--select for age-->
+									<div class="input-icon-group mb-3">
+										<select class="form-select" name="age">
+											<option selected>출생년도를 선택하세요.</option>
+											<th:block th:each="num : ${#numbers.sequence(1,100)}">
+												<option th:value="${num}"><span th:text="${2022-num}+년"></span></option>
+											</th:block>
+										</select>
+									</div>
+									<!-- Radio button for gender -->
+									<div class="input-icon-group mb-3" style="width: 100%;">
+										<input type="radio" class="btn-check" name="gender" id="Man"
+											value="Man" autocomplete="off"> <label
+											class="btn btn-outline-secondary" for="Man">남성</label>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio"
+											class="btn-check" name="gender" id="Woman" value="Woman"
+											autocomplete="off"> <label
+											class="btn btn-outline-secondary" for="Woman">여성</label>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio"
+											class="btn-check" name="gender" id="Private" value="Private"
+											autocomplete="off"> <label
+											class="btn btn-outline-secondary" for="Private">비공개</label>
+									</div>
+									<!--input-with-icon-->
+									<div class="input-icon-group mb-3">
+										<span class="input-icon"> <svg
+												xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+												fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
+                                                    <path
+													d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z" />
+                                                    <path
+													d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                                                </svg>
+										</span> </span> <input type="password" class="form-control"
+											id="signUpConfirmPassword" placeholder="비밀번호를 다시 입력하세요.">
+									</div>
+									<!--Checkbox-->
+									<div class="mb-3 d-flex justify-content-between">
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" value=""
+												id="flexCheckDefault"> <label
+												class="form-check-label small text-muted"
+												for="flexCheckDefault"> 동의 <a href="#!"
+												class="fw-semibold link-decoration">이용약관</a>
+											</label>
+										</div>
+									</div>
+
+									<div class="d-grid">
+										<button class="btn btn-dark" type="button" onclick="save();">회원가입</button>
+									</div>
+								</form>
+
+								<!---->
+								<p class="pt-3 small text-muted">
+									회원이세요? <a href="/login"
+										class="ms-2 text-dark fw-semibold link-decoration">로그인</a>
+								</p>
+								<!--Divider-->
+								<div class="d-flex align-items-center py-3">
+									<span class="flex-grow-1 border-bottom pt-1"></span> <span
+										class="d-inline-flex center-both lh-1 size-30 rounded-circle bg-white text-mono">or</span>
+									<span class="flex-grow-1 border-bottom pt-1"></span>
+								</div>
+								<div class="d-grid">
+									<a href="#!"
+										class="d-flex hover-lift btn-outline-secondary mb-2 btn position-relative center-both">
+										<!--Main Icon-->
+										<div class="position-relative d-flex align-items-center">
+											<img src="" alt="" class="width-20 me-2"> <span>카카오
+												계정으로 로그인</span>
+										</div>
+									</a> <a href="#!"
+										class="d-flex hover-lift btn-outline-secondary btn position-relative center-both">
+										<!--Main Icon-->
+										<div class="position-relative d-flex align-items-center">
+											<img src="" alt="" class="width-20 me-2"> <span>네이버
+												아이디로 로그인</span>
+										</div>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+
+
+	<!-- scripts -->
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="/assets/js/theme.bundle.js"></script>
+	<script type="text/javascript">
+	
+		/**
+         * Gender radio button의 선택 여부에 따라 label 색 바꿔줌
+         */
+		$('input[name="gender"]').change(function() {
+			$('input[name="gender"]').each(function() {
+				var value = $(this).val();
+				var checked = $(this).prop('checked');
+				var $label = $(this).next();
+
+				if (checked)
+					$label.prop('checked', true);
+				else
+					$label.prop('cheched', false);
+			});
+		});
+		
+		/**
+         * 닉네임 입력값이 변경될 때마다 nickname validation 값을 unchecked로 변경
+         */
+		$('input[name="nickname"]').change(function() {
+			var now = $('input[name="nicknameValidation"]');
+			now.prop('value', 'unchecked');
+			console.log(now.val());
+		});
+		
+		/**
+         * 닉네임 유효성 검사 후 nickname validation 값을 checked로 변경
+         */
+		function isValidNickname() {
+			const form = document.getElementById('signup-form');
+        	if (!form.signUpNickname.value.trim()) {
+        		alert('닉네임을 입력해 주세요.');
+        		form.signUpNickname.value = '';
+        		form.signUpNickname.focus();
+        		return false;
+        	} else if (form.signUpNickname.value.trim().length<2) {
+        		alert('닉네임이 너무 짧습니다. 닉네임은 2자 이상이어야 합니다.');
+        		form.signUpNickname.focus();
+        		return false;
+        	}
+        	
+        	var url = '/api/register?nickname='+form.signUpNickname.value.trim();
+            
+            	fetch(url).then(response => {
+            		if (response.ok) {
+            			alert("이미 사용 중인 닉네임입니다.");
+            			return false;
+            		} else {
+            			if(response.status==500) {
+            				form.nicknameValidation.value = 'checked';
+	            			console.log("닉네임 검증 확인");
+	            			alert("사용 가능한 닉네임입니다.");
+	            			return true;
+            			}
+            			throw new Error('일시적인 오류입니다. 다시 시도해 보세요.');
+            		}
+            		
+            	}).catch(error => {
+            		alert('오류가 발생하였습니다. \n'+error);
+            	});
+		}
+		
+		/**
+         * 유효성 검사
+         */
+        function isValid() { 
+          	const form = document.getElementById('signup-form');         	
+        	if (!form.signUpMail.value.trim()) {
+        		alert('이메일을 입력해 주세요.');
+        		form.signUpMail.value = '';
+        		form.signUpMail.focus();
+        		return false;
+        	} else if ( form.signUpMail.value.trim().length<5
+        			|| !form.signUpMail.value.trim().includes("@") 
+        			|| form.signUpMail.value.trim().endsWith("@")
+        			|| !/^[a-z0-9()]+$/i.test(form.signUpMail.value.trim().slice(-2,-1))) {
+        		alert('올바른 이메일 형식이 아닙니다.');	
+        		form.signUpMail.focus();
+        		return false;
+        	}
+            
+        	if (!form.signUpPassword.value.trim()) {
+        		alert('비밀번호를 입력해 주세요.');
+        		form.signUpPassword.value = '';
+        		form.signUpPassword.focus();
+        		return false;
+        	} else if(form.signUpConfirmPassword.value.trim()!=form.signUpPassword.value.trim()) {
+        		alert('입력된 두 비밀번호가 다릅니다.')
+        		form.signUpPassword.value = '';
+        		form.signUpConfirmPassword.value = '';
+        		form.signUpPassword.focus();
+        		return false;
+        	} else if (form.signUpPassword.value.trim().length<6) {
+        		alert('비밀번호가 너무 짧습니다. 6자 이상으로 입력해 주세요.');
+        		form.signUpPassword.value = '';
+        		form.signUpConfirmPassword.value = '';
+        		form.signUpPassword.focus();
+        		return false;
+        	}
+        	
+        	if (!form.signUpRealName.value.trim()) {
+        		alert('이름을 입력해 주세요.');
+        		form.signUpRealName.value = '';
+        		form.signUpRealName.focus();
+        		return false;
+        	} else if (form.signUpRealName.value.trim().length<2) {
+        		alert('이름이 너무 짧습니다. 이름은 2자 이상이어야 합니다.');
+        		form.signUpRealName.focus();
+        		return false;
+        	}
+        	
+        	if (form.nicknameValidation.value!='checked') {
+        		alert('닉네임 중복 체크 버튼을 누르세요.');
+        		form.nicknameCheck.focus();
+        		return false;
+        	}
+        	
+        	if (!form.age.value.trim()) {
+        		alert('출생년도를 선택해 주세요.');
+        		form.age.focus();
+        		return false;
+        	}
+        	
+        	if (!form.gender.value.trim()) {
+        		alert('성별을 선택해 주세요.');
+        		form.gender.focus();
+        		return false;
+        	}
+     		
+        	if (!form.flexCheckDefault.checked) {
+        		alert('이용약관에 동의해 주세요.');
+        		form.flexCheckDefault.focus();
+        		return false;
+        	}
+        	
+        	return true;
+        }
+        
+        /**
+         * 게시글 등록(생성/수정)
+         */
+        function save() {
+        
+        	if ( !isValid() ) {
+        		return false;
+        	}
+        
+        	const form = document.getElementById('signup-form');
+        	const params = {
+        		email: form.signUpMail.value,
+        		password: form.signUpPassword.value,
+        		nickname: form.signUpNickname.value,
+        		realname: form.signUpRealName.value,
+        		ageString: form.age.value,
+        		gender: form.gender.value,
+        	};
+        
+        	fetch('/api/signup', {
+        		method: 'POST', /*데이터 생성은 무조건 post 방식 이용*/
+        		headers: { 
+        			'Content-Type': 'application/json',
+        		}, /*API 호출 시, GET 방식이 아닌 요청은 Content-Type을 application/json으로 설정한다. */
+        		body: JSON.stringify(params) /*데이터 전달에 사용되는 옵션으로, params 객체에 담긴 게시글 정보를 API 서버로 전달한다.*/
+        
+        	}).then(response => {
+        		if (!response.ok) {
+        			if(response.status==500)
+        				throw new Error('이미 가입된 회원입니다. 다른 이메일을 사용해 주세요.')
+        			else
+        				throw new Error('일시적인 오류입니다. 다시 시도해 보세요.');
+        		}
+        
+        		alert('저장되었습니다.');
+        		location.href = '/';
+        
+        	}).catch(error => {
+        		alert('오류가 발생하였습니다. \n'+error);
+        	});
+        }
+	</script>
+</body>
+
+</html>

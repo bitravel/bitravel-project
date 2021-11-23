@@ -25,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 public class BoardService {
+	
 	private final BoardRepository boardRepository;
 	private final UserRepository userRepository;
 	
