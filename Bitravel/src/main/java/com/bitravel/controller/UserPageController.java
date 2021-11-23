@@ -18,7 +18,7 @@ public class UserPageController {
     
     @GetMapping("/register")
     public String openRegisterPage() {
-    	return "/registerPage";
+    	return "/user/signUp";
     }
 	
 }
