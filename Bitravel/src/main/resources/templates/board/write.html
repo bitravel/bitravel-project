@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
     <head>
         <!-- Required meta tags -->
@@ -376,6 +376,39 @@
 					</form>
 					<script th:inline="javascript">
 					/*<![CDATA[*/
+						window.onload = () => {
+				            findBoard();
+				        }
+				
+						/**
+						 * 게시글 조회
+						 */
+						function findBoard() {
+				
+						    const id = /*[[ ${id} ]]*/;
+				
+						    if ( !id ) {
+						    	return false;
+						    }
+				
+						    fetch(`/api/boards/${id}`).then(response => {
+						    	if (!response.ok) {
+									throw new Error('Request failed...');
+							    }
+						    	return response.json();
+				
+						   	}).then(json => {
+						   		const form = document.getElementById('form');
+						   		form.boardTitle.value = json.boardTitle;
+						   		$('#summernote').summernote('editor.insertText', json.boardContent);
+						   		
+				
+						   	}).catch(error => {
+						    	alert('게시글 정보를 찾을 수 없습니다.');
+						    	location.href = '/board/list';
+						   	});
+						}
+		
 						$(document).ready(function() {
 							 $('#summernote').summernote({
 						    		placeholder: '내용을 입력하세요. (10자 이상)',
@@ -450,14 +483,16 @@
 				        	const form = document.getElementById('form');
 				        	const params = {
 				        		boardTitle: form.boardTitle.value,
-				        		boardContent: form.summernote.value,
+				        		boardContent: form.summernote.value
 				        	};
-				        
-				        	fetch('/api/boards', {
-				        		method: 'POST', /*데이터 생성은 무조건 post 방식 이용*/
-				        		headers: { 
-				        			'Content-Type': 'application/json',
-				        		}, /*API 호출 시, GET 방식이 아닌 요청은 Content-Type을 application/json으로 설정한다. */
+				        	
+				        	const id = /*[[ ${id} ]]*/;
+				        	const uri = ( id ) ? `/api/boards/${id}` : '/api/boards';
+				        	const method = ( id ) ? 'PATCH' : 'POST';
+				        	
+				        	fetch(uri, {
+				        		method: method, /*데이터 생성은 무조건 post 방식 이용*/
+				        		headers: {'Content-Type': 'application/json'}, /*API 호출 시, GET 방식이 아닌 요청은 Content-Type을 application/json으로 설정한다. */
 				        		body: JSON.stringify(params) /*데이터 전달에 사용되는 옵션으로, params 객체에 담긴 게시글 정보를 API 서버로 전달한다.*/
 				        
 				        	}).then(response => {
