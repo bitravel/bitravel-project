@@ -197,9 +197,10 @@
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="/assets/js/theme.bundle.js"></script>
 	<script type="text/javascript">
-		// find checked value
-		// 성별 선택한 값의 버튼이 계속 진하게 보이도록 설정
-		
+	
+		/**
+         * Gender radio button의 선택 여부에 따라 label 색 바꿔줌
+         */
 		$('input[name="gender"]').change(function() {
 			$('input[name="gender"]').each(function() {
 				var value = $(this).val();
@@ -212,13 +213,19 @@
 					$label.prop('cheched', false);
 			});
 		});
+		
+		/**
+         * 닉네임 입력값이 변경될 떄마다 nickname validation 값을 unchecked로 변경
+         */
 		$('input[name="nickname"]').change(function() {
 			var now = $('input[name="nicknameValidation"]');
 			now.prop('value', 'unchecked');
 			console.log(now.val());
 		});
 		
-		
+		/**
+         * 닉네임 유효성 검사 후 nickname validation 값을 checked로 변경
+         */
 		function isValidNickname() {
 			const form = document.getElementById('signup-form');
         	if (!form.signUpNickname.value.trim()) {
