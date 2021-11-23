@@ -215,7 +215,7 @@
 		});
 		
 		/**
-         * 닉네임 입력값이 변경될 떄마다 nickname validation 값을 unchecked로 변경
+         * 닉네임 입력값이 변경될 때마다 nickname validation 값을 unchecked로 변경
          */
 		$('input[name="nickname"]').change(function() {
 			var now = $('input[name="nicknameValidation"]');
@@ -248,9 +248,9 @@
             		} else {
             			if(response.status==500) {
             				form.nicknameValidation.value = 'checked';
-            			console.log("닉네임 검증 확인");
-            			alert("사용 가능한 닉네임입니다.");
-            			return true;
+	            			console.log("닉네임 검증 확인");
+	            			alert("사용 가능한 닉네임입니다.");
+	            			return true;
             			}
             			throw new Error('일시적인 오류입니다. 다시 시도해 보세요.');
             		}
