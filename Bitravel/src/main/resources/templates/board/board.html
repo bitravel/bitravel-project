@@ -622,7 +622,7 @@
 							<tr>
     							<td>${json.length - idx}</td>
     							<td class="text-left">
-    								<a href='/api/boards/${obj.boardId}'>${obj.boardTitle}</a>
+    								<a href="javascript: void(0);" onclick="goView(${obj.boardId})">${obj.boardTitle}</a>
     							</td>
     							<td>${obj.nickname}</td>
     							<td>${moment(obj.boardDate).format('YYYY-MM-DD HH:mm:ss')}</td>
@@ -633,6 +633,13 @@
 
 				document.getElementById('list').innerHTML = html;
 			});
+		}
+		
+		 /**
+		 * 게시글 조회
+		 */
+		function goView(id) {
+			location.href = `/board/detail/${id}`;
 		}
 
 	/*]]>*/
