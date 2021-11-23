@@ -76,8 +76,11 @@ public class UserService {
 		// 유저에게 받아온 토큰 맨 앞자리의 'Bearer ' 문자열 삭제
 		if(StringUtils.hasText(jwt) && jwt.startsWith("Bearer "))
 			jwt = jwt.substring(7);
-		else
-			return false;		
+		else {
+			log.debug("유효한 header를 찾을 수 없음");
+			return false;
+		}
+					
 		try {
 			// 로그아웃 후에는 해당 토큰 만료 전이라도 인증할 수 없게 해야 하므로 redis의 예외 테이블에 map 형태로 저장함
 			// redis에서는 유효기간 이후에 토큰이 저절로 사라짐
