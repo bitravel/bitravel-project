@@ -67,7 +67,13 @@ public class UserController {
 	@GetMapping("/user")
 	//@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	public ResponseEntity<UserDto> myUserInfo() {
-		return ResponseEntity.ok(userService.getMyUserWithAuthorities().get());
+		return ResponseEntity.ok(userService.getMyUserWithAuthorities().get());	
+	}
+	
+	@GetMapping("/register")
+	//@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+	public ResponseEntity<UserDto> isUsedNickname(String nickname) {
+		return ResponseEntity.ok(userService.getUserByNickname(nickname).get());
 	}
 	
 	@PostMapping("/user/details")

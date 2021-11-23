@@ -123,7 +123,7 @@ public class UserService {
 				.email(userDto.getEmail())
 				.password(passwordEncoder.encode(userDto.getPassword()))
 				.nickname(userDto.getNickname())
-				.age(userDto.getAge())
+				.age(Integer.parseInt(userDto.getAgeString()))
 				.gender(userDto.getGender())
 				.realName(userDto.getRealname())
 				.point(0)
@@ -137,6 +137,12 @@ public class UserService {
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Optional<UserDto> getUserWithAuthorities(String email) {
 		return userRepository.findOneWithAuthoritiesByEmail(email).map(UserDto::new);
+	}
+	
+	// 회원 닉네임으로 찾기
+	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public Optional<UserDto> getUserByNickname(String nickname) {
+		return userRepository.findOneByNickname(nickname).map(UserDto::new);
 	}
 
 	// 자기 자신 (로그인된 정보) 불러오기
