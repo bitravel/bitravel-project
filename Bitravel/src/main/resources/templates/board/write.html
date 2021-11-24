@@ -4,7 +4,7 @@
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="text/html, width=device-width, initial-scale=1">
         <link rel="icon" href="/assets/img/favicon.ico" type="image/ico">
         <!--Icons-->
         <link href="/assets/fonts/iconsmind/iconsmind.css" rel="stylesheet">
@@ -399,6 +399,19 @@
 						/**
 						 * 게시글 조회
 						 */
+						 function deleteHtml( htmlTxt)
+					        {
+					             htmlTxt =  htmlTxt || '';
+					             htmlTxt =  htmlTxt.replace(/<\/p>/ig, "</p>\n"); // </p> 태그를 </p> + 엔터로 변경
+					             htmlTxt =  htmlTxt.replace(/&nbsp;/ig, " "); // 공백
+					             htmlTxt =  htmlTxt.replace(/<br>/ig, "\n"); // <br>을 엔터로 변경
+					             htmlTxt =  htmlTxt.replace(/(<([^>]+)>)/ig,"");
+
+					            // HTML 태그제거 정규표현식 사용
+					             htmlTxt =  htmlTxt.replace(/<(\/)?([a-zA-Z0-9]*)(\s[a-zA-Z0-9]*=[^>]*)?(\s)*(\/)?>/ig, "");
+					            return  htmlTxt;
+					        }
+						
 						function findBoard() {
 				
 						    const id = /*[[ ${id} ]]*/;
@@ -416,6 +429,7 @@
 						   	}).then(json => {
 						   		const form = document.getElementById('form');
 						   		form.boardTitle.value = json.boardTitle;
+						   		json.boardContent = deleteHtml(json.boardContent);
 						   		$('#summernote').summernote('editor.insertText', json.boardContent);
 						   		
 				
