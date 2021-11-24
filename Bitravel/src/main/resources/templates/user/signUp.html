@@ -132,29 +132,27 @@
 									</div>
 									<br>
 									<!-- 거주 지역 선택 -->
-									
+
 									<div class="input-icon-group mb-3">
-									<h6> 현재 거주 지역을 선택해 주세요.</h6>
+										<h6>현재 거주 지역을 선택해 주세요.</h6>
 									</div>
 									<div class="input-icon-group mb-3">
-										<select id="selectSearch " class="form-control">
-											<option selected>시/도</option>
-											<option>Select another</option>
-											<option>Select all</option>
-										</select> <select id="selectSearch " class="form-control">
-											<option selected>시/군/구</option>
-											<option>Select another</option>
-											<option>Select all</option>
+										<select id="nowLarge" class="form-control">
+											<option value="" selected>시/도</option>
+											
+										</select>
+										<select id="nowSmall" class="form-control">
+											<option value="" selected>시/군/구</option>
+											
 										</select>
 										<div class="mb-3 d-flex flex-row-reverse">
-										<div class="form-check">
-											<input class="form-check-input" type="checkbox" value=""
-												id="foreignCheck"> <label
-												class="form-check-label small"
-												for="flexCheckDefault"> 해외 거주
-											</label>
+											<div class="form-check">
+												<input class="form-check-input" type="checkbox" value=""
+													id="foreignCheck"> <label
+													class="form-check-label small" for="flexCheckDefault">
+													해외 거주 </label>
+											</div>
 										</div>
-									</div>
 									</div>
 									<!--input-with-icon-->
 									<div class="input-icon-group mb-3">
@@ -227,6 +225,69 @@
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="/assets/js/theme.bundle.js"></script>
 	<script type="text/javascript">
+	$(document).ready(function() {	
+	console.log('step 1');
+	
+	const largeSelect = document.getElementById('nowLarge');
+	
+	if(largeSelect.value=="") {
+		document.getElementById('nowSmall').disabled = true;
+		document.getElementById('nowSmall').disabled = 'disabled';
+	}
+	
+	console.log('step 2');
+	
+    fetch(`/api/regions/list`).then(response => {
+    	
+    	if (!response.ok) {
+			throw new Error('Request failed...');
+	    }
+    	return response.json();
+    	
+   	}).then(json => {
+   		//console.table(json);
+   		json = JSON.stringify(json);
+   		json.replace('[', '{').replace(']', '}');
+   		console.log("step 3");
+   		const newList = JSON.parse(json);
+   		console.log(newList+" step 4");
+   		var tag = "";
+   		newList.forEach(function (item, index, array) {
+   			console.log(item);
+   			tag += "<option value='"+item+"'>"+item+"</option>\n";
+   			//console.log(tag);
+   		});
+   		console.log(largeSelect.innerHTML);
+   		largeSelect.innerHTML += tag;
+   		console.log(largeSelect.innerHTML);
+   		
+   	}).catch(error => {
+    	alert('리스트 불러오기에 실패했습니다.');
+    	
+   	});
+	/**
+     * 광역지자체 리스트 가져오기
+     */
+    $('select[name="nowLarge"]').on("change", function(){
+    	 
+    });
+});
+	
+		/**
+         * 광역지자체 option 값이 바뀔 때마다 기초지자체 리스트 가져오기
+         */	
+         $('input[name="gender"]').change(function() {
+ 			$('input[name="gender"]').each(function() {
+ 				var value = $(this).val();
+ 				var checked = $(this).prop('checked');
+ 				var $label = $(this).next();
+
+ 				if (checked)
+ 					$label.prop('checked', true);
+ 				else
+ 					$label.prop('cheched', false);
+ 			});
+ 		});
 	
 		/**
          * Gender radio button의 선택 여부에 따라 label 색 바꿔줌
