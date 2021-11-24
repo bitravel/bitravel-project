@@ -69,8 +69,11 @@ public class User {
     @Column(name = "age")
     private Integer age;
     
-    @Column(name = "userAddr")
-    private String userAddr;
+    @Column(name = "userLargeGov")
+    private String userLargeGov; // 사용자 거주 광역자치단체 (외국인 경우도 포함)
+
+    @Column(name = "userSmallGov")
+    private String userSmallGov; // 사용자 거주 기초자치단체 (외국인 경우도 포함)
     
     @Column(name = "userDate", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp userDate;
