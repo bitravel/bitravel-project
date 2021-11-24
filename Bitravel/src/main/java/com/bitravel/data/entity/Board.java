@@ -80,10 +80,6 @@ public class Board {
     	this.boardTitle = boardTitle;
     	this.boardContent = boardContent;
     }
-    
-	public void addOneView() {
-		this.boardView++;
-	}
   
 }
 
