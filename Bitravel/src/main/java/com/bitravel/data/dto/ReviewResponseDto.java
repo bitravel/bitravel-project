@@ -38,6 +38,7 @@ public class ReviewResponseDto {
     	this.travelList = this.extractId(entity.getTravelSet());
     }
     
+    // 리뷰에 필요한 정보만 가지고 있는 Dto로 travelSet을 만들어서 사용
     public List<TravelSimpleDto> extractId(Set<Travel> travelSet) {
     	List<TravelSimpleDto> list = new ArrayList<>();
     	Iterator<Travel> iterator = travelSet.iterator();
