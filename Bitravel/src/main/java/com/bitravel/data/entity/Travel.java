@@ -88,7 +88,5 @@ public class Travel {
 		this.travelSummary = travel.travelSummary;
 		this.travelTel = travel.travelTel;
 	}
-	public void addOneView() {
-		this.travelView++;
-	}
+	
 }
