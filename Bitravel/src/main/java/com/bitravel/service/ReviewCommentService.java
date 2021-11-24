@@ -10,6 +10,7 @@ import com.bitravel.data.dto.ReviewCommentResponseDto;
 import com.bitravel.data.entity.Review;
 import com.bitravel.data.entity.ReviewComment;
 import com.bitravel.data.repository.ReviewCommentRepository;
+import com.bitravel.data.repository.ReviewRepository;
 import com.bitravel.data.repository.UserRepository;
 import com.bitravel.exception.CustomException;
 import com.bitravel.exception.ErrorCode;
@@ -25,13 +26,13 @@ public class ReviewCommentService {
 	
 	private final ReviewCommentRepository rCommentRepository;
 	private final UserRepository userRepository;
-	private ReviewService reviewService;
+	private final ReviewRepository reviewRepository;
 	
     /**
      * 특정 후기의 댓글 모두 보기
      */
-    public List<ReviewCommentResponseDto> findAllComments(Long bid) {
-    	Review review = reviewService.detail(bid);
+    public List<ReviewCommentResponseDto> findAllComments(Long rid) {
+    	Review review = reviewRepository.findById(rid).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
         List<ReviewComment> list = rCommentRepository.findAllByReview(review);
         return list.stream().map(ReviewCommentResponseDto::new).collect(Collectors.toList());
     }
@@ -48,7 +49,7 @@ public class ReviewCommentService {
     	} else {
     		params.setNickname(userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get().getNickname());
     	}
-    	Review review = reviewService.detail(params.getReviewId());
+    	Review review = reviewRepository.findById(params.getReviewId()).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
     	params.setReview(review);
         ReviewComment entity = rCommentRepository.save(params.toEntity());
         return entity.getRCommentId();
