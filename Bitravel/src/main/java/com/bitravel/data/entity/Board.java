@@ -82,7 +82,7 @@ public class Board {
     }
     
     //조회수 증가
-    public void increaseVeiw()
+    public void increaseView()
     {
     	this.boardView++;
     }
