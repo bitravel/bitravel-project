@@ -10,6 +10,7 @@ import com.bitravel.data.dto.BoardCommentResponseDto;
 import com.bitravel.data.entity.Board;
 import com.bitravel.data.entity.BoardComment;
 import com.bitravel.data.repository.BoardCommentRepository;
+import com.bitravel.data.repository.BoardRepository;
 import com.bitravel.data.repository.UserRepository;
 import com.bitravel.exception.CustomException;
 import com.bitravel.exception.ErrorCode;
@@ -25,13 +26,13 @@ public class BoardCommentService {
 	
 	private final BoardCommentRepository bCommentRepository;
 	private final UserRepository userRepository;
-	private BoardService boardService;
+	private final BoardRepository boardRepository;
 	
     /**
      * 특정 게시글의 댓글 모두 보기
      */
     public List<BoardCommentResponseDto> findAllComments(Long bid) {
-    	Board board = boardService.detail(bid);
+    	Board board = boardRepository.findById(bid).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));		
         List<BoardComment> list = bCommentRepository.findAllByBoard(board);
         return list.stream().map(BoardCommentResponseDto::new).collect(Collectors.toList());
     }
@@ -48,7 +49,7 @@ public class BoardCommentService {
     	} else {
     		params.setNickname(userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get().getNickname());
     	}
-    	Board board = boardService.detail(params.getBoardId());
+    	Board board = boardRepository.findById(params.getBoardId()).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
     	params.setBoard(board);
         BoardComment entity = bCommentRepository.save(params.toEntity());
         return entity.getBCommentId();
