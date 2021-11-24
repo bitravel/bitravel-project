@@ -55,7 +55,16 @@ public class RegionController {
     	// 추후 비회원인 경우 해당 서비스 접근 제한 예정
         return regionService.findAllByMe();
     }
-      
+     
+    /**
+     *  전체 광역자치단체 검색
+     */
+    @GetMapping("/regions/list")
+    @ApiOperation(value = "광역자치단체 목록 검색", notes = "광역자치단체별 기초자치단체 목록을 출력하는 API. Region entity 클래스의 LargeGov값을 기준으로 데이터를 가져온다.")
+    public List<String> ListOfLargeGov() {
+    	return regionService.ListOfLargeGov();
+    }
+    
     /**
      *  광역자치단체별 기초자치단체 검색
      */
@@ -68,7 +77,7 @@ public class RegionController {
     /**
      * 전체 기초자치단체 검색
      */
-    @GetMapping("/regions/list")
+    @GetMapping("/regions/list/all")
     @ApiOperation(value = "기초자치단체 목록 검색", notes = "전체 기초자치단체 목록을 출력하는 API. Region entity 클래스의 모든 데이터를 가져온다.")
     public List<Region> ListAll() {
     	return regionService.ListAll();

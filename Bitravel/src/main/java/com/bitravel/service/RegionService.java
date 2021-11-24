@@ -1,4 +1,5 @@
 package com.bitravel.service;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -47,7 +48,23 @@ public class RegionService {
 		String keyword = SecurityUtil.getCurrentEmail().get();
 		return userRegionRepository.findByUserEmail(keyword);
 	}
-
+	
+    /**
+     *  전체 광역자치단체 검색
+     */
+	
+	@Transactional(readOnly = true)
+	public List<String> ListOfLargeGov() {
+		// 전체 광역자치단체 검색
+		List<Region> all = regionRepository.findAll();
+		List<String> list = new ArrayList<>();
+		for(int i=0;i<all.size();i++) {
+			if(!list.contains(all.get(i).getLargeGov())) {
+				list.add(all.get(i).getLargeGov());
+			}
+		}
+		return list;
+	}
 
 	/**
 	 * 광역자치단체별 기초자치단체 검색
