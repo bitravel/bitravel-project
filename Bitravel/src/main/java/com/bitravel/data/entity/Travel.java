@@ -66,6 +66,9 @@ public class Travel {
 	
 	@Column(name = "smallGov") // 기초자치단체
 	private String smallGov;
+	
+	@Column(name = "travelView") // 여행지 조회수
+	private Integer travelView;
 
 	// @Column(name = "imageUrl") // 이미지 URL 가능 여부 확인
 	// private String imageUrl;
@@ -84,5 +87,8 @@ public class Travel {
 		this.travelDetail = travel.travelDetail;
 		this.travelSummary = travel.travelSummary;
 		this.travelTel = travel.travelTel;
+	}
+	public void addOneView() {
+		this.travelView++;
 	}
 }
