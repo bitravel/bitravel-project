@@ -9,12 +9,14 @@ Bitravel Project Main Repository
 * Java (Spring Boot, Gradle, JPA Hibernate)
 * Python(Pandas, Numpy, Selenium)
 * HTML/CSS
+* Javascript (jQuery -> Vanilla JS)
 * MySQL
 * Windows 10
 * Linux Ubuntu
 * Docker (Redis)
 * Visual Studio Code
 * Eclipse EE
+* Primary Sources (summernote, Assan 4)
 * to be updated...
 
 
