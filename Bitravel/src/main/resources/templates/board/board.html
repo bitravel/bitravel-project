@@ -349,6 +349,7 @@
                                     <th scope="col">제목</th>
                                     <th scope="col">ID</th>
                                     <th scope="col">날짜</th>
+                                    <th scope="col">조회수</th>
                                 </tr>
                             </thead>
                             <tbody id="list">
@@ -626,6 +627,7 @@
     							</td>
     							<td>${obj.nickname}</td>
     							<td>${moment(obj.boardDate).format('YYYY-MM-DD HH:mm:ss')}</td>
+    							<td>${obj.boardView}</td>
 							</tr>
 						`;
 					});
