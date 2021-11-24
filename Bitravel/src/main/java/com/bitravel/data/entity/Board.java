@@ -53,7 +53,7 @@ public class Board {
     private String boardFile;
     
     @NotBlank(message = "글의 내용을 기입해주세요.")
-    @Size(max=3000, message = "글의 내용은 최소 10자 이상이어야 합니다.")
+    @Size(max=10000)
     private @Column(name = "boardContent") String boardContent;
     
     @Column(name = "boardDate", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
