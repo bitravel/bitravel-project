@@ -368,47 +368,14 @@
 						</div>
 
 						<div class="btn_wrap text-center">
-							<a th:href="@{/board/list}"
-								class="btn btn-default waves-effect waves-light">뒤로가기</a>
+							<button type="button" onclick="goBack();"
+								class="btn btn-default waves-effect waves-light">뒤로가기</button>
 							<button type="button" onclick="save();"
 								class="btn btn-primary waves-effect waves-light">저장하기</button>
 						</div>
 					</form>
 					<script th:inline="javascript">
-					/*<![CDATA[*/
-						window.onload = () => {
-				            findBoard();
-				        }
-				
-						/**
-						 * 게시글 조회
-						 */
-						function findBoard() {
-				
-						    const id = /*[[ ${id} ]]*/;
-				
-						    if ( !id ) {
-						    	return false;
-						    }
-				
-						    fetch(`/api/boards/${id}`).then(response => {
-						    	if (!response.ok) {
-									throw new Error('Request failed...');
-							    }
-						    	return response.json();
-				
-						   	}).then(json => {
-						   		const form = document.getElementById('form');
-						   		form.boardTitle.value = json.boardTitle;
-						   		$('#summernote').summernote('editor.insertText', json.boardContent);
-						   		
-				
-						   	}).catch(error => {
-						    	alert('게시글 정보를 찾을 수 없습니다.');
-						    	location.href = '/board/list';
-						   	});
-						}
-		
+					/*<![CDATA[*/						
 						$(document).ready(function() {
 							 $('#summernote').summernote({
 						    		placeholder: '내용을 입력하세요. (10자 이상)',
@@ -424,7 +391,50 @@
 										}
 									}
 						    	});
+							 console.log("인식여부");
+					         findBoard();
 						});
+						
+						
+						/**
+						 * 게시글 조회
+						 */
+						function findBoard() {
+				
+						    const id = /*[[ ${id} ]]*/;
+				
+						    if ( !id ) {
+						    	return false;
+						    }
+						    fetch(`/api/boards/${id}`).then(response => {
+						    	if (!response.ok) {
+									throw new Error('Request failed...');
+							    }
+						    	console.log("id: "+id);
+						    	return response.json();
+				
+						   	}).then(json => {
+						   		const form = document.getElementById('form');
+						   		form.boardTitle.value = json.boardTitle;
+						   		$('#summernote').summernote('editor.insertText', json.boardContent);
+						   		
+				
+						   	}).catch(error => {
+						    	alert('게시글 정보를 찾을 수 없습니다.');
+						    	location.href = '/board/list';
+						   	});
+						}
+						
+						function goBack() {
+							
+							const id = /*[[ ${id} ]]*/;
+							
+							if(!id)
+								location.href = '/board/list';
+							else
+								location.href = '/board/detail/'+id;
+							
+						}
 						
 						function sendFile(file, el) {
 							var form_data = new FormData();
