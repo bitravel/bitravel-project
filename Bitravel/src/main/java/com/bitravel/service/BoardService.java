@@ -126,7 +126,7 @@ public class BoardService {
     @Transactional
     public BoardResponseDto detail(Long id) {
     	Board entity = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
-    	entity.increaseVeiw();
+    	entity.increaseView();
     	return new BoardResponseDto(entity);
     }
 
