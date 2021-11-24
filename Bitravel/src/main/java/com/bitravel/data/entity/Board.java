@@ -80,6 +80,11 @@ public class Board {
     	this.boardTitle = boardTitle;
     	this.boardContent = boardContent;
     }
-  
+    
+    //조회수 증가
+    public void increaseVeiw()
+    {
+    	this.boardView++;
+    }
 }
 
