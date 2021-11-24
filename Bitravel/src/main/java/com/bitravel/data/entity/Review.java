@@ -82,6 +82,10 @@ public class Review {
     	this.travelSet = travelSet;
     }
     
+	public void addOneView() {
+		this.reviewView++;
+	}
+    
     // 테이블 간 다대다 연결
     @ManyToMany
     @JoinTable(
