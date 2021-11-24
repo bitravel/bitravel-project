@@ -65,7 +65,7 @@
 
            	}).then(json => {
            		console.table(json);
-            	json.createdDate = moment(json.createdDate).format('YYYY-MM-DD HH:mm:ss');
+            	json.boardDate = moment(json.boardDate).format('YYYY-MM-DD HH:mm:ss');
 
             	Object.keys(json).forEach(key => {
              		const elem = document.getElementById(key);
