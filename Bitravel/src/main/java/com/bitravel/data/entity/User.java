@@ -49,21 +49,33 @@ public class User {
     @Column(name = "email", unique = true)
     private String email;
     
-    private @Column(name = "realName") String realName;
+    @Column(name = "realName")
+    private String realName;
     
-    private @Column(name = "nickname", unique = true) String nickname;
+    @Column(name = "nickname", unique = true)
+    private String nickname;
     
     @JsonIgnore
-    private @Column(name = "password") String password;
+    @Column(name = "password")
+    private String password;
     
     // 회원정보 수정하는 경우 있음
     @Column(name = "point")
     private Integer point;
     
-    private @Column(name = "gender") String gender;
+    @Column(name = "gender")
+    private String gender;
     
-    private @Column(name = "age") Integer age;
-        @Column(name = "userDate", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    @Column(name = "age")
+    private Integer age;
+    
+    @Column(name = "userLargeGov")
+    private String userLargeGov; // 사용자 거주 광역자치단체 (외국인 경우도 포함)
+
+    @Column(name = "userSmallGov")
+    private String userSmallGov; // 사용자 거주 기초자치단체 (외국인 경우도 포함)
+    
+    @Column(name = "userDate", nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private Timestamp userDate;
     
     @JsonIgnore
