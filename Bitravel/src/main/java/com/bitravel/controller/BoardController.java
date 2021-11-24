@@ -95,7 +95,7 @@ public class BoardController {
      */
     @GetMapping("/boards/{id}")
     @ApiOperation(value = "글 내용 조회", notes = "개별 글의 정보를 조회하는 API. Board entity 클래스의 bid값을 기준으로 데이터를 가져온다.")
-    public Board detail(@PathVariable final Long id) {
+    public BoardResponseDto detail(@PathVariable final Long id) {
     	return boardService.detail(id);
     }
     /**
