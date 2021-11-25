@@ -29,7 +29,6 @@ public class RegionService {
 	 */
 	@Transactional
 	public Long save(UserRegion params) {
-		params.setUserEmail(SecurityUtil.getCurrentEmail().get());
 		UserRegion entity = userRegionRepository.save(params);
 		return entity.getUserRegionId();
 	}
