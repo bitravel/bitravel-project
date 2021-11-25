@@ -48,11 +48,11 @@ public class RegionService {
 		String keyword = SecurityUtil.getCurrentEmail().get();
 		return userRegionRepository.findByUserEmail(keyword);
 	}
-	
-    /**
-     *  전체 광역자치단체 검색
-     */
-	
+
+	/**
+	 *  전체 광역자치단체 검색
+	 */
+
 	@Transactional(readOnly = true)
 	public List<String> ListOfLargeGov() {
 		// 전체 광역자치단체 검색
@@ -70,8 +70,12 @@ public class RegionService {
 	 * 광역자치단체별 기초자치단체 검색
 	 */
 	@Transactional(readOnly = true)
-	public List<Region> ListByLargeGov(String largeGov) {
-		List<Region> list = regionRepository.findByLargeGov(largeGov);
+	public List<String> ListByLargeGov(String largeGov) {
+		List<Region> all = regionRepository.findByLargeGov(largeGov);
+		List<String> list = new ArrayList<>();
+		for(int i=0;i<all.size();i++) {
+			list.add(all.get(i).getSmallGov());
+		}
 		return list;
 	}
 
