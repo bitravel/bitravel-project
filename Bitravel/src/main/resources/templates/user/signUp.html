@@ -229,11 +229,17 @@
 	
 	const largeSelect = document.getElementById('nowLarge');
 	
+	/**
+     * 광역지자체 선택이 안되있을 것이므로 기초지자체는 선택 불가능하게 설정
+     */
 	if(largeSelect.value=="") {
 		document.getElementById('nowSmall').disabled = true;
 		document.getElementById('nowSmall').disabled = 'disabled';
 	}
 	
+	/**
+     * 광역지자체 리스트 가져오기
+     */
     fetch(`/api/regions/list`).then(response => {
     	
     	if (!response.ok) {
@@ -242,6 +248,7 @@
     	return response.json();
     	
    	}).then(json => {
+   		// 리스트 형태이므로 대괄호를 중괄호로 바꾸어야 올바른 JSON 형식이 됨
    		json = JSON.stringify(json);
    		json.replace('[', '{').replace(']', '}');
    		const newList = JSON.parse(json);
@@ -255,8 +262,9 @@
     	alert('리스트 불러오기에 실패했습니다.');
     	
    	});
+    
 	/**
-     * 광역지자체별 기초자치단체 리스트 가져오기
+     * 광역지자체 값이 바뀔 때마다 기초자치단체 리스트 가져오기
      */
    		$('#nowLarge').on("change", function(){
    			
@@ -270,7 +278,6 @@
 	    		smallSelect.disabled = false;
 	    		
 	    		var url = '/api/regions/list/' + largeSelect.value;
-	    		console.log(url);
 	    		fetch(url).then(response => {
 	    	    	
 	    	    	if (!response.ok) {
@@ -281,17 +288,13 @@
 	    	   	}).then(json => {
 	    	   		console.table(json);
 	    	   		json = JSON.stringify(json);
-	    	   		console.log(json+" step 3");
 	    	   		json.replace('[', '{').replace(']', '}');
 	    	   		const newList = JSON.parse(json);
-	    	   		console.log(newList+" step 4");
 	    	   		var tag = "";
 	    	   		newList.forEach(function (item, index, array) {
 	    	   			tag += "<option value='"+item+"'>"+item+"</option>\n";
 	    	   		});
-	    	   		console.log(smallSelect.innerHTML);
 	    	   		smallSelect.innerHTML += tag;
-	    	   		console.log(smallSelect.innerHTML);
 	    	   		
 	    	   	}).catch(error => {
 	    	    	alert('리스트 불러오기에 실패했습니다.');
@@ -322,7 +325,7 @@
 		$('input[name="nickname"]').change(function() {
 			var now = $('input[name="nicknameValidation"]');
 			now.prop('value', 'unchecked');
-			console.log(now.val());
+			console.log("닉네임 재검증 필요");
 		});
 		
 		/**
@@ -363,7 +366,7 @@
 		}
 		
 		/**
-         * 유효성 검사
+         * 입력 정보 유효성 검사
          */
         function isValid() { 
           	const form = document.getElementById('signup-form');         	
@@ -451,7 +454,7 @@
         }
         
         /**
-         * 게시글 등록(생성/수정)
+         * 회원 등록
          */
         function save() {
         
@@ -487,7 +490,7 @@
         		}
         
         		alert('저장되었습니다.');
-        		location.href = '/';
+        		location.href = '/signup/second';
         
         	}).catch(error => {
         		alert('오류가 발생하였습니다. \n'+error);
