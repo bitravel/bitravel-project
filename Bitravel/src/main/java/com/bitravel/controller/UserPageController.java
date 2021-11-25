@@ -17,8 +17,18 @@ public class UserPageController {
     }
     
     @GetMapping("/signup")
-    public String openRegisterPage() {
+    public String openFirstSignUpPage() {
     	return "/user/signUp";
+    }
+    
+    @GetMapping("/signup/second")
+    public String openSecondSignUpPage() {
+    	return "/user/signUp2";
+    }
+    
+    @GetMapping("/signup/third")
+    public String openThirdSignUpPage() {
+    	return "/user/signUp3";
     }
 	
 }
