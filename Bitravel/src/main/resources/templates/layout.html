@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
     <head>
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
         <meta content="IE=edge" http-equiv="X-UA-Compatible" />
@@ -19,6 +19,9 @@
                 <h1 class="page-title">Board</h1>
             </div>
         </div>
+        
+        <th:block layout:fragment="modal"></th:block>
+        
         <div id="wrapper">
             <div class="main-content">
                 <div class="row row-inline-block small-spacing">
@@ -32,6 +35,7 @@
                             <th:block layout:fragment="content"></th:block>
 
                         </div>
+                        <th:block layout:fragment="add-content"></th:block>
                     </div>
                 </div>
                 <footer class="footer">
@@ -48,7 +52,6 @@
         <script th:src="@{/plugin/mCustomScrollbar/jquery.mCustomScrollbar.concat.min.js}"></script>
 		<script th:src="@{/js/summernote-ko-KR.js}"></script>
         <!--/* JavaScript 영역 */-->
-        <th:block layout:fragment="script">
-        </th:block>
+        <th:block layout:fragment="script"></th:block>
     </body>
 </html>
