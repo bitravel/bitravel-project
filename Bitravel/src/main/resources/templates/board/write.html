@@ -399,19 +399,6 @@
 						/**
 						 * 게시글 조회
 						 */
-						 function deleteHtml( htmlTxt)
-					        {
-					             htmlTxt =  htmlTxt || '';
-					             htmlTxt =  htmlTxt.replace(/<\/p>/ig, "</p>\n"); // </p> 태그를 </p> + 엔터로 변경
-					             htmlTxt =  htmlTxt.replace(/&nbsp;/ig, " "); // 공백
-					             htmlTxt =  htmlTxt.replace(/<br>/ig, "\n"); // <br>을 엔터로 변경
-					             htmlTxt =  htmlTxt.replace(/(<([^>]+)>)/ig,"");
-
-					            // HTML 태그제거 정규표현식 사용
-					             htmlTxt =  htmlTxt.replace(/<(\/)?([a-zA-Z0-9]*)(\s[a-zA-Z0-9]*=[^>]*)?(\s)*(\/)?>/ig, "");
-					            return  htmlTxt;
-					        }
-						
 						function findBoard() {
 				
 						    const id = /*[[ ${id} ]]*/;
@@ -427,10 +414,10 @@
 						    	return response.json();
 				
 						   	}).then(json => {
+						   		console.table(json);
 						   		const form = document.getElementById('form');
 						   		form.boardTitle.value = json.boardTitle;
-						   		json.boardContent = deleteHtml(json.boardContent);
-						   		$('#summernote').summernote('editor.insertText', json.boardContent);
+						   		$('#summernote').summernote('code', json.boardContent); // summernote html코드로 받으려면 'code'사용!
 						   		
 				
 						   	}).catch(error => {
@@ -523,9 +510,14 @@
 				        		if (!response.ok) {
 				        			throw new Error('Request failed...');
 				        		}
-				        
-				        		alert('저장되었습니다.');
-				        		location.href = '/board/detail/'+ id;
+				        		if (!id) {
+				        			alert('저장되었습니다.');
+				        			location.href = '/board/list';
+				        		} else {
+				        			alert('저장되었습니다.');
+									location.href = '/board/detail/'+id;
+				        		}
+				        		
 				        
 				        	}).catch(error => {
 				        		alert('오류가 발생하였습니다.');
