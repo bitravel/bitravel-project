@@ -16,7 +16,7 @@ public class UserPageController {
     	return "/index";
     }
     
-    @GetMapping("/register")
+    @GetMapping("/signup")
     public String openRegisterPage() {
     	return "/user/signUp";
     }

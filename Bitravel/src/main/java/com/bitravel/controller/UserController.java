@@ -79,7 +79,7 @@ public class UserController {
 		return ResponseEntity.ok(userService.getMyUserWithAuthorities().get());	
 	}
 
-	@GetMapping("/register")
+	@GetMapping("/signup")
 	//@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	public ResponseEntity<UserDto> isUsedNickname(String nickname) {
 		return ResponseEntity.ok(userService.getUserByNickname(nickname).get());
