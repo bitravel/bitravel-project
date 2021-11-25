@@ -226,17 +226,20 @@
 	<script src="/assets/js/theme.bundle.js"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {	
-	console.log('step 1');
 	
 	const largeSelect = document.getElementById('nowLarge');
 	
+	/**
+     * 광역지자체 선택이 안되있을 것이므로 기초지자체는 선택 불가능하게 설정
+     */
 	if(largeSelect.value=="") {
 		document.getElementById('nowSmall').disabled = true;
 		document.getElementById('nowSmall').disabled = 'disabled';
 	}
 	
-	console.log('step 2');
-	
+	/**
+     * 광역지자체 리스트 가져오기
+     */
     fetch(`/api/regions/list`).then(response => {
     	
     	if (!response.ok) {
@@ -245,49 +248,60 @@
     	return response.json();
     	
    	}).then(json => {
-   		//console.table(json);
+   		// 리스트 형태이므로 대괄호를 중괄호로 바꾸어야 올바른 JSON 형식이 됨
    		json = JSON.stringify(json);
    		json.replace('[', '{').replace(']', '}');
-   		console.log("step 3");
    		const newList = JSON.parse(json);
-   		console.log(newList+" step 4");
    		var tag = "";
    		newList.forEach(function (item, index, array) {
-   			console.log(item);
    			tag += "<option value='"+item+"'>"+item+"</option>\n";
-   			//console.log(tag);
    		});
-   		console.log(largeSelect.innerHTML);
    		largeSelect.innerHTML += tag;
-   		console.log(largeSelect.innerHTML);
    		
    	}).catch(error => {
     	alert('리스트 불러오기에 실패했습니다.');
     	
    	});
+    
 	/**
-     * 광역지자체 리스트 가져오기
+     * 광역지자체 값이 바뀔 때마다 기초자치단체 리스트 가져오기
      */
-    $('select[name="nowLarge"]').on("change", function(){
-    	 
-    });
-});
-	
-		/**
-         * 광역지자체 option 값이 바뀔 때마다 기초지자체 리스트 가져오기
-         */	
-         $('input[name="gender"]').change(function() {
- 			$('input[name="gender"]').each(function() {
- 				var value = $(this).val();
- 				var checked = $(this).prop('checked');
- 				var $label = $(this).next();
-
- 				if (checked)
- 					$label.prop('checked', true);
- 				else
- 					$label.prop('cheched', false);
- 			});
- 		});
+   		$('#nowLarge').on("change", function(){
+   			
+   			const smallSelect = document.getElementById('nowSmall');
+   			
+	    	if(largeSelect.value == "") {
+	    		smallSelect.disabled = true;
+	    		smallSelect.disabled = 'disabled';
+	    	} else {
+	    		smallSelect.disabled = '';
+	    		smallSelect.disabled = false;
+	    		
+	    		var url = '/api/regions/list/' + largeSelect.value;
+	    		fetch(url).then(response => {
+	    	    	
+	    	    	if (!response.ok) {
+	    				throw new Error('Request failed...');
+	    		    }
+	    	    	return response.json();
+	    	    	
+	    	   	}).then(json => {
+	    	   		console.table(json);
+	    	   		json = JSON.stringify(json);
+	    	   		json.replace('[', '{').replace(']', '}');
+	    	   		const newList = JSON.parse(json);
+	    	   		var tag = "";
+	    	   		newList.forEach(function (item, index, array) {
+	    	   			tag += "<option value='"+item+"'>"+item+"</option>\n";
+	    	   		});
+	    	   		smallSelect.innerHTML += tag;
+	    	   		
+	    	   	}).catch(error => {
+	    	    	alert('리스트 불러오기에 실패했습니다.');
+	    	   	});	
+	    	}
+	    });
+	});
 	
 		/**
          * Gender radio button의 선택 여부에 따라 label 색 바꿔줌
@@ -311,7 +325,7 @@
 		$('input[name="nickname"]').change(function() {
 			var now = $('input[name="nicknameValidation"]');
 			now.prop('value', 'unchecked');
-			console.log(now.val());
+			console.log("닉네임 재검증 필요");
 		});
 		
 		/**
@@ -330,7 +344,7 @@
         		return false;
         	}
         	
-        	var url = '/api/register?nickname='+form.signUpNickname.value.trim();
+        	var url = '/api/signup?nickname='+form.signUpNickname.value.trim();
             
             	fetch(url).then(response => {
             		if (response.ok) {
@@ -352,7 +366,7 @@
 		}
 		
 		/**
-         * 유효성 검사
+         * 입력 정보 유효성 검사
          */
         function isValid() { 
           	const form = document.getElementById('signup-form');         	
@@ -417,6 +431,18 @@
         		form.gender.focus();
         		return false;
         	}
+        	
+        	if (!form.nowLarge.value.trim()) {
+        		alert('거주 지역을 선택해 주세요.');
+        		form.nowLarge.focus();
+        		return false;
+        	}
+        	
+        	if (!form.nowSmall.value.trim()) {
+        		alert('거주 지역을 선택해 주세요.');
+        		form.nowSmall.focus();
+        		return false;
+        	}
      		
         	if (!form.flexCheckDefault.checked) {
         		alert('이용약관에 동의해 주세요.');
@@ -428,7 +454,7 @@
         }
         
         /**
-         * 게시글 등록(생성/수정)
+         * 회원 등록
          */
         function save() {
         
@@ -444,6 +470,8 @@
         		realname: form.signUpRealName.value,
         		ageString: form.age.value,
         		gender: form.gender.value,
+        		userLargeGov: form.nowLarge.value,
+        		userSmallGov: form.nowSmall.value,
         	};
         
         	fetch('/api/signup', {
@@ -462,7 +490,7 @@
         		}
         
         		alert('저장되었습니다.');
-        		location.href = '/';
+        		location.href = '/signup/second?nickname='+form.signUpNickname.value;
         
         	}).catch(error => {
         		alert('오류가 발생하였습니다. \n'+error);

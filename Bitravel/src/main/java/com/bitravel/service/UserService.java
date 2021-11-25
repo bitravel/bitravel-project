@@ -130,6 +130,8 @@ public class UserService {
 				.gender(userDto.getGender())
 				.realName(userDto.getRealname())
 				.point(0)
+				.userLargeGov(userDto.getUserLargeGov())
+				.userSmallGov(userDto.getUserSmallGov())
 				.authorities(Collections.singleton(authority))
 				.activated(true)
 				.build();

@@ -42,8 +42,15 @@ public class UserDto {
 	@NotNull
 	private String ageString;
 	
+	// 나이 입력은 String으로 받음
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private int age;
+	
+	@NotNull
+	private String userLargeGov;
+	
+	@NotNull
+	private String userSmallGov;
 	
 	// Response로 User Entity를 가져오는 경우
 	public UserDto(User entity) {
@@ -55,6 +62,8 @@ public class UserDto {
 		this.gender = entity.getGender();
 		this.age = entity.getAge();
 		this.ageString = Integer.toString(this.age);
+		this.userLargeGov = entity.getUserLargeGov();
+		this.userSmallGov = entity.getUserSmallGov();
 	}
 	
 }

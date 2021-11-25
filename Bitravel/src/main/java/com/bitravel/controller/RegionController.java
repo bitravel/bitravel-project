@@ -70,7 +70,7 @@ public class RegionController {
      */
     @GetMapping("/regions/list/{name}")
     @ApiOperation(value = "광역자치단체 목록 검색", notes = "광역자치단체별 기초자치단체 목록을 출력하는 API. Region entity 클래스의 LargeGov값을 기준으로 데이터를 가져온다.")
-    public List<Region> ListByLargeGov(@PathVariable final String name) {
+    public List<String> ListByLargeGov(@PathVariable final String name) {
     	return regionService.ListByLargeGov(name);
     }
     
