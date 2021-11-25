@@ -25,13 +25,15 @@ public class UserPageController {
     
     @GetMapping("/signup/second")
     public String openSecondSignUpPage
-    (@RequestParam("nickname") String nickname, Model model) {
-    	model.addAttribute("nickname", nickname);
+    (@RequestParam("userEmail") String email, Model model) {
+    	model.addAttribute("userEmail", email);
     	return "/user/signUp2";
     }
     
     @GetMapping("/signup/third")
-    public String openThirdSignUpPage() {
+    public String openThirdSignUpPage
+    (@RequestParam("userEmail") String email, Model model) {
+    	model.addAttribute("userEmail", email);
     	return "/user/signUp3";
     }
 	
