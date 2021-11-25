@@ -53,19 +53,6 @@
         /**
          * 게시글 조회
          */
-        function deleteHtml( htmlTxt)
-        {
-             htmlTxt =  htmlTxt || '';
-             htmlTxt =  htmlTxt.replace(/<\/p>/ig, "</p>\n"); // </p> 태그를 </p> + 엔터로 변경
-             htmlTxt =  htmlTxt.replace(/&nbsp;/ig, " "); // 공백
-             htmlTxt =  htmlTxt.replace(/<br>/ig, "\n"); // <br>을 엔터로 변경
-             htmlTxt =  htmlTxt.replace(/(<([^>]+)>)/ig,"");
-
-            // HTML 태그제거 정규표현식 사용
-             htmlTxt =  htmlTxt.replace(/<(\/)?([a-zA-Z0-9]*)(\s[a-zA-Z0-9]*=[^>]*)?(\s)*(\/)?>/ig, "");
-            return  htmlTxt;
-        }
-        
         function findBoard() {
 
             const id = /*[[ ${id} ]]*/;
@@ -79,11 +66,10 @@
            	}).then(json => {
            		console.table(json);
             	json.boardDate = moment(json.boardDate).format('YYYY-MM-DD HH:mm:ss');
-            	json.boardContent = deleteHtml(json.boardContent);
             	Object.keys(json).forEach(key => {
              		const elem = document.getElementById(key);
              		if (elem) {
-              			elem.innerText = json[key];
+              			elem.innerHTML = json[key];
              		}
              
             	});
