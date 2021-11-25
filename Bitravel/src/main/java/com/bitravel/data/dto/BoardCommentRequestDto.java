@@ -29,7 +29,7 @@ public class BoardCommentRequestDto {
 				.commentContent(commentContent)
 				.userEmail(userEmail)
 				.nickname(nickname)
-				.commentLevel(commentLevel)
+				//.commentLevel(commentLevel)
 				.build();
 	}
 	
