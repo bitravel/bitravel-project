@@ -22,8 +22,8 @@ public class UserPageController {
     }
     
     @GetMapping("/signup/second")
-    public String openSecondSignUpPage() {
-    	return "/user/signUp2";
+    public String openSecondSignUpPage(String nickname) {
+    	return "/user/signUp2?nickname="+nickname;
     }
     
     @GetMapping("/signup/third")

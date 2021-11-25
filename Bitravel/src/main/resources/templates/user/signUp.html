@@ -490,7 +490,7 @@
         		}
         
         		alert('저장되었습니다.');
-        		location.href = '/signup/second';
+        		location.href = '/signup/second?nickname='+form.signUpNickname.value;
         
         	}).catch(error => {
         		alert('오류가 발생하였습니다. \n'+error);
