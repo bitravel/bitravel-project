@@ -1,7 +1,9 @@
 package com.bitravel.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserPageController {
@@ -22,8 +24,10 @@ public class UserPageController {
     }
     
     @GetMapping("/signup/second")
-    public String openSecondSignUpPage(String nickname) {
-    	return "/user/signUp2?nickname="+nickname;
+    public String openSecondSignUpPage
+    (@RequestParam("nickname") String nickname, Model model) {
+    	model.addAttribute("nickname", nickname);
+    	return "/user/signUp2";
     }
     
     @GetMapping("/signup/third")
