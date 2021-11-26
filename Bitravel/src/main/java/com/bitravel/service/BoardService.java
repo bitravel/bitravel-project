@@ -4,6 +4,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
@@ -49,11 +52,13 @@ public class BoardService {
     /**
      * 게시글 리스트 조회
      */
-    public List<BoardResponseDto> findAll() {
-
-        Sort sort = Sort.by(Direction.DESC, "boardId", "boardDate");
-        List<Board> list = boardRepository.findAll(sort);
-        return list.stream().map(BoardResponseDto::new).collect(Collectors.toList());
+    public Page<Board> findAll(Pageable pageable) {
+    	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+    	pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardId"));
+        //Sort sort = Sort.by(Direction.DESC, "boardId");
+        //List<Board> list = boardRepository.findAll(sort);
+        //return list.stream().map(BoardResponseDto::new).collect(Collectors.toList());
+    	return boardRepository.findAll(pageable);
     }
     
     /**

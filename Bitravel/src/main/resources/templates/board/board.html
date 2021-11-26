@@ -353,7 +353,19 @@
                                 </tr>
                             </thead>
                             <tbody id="list">
-                            
+                            <tr th:each="list: ${boardList}">
+                            	
+                            	<td>[[${list.boardId}]]</td>
+                            	<td>
+                            		<a th:href="@{'/board/detail/'+${list.boardId}}">
+                            			[[${list.boardTitle}]]
+                            		</a>
+                            	</td>
+                            	<td>[[${list.nickname}]]</td>
+                            	<td th:text="${#dates.format(list.boardDate, 'yyyy-MM-dd HH:mm:ss')}">
+                            		[[${list.boardDate}]]</td>
+                            	<td>[[${list.boardView}]]</td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -364,20 +376,43 @@
                     
                     <nav aria-label="Page navigation example">
                         <br>
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="#" aria-label="Previous">
+                        <ul class="pagination justify-content-center"
+                        	th:with="start=${T(Math).floor(boardList.number/10) * 10 + 1},
+              						last=${start + 9 < boardList.totalPages ? start + 9 : boardList.totalPages}">
+                            
+                            <!-- first page -->
+                            <li class="page-item" >
+						      <a class="page-link" th:href="@{./list(page=1)}" aria-label="First">
+						        <span aria-hidden="true"> FIRST </span>
+						      </a>
+						    </li>
+						    
+                            <!-- previous page -->
+                            <li class="page-item" th:class="${boardList.first} ? 'disabled'">
+                                <a class="page-link" th:href="${boardList.first} ? '#' : @{./list(page=${boardList.number})}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
-                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Next">
+                            
+                            <!-- present page -->
+                            <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == boardList.number + 1} ? 'active'">
+                            <a class="page-link" th:text="${page}" th:href="@{./list(page=${page})}">&nbsp;</a>
+                            </li>
+							
+							<!-- next page -->
+                            <li class="page-item" th:class="${boardList.last} ? 'disabled'">
+                                <a class="page-link" th:href="${boardList.last} ? '#' : @{./list(page=${boardList.number + 2})}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
+                            
+                            <!-- last page -->
+                            <li class="page-item">
+						      <a class="page-link" th:href="@{./list(page=${boardList.totalPages})}" aria-label="Last">
+						        <span aria-hidden="true">LAST</span>
+						      </a>
+						    </li>
+						    
                         </ul>
                     </nav>
                 </div>
@@ -597,18 +632,18 @@
 
 		/**
 		 * 페이지 로딩 시점에 실행되는 함수
-		 */
-		window.onload = () => {
-
+		 
+			window.onload = () => {
 			findAll();
 		}
-
+		*/
+			
 		/**
 		 * 게시글 리스트 조회
-		 */
+		 
 		 function findAll() {
 
-			fetch('/api/boards').then(response => {
+			fetch('/board/list').then(response => {
 				if (response.ok) {
    					return response.json();
 				}
@@ -636,6 +671,7 @@
 				document.getElementById('list').innerHTML = html;
 			});
 		}
+		*/
 		
 		 /**
 		 * 게시글 조회

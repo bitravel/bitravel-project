@@ -40,11 +40,11 @@ public class BoardController {
     /**
      * 게시글 리스트 조회
      */
-    @GetMapping("/boards")
-    @ApiOperation(value = "글 목록 조회", notes = "글 목록을 조회하는 API.")
-    public List<BoardResponseDto> findAll() {
-        return boardService.findAll();
-    }
+//    @GetMapping("/boards")
+//    @ApiOperation(value = "글 목록 조회", notes = "글 목록을 조회하는 API.")
+//    public List<BoardResponseDto> findAll() {
+//        return boardService.findAll();
+//    }
     
     /**
 	 * 게시글 통합 검색

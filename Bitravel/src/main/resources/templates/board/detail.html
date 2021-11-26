@@ -139,7 +139,7 @@
         }
         
         /**
-         * 댓글 구현
+         * 댓글 수정 창
          */
          function openModal(commentId, nickname, content) {
 
@@ -153,7 +153,7 @@
 			}
 			
          	/**
-	         * 유효성 검사
+	         * 댓글 유효성 검사
 	         */
 	        function isValid() {
 	        
@@ -168,7 +168,10 @@
 	        
 	        	return true;
 	        }
-         
+         	
+	        /**
+			* 댓글 작성
+			**/
 			function insertComment() {
 				
 				if ( !isValid() ) {
@@ -202,8 +205,10 @@
 						}
 					});
 				}
-			/*[- end of function -]*/
-
+			
+			/**
+			* 댓글 수정
+			**/
 			function updateComment(commentId) {
 				
 				const id = /*[[ ${id} ]]*/;
@@ -236,7 +241,9 @@
 				});
 			}
 			
-
+			/**
+			* 댓글 삭제
+			**/
 			function deleteComment(commentId) {
 
 				if (!confirm('댓글을 삭제하시겠어요?')) {
@@ -267,8 +274,10 @@
 				});
 			}
 			
-			/*[- end of function -]*/
-
+			
+			/**
+			* 댓글 조회
+			**/
 			function printCommentList() {
 
 				fetch('/api/boards/comments/[[ ${id} ]]').then(response => {
@@ -304,7 +313,8 @@
          * 뒤로가기
          */
         function goList() {
-        	location.href = '/board/list';
+        	/* location.href = `/board/list?page=[]`; 페이지 넘버를 불러오는걸 모르겠습니다..*/
+        	location.href = "javascript:history.back(-1)"; 
         }
 
         /**
