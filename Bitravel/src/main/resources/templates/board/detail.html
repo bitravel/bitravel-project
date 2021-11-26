@@ -13,10 +13,10 @@
 		            </div>
 		            <div class="modal-body">
 		                <form>
-		                    <div class="form-group">
+		                    <!-- <div class="form-group">
 		                        <label for="modalWriter" class="col-form-label">작성자</label>
 		                        <input type="text" id="modalWriter" class="form-control" placeholder="작성자를 입력해 주세요." />
-		                    </div>
+		                    </div> -->
 		                    <div class="form-group">
 		                        <label for="modalContent" class="col-form-label">내용</label>
 		                        <textarea id="modalContent" class="form-control" placeholder="내용을 입력해 주세요."></textarea>
@@ -141,15 +141,15 @@
         /**
          * 댓글 구현
          */
-         function openModal(idx, writer, content) {
+         function openModal(commentId, nickname, content) {
 
 				$("#commentModal").modal("toggle");
 
-				document.getElementById("modalWriter").value = writer;
+				//document.getElementById("modalWriter").value = writer;
 				document.getElementById("modalContent").value = content;
 
-				document.getElementById("btnCommentUpdate").setAttribute("onclick", "updateComment("+ idx +")");
-				document.getElementById("btnCommentDelete").setAttribute("onclick", "deleteComment("+ idx +")");
+				document.getElementById("btnCommentUpdate").setAttribute("onclick", "updateComment("+ commentId +")");
+				document.getElementById("btnCommentDelete").setAttribute("onclick", "deleteComment("+ commentId +")");
 			}
 			
          	/**
@@ -204,14 +204,15 @@
 				}
 			/*[- end of function -]*/
 
-			function updateComment() {
-
+			function updateComment(commentId) {
+				
+				const id = /*[[ ${id} ]]*/;
 				var writer = document.getElementById("modalWriter");
 				var content = document.getElementById("modalContent");
 			
-				var uri = `/api/boards/comments/${id}`;
+				var uri = `/api/boards/comments/${commentId}`;
 				var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "PATCH"};
-				var params = {"boardId": [[ ${id} ]], "commentContent": content.value};
+				var params = {"commentId": commentId, "commentContent": content.value};
 			
 				$.ajax({
 					url: uri,
@@ -234,6 +235,38 @@
 					}
 				});
 			}
+			
+
+			function deleteComment(commentId) {
+
+				if (!confirm('댓글을 삭제하시겠어요?')) {
+					return false;
+				}
+			
+				var uri = [[ @{/api/boards/comments/} ]] + commentId;
+				var headers = {"Content-Type": "application/json", "X-HTTP-Method-Override": "DELETE"};
+			
+				$.ajax({
+					url: uri,
+					type: "DELETE",
+					headers: headers,
+					dataType: "json",
+					success: function(response) {
+						if (response.result == false) {
+							alert("댓글 삭제에 실패하였습니다.");
+							return false;
+						}
+			
+						printCommentList();
+						$("#commentModal").modal("hide");
+					},
+					error: function(xhr, status, error) {
+						alert("에러가 발생하였습니다.");
+						return false;
+					}
+				});
+			}
+			
 			/*[- end of function -]*/
 
 			function printCommentList() {
@@ -255,7 +288,7 @@
 									<span class="name">${obj.nickname}</span>
 	    							<span class="desc">${obj.commentContent}</span>
 	    							
-	    							<button type="button" onclick="openModal(${obj.rCommentId}, '${obj.nickname}', '${obj.commentContent}' )" class="btn btn-xs btn-circle"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i></button>
+	    							<button type="button" onclick="openModal(${obj.bcommentId}, '${obj.nickname}', '${obj.commentContent}' )" class="btn btn-xs btn-circle"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i></button>
 								</li>
 							`;
 						});
@@ -264,7 +297,7 @@
 				});
 			}
 			/*[- end of function -]*/
-			
+		
         
 
         /**
