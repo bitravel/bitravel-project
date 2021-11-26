@@ -231,7 +231,7 @@
 		
 		if(!flag) {
 			alert('최소 1개 이상의 선호 여행 지역을 선택해야 합니다.');
-			form.largeSelect0.focus();
+			document.getElementById('largeSelect0').focus();
 			return false;
 		}
 		if(!all) {
@@ -247,11 +247,11 @@
 	// 결과 UserRegion class에 저장
 	function save() {
 		
-		var allSelect = (document.getElementsByTagName('select').length)/2;
-		
 		if(!isValid())
 			return false;
 		console.log('validated');
+		
+		var allSelect = (document.getElementsByTagName('select').length)/2;
 		
 		var resultList = new Array();
 		var userMail = "[[${userEmail}]]";
