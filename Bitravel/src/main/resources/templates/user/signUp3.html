@@ -84,8 +84,8 @@
 	<script type="text/javascript">
 		$(document).ready(function() {	
 			
-			const rowStart = '<article class="card-hover border-0 d-flex" id="article';
-			const rowStart1 = '" style="width:80%;margin-bottom:50px;">\n<div class="card-body position-relative p-0 m-2" id="card';
+			const rowStart = '<article class="ml-10 mr-10 border-0 d-flex" id="article';
+			const rowStart1 = '" style="width:80%;margin-bottom:40px;">\n<div class="card-body card-hover position-relative p-0 m-2" id="card';
 			
 			const cardRear = '<button type="button" class="btn btn-rise btn-outline-info m-2 p-0 size-40 d-flex rounded-circle">\n<div class="btn-rise-bg bg-info"></div>\n<div class="btn-rise-text"><i class="fs-5 bi bi-hand-thumbs-up"></i></div></button>\n<button type="button" class="btn btn-rise btn-outline-danger m-2 p-0 size-40 d-flex rounded-circle">\n<div class="btn-rise-bg bg-tint-danger"></div>\n<div class="btn-rise-text"><i class="fs-5 bi bi-hand-thumbs-down"></i></div></button>\n</div></div>';
 			const rowRear = '</article>';
@@ -118,7 +118,7 @@
 		   			console.log(index);
 		   			
 		   			var tag = '';
-		   			var allCards = document.getElementsByClassName('card-body position-relative p-0').length;
+		   			var allCards = document.getElementsByClassName('card-body card-hover position-relative p-0').length;
 		   			var newElement = document.createElement('div');
 		   			
 		   			if (index%3 == 0) {
@@ -128,7 +128,7 @@
 		   				tag += '">\n';
 		   			} else {
 			   			var cardId = 'card'+allCards;			   			
-			   			newElement.setAttribute('class', 'card-body position-relative p-0 m-2');
+			   			newElement.setAttribute('class', 'card-body card-hover position-relative p-0 m-2');
 			   			newElement.setAttribute('id', cardId);
 		   			}
 		   			
