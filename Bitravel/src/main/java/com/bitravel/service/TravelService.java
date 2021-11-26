@@ -1,11 +1,13 @@
 package com.bitravel.service;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bitravel.data.dto.TravelSimpleDto;
 import com.bitravel.data.entity.Travel;
 import com.bitravel.data.repository.TravelRepository;
 import com.bitravel.exception.CustomException;
@@ -84,6 +86,15 @@ public class TravelService {
     	}
     	return list;
     }
+    
+	/**
+	 * 지역별 인기 여행지 조회 (Simple DTO)
+	 */
+	public List<TravelSimpleDto> findTravelsByRegion(String largeGov, String smallGov) {
+		Sort sort = Sort.by(Direction.ASC, "travelView", "travelName");
+		return travelRepository.findByLargeGovAndSmallGov(largeGov, smallGov, sort)
+				.stream().map(TravelSimpleDto::new).collect(Collectors.toList());
+	}
     
     /**
      * 여행지 수정

@@ -23,6 +23,7 @@ public class TravelSimpleDto {
 	private String address;
 	private String largeGov;
 	private String smallGov;
+	private Integer travelView;
 	
 	public TravelSimpleDto(Travel entity) {
 		this.travelId = entity.getTravelId();
@@ -32,6 +33,7 @@ public class TravelSimpleDto {
 		this.address = entity.getAddress();
 		this.largeGov = entity.getLargeGov();
 		this.smallGov = entity.getSmallGov();
+		this.travelView = entity.getTravelView();
 	}
 	
 }
