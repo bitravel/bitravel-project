@@ -27,7 +27,6 @@
 
 	<main class="main-content position-relative z-index-2 bg-white"
 		id="main-content">
-	<!--  	<form id="travel-like-dislike" method="post">-->
 		<section class="bg-white position-relative" id="cardList">
 			<div
 				class="bg-pattern text-muted opacity-10 w-100 h-100 start-0 top-0 position-absolute"></div>
@@ -51,25 +50,10 @@
 				</div>
 			</div>
 			</section>
-		<!--  	</form>-->
-			<div
-				class="d-flex align-items-center justify-content-center mb-3 pt-4">
-				<nav aria-label="Page navigation example">
-					<ul class="pagination pagination-sm">
-						<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-						<li class="page-item active"><a class="page-link" href="#">1</a></li>
-						<li class="page-item"><a class="page-link" href="#">2</a></li>
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-						<li class="page-item"><a class="page-link" href="#">Next</a></li>
-					</ul>
-				</nav>
-			</div>
-				<br>
-			<div class="m-4 row justify-content-center">
+			<div class="m-3 row justify-content-center">
 				<button type="button" onclick="save()" 
 					class="btn btn-outline-secondary border-2 col-3">저장</button>
-			</div>
-		
+			</div>		
 	</main>
 	<!-- scripts -->
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -84,7 +68,7 @@
 		     * 처음 여행지 리스트를 불러와서 card div로 띄우기
 		     */
 			const rowStart = '<article class="ml-10 mr-10 border-0 d-flex" id="article';
-			const rowStart1 = '" style="width:80%;margin-bottom:40px;">\n<div class="card-body card-hover position-relative p-0 m-4" id="card';
+			const rowStart1 = '" style="width:70%;margin-bottom:40px;">\n<div class="card-body card-hover position-relative p-0 m-4" id="card';
 			
 			const cardRear = '<input type="radio" class="btn-check" id="like';
 			const cardRear1 = '" value="like'
