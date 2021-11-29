@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
@@ -61,11 +64,12 @@ public class ReviewService {
     /**
      * 후기 리스트 조회
      */
-    public List<ReviewResponseDto> findAll() {
-
-        Sort sort = Sort.by(Direction.DESC, "reviewId", "reviewDate");
-        List<Review> list = reviewRepository.findAll(sort);
-        return list.stream().map(ReviewResponseDto::new).collect(Collectors.toList());
+    public Page<Review> findAll(Pageable pageable) {
+		pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "reviewId"));
+//        Sort sort = Sort.by(Direction.DESC, "reviewId", "reviewDate");
+//        List<Review> list = reviewRepository.findAll(sort);
+//        return list.stream().map(ReviewResponseDto::new).collect(Collectors.toList());
+		return reviewRepository.findAll(pageable);
     }
     
     /**
