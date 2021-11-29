@@ -1,5 +1,6 @@
 package com.bitravel.service;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -75,6 +76,7 @@ public class RegionService {
 		for(int i=0;i<all.size();i++) {
 			list.add(all.get(i).getSmallGov());
 		}
+		Collections.sort(list);
 		return list;
 	}
 
