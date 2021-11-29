@@ -145,9 +145,9 @@
 	        		console.log(json);
 	        		var now = new Date();
 	        		var time = now.getTime();
-	        		var expireDate = time+24*50*60*1000;
+	        		var expireDate = time+24*60*60*1000;
 	        		now.setTime(expireDate);
-	        		document.cookie = "Authorization="+json.token+"; expires="+now.toUTCString()+"; path=/";
+	        		document.cookie = "Authorization="+json.token+"; expires="+now.toUTCString()+"; path=/; domain=localhost;";
 	        		
 	        		location.href = '/';
 	        		
