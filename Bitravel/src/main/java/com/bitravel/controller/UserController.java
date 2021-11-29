@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.bitravel.data.dto.LoginDto;
 import com.bitravel.data.dto.TokenDto;
 import com.bitravel.data.dto.UserDto;
+import com.bitravel.data.dto.UserTravelDto;
 import com.bitravel.data.entity.User;
 import com.bitravel.jwt.JwtFilter;
 import com.bitravel.service.UserService;
 import com.bitravel.util.ScriptUtil;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,7 +38,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserController {
 
 	private final UserService userService;
-
+	
 	@PostMapping("/login")
 	public String login(@Valid LoginDto loginDto, HttpServletResponse response) throws IOException {
 		try {
@@ -72,6 +75,27 @@ public class UserController {
 			) {
 		return ResponseEntity.ok(userService.signup(userDto));
 	}
+	
+    /**
+     * UserTravel 신규 등록
+     */
+    @PostMapping("/signup/fin")
+    @ApiOperation(value = "여행지 작성", notes = "여행지 내용을 저장하는 API. Travel entity 클래스로 데이터를 저장한다.")
+    public ResponseEntity<String> saveUserTravels(@RequestBody List<UserTravelDto> params) {   	
+		if (params.size()>9) {
+			if(!userService.updatePoint(params.get(0).getUserEmail(), 250))
+				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+    	try {		
+    		for(int i=0;i<params.size();i++) {
+				userService.saveUserTravel(params.get(i).toEntity());
+			}
+		} catch (Exception e) {
+			log.error(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
+    }
 
 	@GetMapping("/user")
 	//@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")

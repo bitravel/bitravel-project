@@ -126,8 +126,7 @@
 			    	   			newList.forEach(function (item, index, array) {
 				    	   			tag += "<option value='"+item+"'>"+item+"</option>\n";
 				    	   		});
-				    	   		smallSelect.innerHTML += tag;
-				    	   		//console.log(smallSelect.innerHTML);
+				    	   		smallSelect.innerHTML = tag;
 			    	   		}
 			    	   	}).catch(error => {
 			    	    	alert('리스트 불러오기에 실패했습니다.');

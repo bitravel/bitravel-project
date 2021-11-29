@@ -26,7 +26,9 @@ import com.bitravel.data.dto.TokenDto;
 import com.bitravel.data.dto.UserDto;
 import com.bitravel.data.entity.Authority;
 import com.bitravel.data.entity.User;
+import com.bitravel.data.entity.UserTravel;
 import com.bitravel.data.repository.UserRepository;
+import com.bitravel.data.repository.UserTravelRepository;
 import com.bitravel.jwt.TokenProvider;
 
 import lombok.AllArgsConstructor;
@@ -38,6 +40,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserService {
 
 	private UserRepository userRepository;
+	private UserTravelRepository userTravelRepository;
 	private PasswordEncoder passwordEncoder;
 	private final TokenProvider tokenProvider;
 	private final AuthenticationManagerBuilder authenticationManagerBuilder;
@@ -137,7 +140,15 @@ public class UserService {
 				.build();
 		return userRepository.save(user);
 	}
-
+	
+	/**
+	 * UserTravel 신규 등록
+	 */
+	@Transactional
+	public UserTravel saveUserTravel(UserTravel param) {		
+		return userTravelRepository.save(param);
+	}
+	
 	// 회원 이메일로 찾기
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Optional<UserDto> getUserWithAuthorities(String email) {
@@ -225,4 +236,18 @@ public class UserService {
 		userRepository.deleteById(user.getUserId());
 		return true;
 	}
+	
+	// 포인트만 수정하기
+	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public Boolean updatePoint(String email, Integer point) {
+		Optional<User> userTemp = userRepository.findOneWithAuthoritiesByEmail(email);
+		if(userTemp.isEmpty()) {
+			return false;
+		}
+		User user = userTemp.get();
+		user.setPoint(point);
+		userRepository.save(user);
+		return true;
+	}
+	
 }
