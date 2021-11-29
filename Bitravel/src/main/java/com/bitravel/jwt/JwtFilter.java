@@ -49,9 +49,10 @@ public class JwtFilter extends GenericFilterBean {
 	
 	// 토큰에서 앞부분 Bearer라는 문자열을 삭제함
 	private String resolveToken(HttpServletRequest request) {
-		String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
-		if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-			return bearerToken.substring(7);
+		String[] Cookies = request.getHeader("Cookie").split("; ");
+		String bearerToken = Cookies[1].replace(AUTHORIZATION_HEADER, "");
+		if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("=Bearer ")) {
+			return bearerToken.substring(8);
 		}
 		return null;
 	}
