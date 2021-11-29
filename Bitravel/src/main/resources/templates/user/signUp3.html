@@ -183,9 +183,6 @@
 							count = tmp;
 						}
 					});
-					console.log(count);
-					console.log(checkedArr);
-					checkedArr.sort();
 				});
 		   		
 		   		
@@ -263,8 +260,6 @@
 			}
 			
 			const params = JSON.stringify(resultList);
-			console.log(JSON.stringify(params));
-			console.log(count);
 			
 			fetch('/api/signup/fin', {
         		method: 'POST', /*데이터 생성은 무조건 post 방식 이용*/
