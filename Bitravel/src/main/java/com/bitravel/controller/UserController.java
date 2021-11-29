@@ -61,7 +61,13 @@ public class UserController {
 	@PostMapping("/logout")
 	public String logout (HttpServletRequest request, HttpServletResponse response) {
 		String[] Cookies = request.getHeader("Cookie").split("; ");
-		String bearerToken = Cookies[1].replace(JwtFilter.AUTHORIZATION_HEADER, "");
+		String bearerToken = "";
+		for(int i=0;i<Cookies.length;i++) {
+			if(Cookies[i].indexOf(JwtFilter.AUTHORIZATION_HEADER)>-1) {
+				bearerToken = Cookies[i].replace(JwtFilter.AUTHORIZATION_HEADER, "");
+				break;
+			}
+		}
 		String jwt = bearerToken.substring(1);
 		log.info("token: "+jwt);
 		if(userService.CancelUserAuthentication(jwt)) {
