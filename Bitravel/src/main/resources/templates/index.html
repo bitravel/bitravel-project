@@ -5,7 +5,10 @@
 <title>Index</title>
 </head>
 <body>
-<h1 sec:authorize>회원님</h1>
+<h1 sec:authorize="isAuthenticated()"><span sec:authentication="principal.nickname"></span> 회원님</h1>
+<div sec:authorize="isAuthenticated()">
+<span sec:authentication="principal.authorities"></span>
+<br></div>
 Hello world
 <br>
 <button type="button" sec:authorize="isAnonymous()" id="login" onclick="location.href = '/login'">로그인하러가기</button>
