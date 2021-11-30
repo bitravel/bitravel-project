@@ -37,7 +37,10 @@ public class TravelPageController {
      */
     @GetMapping("/write")
     public String openTravelWrite(@RequestParam(required = false) final Long id, Model model) {
-        model.addAttribute("id", id);
+    	String weatherKey = "k9ex5ipQp8k%2Baiet3GfC015PcRbjkuEv%2Bq8XD2ScEoT0CMfyyZgG5%2BjRCpsuFqQ2LFtwGcZdiDuigKZLvnn7yg%3D%3D";
+    	
+    	model.addAttribute("id", id);
+        model.addAttribute("weather", weatherKey);
         return "travel/write";
     }
     
