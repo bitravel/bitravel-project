@@ -42,11 +42,11 @@ public class ReviewController {
 	/**
 	 * 후기 리스트 조회
 	 */
-	@GetMapping("/reviews")
-	@ApiOperation(value = "후기 목록 조회", notes = "후기 목록을 조회하는 API.")
-	public List<ReviewResponseDto> findAll() {
-		return reviewService.findAll();
-	}
+//	@GetMapping("/reviews")
+//	@ApiOperation(value = "후기 목록 조회", notes = "후기 목록을 조회하는 API.")
+//	public List<ReviewResponseDto> findAll() {
+//		return reviewService.findAll();
+//	}
 	
 	/**
 	 * 후기 통합 검색

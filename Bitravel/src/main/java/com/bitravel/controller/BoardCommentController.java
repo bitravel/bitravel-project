@@ -38,6 +38,16 @@ public class BoardCommentController {
     }
     
     /**
+     * 특정 게시글의 댓글 모두 보기
+     */
+//    @GetMapping("/boards/comments/{id}")
+//    @ApiOperation(value = "댓글 조회", notes = "parameter로 주어진 boardId에 해당하는 댓글을 리스트로 모두 호출한다.")
+//    public Model boardComment (Model model, @PageableDefault(size = 10, sort = "bCommentId", direction = Sort.Direction.DESC) Pageable pageable, @PathVariable final Long id) {
+//        model.addAttribute("commentList", bCommentService.findAllComments(id, pageable));
+//    	return model;
+//    }
+    
+    /**
      * 특정 게시물에 댓글 작성
      */
     @PostMapping("/boards/comments/{id}")

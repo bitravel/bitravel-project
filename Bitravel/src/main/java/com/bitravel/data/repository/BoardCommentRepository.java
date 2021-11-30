@@ -10,3 +10,6 @@ import com.bitravel.data.entity.BoardComment;
 public interface BoardCommentRepository extends JpaRepository<BoardComment, Long>{
 	List<BoardComment> findAllByBoard(Board board);
 }
+//public interface BoardCommentRepository extends JpaRepository<BoardComment, Long>{
+//List<BoardComment> findAllByBoard(Board board, Pageable pageable);
+//}

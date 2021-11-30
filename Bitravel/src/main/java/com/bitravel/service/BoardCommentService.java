@@ -36,6 +36,12 @@ public class BoardCommentService {
         List<BoardComment> list = bCommentRepository.findAllByBoard(board);
         return list.stream().map(BoardCommentResponseDto::new).collect(Collectors.toList());
     }
+    
+//    public List<BoardCommentResponseDto> findAllComments(Long bid, Pageable pageable) {
+//    	Board board = boardRepository.findById(bid).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));		
+//        List<BoardComment> list = bCommentRepository.findAllByBoard(board, pageable);
+//        return list.stream().map(BoardCommentResponseDto::new).collect(Collectors.toList());
+//    }
 
     /**
      * 특정 게시물에 댓글 작성
