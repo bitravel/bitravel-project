@@ -27,17 +27,10 @@
     <!-- Main CSS -->
     <link href="/assets/css/theme.min.css" rel="stylesheet">
 
-
     <title>개별 여행지 상세 페이지</title>
 </head>
 
 <body>
-    <!--Preloader Spinner-->
-    <!-- <div class="spinner-loader bg-gradient-secondary text-white">
-            <div class="spinner-border text-primary" role="status">
-            </div>
-            <span class="small d-block ms-2">Loading...</span>
-        </div> -->
     <!--Header Start-->
     <header class="z-index-fixed">
         <nav class="navbar navbar-expand-lg navbar-light bg-white">
@@ -54,6 +47,8 @@
                             <i></i>
                         </span>
                     </button>
+                    
+                    <!--회원 정보 관련 : 회원 전용 메뉴 -->
                     <div class="nav-item me-3 me-lg-0 dropdown"  sec:authorize="isAuthenticated()">
                         <a href="#" class="btn btn-secondary rounded-pill py-0 ps-0 pe-3" data-bs-auto-close="outside"
                             data-bs-toggle="dropdown">
@@ -74,7 +69,7 @@
                                     </div>
                                 </div>
                             </a>
-                            <a href="#" class="dropdown-item p-3">
+                            <a href="/api/logout" class="dropdown-item p-3">
                                 <span class="d-block text-end">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                         class="bi bi-box-arrow-right me-2" viewBox="0 0 16 16">
@@ -85,9 +80,37 @@
                                             d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z">
                                         </path>
                                     </svg>
-                                    Sign Out
+                                    로그아웃
                                 </span>
                             </a>
+                        </div>
+                    </div>
+                    <!--회원 정보 관련 : 비회원 메뉴 -->
+                    <div class="nav-item me-3 me-lg-0 dropdown"  sec:authorize="isAnonymous()">
+                        <a href="#" class="btn btn-secondary rounded-pill py-0 ps-0 pe-2" data-bs-auto-close="outside"
+                            data-bs-toggle="dropdown">
+                            <img src="/assets/img/avatar/4.jpg" alt="" class="avatar sm rounded-circle me-1">
+                            <small>로그인</small>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs p-0">
+                            <span class="d-block text-center mt-4 mb-2 text-muted">
+                            더 많은 BITravel의 서비스를 즐겨 보세요.</span>
+                            <span class="d-block text-end mb-2 me-3">
+                            <a href="/login" class="text-dark me-2"> 
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+									  <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
+									  <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+									</svg> 
+                                	로그인
+                               </a>
+                            <a href="/signup" class="text-dark">
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+									  <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+									  <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+									</svg>
+                                    가입  
+                            </a>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -317,22 +340,23 @@
                 </div>
             </div>
         </nav>
+        <br>
         <!-- 헤더 검색창 시작 -->
+        <form action="/search" method="post">
         <div class="row ">
             <div class="col-xl-6 col-sm-8 col-auto mx-auto d-flex">
-                <label for="formGroupExampleInput" class="form-label"></label>
-                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="여행지를 검색하세요.">
-                <button type="submit" class="ms-sm-1 rounded-pill btn btn-primary btn-lg ">
-                    <span class="d-flex align-items-center">
-                        <i class="far fa-paper-plane me-2 small d-inline-block"></i>
+                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="키워드를 입력하세요.">
+                &nbsp;
+                <button type="submit" class="ms-sm-1 btn btn-primary btn ">
+                    <span class="d-flex align-items-center fs-5"> 
                         <span>검색</span>
                     </span>
                 </button>
             </div>
-        </div>
+        </div></form>
         <!-- 헤더 검색창 종료 -->
     </header>
-
+<br>
 
     <!--메인 -->
     <main class="main-content position-relative z-index-2 bg-white" id="main-content">
@@ -340,8 +364,8 @@
             <div class="container  pt-11 pb-7 pb-lg-9">
                 <div class="row pt-lg-5">
                     <div class="col-lg-8">
-                        <h2 class="display-4">Footer fixed at bottom</h2>
-                        <p>Layout footer fixed at bottom using pure javascript code </p>
+                        <h2 class="display-4" id="travelName"></h2>
+                        <span id="address"></span><br><span id="travelTel"></span>
                     </div>
                 </div>
             </div>
@@ -349,7 +373,7 @@
     </main>
     <div class="container py-2 pb-0">
         <h2 class="mb-4 py-3 border-bottom border-4 border-secondary">상세정보</h2>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum, dolorem! Recusandae, atque reprehenderit. Deserunt placeat eius cumque dolor quibusdam sint et magnam ut repudiandae nemo. Vero odit quas id ducimus.</p>
+        <p id="travelSummary"></p>
     </div>
 
     <div class="d-flex align-items-center justify-content-center mb-4 pt-2">
@@ -359,75 +383,68 @@
     </div>
 
     <div class="container py-2 pb-0 mb-5">
-        <h2 class="col-12 mb-4 py-3 border-bottom border-4 border-secondary">날씨 예보(최근 7일)</h2>
-        <div class=" d-flex align-items-center justify-content-cented-flex ">
-            <div class="col-2 col-xl-2 mb-4">
-                <i class="fs-1 bi bi-cloud-sun-fill"></i>
-                <div class="label small text-muted">애매함</div>
+        <h2 class="col-12 mb-4 py-3 border-bottom border-4 border-secondary">날씨 정보</h2>
+        <div class="align-items-center text-center">
+            <div class="mb-4 text-center" style="width:13%;display:inline-block;" id="weather0">
+                <div><i class="fs-1 bi bi-cloud-sun-fill"></i></div>
+                <div class="label small text-muted">오늘</div>
             </div>
-            <div class="col-2 col-xl-2 mb-4">
-                <i class="fs-1 bi bi-cloud-sun"></i>
-                <div class="label small text-muted">맑음</div>
+            <div class="mb-4 text-center" style="width:13%;display:inline-block;" id="weather1">
+                <div class="p-0"><i class="fs-1 bi bi-cloud-sun"></i></div>
+                <div class="label small text-muted">내일</div>
             </div>
-            <div class="col-2 col-xl-2 mb-4">
-                <i class="fs-1 bi bi-cloud-rain-heavy-fill"></i>
-                <div class="label small text-muted">우천</div>
+            <div class="mb-4 text-center" style="width:13%;display:inline-block;" id="weather2">
+                <div class="p-0"><i class="fs-1 bi bi-cloud-rain-heavy-fill"></i></div>
+                <div class="label small text-muted">모레</div>
             </div>
-            <div class="col-2 col-xl-2 mb-4">
+            <div class="mb-4 text-center" style="width:13%;display:inline-block;" id="weather3">
                 <i class="fs-1 bi bi-cloud-lightning-rain-fill"></i>
-                <div class="label small text-muted">비, 번개</div>
+                <div class="label small text-muted">3일 후</div>
             </div>
-            <div class="col-2 col-xl-2 mb-4">
+            <div class="mb-4 text-center" style="width:13%;display:inline-block;" id="weather4">
                 <i class="fs-1 bi bi-cloud-fog-fill"></i>
-                <div class="label small text-muted">안개</div>
+                <div class="label small text-muted">4일 후</div>
             </div>
-            <div class="col-2 col-xl-2 mb-4">
-                <i class="fs-3 bi bi-cloud-snow"></i>
-                <div class="label small text-muted">눈</div>
+            <div class="mb-4 text-center" style="width:13%;display:inline-block;" id="weather5">
+                <i class="fs-1 bi bi-cloud-snow"></i>
+                <div class="label small text-muted">5일 후</div>
             </div>
-            <div class="col-2 col-xl-2 mb-4">
+            <div class="mb-4 text-center" style="width:13%;display:inline-block;" id="weather6">
                 <i class="fs-1 bi bi-cloud-sun-fill"></i>
-                <div class="label small text-muted">맑음</div>
+                <div class="label small text-muted">6일 후</div>
             </div>
         </div>
     </div>
 
     <div class="container py-2 pb-0 mb-10">
-        <h2 class="col-12 mb-4 py-3 border-bottom border-4 border-secondary">시설정보</h2>
-        <div class=" d-flex align-items-center justify-content-cented-flex ">
-            <div class="col-2 col-xl-2 mb-4">
-                <i class="fs-1 bi bi-hand-thumbs-down-fill"></i>
-                <div class="label small text-muted">애매함</div>
+        <h2 class="col-12 mb-4 py-3 border-bottom border-4 border-secondary">시설 정보</h2>
+        <div class="align-items-center text-center">
+            <div class="col-2 col-xl-2 mb-4 text-center p-0" style="display:inline-block;">
+                <i class="fs-1 fas fa-car-side"></i>
+                <div class="label small mt-2"><span class="text-muted">주차시설</span><br><span id="parking">정보 없음</span></div>
             </div>
-            <div class="col-2 col-xl-2 mb-4">
-                <i class="fs-1 bi bi-hash"></i>
-                <div class="label small text-muted">맑음</div>
+            <div class="col-2 col-xl-2 mb-4 text-center p-0" style="display:inline-block;">
+                <i class="fs-1 fas fa-baby-carriage"></i>
+                <div class="label small mt-2"><span class="text-muted">유모차 동반</span><br><span id="baby">정보 없음</span></div>
             </div>
-            <div class="col-2 col-xl-2 mb-4">
-                <i class="fs-1 bi bi-hdd"></i>
-                <div class="label small text-muted">우천</div>
+            <div class="col-2 col-xl-2 mb-4 text-center p-0" style="display:inline-block;">
+                <i class="fs-1 fas fa-dog"></i>
+                <div class="label small mt-2"><span class="text-muted">애완동물 동반</span><br><span id="pet">정보 없음</span></div>
             </div>
-            <div class="col-2 col-xl-2 mb-4">
-                <i class="fs-1 bi bi-hexagon"></i>
-                <div class="label small text-muted">비, 번개</div>
-            </div>
-            <div class="col-2 col-xl-2 mb-4">
-                <i class="fs-1 bi bi-inboxes"></i>
-                <div class="label small text-muted">안개</div>
-            </div>
-            <div class="col-2 col-xl-2 mb-4">
-                <i class="fs-1 bi bi-journal-bookmark-fill"></i>
-                <div class="label small text-muted">눈</div>
-            </div>
-            <div class="col-2 col-xl-2 mb-4">
-                <i class="fs-1 bi bi-key"></i>
-                <div class="label small text-muted">맑음</div>
+            <div class="col-2 col-xl-2 mb-4 text-center" style="display:inline-block;">
+                <i class="fs-1 far fa-credit-card"></i>
+                <div class="label small mt-2"><span class="text-muted">신용카드 결제</span><br><span id="card">정보 없음</span></div>
             </div>
         </div>
+        <div class="col-12 mb-4 text-center">
+          <button type="button" class="btn btn-outline-secondary mb-3 btn-sm" data-bs-toggle="collapse" data-bs-target="#travelDetail">더 보기</button>
+		  <div id="travelDetail" class="collapse">
+		  		   	이 여행지의 경우 추가 정보가 없습니다.
+		  </div></div>
     </div>
 
     <div class="container pb-7 pb-lg-12 mb-2">
-        <h2 class="mb-5">내 취향에 맞는 제주도 여행지(추천)</h2>
+        <h2 class="mb-5">내 취향에 맞는 <span id="largeGov"></span> 여행지</h2>
         <!-- Swiper -->
         <div class="swiper-container swiper-3">
             <div class="swiper-wrapper">
@@ -556,7 +573,7 @@
     </div>
 
     <div class="container pb-7 pb-lg-12 mb-2">
-        <h2 class="mb-5">내 취향에 맞는 제주도 여행지(추천)</h2>
+        <h2 class="mb-5"><span id="travelName1"></span> 관련 인기 후기</h2>
         <!-- Swiper -->
         <div class="swiper-container swiper-3">
             <div class="swiper-wrapper">
@@ -685,7 +702,7 @@
     </div>
 
     <div class="container pb-7 pb-lg-12 mb-2">
-        <h2 class="mb-5">내 취향에 맞는 제주도 여행지(추천)</h2>
+        <h2 class="mb-5"><span id="travelName2"></span>같은 여행지를 더 찾으시나요?</h2>
         <!-- Swiper -->
         <div class="swiper-container swiper-3">
             <div class="swiper-wrapper">
@@ -1003,8 +1020,200 @@
         </svg>
     </a>
     <!-- scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js" integrity="sha512-fzff82+8pzHnwA1mQ0dzz9/E0B+ZRizq08yZfya66INZBz86qKTCt9MLU0NCNIgaMJCgeyhujhasnFUsYMsi0Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="/assets/js/theme.bundle.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <th:block layout:fragment="script">
+    <script th:inline="javascript">
     
+    	var travel;
+		var weatherShort;
+		var weatherMiddle;
+		window.onload = () => {
+			
+			findTravel();
+		}
+    
+		/**
+         * 여행지 조회
+         */
+
+        function findTravel() {
+
+            const id = "[[${id}]]";
+
+            fetch(`/api/travels/${id}`).then(response => {
+            	if (!response.ok) {
+        			throw new Error('Request failed...');
+        	    }
+            	return response.json();
+
+           	}).then(json => {
+           		console.table(json);
+           		travel = json;
+            	Object.keys(json).forEach(key => {
+             		const elem = document.getElementById(key);
+             		if (elem && json[key]!="") {
+	              			elem.innerHTML = json[key];
+             		}
+             
+            	});
+           		
+            	if(travel['largeGov']!="서울" && travel['largeGov']!="부산" && 
+            			travel['largeGov']!="대구" && travel['largeGov']!="광주" && 
+            			travel['largeGov']!="울산" && travel['largeGov']!="대전" &&
+            			travel['largeGov']!="인천" ) {
+            		document.getElementById('largeGov').innerText = travel['smallGov'];
+            	} else if (travel['smallGov'].endsWith("군")) {
+            		document.getElementById('largeGov').innerText = travel['smallGov'];
+            	}
+            	            	
+            	
+            	document.getElementById('travelName1').innerText = travel['travelName'];
+            	document.getElementById('travelName2').innerText = travel['travelName'];
+            	
+            	findWeather(json);
+
+           	}).catch(error => {
+            	alert('해당 여행지 정보를 찾을 수 없습니다.');
+            	//goBack();
+           	});
+            
+        }
+		
+		function findWeather(travel) {
+			
+			var now = new Date();
+			var year = now.getFullYear();
+			var month = now.getMonth() + 1;
+			var day = now.getDate();
+			var hour = now.getHours();
+			var minute = now.getMinutes();
+			
+			var regionCode="";
+			if(travel['largeGov']=="서울" || travel['largeGov']=="인천" ||
+					travel['largeGov']=="경기") {
+				regionCode = "11B00000";
+			} else if (travel['smallGov']=="고성군" || travel['smallGov']=="속초시" ||
+					travel['smallGov']=="양양군" || travel['smallGov']=="강릉시" ||
+					travel['smallGov']=="동해시" || travel['smallGov']=="삼척시" ||
+					travel['smallGov']=="태백시") {
+				regionCode = "11D20000";
+			} else if (travel['largeGov'=="강원"]) {
+				regionCode = "11D10000";
+			} else if (travel['largeGov']=="대전" || travel['largeGov']=="세종" ||
+					travel['largeGov']=="충남") {
+				regionCode = "11C20000"; 
+			} else if (travel['largeGov']=="충북") {
+				regionCode = "11C10000";
+			} else if (travel['largeGov']=="광주" || travel['largeGov']=="전남") {
+				regionCode = "11F20000";
+			} else if (travel['largeGov']=="전북") {
+				regionCode = "11F10000";
+			} else if (travel['largeGov']=="대구" || travel['largeGov']=="경북") {
+				regionCode = "11H10000";
+			} else if (travel['largeGov']=="부산" || travel['largeGov']=="울산" ||
+					travel['largeGov']=="경남") {
+				regionCode = "11H20000";
+			} else if (travel['largeGov']=="제주") {
+				regionCode = "11G00000";
+			}
+			
+			if(hour<10) {
+				hour = '0'+hour;
+			}
+			if(minute<10) {
+				minute = '0'+minute;
+			}
+			if(month<10) {
+				month = '0'+month;	
+			}
+			var dateBefore = new Date();
+			dateBefore.setDate(dateBefore.getDate()-1);
+			var monthBefore = dateBefore.getDate();
+			var dayBefore = dateBefore.getDate();
+			if(day<10) {
+				day = '0'+day;	
+			}
+			if(monthBefore<10) {
+				monthBefore = '0'+monthBefore;	
+			}
+			if(dayBefore<10) {
+				dayBefore = '0'+dayBefore;	
+			}
+			today = year+""+month+""+day;
+			var timeShort = hour+""+minute;
+			var timeMiddle = "";
+			if(hour<6) {
+				timeMiddle = year+""+monthBefore+""+dayBefore+"1800";
+			} else if (hour <18) {
+				timeMiddle = today+"0600";
+			} else {
+				timeMiddle = today+"1800";
+			}
+			
+			var myKey = /*[[${weather}]]*/;
+			urlShort="";
+			urlMiddle="http://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst?serviceKey=";
+			urlMiddle += myKey;
+			urlMiddle += "&pageNo=1&numOfRows=7&dataType=xml&regId=";
+			urlMiddle += regionCode;
+			urlMiddle += "&tmFc=";
+			urlMiddle += timeMiddle;
+			
+			$.ajax({
+				url: urlMiddle,
+				dataType: 'jsonp',
+				crossOrigin : true,
+			}).then(response => {
+            	if (!response.ok) {
+        			throw new Error('Request failed...');
+        	    }
+            	console.log('res '+response);
+            	//return response.json();
+
+           	});
+			
+		//	console.log("check");
+			
+		//	$.getJSON(url+"?callback=?", response => {
+		//		console.log(response+" check");
+		//	});
+			
+		//	console.log('check');
+			/*fetch(url+"?callback=?").then(response => {
+            	if (!response.ok) {
+        			throw new Error('Request failed...');
+        	    }
+            	return response.json();
+
+           	}).then(json => {
+           		console.table(json);
+           		weatherMiddle = json;
+            	/*Object.keys(json).forEach(key => {
+             		const elem = document.getElementById(key);
+             		if (elem && json[key]!="") {
+	              			elem.innerHTML = json[key];
+             		}
+             
+            	});*/
+
+          // 	}).catch(error => {
+          // 	});
+		}
+		
+		
+		
+        /**
+         * 뒤로가기
+         */
+        function goBack() {
+        	/* location.href = `/board/list?page=[]`; 페이지 넘버를 불러오는걸 모르겠습니다..*/
+        	location.href = "javascript:history.back(-1)"; 
+        }
+		
+    </script>
+    </th:block>
 </body>
 
 </html>
