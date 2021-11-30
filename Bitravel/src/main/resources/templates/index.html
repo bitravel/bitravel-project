@@ -12,8 +12,6 @@
 Hello world
 <br>
 <button type="button" sec:authorize="isAnonymous()" id="login" onclick="location.href = '/login'">로그인하러가기</button>
-<form action="/api/logout" sec:authorize="isAuthenticated()" method="post" class="token">
-<button type="submit" sec:authorize="isAuthenticated()">로그아웃하기</button>
-</form>
+<button type="button" sec:authorize="isAuthenticated()" id="logout" onclick="location.href='/api/logout'">로그아웃하기</button>
 </body>
 </html>
