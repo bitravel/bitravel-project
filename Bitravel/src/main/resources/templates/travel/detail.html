@@ -1151,14 +1151,26 @@
 				timeMiddle = today+"1800";
 			}
 			console.log(timeMiddle);
-			urlShort="";
-			var url = "/api/weather?travelId="+travel['travelId'];
-			url += "&pageNo=1&numOfRows=7&dataType=xml&regId=";
-			url += regionCode;
-			url += "&tmFc=";
-			url += timeMiddle;	
 			
-			/*fetch(url).then(response => {
+			const param = {
+					travelId: travel['travelId'],
+					timeShort: timeShort,
+					timeMiddle: timeMiddle,
+					regionId: regionCode,
+					latitude: travel['latitude'],
+					longitude: travel['longitude'],
+			};
+			
+			var url = "/api/weather";
+			
+			fetch(url, {
+				method:'POST',
+				headers:{
+        			'Content-Type': 'application/json',
+        		},
+        		body: JSON.stringify(param)
+        		
+			}).then(response => {
             	if (!response.ok) {
         			throw new Error('Request failed...');
         	    }
@@ -1175,8 +1187,8 @@
              
             	});*/
 
-         //  	}).catch(error => {
-           //	});
+           	}).catch(error => {
+           	});
 		}
 		
 		
