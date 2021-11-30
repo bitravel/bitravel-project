@@ -58,7 +58,7 @@ public class UserController {
 		}
 	}
 
-	@PostMapping("/logout")
+	@GetMapping("/logout")
 	public String logout (HttpServletRequest request, HttpServletResponse response) {
 		String[] Cookies = request.getHeader("Cookie").split("; ");
 		String bearerToken = "";
