@@ -1089,7 +1089,6 @@
 			var day = now.getDate();
 			var hour = now.getHours();
 			var minute = now.getMinutes();
-			
 			var regionCode="";
 			if(travel['largeGov']=="서울" || travel['largeGov']=="인천" ||
 					travel['largeGov']=="경기") {
@@ -1118,7 +1117,7 @@
 			} else if (travel['largeGov']=="제주") {
 				regionCode = "11G00000";
 			}
-			
+			console.log(regionCode);
 			if(hour<10) {
 				hour = '0'+hour;
 			}
@@ -1151,37 +1150,15 @@
 			} else {
 				timeMiddle = today+"1800";
 			}
-			
-			var myKey = /*[[${weather}]]*/;
+			console.log(timeMiddle);
 			urlShort="";
-			urlMiddle="http://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst?serviceKey=";
-			urlMiddle += myKey;
-			urlMiddle += "&pageNo=1&numOfRows=7&dataType=xml&regId=";
-			urlMiddle += regionCode;
-			urlMiddle += "&tmFc=";
-			urlMiddle += timeMiddle;
+			var url = "/api/weather?travelId="+travel['travelId'];
+			url += "&pageNo=1&numOfRows=7&dataType=xml&regId=";
+			url += regionCode;
+			url += "&tmFc=";
+			url += timeMiddle;	
 			
-			$.ajax({
-				url: urlMiddle,
-				dataType: 'jsonp',
-				crossOrigin : true,
-			}).then(response => {
-            	if (!response.ok) {
-        			throw new Error('Request failed...');
-        	    }
-            	console.log('res '+response);
-            	//return response.json();
-
-           	});
-			
-		//	console.log("check");
-			
-		//	$.getJSON(url+"?callback=?", response => {
-		//		console.log(response+" check");
-		//	});
-			
-		//	console.log('check');
-			/*fetch(url+"?callback=?").then(response => {
+			/*fetch(url).then(response => {
             	if (!response.ok) {
         			throw new Error('Request failed...');
         	    }
@@ -1198,8 +1175,8 @@
              
             	});*/
 
-          // 	}).catch(error => {
-          // 	});
+         //  	}).catch(error => {
+           //	});
 		}
 		
 		
