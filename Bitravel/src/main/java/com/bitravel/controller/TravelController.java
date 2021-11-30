@@ -36,15 +36,6 @@ public class TravelController {
     }
 
     /**
-     * 여행지 리스트 조회
-     */
-    @GetMapping("/travels")
-    @ApiOperation(value = "여행지 목록 조회", notes = "여행지 목록을 조회하는 API.")
-    public List<Travel> findAll() {
-        return travelService.findAll();
-    }
-
-    /**
      * 여행지 수정
      */
     @PatchMapping("/travels/{id}")
