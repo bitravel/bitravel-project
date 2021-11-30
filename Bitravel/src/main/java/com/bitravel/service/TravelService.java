@@ -2,6 +2,9 @@ package com.bitravel.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
@@ -34,14 +37,14 @@ public class TravelService {
         return entity.getTravelId();
     }
 
-	/**
-	 * 여행지 리스트 조회
-	 */
-	public List<Travel> findAll() {
-		// 기본 리스트 Sort 기준을 인기순으로 할 수 있을듯. 일단은 이름순 정렬로 세팅
-		Sort sort = Sort.by(Direction.ASC, "travelName");
-		return travelRepository.findAll(sort);
-	}
+    /**
+     * 여행지 리스트 조회
+     */
+    public Page<Travel> findAll(Pageable pageable) {
+    	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+    	pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardId"));
+    	return travelRepository.findAll(pageable);
+    }
 
 	/**
 	 * 여행지 상세 정보 조회 (여행지 ID)
