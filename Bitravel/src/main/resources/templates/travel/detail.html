@@ -1030,11 +1030,10 @@
     <script th:inline="javascript">
     
         var travel;
-    	
+        const id = "[[${id}]]";
+        
 		window.onload = () => {
-            
-            const id = "[[${id}]]";
-            
+               
 			findTravel(id);
 		}
 		
