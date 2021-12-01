@@ -1,7 +1,15 @@
 package com.bitravel.service;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -11,11 +19,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bitravel.data.dto.TravelSimpleDto;
+import com.bitravel.data.dto.WeatherDto;
 import com.bitravel.data.entity.Travel;
 import com.bitravel.data.repository.TravelRepository;
 import com.bitravel.exception.CustomException;
 import com.bitravel.exception.ErrorCode;
 import com.bitravel.util.SecurityUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -132,5 +142,79 @@ public class TravelService {
 		travelRepository.deleteById(id);
 		return true;
 	}
+	
+	public String weathersShortByTravel(final WeatherDto now) throws IOException, JSONException {
+    	String myWeather = 	
+       			"k9ex5ipQp8k%2Baiet3GfC015PcRbjkuEv%2Bq8XD2ScEoT0CMfyyZgG5%2BjRCpsuFqQ2LFtwGcZdiDuigKZLvnn7yg%3D%3D";
+		String url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=";
+		url += myWeather;
+		url += "&pageNo=1&numOfRows=650&dataType=JSON&base_date=";
+		url += now.getDayShort();
+		url += "&base_time=";
+		url += now.getTimeShort();
+		url += "&nx=";
+		url += Math.round(Double.parseDouble(now.getLatitude()));
+		url += "&ny=";
+		url += Math.round(Double.parseDouble(now.getLongitude()));
+		log.info(url);
+		HashMap<String, Object> resultMap = getDataFromJson(url, "UTF-8");
+		
+		log.info("Successfully got the information from Weather api (short)");
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("weather", resultMap);
+		
+		return jsonObj.toString();
+	}
+	
+	public String weathersMiddleByTravel(final WeatherDto now) throws IOException, JSONException {
+    	String myWeather = 	
+       			"k9ex5ipQp8k%2Baiet3GfC015PcRbjkuEv%2Bq8XD2ScEoT0CMfyyZgG5%2BjRCpsuFqQ2LFtwGcZdiDuigKZLvnn7yg%3D%3D";
+		String url = "http://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst?serviceKey=";
+		url += myWeather;
+		url += "&pageNo=1&numOfRows=10&dataType=JSON&regId=";
+		url += now.getRegionId();
+		url += "&tmFc=";
+		url += now.getTimeMiddle();
+		log.info(url);
+		HashMap<String, Object> resultMap = getDataFromJson(url, "UTF-8");
+		
+		log.info("Successfully got the information from Weather api (middle)");
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("weather", resultMap);
+		
+		return jsonObj.toString();
+	}
 
+	@SuppressWarnings("unchecked")
+	private HashMap<String, Object> getDataFromJson(String url, String encoding) throws IOException {
+		URL apiURL = new URL(url);
+		HttpURLConnection conn = null;
+		BufferedReader br = null;
+		
+		HashMap<String, Object> resultMap = new HashMap<String, Object>();
+		
+		try {
+			conn = (HttpURLConnection) apiURL.openConnection();
+			conn.setConnectTimeout(5000);
+			conn.setReadTimeout(7000);
+			conn.setDoOutput(true);
+			conn.setRequestMethod("GET");
+			conn.connect();
+			
+			br = new BufferedReader(new InputStreamReader(conn.getInputStream(), encoding));
+			String line = null;
+			StringBuffer result = new StringBuffer();			
+			while((line=br.readLine())!=null)
+				result.append(line);
+			ObjectMapper mapper = new ObjectMapper();
+			
+			resultMap = mapper.readValue(result.toString(), HashMap.class);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if(conn != null) conn.disconnect();
+			if(br != null) br.close();
+		}
+		return resultMap;
+	}
 }
