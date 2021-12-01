@@ -2,6 +2,7 @@ package com.bitravel.controller;
 
 import java.util.List;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bitravel.data.dto.BoardRequestDto;
@@ -49,38 +51,38 @@ public class BoardController {
     /**
 	 * 게시글 통합 검색
 	 */
-	@GetMapping("/boards/search/all")
-	@ApiOperation(value = "게시글 통합 검색 목록", notes = "게시글을 닉네임 또는 제목 또는 내용으로 조회하는 API.")
-	public List<BoardResponseDto> findBoards(String keyword) {
-		return boardService.findBoards(keyword);
-	}
+//	@GetMapping("/boards/search/all")
+//	@ApiOperation(value = "게시글 통합 검색 목록", notes = "게시글을 닉네임 또는 제목 또는 내용으로 조회하는 API.")
+//	public List<BoardResponseDto> findBoards(String keyword) {
+//		return boardService.findBoards(keyword);
+//	}
 
-	/**
-	 * 게시글 닉네임 검색
-	 */
-	@GetMapping("/boards/search/nickname")
-	@ApiOperation(value = "게시글 닉네임 검색 목록", notes = "게시글을 닉네임으로 조회하는 API.")
-	public List<BoardResponseDto> findBoardsByNickname(String keyword) {
-		return boardService.findBoardsByNickname(keyword);
-	}
-	
-	/**
-	 * 게시글 제목 검색
-	 */
-	@GetMapping("/boards/search/title")
-	@ApiOperation(value = "게시글 제목 검색 목록", notes = "게시글을 제목으로 조회하는 API.")
-	public List<BoardResponseDto> findBoardsByTitle(String keyword) {
-		return boardService.findBoardsByTitle(keyword);
-	}
-	
-	/**
-	 * 게시글 제목+내용 검색
-	 */
-	@GetMapping("/boards/search/titleandcontent")
-	@ApiOperation(value = "게시글 제목+내용 검색 목록", notes = "게시글을 제목 또는 내용으로 조회하는 API.")
-	public List<BoardResponseDto> findBoardsByTitleAndContent(String keyword) {
-		return boardService.findBoardsByTitleAndContent(keyword);
-	}
+//	/**
+//	 * 게시글 닉네임 검색
+//	 */
+//	@GetMapping("/boards/search/nickname")
+//	@ApiOperation(value = "게시글 닉네임 검색 목록", notes = "게시글을 닉네임으로 조회하는 API.")
+//	public Page<BoardResponseDto> findBoardsByNickname(String keyword) {
+//		return boardService.findBoardsByNickname(keyword);
+//	}
+//	
+//	/**
+//	 * 게시글 제목 검색
+//	 */
+//	@GetMapping("/boards/search/title")
+//	@ApiOperation(value = "게시글 제목 검색 목록", notes = "게시글을 제목으로 조회하는 API.")
+//	public Page<BoardResponseDto> findBoardsByTitle(String keyword) {
+//		return boardService.findBoardsByTitle(keyword);
+//	}
+//	
+//	/**
+//	 * 게시글 제목+내용 검색
+//	 */
+//	@GetMapping("/boards/search/titleandcontent")
+//	@ApiOperation(value = "게시글 제목+내용 검색 목록", notes = "게시글을 제목 또는 내용으로 조회하는 API.")
+//	public Page<BoardResponseDto> findBoardsByTitleAndContent(String keyword) {
+//		return boardService.findBoardsByTitleAndContent(keyword);
+//	}
     
     /**
      * 게시글 수정
