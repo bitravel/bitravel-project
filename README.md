@@ -5,7 +5,7 @@ Bitravel Project Main Repository
 
 처음 사용하실 때는 웹 위주로 작동 방식을 익히셔도 좋습니다.
 
-## 기술 스택 (updating..)
+## 사용 기술 (updating..)
 * Java (Spring Boot, Gradle, JPA Hibernate)
 * Python(Pandas, Numpy, Selenium)
 * HTML/CSS
