@@ -1,7 +1,9 @@
 package com.bitravel.controller;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -11,13 +13,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bitravel.data.dto.WeatherDto;
 import com.bitravel.data.entity.Travel;
 import com.bitravel.service.TravelService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -88,11 +93,30 @@ public class TravelController {
     	return travelService.deleteById(id);
     }
     
-//    @PostMapping("/weather")
-//    @ApiOperation(value = "여행지 날씨 조회", notes = "여행지의 7일간 일기예보를 조회하는 API. 기상청 단기예보/중기예보 API를 활용한다.")
-//    public List<Travel> weathersByTravel(final String name) {
-//    	return travelService.detailsByName(name);
-//    }
+    @PostMapping("/weather/mid")
+    @ApiOperation(value = "여행지 중기 날씨 조회", notes = "여행지의 3~7일간 일기예보를 조회하는 API. 기상청 단기예보/중기예보 API를 활용한다.")
+    public String weathersMiddleByTravel(@RequestBody final WeatherDto param) {
+    	log.info(param.getLatitude()+"check");
+    	
+    	try {
+			return travelService.weathersMiddleByTravel(param);
+		} catch (IOException | JSONException e) {
+			e.printStackTrace();
+		}
+    	return null;
+    }
     
+    @PostMapping("/weather/short")
+    @ApiOperation(value = "여행지 단기 날씨 조회", notes = "여행지의 오늘~모레까지의 일기예보를 조회하는 API. 기상청 단기예보/중기예보 API를 활용한다.")
+    public String weathersShortByTravel(@RequestBody final WeatherDto param) {
+    	log.info(param.getLatitude()+"check");
+    	
+    	try {
+			return travelService.weathersShortByTravel(param);
+		} catch (IOException | JSONException e) {
+			e.printStackTrace();
+		}
+    	return null;
+    }
     
 }
