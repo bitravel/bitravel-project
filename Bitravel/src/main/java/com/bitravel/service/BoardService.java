@@ -55,9 +55,6 @@ public class BoardService {
     public Page<Board> findAll(Pageable pageable) {
     	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
     	pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardId"));
-        //Sort sort = Sort.by(Direction.DESC, "boardId");
-        //List<Board> list = boardRepository.findAll(sort);
-        //return list.stream().map(BoardResponseDto::new).collect(Collectors.toList());
     	return boardRepository.findAll(pageable);
     }
     
@@ -65,64 +62,35 @@ public class BoardService {
      * 게시글 통합 검색 결과 조회
      */
     @Transactional
-    public List<BoardResponseDto> findBoards(String keyword) {
+    public Page<Board> findBoards(String keyword, Pageable pageable) {
 
-        List<Board> list = boardRepository.findByNicknameContainingOrBoardTitleContainingOrBoardContentContaining(keyword, keyword, keyword);
-        Collections.sort(list, new Comparator<Board>() {
-			@Override
-			public int compare(Board o1, Board o2) {
-				return (int) (o2.getBoardId()-o1.getBoardId());
-			}
-        });
-        return list.stream().map(BoardResponseDto::new).collect(Collectors.toList());
+    	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+    	pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardId"));
+        return boardRepository.findByNicknameContainingOrBoardTitleContainingOrBoardContentContaining(keyword, keyword, keyword, pageable);
     }
     
     /**
      * 게시글 닉네임 검색 결과 조회
      */
     @Transactional
-    public List<BoardResponseDto> findBoardsByNickname(String keyword) {
-
-        List<Board> list = boardRepository.findByNicknameContaining(keyword);
-        Collections.sort(list, new Comparator<Board>() {
-			@Override
-			public int compare(Board o1, Board o2) {
-				return (int) (o2.getBoardId()-o1.getBoardId());
-			}
-        });
-        return list.stream().map(BoardResponseDto::new).collect(Collectors.toList());
+    public Page<BoardResponseDto> findBoardsByNickname(String keyword, Pageable pageable) {
+        return boardRepository.findByNicknameContaining(keyword, pageable);
     }
     
     /**
      * 게시글 제목 검색 결과 조회
      */
     @Transactional
-    public List<BoardResponseDto> findBoardsByTitle(String keyword) {
-
-        List<Board> list = boardRepository.findByBoardTitleContaining(keyword);
-        Collections.sort(list, new Comparator<Board>() {
-			@Override
-			public int compare(Board o1, Board o2) {
-				return (int) (o2.getBoardId()-o1.getBoardId());
-			}
-        });
-        return list.stream().map(BoardResponseDto::new).collect(Collectors.toList());
+    public Page<BoardResponseDto> findBoardsByTitle(String keyword, Pageable pageable) {
+        return boardRepository.findByBoardTitleContaining(keyword, pageable);
     }
     
     /**
      * 게시글 제목+내용 검색 결과 조회
      */
     @Transactional
-    public List<BoardResponseDto> findBoardsByTitleAndContent(String keyword) {
-
-        List<Board> list = boardRepository.findByBoardTitleContainingOrBoardContentContaining(keyword, keyword);
-        Collections.sort(list, new Comparator<Board>() {
-			@Override
-			public int compare(Board o1, Board o2) {
-				return (int) (o2.getBoardId()-o1.getBoardId());
-			}
-        });
-        return list.stream().map(BoardResponseDto::new).collect(Collectors.toList());
+    public Page<BoardResponseDto> findBoardsByTitleAndContent(String keyword, Pageable pageable) {
+        return boardRepository.findByBoardTitleContainingOrBoardContentContaining(keyword, keyword, pageable);
     }
     
     /**

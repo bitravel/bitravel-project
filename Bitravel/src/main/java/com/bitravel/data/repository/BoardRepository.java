@@ -2,17 +2,20 @@ package com.bitravel.data.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.bitravel.data.dto.BoardResponseDto;
 import com.bitravel.data.entity.Board;
 
 // Entity가 하나 추가될 때마다 별개의 Repository class가 필요함
 public interface BoardRepository extends JpaRepository<Board, Long>{
-	List<Board> findByNicknameContainingOrBoardTitleContainingOrBoardContentContaining(String nickname, String boardTitle, String boardContent);
+	Page<Board> findByNicknameContainingOrBoardTitleContainingOrBoardContentContaining(String nickname, String boardTitle, String boardContent, Pageable pageable);
 
-	List<Board> findByNicknameContaining(String keyword);
+	Page<BoardResponseDto> findByNicknameContaining(String keyword, Pageable pageable);
 
-	List<Board> findByBoardTitleContaining(String keyword);
+	Page<BoardResponseDto> findByBoardTitleContaining(String keyword, Pageable pageable);
 	
-	List<Board> findByBoardTitleContainingOrBoardContentContaining(String boardTitle, String boardContent);
+	Page<BoardResponseDto> findByBoardTitleContainingOrBoardContentContaining(String boardTitle, String boardContent, Pageable pageable);
 }
