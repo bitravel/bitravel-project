@@ -20,9 +20,7 @@ import com.bitravel.service.TravelService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -96,7 +94,6 @@ public class TravelController {
     @PostMapping("/weather/mid")
     @ApiOperation(value = "여행지 중기 날씨 조회", notes = "여행지의 3~7일간 일기예보를 조회하는 API. 기상청 단기예보/중기예보 API를 활용한다.")
     public String weathersMiddleByTravel(@RequestBody final WeatherDto param) {
-    	log.info(param.getLatitude()+"check");
     	
     	try {
 			return travelService.weathersMiddleByTravel(param);
@@ -109,7 +106,6 @@ public class TravelController {
     @PostMapping("/weather/short")
     @ApiOperation(value = "여행지 단기 날씨 조회", notes = "여행지의 오늘~모레까지의 일기예보를 조회하는 API. 기상청 단기예보/중기예보 API를 활용한다.")
     public String weathersShortByTravel(@RequestBody final WeatherDto param) {
-    	log.info(param.getLatitude()+"check");
     	
     	try {
 			return travelService.weathersShortByTravel(param);
