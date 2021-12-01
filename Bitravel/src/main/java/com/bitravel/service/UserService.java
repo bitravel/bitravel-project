@@ -80,7 +80,7 @@ public class UserService {
 		if(StringUtils.hasText(jwt) && jwt.startsWith("Bearer "))
 			jwt = jwt.substring(7);
 		else {
-			log.debug("유효한 header를 찾을 수 없음");
+			log.info("유효한 header를 찾을 수 없음");
 			return false;
 		}
 					

@@ -46,14 +46,14 @@
                             </p>
                             <div class="position-relative">
                                 <div>
-                                    <form action="api/login" method="post">
+                                 <!--     <form id="loginForm" method="post">-->
                                         <div class="input-icon-group mb-3">
                                             <span class="input-icon">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
                                                     <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z"/>
                                                 </svg>
                                             </span>
-                                            <input type="text" name="email" class="form-control" autofocus placeholder="아이디 입력">
+                                            <input type="text" name="email" id="email" class="form-control" autofocus placeholder="아이디 입력">
                                         </div>
                                         <div class="input-icon-group mb-3">
                                             <span class="input-icon">
@@ -62,7 +62,7 @@
                                                     <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
                                                 </svg>
                                             </span>
-                                            <input type="password" name="password" class="form-control" placeholder="비밀번호 입력">
+                                            <input type="password" name="password" id="password" class="form-control" placeholder="비밀번호 입력">
                                         </div>
                                         
                                            
@@ -73,15 +73,15 @@
                                         
                                         
                                         <div class="d-grid">
-                                            <button class="btn btn-primary" type="submit">
+                                            <button class="btn btn-primary" type="button" onclick="login()">
                                                 로그인
                                             </button>
                                         </div>
-                                    </form>
+                                   <!--  </form> -->
 
                                     <!---->
                                     <p class="pt-4 small text-muted">
-                                        회원이 아니세요? <a href="/signup" class="ms-2 text-dark fw-semibold link-underline">Sign Up</a>
+                                        회원이 아니세요? <a href="/signup" class="ms-2 text-dark fw-semibold link-underline">회원가입</a>
                                     </p>
                                     <!--Divider-->
                                     <div class="d-flex align-items-center py-3">
@@ -114,7 +114,52 @@
         </main>
         
         <!-- scripts -->
-        <script src="/assets/js/theme.bundle.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+		<script src="/assets/js/theme.bundle.js"></script>
+		<script type="text/javascript">
+			
+			async function login () {
+				var email = document.getElementById('email').value;
+				var password = document.getElementById('password').value;
+				var param = {'email':email, 'password':password};
+				loginToken(param);
+			};
+			
+			async function loginToken(param) {
+				
+				console.log(JSON.stringify(param));
+				
+				fetch('/api/login', {
+	        		method: 'POST', /*데이터 생성은 무조건 post 방식 이용*/
+	        		headers: { 
+	        			'Content-Type': 'application/json',
+	        		}, /*API 호출 시, GET 방식이 아닌 요청은 Content-Type을 application/json으로 설정한다. */
+	        		body: JSON.stringify(param), /*데이터 전달에 사용되는 옵션으로, params 객체에 담긴 정보를 API 서버로 전달한다.*/
+	        
+	        	}).then(response => {
+	        		if (!response.ok) {
+	        			throw new Error('일시적인 오류입니다. 다시 시도해 보세요.');
+	        		}
+	        		return response.json();
+	        	}).then(json => {
+	        		console.log(json);
+	        		var now = new Date();
+	        		var time = now.getTime();
+	        		var expireDate = time+24*60*60*1000;
+	        		now.setTime(expireDate);
+	        		// js에서는 Http only를 설정할 수 없고, server에서 설정할 수 있어야 하나
+	        		// 현재 spring에서 server-less 설정이 되어 있고 Spring security 적용 중이어 cookie를 다루는 것이 까다롭다.
+	        		// 시간대는 UTC 기준이다. (한국보다 9시간 느림)
+	        		document.cookie = "Authorization="+json.token+"; expires="+now.toUTCString()+"; path=/; domain=localhost;secure=true;";
+	        		
+	        		location.href = '/';
+	        		
+	        	}).catch(error => {
+	        		alert('오류가 발생하였습니다. \n'+error);
+	        	});
+			};
+		
+		</script>
     </body>
 
 </html>

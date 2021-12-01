@@ -36,15 +36,6 @@ public class TravelController {
     }
 
     /**
-     * 여행지 리스트 조회
-     */
-    @GetMapping("/travels")
-    @ApiOperation(value = "여행지 목록 조회", notes = "여행지 목록을 조회하는 API.")
-    public List<Travel> findAll() {
-        return travelService.findAll();
-    }
-
-    /**
      * 여행지 수정
      */
     @PatchMapping("/travels/{id}")
@@ -96,5 +87,12 @@ public class TravelController {
     public Boolean deleteById(@PathVariable Long id) {	
     	return travelService.deleteById(id);
     }
+    
+//    @PostMapping("/weather")
+//    @ApiOperation(value = "여행지 날씨 조회", notes = "여행지의 7일간 일기예보를 조회하는 API. 기상청 단기예보/중기예보 API를 활용한다.")
+//    public List<Travel> weathersByTravel(final String name) {
+//    	return travelService.detailsByName(name);
+//    }
+    
     
 }

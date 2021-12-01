@@ -40,25 +40,35 @@ public class UserController {
 	private final UserService userService;
 	
 	@PostMapping("/login")
-	public String login(@Valid LoginDto loginDto, HttpServletResponse response) throws IOException {
+	public ResponseEntity<TokenDto> login(@RequestBody LoginDto loginDto, HttpServletResponse response) throws IOException {
+		log.info(loginDto.getEmail()+" "+loginDto.getPassword()+" check");
 		try {
 			TokenDto tokenInfo = userService.getUserAuthentication(loginDto);
 			if(tokenInfo==null) {
 				ScriptUtil.alertAndBackPage(response, "비밀번호를 다시 입력해 주세요.");
 				return null;
 			}
-			String jwt = tokenInfo.getToken();
-			response.setHeader(JwtFilter.AUTHORIZATION_HEADER, "Bearer "+jwt);
+			String jwt = tokenInfo.getToken();	
+			jwt = "Bearer "+jwt;
+			tokenInfo.setToken(jwt);
+			return ResponseEntity.ok(tokenInfo);
 		} catch (Exception e) {
 			ScriptUtil.alertAndBackPage(response, "아이디를 찾을 수 없습니다.");
 			return null;
 		}
-		return "index";
 	}
 
-	@PostMapping("/logout")
+	@GetMapping("/logout")
 	public String logout (HttpServletRequest request, HttpServletResponse response) {
-		String jwt = response.getHeader(JwtFilter.AUTHORIZATION_HEADER);
+		String[] Cookies = request.getHeader("Cookie").split("; ");
+		String bearerToken = "";
+		for(int i=0;i<Cookies.length;i++) {
+			if(Cookies[i].indexOf(JwtFilter.AUTHORIZATION_HEADER)>-1) {
+				bearerToken = Cookies[i].replace(JwtFilter.AUTHORIZATION_HEADER, "");
+				break;
+			}
+		}
+		String jwt = bearerToken.substring(1);
 		log.info("token: "+jwt);
 		if(userService.CancelUserAuthentication(jwt)) {
 			// 실제 구현 완료하고 나면 반드시 redirect해야 함
