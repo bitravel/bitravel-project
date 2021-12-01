@@ -1,22 +1,14 @@
 /**
  * 
  */
-var travel;
-    	
-		window.onload = () => {
-			
-			findTravel();
-		}
-    
 		/**
          * 여행지 조회
          */
 
-        function findTravel() {
+        function findTravel(id) {
 
-            const id = "[[${id}]]";
-
-            fetch(`/api/travels/${id}`).then(response => {
+            var url = "/api/travels/"+id;
+            fetch(url).then(response => {
             	if (!response.ok) {
         			throw new Error('Request failed...');
         	    }
@@ -142,7 +134,7 @@ var travel;
 			} else if (hour<15) {
 				timeShort = "1100";
 			} else if (hour<18) {
-				timeShort = "1500";
+				timeShort = "1400";
 			} else if (hour<21) {
 				timeShort = "1700";
 			} else if (hour<24) {
@@ -180,7 +172,7 @@ var travel;
            		json = json.replaceAll(', ', '", "');
            		json = json.replaceAll('}', '"}');
            		json = json.replaceAll('}", "{', '}; {');
-           		json = json.replace(']"}", "pageNo":"1", "numOfRows":"650", "totalCount":"737"}"}"}',"");
+           		json = json.replace(']',"; ");
            		var list = json.split("; ");
            		
            		var skyList = new Array();
@@ -190,6 +182,9 @@ var travel;
            		var nowH = now.getHours()+1+'00';
            		var i=0;
            		list.forEach((obj)=> {
+					if(obj.startsWith('"')) {
+						return false;
+					}
            			var row = JSON.parse(obj);
            			if(row['fcstTime']==nowH)
                			if(row['category']=="SKY") {
@@ -199,7 +194,6 @@ var travel;
                				i++;
                			}
            		});
-           		
             	for(var i=0;i<3;i++) {
             		var id = 'weather'+i;
             		var tag = front;
@@ -247,7 +241,8 @@ var travel;
             		then.setDate(then.getDate()+i);
             		var thisDay = (then.getMonth()+1)+'월 '+then.getDate()+'일 ('+week[then.getDay()]+')</span><br>';        		
              		
-            		tag += middle;
+					tag += middle;
+
             		if(i==0)
             			tag += "오늘</span><br>";
             		else if(i==1)
@@ -260,7 +255,6 @@ var travel;
             		const elem = document.getElementById(id);
  					elem.innerHTML = tag;
             	};
-           	}).catch(error => {
            	});
 			
 			fetch("/api/weather/mid", {
@@ -286,7 +280,7 @@ var travel;
            		json = json.replace('}', '"}');
            		json = JSON.parse(json);
            		
-            	for(var i=3;i<8;i++) {
+            	for(var i=3;i<7;i++) {
             		var id = 'weather'+i;
             		var tag = front;
             		var key = 'wf'+i;
@@ -333,7 +327,6 @@ var travel;
  					elem.innerHTML = tag;
             	};
 
-           	}).catch(error => {
            	});
 		}
 
