@@ -1,5 +1,6 @@
 package com.bitravel.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,13 @@ public class UserPageController {
     (@RequestParam("userEmail") String email, Model model) {
     	model.addAttribute("userEmail", email);
     	return "/user/signUp3";
+    }
+    
+    
+    @GetMapping("/admin")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public String openAdminPage() {
+    	return "/user/admin";
     }
 	
 }
