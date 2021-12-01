@@ -47,3 +47,5 @@ out/
 **/vender/**
 **/videos/**
 **/docs/**
+**/js/custom/**
+**/static/css/**
