@@ -5,18 +5,19 @@ Bitravel Project Main Repository
 
 처음 사용하실 때는 웹 위주로 작동 방식을 익히셔도 좋습니다.
 
-## 사용 스택 (updating..)
+## 기술 스택 (updating..)
 * Java (Spring Boot, Gradle, JPA Hibernate)
 * Python(Pandas, Numpy, Selenium)
 * HTML/CSS
-* Javascript (jQuery -> Vanilla JS)
+* Javascript (jQuery)
 * MySQL
 * Windows 10
 * Linux Ubuntu
 * Docker (Redis)
 * Visual Studio Code
 * Eclipse EE
-* Primary Sources (summernote, Assan 4)
+* 공공데이터 (Tour API, 기상청 단기예보/중기예보 API)
+* Primary Sources (summernote lite, Assan 4, bootstrap, Font Awesome)
 * to be updated...
 
 
