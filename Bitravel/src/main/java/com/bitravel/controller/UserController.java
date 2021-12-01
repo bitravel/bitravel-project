@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -132,7 +133,7 @@ public class UserController {
 	}
 
 	@GetMapping("/user/list")
-	//@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public ResponseEntity<List<UserDto>> allUserList() {
 		return ResponseEntity.ok(userService.getAllUserList());
 	}
@@ -143,19 +144,19 @@ public class UserController {
 	}
 
 	@PostMapping("/user/modify")
-	//@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	public ResponseEntity<User> modifyUser (UserDto userDto) {
 		return ResponseEntity.ok(userService.updateUser(userDto));
 	}
 
 	@PostMapping("/user/modifyPassword")
-	//@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	public ResponseEntity<Boolean> modifyUserPassword (String email, String password) {
 		return ResponseEntity.ok(userService.updateUserPassword(email, password));
 	}
 
 	@PostMapping("user/delete")
-	//@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	public ResponseEntity<Boolean> deleteUser(String email) {
 		return ResponseEntity.ok(userService.deleteUser(email));
 	}
