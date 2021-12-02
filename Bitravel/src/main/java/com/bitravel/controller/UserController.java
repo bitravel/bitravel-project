@@ -137,10 +137,20 @@ public class UserController {
 	public ResponseEntity<List<UserDto>> allUserList() {
 		return ResponseEntity.ok(userService.getAllUserList());
 	}
-
-	@GetMapping("/user/search")
-	public ResponseEntity<List<UserDto>> userListByNickname(String nickname) {
-		return ResponseEntity.ok(userService.getUserListBynickname(nickname));
+	
+	@GetMapping("/user/search/nickname")
+	public ResponseEntity<List<UserDto>> userListByNickname(String keyword) {
+		return ResponseEntity.ok(userService.getUserListBynickname(keyword));
+	}
+	
+	@GetMapping("/user/search/realname")
+	public ResponseEntity<List<UserDto>> userListByRealname(String keyword) {
+		return ResponseEntity.ok(userService.getUserListByrealname(keyword));
+	}
+	
+	@GetMapping("/user/search/email")
+	public ResponseEntity<List<UserDto>> userListByEmail(String keyword) {
+		return ResponseEntity.ok(userService.getUserListByEmail(keyword));
 	}
 
 	@PostMapping("/user/modify")
