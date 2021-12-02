@@ -20,12 +20,12 @@
 	<!-- The Modal -->
 	<div class="container mt-3">
 		<hr>
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal_1">
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal_1" id="openAdminUser">
 			회원관리 페이지 열기
 		</button>
 
 		<hr>
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal_2">
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal_2"  id="openAdminReport">
 			신고관리 페이지 열기
 		</button>
 		<hr>
@@ -48,232 +48,48 @@
 				</div>
 				<!-- Modal body -->
 				<div class="modal-body">
-
+				<form id="user-search-form" method="POST" autocomplete="off">
+				<div class="btn-group">
 					<div class="btn-group">
-						<div class="btn-group">
-							<button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">상태(전체)</button>
-							<div class="dropdown-menu">
-								<a class="dropdown-item" href="#">1</a>
-								<a class="dropdown-item" href="#">2</a>
-							</div>
-
-							<button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">이름</button>
-							<div class="dropdown-menu">
-								<a class="dropdown-item" href="#">이름</a>
-								<a class="dropdown-item" href="#">이메일</a>
-							</div>
-						</div>
+						<select class="btn btn-primary dropdown-toggle" name="select1">
+							<option value="realname">이름</option>
+							<option value="email">이메일</option>
+							<option value="nickname">닉네임</option>
+						</select>
+					</div>
 
 						<div>
-							<form class="d-flex">
-								<input class="form-control me-2" type="text" placeholder="Search">
-								<button class="btn btn-primary" type="button">Search</button>
-							</form>
+							<div class="d-flex">
+								<input class="form-control me-2" type="text" placeholder="회원정보 검색" id="userSearch">
+							</div>
 						</div>
 						<div class="btn-group">
-							<button type="button" class="btn btn-primary">조회</button>
-							<button type="button" class="btn btn-primary">삭제</button>
-							<button type="button" class="btn btn-primary">등록</button>
-						</div>
+							<button type="button" class="btn btn-primary" id="search1" onclick="searchKeyword();">검색</button>
+							<button type="button" class="btn btn-primary" id="delete1" onclick="deleteUser();">삭제</button>
+						</div>	
 					</div>
+					</form>
 					<!--테이블-->
+					<form id="admin-user-form" method="post" autocomplete="off">
 					<table class="table table-striped">
 						<thead>
 							<tr>
+								<th>선택</th>
 								<th>번호</th>
-								<th>아이디</th>
 								<th>사용자 이름</th>
-								<th>사용자 이메일</th>
-								<th>전화번호</th>
-								<th>등록일</th>
-								<th>가입상태</th>
+								<th>닉네임</th>
+								<th>이메일</th>
+								<th>나이</th>
+								<th>성별</th>
+								<th>거주지</th>
+								<th>가입일시</th>
+								<th>권한</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr>
-								<td>1</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
-
-							<tr>
-								<td>3</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
-
+						<tbody id="userList">
 						</tbody>
 					</table>
+					</form>
 				</div>
 
 				<!-- Modal footer -->
@@ -304,12 +120,6 @@
 
 					<div class="btn-group">
 						<div class="btn-group">
-							<button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">상태(전체)</button>
-							<div class="dropdown-menu">
-								<a class="dropdown-item" href="#">1</a>
-								<a class="dropdown-item" href="#">2</a>
-							</div>
-
 							<button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">이름</button>
 							<div class="dropdown-menu">
 								<a class="dropdown-item" href="#">이름</a>
@@ -320,11 +130,10 @@
 						<div class="btn-group">
 							<button type="button" class="btn btn-primary">조회</button>
 							<button type="button" class="btn btn-primary">삭제</button>
-							<button type="button" class="btn btn-primary">등록</button>
 						</div>
 					</div>
 					<!--테이블-->
-					<table class="table table-striped">
+					<table class="table table-striped" id="reportList">
 						<thead>
 							<tr>
 								<th>번호</th>
@@ -337,6 +146,7 @@
 							</tr>
 						</thead>
 						<tbody>
+
 							<tr>
 								<td>1</td>
 								<td>Doe</td>
@@ -372,11 +182,15 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
 				</div>
-
 			</div>
 		</div>
 	</div>
 
+     <!-- scripts -->
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="/assets/js/moment.min.js"></script>
+	<script type="text/javascript" src="/js/bitravel/adminUser.js"></script>	
+	<script type="text/javascript" src="/js/bitravel/adminReport.js"></script>
 </body>
 
 </html>
