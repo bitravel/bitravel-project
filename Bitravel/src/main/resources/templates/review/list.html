@@ -91,6 +91,17 @@
 				document.getElementById('list').innerHTML = html;
 			});
 		}
+		 function option_bt(act) { 
+			    if (act=='all'){
+			    	document.edit.action = "/board/boards/search/all";
+			    } else if (act=="title") {
+			    	document.edit.action = "/board/boards/search/title";
+			    } else if (act=="titleandcontent") {
+			    	document.edit.action = "/board/boards/search/titleandcontent";
+			    } else {
+			    	document.edit.action = "/board/boards/search/nickname";
+			    }
+			}
 
 	/*]]>*/
     </script>
