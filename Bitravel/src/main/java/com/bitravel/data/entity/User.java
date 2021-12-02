@@ -15,6 +15,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -31,8 +32,13 @@ import lombok.Setter;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class User implements UserDetails {
 	// 초안 기준 1차 설계 진행 중
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6923379214282610871L;
 
 	@SuppressWarnings("unchecked")
 	public User(String subject, Collection<? extends GrantedAuthority> authorities) {
@@ -88,6 +94,31 @@ public class User {
             joinColumns = {@JoinColumn(name = "userId", referencedColumnName = "userId")},
             inverseJoinColumns = {@JoinColumn(name = "roleName", referencedColumnName = "roleName")})
     private Set<Authority> authorities;
+    
+	@Override
+	public String getUsername() {
+		return this.email;
+	}
+	
+	@Override
+	public boolean isAccountNonExpired() {
+		return activated;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 
 }
 
