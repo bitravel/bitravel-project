@@ -1,7 +1,11 @@
 package com.bitravel.data.dto;
 
+import java.sql.Timestamp;
+import java.util.Iterator;
+
 import javax.validation.constraints.NotNull;
 
+import com.bitravel.data.entity.Authority;
 import com.bitravel.data.entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -52,6 +56,14 @@ public class UserDto {
 	@NotNull
 	private String userSmallGov;
 	
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@NotNull
+	private Timestamp userDate;
+	
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@NotNull
+	private String userAuthority;
+	
 	// Response로 User Entity를 가져오는 경우
 	public UserDto(User entity) {
 		this.userId = entity.getUserId();
@@ -64,6 +76,13 @@ public class UserDto {
 		this.ageString = Integer.toString(this.age);
 		this.userLargeGov = entity.getUserLargeGov();
 		this.userSmallGov = entity.getUserSmallGov();
+		this.userDate = entity.getUserDate();
+		Iterator<Authority> iterator = entity.getAuthorities().iterator();
+		while(iterator.hasNext()) {
+			this.userAuthority = iterator.next().getRoleName();
+			if(this.userAuthority.equals("ROLE_ADMIN"))
+				break;
+		}		
 	}
 	
 }
