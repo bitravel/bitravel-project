@@ -193,6 +193,24 @@ public class UserService {
 		List<User> list = userRepository.findByNicknameContaining(nickname);
 		return list.stream().map(UserDto::new).collect(Collectors.toList());
 	}
+	
+	// 회원 본명으로 검색한 결과 불러오기
+	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public List<UserDto> getUserListByrealname(String realname) {
+		// 인기도 등 다른 조건으로 정렬하는 기능 추가할 수 있음
+		// Sort sort = Sort.by(Direction.ASC, "userId");
+		List<User> list = userRepository.findByRealNameContaining(realname);
+		return list.stream().map(UserDto::new).collect(Collectors.toList());
+	}
+	
+	// 회원 이메일으로 검색한 결과 불러오기
+	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public List<UserDto> getUserListByEmail(String email) {
+		// 인기도 등 다른 조건으로 정렬하는 기능 추가할 수 있음
+		// Sort sort = Sort.by(Direction.ASC, "userId");
+		List<User> list = userRepository.findByEmailContaining(email);
+		return list.stream().map(UserDto::new).collect(Collectors.toList());
+	}
 
 	// 회원정보 입력받은 내용으로 수정하기
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
@@ -234,6 +252,18 @@ public class UserService {
 		}
 		User user = userTemp.get();
 		userRepository.deleteById(user.getUserId());
+		return true;
+	}
+	
+	// 회원정보 삭제하기
+	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public boolean deleteUserByList(List<Long> list) {
+		try {
+			userRepository.deleteAllById(list);
+		} catch (IllegalArgumentException e) {
+			log.info("올바르지 않은 삭제 요청");
+			return false;
+		}
 		return true;
 	}
 	

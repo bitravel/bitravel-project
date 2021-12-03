@@ -1,6 +1,7 @@
 /**
  * 
  */
+
  async function login () {
 				var email = document.getElementById('email').value;
 				var password = document.getElementById('password').value;
@@ -31,9 +32,12 @@
 	        		// 현재 spring에서 server-less 설정이 되어 있고 Spring security 적용 중이어 cookie를 다루는 것이 까다롭다.
 	        		// 시간대는 UTC 기준이다. (한국보다 9시간 느림)
 	        		document.cookie = "Authorization="+json.token+"; expires="+now.toUTCString()+"; path=/; domain=localhost;secure=true;";
-	        		
-	        		location.href = '/';
-	        		
+					
+					if(history.length>2)
+						history.back();
+					else
+						location.href = '/';
+						
 	        	}).catch(error => {
 	        		alert('오류가 발생하였습니다. \n'+error);
 	        	});

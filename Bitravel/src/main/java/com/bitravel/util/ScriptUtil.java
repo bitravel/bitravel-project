@@ -25,4 +25,11 @@ public class ScriptUtil {
 		out.println("<script>alert('"+alertText+"'); history.go(-1);</script>");
 		out.flush();
 	}
+	
+	public static void alert(HttpServletResponse response, String alertText) throws IOException {
+		init(response);
+		PrintWriter out = response.getWriter();
+		out.println("<script>alert('"+alertText+"');</script>");
+		out.flush();
+	}
 }

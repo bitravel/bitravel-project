@@ -36,12 +36,12 @@ public class GlobalExceptionHandler {
     /*
      * HTTP 500 Exception
      */
-    @ExceptionHandler(Exception.class)
+/*   @ExceptionHandler(Exception.class)
     protected ResponseEntity<ErrorResponse> handleException(final Exception e) {
         log.error("handleException: {}", e.getMessage());
         return ResponseEntity
                 .status(ErrorCode.INTERNAL_SERVER_ERROR.getStatus().value())
                 .body(new ErrorResponse(ErrorCode.INTERNAL_SERVER_ERROR));
-    }
+    }*/
 
 }

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class UserPageController {
 	
     @GetMapping("/login")
+    @PreAuthorize("isAnonymous()")
     public String openLoginPage() {
         return "/user/login";
     }
