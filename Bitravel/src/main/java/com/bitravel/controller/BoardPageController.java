@@ -50,8 +50,9 @@ public class BoardPageController {
      * 게시글 상세 페이지
      */
     @GetMapping("/detail/{id}")
-    public String openDetailWriting(@PathVariable final Long id, Model model) {
+    public String openDetailWriting(@PathVariable final Long id, Model model, @RequestParam(value = "page") final Long page) {
         model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
+        
         return "board/detail";
     }
     /**

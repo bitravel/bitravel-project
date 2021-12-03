@@ -356,7 +356,7 @@
                             	
                             	<td>[[${list.boardId}]]</td>
                             	<td>
-                            		<a th:href="@{'/board/detail/'+${list.boardId}}">
+                            		<a th:href="@{'/board/detail/'+${list.boardId}(page=${boardList.number+1})}">
                             			[[${list.boardTitle}]]
                             		</a>
                             	</td>
