@@ -24,7 +24,6 @@ import com.bitravel.data.dto.UserTravelDto;
 import com.bitravel.data.entity.User;
 import com.bitravel.jwt.JwtFilter;
 import com.bitravel.service.UserService;
-import com.bitravel.util.ScriptUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -46,7 +45,7 @@ public class UserController {
 		try {
 			TokenDto tokenInfo = userService.getUserAuthentication(loginDto);
 			if(tokenInfo==null) {
-				ScriptUtil.alertAndBackPage(response, "비밀번호를 다시 입력해 주세요.");
+				response.setStatus(401);
 				return null;
 			}
 			String jwt = tokenInfo.getToken();	
@@ -54,7 +53,7 @@ public class UserController {
 			tokenInfo.setToken(jwt);
 			return ResponseEntity.ok(tokenInfo);
 		} catch (Exception e) {
-			ScriptUtil.alertAndBackPage(response, "아이디를 찾을 수 없습니다.");
+			response.setStatus(500);
 			return null;
 		}
 	}

@@ -19,9 +19,14 @@
 	        		body: JSON.stringify(param), /*데이터 전달에 사용되는 옵션으로, params 객체에 담긴 정보를 API 서버로 전달한다.*/
 	        
 	        	}).then(response => {
-	        		if (!response.ok) {
+	        		if(response.status==401) {
+						throw new Error('인증에 실패하였습니다. 올바른 비밀번호를 입력하세요.');
+					} else if (response.status==500) {
+	        			throw new Error('인증에 실패하였습니다. 올바른 아이디를 입력하세요.');
+					}else if (!response.ok) {
 	        			throw new Error('일시적인 오류입니다. 다시 시도해 보세요.');
-	        		}
+					} 
+					console.log(response);
 	        		return response.json();
 	        	}).then(json => {
 	        		var now = new Date();
