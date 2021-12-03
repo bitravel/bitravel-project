@@ -4,7 +4,7 @@
  	$(document).ready(function() {	
 	
 	const largeSelect = document.getElementById('nowLarge');
-	
+	const smallSelect = document.getElementById('nowSmall');
 	/**
      * 광역지자체 선택이 안되있을 것이므로 기초지자체는 선택 불가능하게 설정
      */
@@ -44,8 +44,6 @@
      */
    		$('#nowLarge').on("change", function(){
    			
-   			const smallSelect = document.getElementById('nowSmall');
-   			
 	    	if(largeSelect.value == "") {
 	    		smallSelect.disabled = true;
 	    		smallSelect.disabled = 'disabled';
@@ -79,6 +77,29 @@
 	    });
 	});
 	
+
+	$('#foreignCheck').on("change", function(){
+
+		const largeSelect = document.getElementById('nowLarge');
+		const smallSelect = document.getElementById('nowSmall');
+
+		var foreign = document.getElementById('foreignCheck');
+		if(foreign.checked) {
+			largeSelect.disabled = true;
+	    	largeSelect.disabled = 'disabled';
+	    	smallSelect.disabled = true;
+	    	smallSelect.disabled = 'disabled';
+	    } else {
+			largeSelect.disabled = '';
+	    	largeSelect.disabled = false;
+	    	smallSelect.disabled = '';
+	    	smallSelect.disabled = false;
+		}
+
+	});
+
+
+
 		/**
          * Gender radio button의 선택 여부에 따라 label 색 바꿔줌
          */

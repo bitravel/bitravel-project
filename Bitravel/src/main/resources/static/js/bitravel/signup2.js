@@ -1,14 +1,14 @@
 /**
  * 
  */
- 	$(document).ready(function() {	
-		loadLargeSelect('largeSelect0', 'smallSelect0');
-		
+
+$(document).ready(function() {	
+	loadLargeSelect('largeSelect0', 'smallSelect0');
 		/**
 	     * 광역지자체 값이 바뀔 때마다 기초자치단체 리스트 가져오기
 	     */  
-		     $(document).on("change", "select[name='large']", function(){
-		    	 var allSelect = (document.getElementsByTagName('select').length)/2;
+		 $(document).on("change", "select[name='large']", function(){
+		    var allSelect = (document.getElementsByTagName('select').length)/2;
 		    	$("select[name='large']").each (function () {
 		    		var largeId = $(this).attr('id');
 		    		var smallId = 'smallSelect' + largeId[11];
@@ -46,9 +46,10 @@
 			    		
 			    	}
 		    	});
-		     });
+		});
 		
-	});
+});
+
 	
 	function loadLargeSelect(largeId, smallId) {		
 		
@@ -155,8 +156,10 @@
 	
 	
 	// 결과 UserRegion class에 저장
-	function save() {
+	function save(userEmail) {
 		
+		console.log(userEmail);
+
 		if(!isValid())
 			return false;
 		console.log('validated');
@@ -164,7 +167,6 @@
 		var allSelect = (document.getElementsByTagName('select').length)/2;
 		
 		var resultList = new Array();
-		var userMail = "[[${userEmail}]]";
 		
 		for(var i=0;i<allSelect;i++) {
 			var largeId = 'largeSelect'+i;
@@ -172,7 +174,7 @@
 			
 			var data = new Object();
 				
-			data.userEmail = userMail;
+			data.userEmail = userEmail;
 			data.largeGov = document.getElementById(largeId).value;
 			data.smallGov = document.getElementById(smallId).value;
 			
@@ -197,7 +199,7 @@
     		}
     
     		alert('저장되었습니다.');
-    		location.href = '/signup/third?userEmail='+ userMail;
+    		location.href = '/signup/third?userEmail='+ userEmail;
     
     	}).catch(error => {
     		alert('오류가 발생하였습니다. \n'+error);

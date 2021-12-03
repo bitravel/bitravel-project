@@ -3,7 +3,8 @@
  */
  	var count = 0;
 	var checkedArr = new Array();
-	
+	var userEmail;
+
 		$(document).ready(function() {	
 			
 			 /**
@@ -22,9 +23,15 @@
 			const cardRear6 = '">\n<div class="btn-rise-bg bg-tint-danger"></div>\n<div class="btn-rise-text"><i class="fs-5 bi bi-hand-thumbs-down"></i></div></label>\n</div></div>';
 			const rowRear = '</article>';
 			
-		     userEmail = "[[${userEmail}]]";
-		     url = '/api/regions/travels'+"?userEmail="+userEmail;
-		    fetch(url).then(response => {
+			const nowUrl = new URL(window.location.href);
+			const urlParams = nowUrl.searchParams;
+
+			userEmail = urlParams.get('userEmail');
+			
+			console.log(userEmail);
+		    url = '/api/regions/travels'+"?userEmail="+userEmail;
+			
+			fetch(url).then(response => {
 		    	
 		    	if (!response.ok) {
 					throw new Error('Request failed...');
@@ -113,7 +120,7 @@
 		   		
 		   		
 		   	}).catch(error => {
-		    	alert('리스트 불러오기에 실패했습니다.'+error);
+		    	alert('리스트 불러오기에 실패했습니다.\n'+error);
 		   	});
 		    
 		});
@@ -156,7 +163,6 @@
 			var allCards = document.getElementsByClassName('card-body card-hover position-relative p-0').length;
 			
 			var resultList = new Array();
-			var userMail = "[[${userEmail}]]";
 			
 			for(var i=0;i<allCards;i++) {
 				var likeNow = 'like'+i;
@@ -166,7 +172,7 @@
 				if(document.getElementById(likeNow).checked) {
 					var data = new Object();
 					
-					data.userEmail = userMail;
+					data.userEmail = userEmail;
 					data.travelId = document.getElementById(travelNow).value;
 					data.isLiked = '1';
 					data.isVisited = '0';
