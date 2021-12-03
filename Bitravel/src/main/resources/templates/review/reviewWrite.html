@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
 
     <head>
         <!-- Required meta tags -->
@@ -34,8 +34,12 @@
         <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
         <!-- Main CSS -->
         <link href="/assets/css/theme.min.css" rel="stylesheet">
+        <!--모달-->
+        <style> .note-dialog .modal-dialog{ z-index:1050; } .modal-nav </style>
+		
+		
         
-
+		
         <title>여행후기 작성 페이지</title>
     </head>
 
@@ -358,21 +362,71 @@
                 </div>
 
             </section>
-            <div class="row mb-1">
-                <div class="col-4 mx-auto mb-3 mb-md-0 py-4">
-                    <div class="card-over rounded-3 overflow-hidden">
-                        <img src="/assets/img/800x600/6.jpg" alt="" class="img-fluid img-zoom">
-                        <div class="card-overlay py-4 px-3 text-white d-flex align-items-end">
-                            <ul class="list-unstyled overlay-items">
-                                <li>
-                                    <h5 class="fs-4 mb-1">해운대</h5>
-                                </li>
-                                <li><span>Awesome Subtitle</span></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!-- 모달 버튼 -->
+            <div class="container mt-3">
+				<hr>
+				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal_1">
+					여행지 추가
+				</button>
+			</div>
+			<!-- 모달 내부 내용 -->
+            <div class="modal" id="myModal_1">
+				<div class="modal-dialog modal-fullscreen">
+					<div class="modal-content note-dialog modal-dialog">
+		
+						<!-- Modal Header -->
+						<div class="modal-header">
+							<h4 class="modal-title">회원관리 목록</h4>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+						</div>
+						<!--Modal navbar-->
+						<div class="modal-nav">
+		
+						</div>
+						<!-- Modal body -->
+						<div class="modal-body">
+		
+							<div class="btn-group">
+								<div class="btn-group">
+									<button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">여행지명</button>
+								</div>
+		
+								<div>
+									<form class="d-flex" >
+										<input class="form-control me-2" type="text" id="name" onkeypress="findTravelName()" placeholder="Search" >
+										<input type="text" style="width:0px; visibility: hidden;">
+										<button class="btn btn-primary" type="button" onclick="findTravelName();">Search</button>
+									</form>
+								</div>
+								<div class="btn-group">
+									<button type="button" class="btn btn-primary">등록</button>
+								</div>
+							</div>
+							<!--테이블-->
+							<table class="table table-striped">
+								<thead>
+									<tr>
+										<th>번호</th>
+										<th>여행지</th>
+										<th>주소</th>
+										<th>id</th>
+									</tr>
+								</thead>
+								<tbody id="list">
+		
+								</tbody>
+							</table>
+						</div>
+		
+						<!-- Modal footer -->
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+						</div>
+		
+					</div>
+				</div>
+			</div>
+			
             <!-- 글작성 창 시작-->
             <section class="position-relative">
                 <div class="container py-2 py-1 mb-9">
@@ -400,170 +454,12 @@
 							<button type="button" onclick="save();"
 								class="btn btn-primary waves-effect waves-light">저장하기</button>
 						</div>
-					</form>
-					<script th:inline="javascript">
-					/*<![CDATA[*/						
-						$(document).ready(function() {
-							 $('#summernote').summernote({
-						    		placeholder: '내용을 입력하세요. (10자 이상)',
-						    		minHeight: 370,
-						    		maxHeight: null,
-						    		focus: true,
-						    		lang: 'ko-KR',
-					    			callbacks : { //다중 이미지 처리 반복문..
-										onImageUpload : function(files, editor, welEditable) {
-											for (var i = 0; i < files.length; i++) {
-												sendFile(files[i], this);
-											}
-										}
-									}
-						    	});
-							 console.log("인식여부");
-					         findreview();
-						});
-						
-						
-						/**
-						 * 게시글 조회
-						 */
-						function findreview() {
-				
-						    const id = /*[[ ${id} ]]*/;
-				
-						    if ( !id ) {
-						    	return false;
-						    }
-						    fetch(`/api/reviews/${id}`).then(response => {
-						    	if (!response.ok) {
-									throw new Error('Request failed...');
-							    }
-						    	console.log("id: "+id);
-						    	return response.json();
-				
-						   	}).then(json => {
-						   		console.table(json);
-						   		const form = document.getElementById('form');
-						   		form.reviewTitle.value = json.reviewTitle;
-						   		$('#summernote').summernote('code', json.reviewContent); // summernote html코드로 받으려면 'code'사용!
-						   		
-				
-						   	}).catch(error => {
-						    	alert('게시글 정보를 찾을 수 없습니다.');
-						    	location.href = '/review/reviewList';
-						   	});
-						}
-						
-						function goBack() {
-							
-							const id = /*[[ ${id} ]]*/;
-							
-							if(!id)
-								location.href = '/review/reviewList';
-							else
-								location.href = '/review/reviewDetail/'+id;
-							
-						}
-						
-						function sendFile(file, el) {
-							var form_data = new FormData();
-							form_data.append('file', file);
-							$.ajax({
-								data : form_data,
-								type : "POST",
-								url : '/image',
-								cache : false,
-								contentType : false,
-								enctype : 'multipart/form-data',
-								processData : false,
-								success : function(url) {
-									$(el).summernote('insertImage', url, function($image) {
-										$image.css('width', "50%");
-									});
-								}
-							});
-						}
-				
-						
-						/**
-				         * 유효성 검사
-				         */
-				        function isValid() {
-				        
-				          	const form = document.getElementById('form');
-				        
-				        	if (!form.reviewTitle.value.trim()) {
-				        		alert('제목을 입력해 주세요.');
-				        		form.reviewTitle.value = '';
-				        		form.reviewTitle.focus();
-				        		return false;
-				        	}
-				        
-				        
-				        	if (!form.summernote.value.trim()) {
-				        		alert('내용을 입력해 주세요.');
-				        		form.summernote.value = '';
-				        		form.summernote.focus();
-				        		return false;
-				        	}
-				        
-				        	return true;
-				        }
-				        
-				        /**
-				         * 게시글 등록(생성/수정)
-				         */
-				        function save() {
-				        
-				        	if ( !isValid() ) {
-				        		return false;
-				        	}
-				        
-				        	const form = document.getElementById('form');
-				        	const params = {
-				        		reviewTitle: form.reviewTitle.value,
-				        		reviewContent: form.summernote.value
-				        	};
-				        	
-				        	const id = /*[[ ${id} ]]*/;
-				        	const uri = ( id ) ? `/api/reviews/${id}` : '/api/reviews';
-				        	const method = ( id ) ? 'PATCH' : 'POST';
-				        	
-				        	fetch(uri, {
-				        		method: method, /*데이터 생성은 무조건 post 방식 이용*/
-				        		headers: {'Content-Type': 'application/json'}, /*API 호출 시, GET 방식이 아닌 요청은 Content-Type을 application/json으로 설정한다. */
-				        		body: JSON.stringify(params) /*데이터 전달에 사용되는 옵션으로, params 객체에 담긴 게시글 정보를 API 서버로 전달한다.*/
-				        
-				        	}).then(response => {
-				        		if (!response.ok) {
-				        			throw new Error('Request failed...');
-				        		}
-				        		if (!id) {
-				        			alert('저장되었습니다.');
-				        			location.href = '/review/reviewList';
-				        		} else {
-				        			alert('저장되었습니다.');
-									location.href = '/review/reviewDetail/'+id;
-				        		}
-				        		
-				        
-				        	}).catch(error => {
-				        		alert('오류가 발생하였습니다.');
-				        	});
-				        }
-				
-					/*]]>*/
-				    </script>
+						</form>
                     </div>
                 </div>
             </section>
         </main>
         <!-- 글작성 창 종료 -->
-
-        
-        
-
-        
-        
 
         <!--Footer Start-->
         <footer id="footer-default" class="bg-dark text-white position-relative">
@@ -749,11 +645,224 @@
                 </path>
             </svg>
         </a>
-        <!-- scripts -->
-        <script src="/assets/js/theme.bundle.js"></script>
+
 
         <!-- 글작성 scripts -->
-        <script src="/assets/js/theme.bundle.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
 
     </body>
+    <script th:inline="javascript">
+	/*<![CDATA[*/
+		/**
+		* 모달창 앞으로 이동
+		**/
+
+		$('#myModal_1').appendTo("body") 
+		
+		/**
+		* 썸머노트 에디터
+		**/
+		
+		
+		$(document).ready(function() {
+			 $('#summernote').summernote({
+		    		placeholder: '내용을 입력하세요. (10자 이상)',
+		    		minHeight: 370,
+		    		maxHeight: null,
+		    		focus: true,
+		    		lang: 'ko-KR',
+	    			callbacks : { //다중 이미지 처리 반복문..
+						onImageUpload : function(files, editor, welEditable) {
+							for (var i = 0; i < files.length; i++) {
+								sendFile(files[i], this);
+							}
+						}
+					}
+		    	});
+			 console.log("인식여부");
+	         findreview();
+		});
+	
+		function sendFile(file, el) {
+			var form_data = new FormData();
+			form_data.append('file', file);
+			$.ajax({
+				data : form_data,
+				type : "POST",
+				url : '/image',
+				cache : false,
+				contentType : false,
+				enctype : 'multipart/form-data',
+				processData : false,
+				success : function(url) {
+					$(el).summernote('insertImage', url, function($image) {
+						$image.css('width', "50%");
+					});
+				}
+			});
+		}
+			
+		/**
+		* 여행지 이름으로 리스트 조회
+		**/
+		 
+		 function findTravelName() {
+			
+			let input = document.getElementById('name');
+			var url = '/api/travels/name/' + input.value;
+			
+			fetch(url).then(response => {
+				if (!response.ok) {
+					console.log("Request failed...");
+					throw new Error('Request failed...');
+				}
+				return response.json();
+				console.log("good")
+			}).then(json => {
+				let html = '';
+
+				if (!json.length) {
+					html = '<td colspan="4">등록된 게시글이 없습니다.</td>';
+				} else {
+					json.forEach((obj, idx) => {
+						html += `
+							<tr>
+    							<td>${json.length - idx}</td>
+    							<td class="text-left">
+    								<a href="javascript: void(0);" onclick="put(${obj.travelId, obj.travelName})">${obj.travelName}</a>
+    							</td>
+    							<td>${obj.address}</td>
+    							<td>${obj.travelId}</td>
+							</tr>
+						`;
+					});
+				}
+
+				document.getElementById('list').innerHTML = html;
+			});
+		}
+		
+		/**
+	        * 유효성 검사
+	        */
+	       function isValid() {
+	       
+	         	const form = document.getElementById('form');
+	       
+	       	if (!form.reviewTitle.value.trim()) {
+	       		alert('제목을 입력해 주세요.');
+	       		form.reviewTitle.value = '';
+	       		form.reviewTitle.focus();
+	       		return false;
+	       	}
+	       
+	       
+	       	if (!form.summernote.value.trim()) {
+	       		alert('내용을 입력해 주세요.');
+	       		form.summernote.value = '';
+	       		form.summernote.focus();
+	       		return false;
+	       	}
+	       
+	       	return true;
+	       }
+		
+		/**
+         * 게시글 등록(생성/수정)
+         */
+        function save() {
+        
+        	if ( !isValid() ) {
+        		return false;
+        	}
+        
+        	const form = document.getElementById('form');
+        	const params = {
+        		travelId: form.travelId.value,
+        		travelName: form.travelName.value,
+        		boardTitle: form.boardTitle.value,
+        		boardContent: form.summernote.value
+        	};
+        	
+        	const id = /*[[ ${id} ]]*/;
+        	const uri = ( id ) ? `/api/reviews/${id}` : '/api/reviews';
+        	const method = ( id ) ? 'PATCH' : 'POST';
+        	
+        	fetch(uri, {
+        		method: method, /*데이터 생성은 무조건 post 방식 이용*/
+        		headers: {'Content-Type': 'application/json'}, /*API 호출 시, GET 방식이 아닌 요청은 Content-Type을 application/json으로 설정한다. */
+        		body: JSON.stringify(params) /*데이터 전달에 사용되는 옵션으로, params 객체에 담긴 게시글 정보를 API 서버로 전달한다.*/
+        
+        	}).then(response => {
+        		if (!response.ok) {
+        			throw new Error('Request failed...');
+        		}
+        		if (!id) {
+        			alert('저장되었습니다.');
+        			location.href = '/review/reviewList';
+        		} else {
+        			alert('저장되었습니다.');
+					location.href = '/review/reviewDetail/'+id;
+        		}
+        		
+        	}).catch(error => {
+        		alert('오류가 발생하였습니다.');
+        	});
+        }
+		
+		/**
+		 * 리뷰글 상세 조회
+		 */
+		function findreview() {
+
+		    const id = /*[[ ${id} ]]*/;
+
+		    if ( !id ) {
+		    	return false;
+		    }
+		    fetch(`/api/reviews/${id}`).then(response => {
+		    	if (!response.ok) {
+					throw new Error('Request failed...');
+			    }
+		    	console.log("id: "+id);
+		    	return response.json();
+
+		   	}).then(json => {
+		   		console.table(json);
+		   		const form = document.getElementById('form');
+		   		form.reviewTitle.value = json.reviewTitle;
+		   		$('#summernote').summernote('code', json.reviewContent); // summernote html코드로 받으려면 'code'사용!
+		   		
+
+		   	}).catch(error => {
+		    	alert('게시글 정보를 찾을 수 없습니다.');
+		    	location.href = '/review/reviewList';
+		   	});
+		}
+		
+		
+		function goBack() {
+			
+			const id = /*[[ ${id} ]]*/;
+			
+			if(!id)
+				location.href = '/review/reviewList';
+			else
+				location.href = '/review/reviewDetail/'+id;
+			
+		}
+		/**
+         * 여행지 삽입
+         **/
+		function put(travelId, travelName) {
+        	var travelId = travelId;
+        	var travelName = travelName;
+        	//모달창 닫기
+        	$("#모달창 아이디값").modal("hide");
+        	$("travelId").val(travelId);
+            $("#travelName").val(travelName);
+        }
+ 
+	/*]]>*/
+    </script>
 </html>
