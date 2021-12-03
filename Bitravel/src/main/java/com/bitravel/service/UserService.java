@@ -255,6 +255,18 @@ public class UserService {
 		return true;
 	}
 	
+	// 회원정보 삭제하기
+	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public boolean deleteUserByList(List<Long> list) {
+		try {
+			userRepository.deleteAllById(list);
+		} catch (IllegalArgumentException e) {
+			log.info("올바르지 않은 삭제 요청");
+			return false;
+		}
+		return true;
+	}
+	
 	// 포인트만 수정하기
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Boolean updatePoint(String email, Integer point) {

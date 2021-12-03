@@ -165,10 +165,16 @@ public class UserController {
 		return ResponseEntity.ok(userService.updateUserPassword(email, password));
 	}
 
-	@PostMapping("user/delete")
+	@GetMapping("user/delete")
 	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	public ResponseEntity<Boolean> deleteUser(String email) {
 		return ResponseEntity.ok(userService.deleteUser(email));
 	}
-
+	
+	@PostMapping("user/delete")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	public ResponseEntity<Boolean> deleteUserByList(@RequestBody List<Long> list) {
+		return ResponseEntity.ok(userService.deleteUserByList(list));
+	}
+	
 }
