@@ -57,11 +57,9 @@ public class UserDto {
 	private String userSmallGov;
 	
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	@NotNull
 	private Timestamp userDate;
 	
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	@NotNull
 	private String userAuthority;
 	
 	// Response로 User Entity를 가져오는 경우
