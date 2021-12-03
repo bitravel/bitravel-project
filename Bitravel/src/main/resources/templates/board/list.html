@@ -382,7 +382,7 @@
                                 </tr>
                             </thead>
                             <tbody id="list">
-                            <tr th:each="list: ${boardList}">
+                            <tr th:each="list, index: ${boardList}">
                             	
                             	<td>[[${list.boardId}]]</td>
                             	<td>
@@ -403,9 +403,8 @@
 		<!--/* 검색 영역 */-->
 				<div class="row col-8 ">
                     <div class="d-flex justify-content-center">
-                        <form action="/board/boards/search/all" name="edit" method="GET" class="input-group">
+                        <form action="/board/search/all/list" name="edit" method="GET" class="input-group">
                             <label for="selectSizing" class="mb-2"></label>
-
                             <div class="width-120">
                                 <select onchange="option_bt(this.value);" data-choices='{"searchEnabled":false}' class="form-control">
                                     <option value="all">전체</option>
@@ -416,7 +415,6 @@
                             </div>
                             &nbsp;&nbsp;
                             <input type="text" name="keyword" class="form-control" placeholder="키워드를 입력해 주세요." />
-
                             <button type="submit" class="btn btn-primary">
                                 <span aria-hidden="true" class="glyphicon glyphicon-search">검색</span>
                             </button>
@@ -435,33 +433,33 @@
                             
                             <!-- first page -->
                             <li class="page-item" >
-						      <a class="page-link" th:href="@{./list(page=1)}" aria-label="First">
+						      <a class="page-link" th:href="@{./list(keyword=${keyword}, page=1)}" aria-label="First">
 						        <span aria-hidden="true"> FIRST </span>
 						      </a>
 						    </li>
 						    
                             <!-- previous page -->
                             <li class="page-item" th:class="${boardList.first} ? 'disabled'">
-                                <a class="page-link" th:href="${boardList.first} ? '#' : @{./list(page=${boardList.number})}" aria-label="Previous">
+                                <a class="page-link" th:href="${boardList.first} ? '#' : @{./list(keyword=${keyword}, page=${boardList.number})}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
                             
                             <!-- present page -->
                             <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == boardList.number + 1} ? 'active'">
-                            <a class="page-link" th:text="${page}" th:href="@{./list(page=${page})}">&nbsp;</a>
+                            <a class="page-link" th:text="${page}" th:href="@{./list(keyword=${keyword}, page=${page})}">&nbsp;</a>
                             </li>
 							
 							<!-- next page -->
                             <li class="page-item" th:class="${boardList.last} ? 'disabled'">
-                                <a class="page-link" th:href="${boardList.last} ? '#' : @{./list(page=${boardList.number + 2})}" aria-label="Next">
+                                <a class="page-link" th:href="${boardList.last} ? '#' : @{./list(keyword=${keyword}, page=${boardList.number + 2})}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
                             
                             <!-- last page -->
                             <li class="page-item">
-						      <a class="page-link" th:href="@{./list(page=${boardList.totalPages})}" aria-label="Last">
+						      <a class="page-link" th:href="@{./list(keyword=${keyword}, page=${boardList.totalPages})}" aria-label="Last">
 						        <span aria-hidden="true">LAST</span>
 						      </a>
 						    </li>
@@ -736,13 +734,13 @@
 		**/
 		function option_bt(act) { 
 		    if (act=='all'){
-		    	document.edit.action = "/board/boards/search/all";
+		    	document.edit.action = "/board/search/all/list";
 		    } else if (act=='title') {
-		    	document.edit.action = "/board/boards/search/title";
+		    	document.edit.action = "/board/search/title/list";
 		    } else if (act=='titleandcontent') {
-		    	document.edit.action = "/board/boards/search/titleandcontent";
+		    	document.edit.action = "/board/search/titleandcontent/list";
 		    } else {
-		    	document.edit.action = "/board/boards/search/nickname";
+		    	document.edit.action = "/board/search/nickname/list";
 		    }
 		}
 
