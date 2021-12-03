@@ -429,11 +429,11 @@
 						function goBack() {
 							
 							const id = /*[[ ${id} ]]*/;
-							
+
 							if(!id)
 								location.href = '/board/list';
 							else
-								location.href = '/board/detail/'+id;
+								location.href = "javascript:history.back(-1)";
 							
 						}
 						
