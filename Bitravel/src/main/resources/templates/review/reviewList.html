@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="kr" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <!-- Required meta tags -->
@@ -517,30 +517,45 @@
     <!--Swiper-slide 3 items per-view (minimum - 1024px width)-->
     <section class="position-relative overflow-hidden">
         <div class="container pb-7 pb-lg-12 mb-2">
+            <h2 class="mb-5">최신 후기</h2>
+            <!-- Swiper -->
+            <div class="swiper-container swiper-3">
+                <div class="swiper-wrapper">
+                	<div class="swiper-slide" th:each="list: ${reviewList}">
+                        <div class="vh-auto bg-white">
+                            <article class="card-hover border-0 d-flex">
+                                <a href="#" class="stretched-link"></a>
+                                <div class="card-body position-relative p-0" >
+                                    <div class="d-block position-relative overflow-hidden mb-4">
+                                        <img src="/assets/img/800x600/2.jpg" class="img-fluid img-zoom" alt="">
+                                    </div>
+                                    <h5 class="mb-3">[[${list.reviewTitle}]]</h5>
+                                    <div class="blog-content">
+                                        <p class="mb-4">[[${list.reviewContent}]]</p>
+                                        <div class="text-primary fw-semibold small pb-2 border-bottom border-primary" th:text="${#dates.format(list.reviewDate, 'yyyy-MM-dd')}">
+                                           [[${list.reviewDate}]]</div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+               	</div>
+                <br><br><br>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination swiper3-pagination"></div>
+                <!-- Add Arrows -->
+                <div class="swiper-button-next swiper3-button-next"></div>
+                <div class="swiper-button-prev swiper3-button-prev"></div>
+            </div>
+        </div>
+
+        <div class="container pb-7 pb-lg-12 mb-2">
             <h2 class="mb-5">내 취향에 맞는 제주도 여행지(추천)</h2>
             <!-- Swiper -->
             <div class="swiper-container swiper-3">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
-                            <article class="card-hover border-0 d-flex">
-                                <a href="#" class="stretched-link"></a>
-                                <div class="card-body position-relative p-0">
-                                    <div class="d-block position-relative overflow-hidden mb-4">
-                                        <img src="/assets/img/800x600/2.jpg" class="img-fluid img-zoom" alt="">
-                                    </div>
-                                    <h5 class="mb-3">ㅎㅇㅎㅇㅎㅇㅎㅇㅎ</h5>
-                                    <div class="blog-content">
-                                        <p class="mb-4">ㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎㅇㅎ</p>
-                                        <div class="text-primary fw-semibold small pb-2 border-bottom border-primary">
-                                            Mar 9, 2021</div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
+                        <div class="vh-auto bg-white">
                             <article class="card-hover border-0 d-flex">
                                 <a href="#" class="stretched-link"></a>
                                 <div class="card-body position-relative p-0">
@@ -559,7 +574,43 @@
                         </div>
                     </div>
                     <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
+                        <div class="vh-auto bg-white">
+                            <article class="card-hover border-0 d-flex">
+                                <a href="#" class="stretched-link"></a>
+                                <div class="card-body position-relative p-0">
+                                    <div class="d-block position-relative overflow-hidden mb-4">
+                                        <img src="/assets/img/800x600/2.jpg" class="img-fluid img-zoom" alt="">
+                                    </div>
+                                    <h5 class="mb-3">4 Business Trends Fueling the Future of Business</h5>
+                                    <div class="blog-content">
+                                        <p class="mb-4">Lorem ipsum is placeholder text commonly used in the graphic,
+                                            print, and publishing...</p>
+                                        <div class="text-primary fw-semibold small pb-2 border-bottom border-primary">
+                                            Mar 9, 2021</div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                  
+              
+                </div>
+                <br><br><br>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination swiper3-pagination"></div>
+                <!-- Add Arrows -->
+                <div class="swiper-button-next swiper3-button-next"></div>
+                <div class="swiper-button-prev swiper3-button-prev"></div>
+            </div>
+        </div>
+
+        <div class="container pb-7 pb-lg-12 mb-2">
+            <h2 class="mb-5">내 취향에 맞는 제주도 여행지(추천)</h2>
+            <!-- Swiper -->
+            <div class="swiper-container swiper-3">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="vh-auto bg-white">
                             <article class="card-hover border-0 d-flex">
                                 <a href="#" class="stretched-link"></a>
                                 <div class="card-body position-relative p-0">
@@ -578,7 +629,7 @@
                         </div>
                     </div>
                     <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
+                        <div class="vh-auto bg-white">
                             <article class="card-hover border-0 d-flex">
                                 <a href="#" class="stretched-link"></a>
                                 <div class="card-body position-relative p-0">
@@ -597,7 +648,7 @@
                         </div>
                     </div>
                     <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
+                        <div class="vh-auto bg-white">
                             <article class="card-hover border-0 d-flex">
                                 <a href="#" class="stretched-link"></a>
                                 <div class="card-body position-relative p-0">
@@ -616,7 +667,45 @@
                         </div>
                     </div>
                     <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
+                        <div class="vh-auto bg-white">
+                            <article class="card-hover border-0 d-flex">
+                                <a href="#" class="stretched-link"></a>
+                                <div class="card-body position-relative p-0">
+                                    <div class="d-block position-relative overflow-hidden mb-4">
+                                        <img src="/assets/img/800x600/2.jpg" class="img-fluid img-zoom" alt="">
+                                    </div>
+                                    <h5 class="mb-3">4 Business Trends Fueling the Future of Business</h5>
+                                    <div class="blog-content">
+                                        <p class="mb-4">Lorem ipsum is placeholder text commonly used in the graphic,
+                                            print, and publishing...</p>
+                                        <div class="text-primary fw-semibold small pb-2 border-bottom border-primary">
+                                            Mar 9, 2021</div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="vh-auto bg-white">
+                            <article class="card-hover border-0 d-flex">
+                                <a href="#" class="stretched-link"></a>
+                                <div class="card-body position-relative p-0">
+                                    <div class="d-block position-relative overflow-hidden mb-4">
+                                        <img src="/assets/img/800x600/2.jpg" class="img-fluid img-zoom" alt="">
+                                    </div>
+                                    <h5 class="mb-3">4 Business Trends Fueling the Future of Business</h5>
+                                    <div class="blog-content">
+                                        <p class="mb-4">Lorem ipsum is placeholder text commonly used in the graphic,
+                                            print, and publishing...</p>
+                                        <div class="text-primary fw-semibold small pb-2 border-bottom border-primary">
+                                            Mar 9, 2021</div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="vh-auto bg-white">
                             <article class="card-hover border-0 d-flex">
                                 <a href="#" class="stretched-link"></a>
                                 <div class="card-body position-relative p-0">
@@ -650,7 +739,7 @@
             <div class="swiper-container swiper-3">
                 <div class="swiper-wrapper">
                     <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
+                        <div class="vh-auto bg-white">
                             <article class="card-hover border-0 d-flex">
                                 <a href="#" class="stretched-link"></a>
                                 <div class="card-body position-relative p-0">
@@ -669,7 +758,7 @@
                         </div>
                     </div>
                     <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
+                        <div class="vh-auto bg-white">
                             <article class="card-hover border-0 d-flex">
                                 <a href="#" class="stretched-link"></a>
                                 <div class="card-body position-relative p-0">
@@ -688,7 +777,7 @@
                         </div>
                     </div>
                     <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
+                        <div class="vh-auto bg-white">
                             <article class="card-hover border-0 d-flex">
                                 <a href="#" class="stretched-link"></a>
                                 <div class="card-body position-relative p-0">
@@ -707,7 +796,7 @@
                         </div>
                     </div>
                     <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
+                        <div class="vh-auto bg-white">
                             <article class="card-hover border-0 d-flex">
                                 <a href="#" class="stretched-link"></a>
                                 <div class="card-body position-relative p-0">
@@ -726,7 +815,7 @@
                         </div>
                     </div>
                     <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
+                        <div class="vh-auto bg-white">
                             <article class="card-hover border-0 d-flex">
                                 <a href="#" class="stretched-link"></a>
                                 <div class="card-body position-relative p-0">
@@ -745,265 +834,7 @@
                         </div>
                     </div>
                     <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
-                            <article class="card-hover border-0 d-flex">
-                                <a href="#" class="stretched-link"></a>
-                                <div class="card-body position-relative p-0">
-                                    <div class="d-block position-relative overflow-hidden mb-4">
-                                        <img src="/assets/img/800x600/2.jpg" class="img-fluid img-zoom" alt="">
-                                    </div>
-                                    <h5 class="mb-3">4 Business Trends Fueling the Future of Business</h5>
-                                    <div class="blog-content">
-                                        <p class="mb-4">Lorem ipsum is placeholder text commonly used in the graphic,
-                                            print, and publishing...</p>
-                                        <div class="text-primary fw-semibold small pb-2 border-bottom border-primary">
-                                            Mar 9, 2021</div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                </div>
-                <br><br><br>
-                <!-- Add Pagination -->
-                <div class="swiper-pagination swiper3-pagination"></div>
-                <!-- Add Arrows -->
-                <div class="swiper-button-next swiper3-button-next"></div>
-                <div class="swiper-button-prev swiper3-button-prev"></div>
-            </div>
-        </div>
-
-        <div class="container pb-7 pb-lg-12 mb-2">
-            <h2 class="mb-5">내 취향에 맞는 제주도 여행지(추천)</h2>
-            <!-- Swiper -->
-            <div class="swiper-container swiper-3">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
-                            <article class="card-hover border-0 d-flex">
-                                <a href="#" class="stretched-link"></a>
-                                <div class="card-body position-relative p-0">
-                                    <div class="d-block position-relative overflow-hidden mb-4">
-                                        <img src="/assets/img/800x600/2.jpg" class="img-fluid img-zoom" alt="">
-                                    </div>
-                                    <h5 class="mb-3">4 Business Trends Fueling the Future of Business</h5>
-                                    <div class="blog-content">
-                                        <p class="mb-4">Lorem ipsum is placeholder text commonly used in the graphic,
-                                            print, and publishing...</p>
-                                        <div class="text-primary fw-semibold small pb-2 border-bottom border-primary">
-                                            Mar 9, 2021</div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
-                            <article class="card-hover border-0 d-flex">
-                                <a href="#" class="stretched-link"></a>
-                                <div class="card-body position-relative p-0">
-                                    <div class="d-block position-relative overflow-hidden mb-4">
-                                        <img src="/assets/img/800x600/2.jpg" class="img-fluid img-zoom" alt="">
-                                    </div>
-                                    <h5 class="mb-3">4 Business Trends Fueling the Future of Business</h5>
-                                    <div class="blog-content">
-                                        <p class="mb-4">Lorem ipsum is placeholder text commonly used in the graphic,
-                                            print, and publishing...</p>
-                                        <div class="text-primary fw-semibold small pb-2 border-bottom border-primary">
-                                            Mar 9, 2021</div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
-                            <article class="card-hover border-0 d-flex">
-                                <a href="#" class="stretched-link"></a>
-                                <div class="card-body position-relative p-0">
-                                    <div class="d-block position-relative overflow-hidden mb-4">
-                                        <img src="/assets/img/800x600/2.jpg" class="img-fluid img-zoom" alt="">
-                                    </div>
-                                    <h5 class="mb-3">4 Business Trends Fueling the Future of Business</h5>
-                                    <div class="blog-content">
-                                        <p class="mb-4">Lorem ipsum is placeholder text commonly used in the graphic,
-                                            print, and publishing...</p>
-                                        <div class="text-primary fw-semibold small pb-2 border-bottom border-primary">
-                                            Mar 9, 2021</div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
-                            <article class="card-hover border-0 d-flex">
-                                <a href="#" class="stretched-link"></a>
-                                <div class="card-body position-relative p-0">
-                                    <div class="d-block position-relative overflow-hidden mb-4">
-                                        <img src="/assets/img/800x600/2.jpg" class="img-fluid img-zoom" alt="">
-                                    </div>
-                                    <h5 class="mb-3">4 Business Trends Fueling the Future of Business</h5>
-                                    <div class="blog-content">
-                                        <p class="mb-4">Lorem ipsum is placeholder text commonly used in the graphic,
-                                            print, and publishing...</p>
-                                        <div class="text-primary fw-semibold small pb-2 border-bottom border-primary">
-                                            Mar 9, 2021</div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
-                            <article class="card-hover border-0 d-flex">
-                                <a href="#" class="stretched-link"></a>
-                                <div class="card-body position-relative p-0">
-                                    <div class="d-block position-relative overflow-hidden mb-4">
-                                        <img src="/assets/img/800x600/2.jpg" class="img-fluid img-zoom" alt="">
-                                    </div>
-                                    <h5 class="mb-3">4 Business Trends Fueling the Future of Business</h5>
-                                    <div class="blog-content">
-                                        <p class="mb-4">Lorem ipsum is placeholder text commonly used in the graphic,
-                                            print, and publishing...</p>
-                                        <div class="text-primary fw-semibold small pb-2 border-bottom border-primary">
-                                            Mar 9, 2021</div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
-                            <article class="card-hover border-0 d-flex">
-                                <a href="#" class="stretched-link"></a>
-                                <div class="card-body position-relative p-0">
-                                    <div class="d-block position-relative overflow-hidden mb-4">
-                                        <img src="/assets/img/800x600/2.jpg" class="img-fluid img-zoom" alt="">
-                                    </div>
-                                    <h5 class="mb-3">4 Business Trends Fueling the Future of Business</h5>
-                                    <div class="blog-content">
-                                        <p class="mb-4">Lorem ipsum is placeholder text commonly used in the graphic,
-                                            print, and publishing...</p>
-                                        <div class="text-primary fw-semibold small pb-2 border-bottom border-primary">
-                                            Mar 9, 2021</div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                </div>
-                <br><br><br>
-                <!-- Add Pagination -->
-                <div class="swiper-pagination swiper3-pagination"></div>
-                <!-- Add Arrows -->
-                <div class="swiper-button-next swiper3-button-next"></div>
-                <div class="swiper-button-prev swiper3-button-prev"></div>
-            </div>
-        </div>
-
-        <div class="container pb-7 pb-lg-12 mb-2">
-            <h2 class="mb-5">내 취향에 맞는 제주도 여행지(추천)</h2>
-            <!-- Swiper -->
-            <div class="swiper-container swiper-3">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
-                            <article class="card-hover border-0 d-flex">
-                                <a href="#" class="stretched-link"></a>
-                                <div class="card-body position-relative p-0">
-                                    <div class="d-block position-relative overflow-hidden mb-4">
-                                        <img src="/assets/img/800x600/2.jpg" class="img-fluid img-zoom" alt="">
-                                    </div>
-                                    <h5 class="mb-3">4 Business Trends Fueling the Future of Business</h5>
-                                    <div class="blog-content">
-                                        <p class="mb-4">Lorem ipsum is placeholder text commonly used in the graphic,
-                                            print, and publishing...</p>
-                                        <div class="text-primary fw-semibold small pb-2 border-bottom border-primary">
-                                            Mar 9, 2021</div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
-                            <article class="card-hover border-0 d-flex">
-                                <a href="#" class="stretched-link"></a>
-                                <div class="card-body position-relative p-0">
-                                    <div class="d-block position-relative overflow-hidden mb-4">
-                                        <img src="/assets/img/800x600/2.jpg" class="img-fluid img-zoom" alt="">
-                                    </div>
-                                    <h5 class="mb-3">4 Business Trends Fueling the Future of Business</h5>
-                                    <div class="blog-content">
-                                        <p class="mb-4">Lorem ipsum is placeholder text commonly used in the graphic,
-                                            print, and publishing...</p>
-                                        <div class="text-primary fw-semibold small pb-2 border-bottom border-primary">
-                                            Mar 9, 2021</div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
-                            <article class="card-hover border-0 d-flex">
-                                <a href="#" class="stretched-link"></a>
-                                <div class="card-body position-relative p-0">
-                                    <div class="d-block position-relative overflow-hidden mb-4">
-                                        <img src="/assets/img/800x600/2.jpg" class="img-fluid img-zoom" alt="">
-                                    </div>
-                                    <h5 class="mb-3">4 Business Trends Fueling the Future of Business</h5>
-                                    <div class="blog-content">
-                                        <p class="mb-4">Lorem ipsum is placeholder text commonly used in the graphic,
-                                            print, and publishing...</p>
-                                        <div class="text-primary fw-semibold small pb-2 border-bottom border-primary">
-                                            Mar 9, 2021</div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
-                            <article class="card-hover border-0 d-flex">
-                                <a href="#" class="stretched-link"></a>
-                                <div class="card-body position-relative p-0">
-                                    <div class="d-block position-relative overflow-hidden mb-4">
-                                        <img src="/assets/img/800x600/2.jpg" class="img-fluid img-zoom" alt="">
-                                    </div>
-                                    <h5 class="mb-3">4 Business Trends Fueling the Future of Business</h5>
-                                    <div class="blog-content">
-                                        <p class="mb-4">Lorem ipsum is placeholder text commonly used in the graphic,
-                                            print, and publishing...</p>
-                                        <div class="text-primary fw-semibold small pb-2 border-bottom border-primary">
-                                            Mar 9, 2021</div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
-                            <article class="card-hover border-0 d-flex">
-                                <a href="#" class="stretched-link"></a>
-                                <div class="card-body position-relative p-0">
-                                    <div class="d-block position-relative overflow-hidden mb-4">
-                                        <img src="/assets/img/800x600/2.jpg" class="img-fluid img-zoom" alt="">
-                                    </div>
-                                    <h5 class="mb-3">4 Business Trends Fueling the Future of Business</h5>
-                                    <div class="blog-content">
-                                        <p class="mb-4">Lorem ipsum is placeholder text commonly used in the graphic,
-                                            print, and publishing...</p>
-                                        <div class="text-primary fw-semibold small pb-2 border-bottom border-primary">
-                                            Mar 9, 2021</div>
-                                    </div>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="vh-35 bg-white">
+                        <div class="vh-auto bg-white">
                             <article class="card-hover border-0 d-flex">
                                 <a href="#" class="stretched-link"></a>
                                 <div class="card-body position-relative p-0">

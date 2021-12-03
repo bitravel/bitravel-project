@@ -11,8 +11,8 @@ import com.bitravel.data.entity.Travel;
 public interface TravelRepository extends JpaRepository<Travel, Long>{
 	// 제목으로 여행지 검색 (정렬 가능)
 	List<Travel> findByTravelNameContaining(String keyword, Sort sort);
-	// 제목으로 여행지 검색
-	List<Travel> findByTravelNameContaining(String keyword);
+	// 제목으로 여행지 검색 Containing = like
+	List<Travel> findByTravelNameContaining(String name);
 	// 광역자치단체로 여행지 검색 (정렬 가능)
 	List<Travel> findByLargeGov(String keyword, Sort sort);
 	// 광역자치단체로 여행지 검색

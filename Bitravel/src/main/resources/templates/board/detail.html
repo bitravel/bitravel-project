@@ -108,7 +108,7 @@
     	}
 
         /**
-         * 게시글 조회
+         * 게시글 상세 조회
          */
 
         function findBoard() {
@@ -313,8 +313,9 @@
          * 뒤로가기
          */
         function goList() {
-        	/* location.href = `/board/list?page=[]`; 페이지 넘버를 불러오는걸 모르겠습니다..*/
-        	location.href = "javascript:history.back(-1)"; 
+        	const url = window.location.search;
+			location.href = `/board/list` + url;
+			/* location.href = "javascript:history.back(-1)";*/ 
         }
 
         /**

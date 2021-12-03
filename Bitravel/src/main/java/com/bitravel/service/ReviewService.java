@@ -65,7 +65,8 @@ public class ReviewService {
      * 후기 리스트 조회
      */
     public Page<Review> findAll(Pageable pageable) {
-		pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "reviewId"));
+    	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+		pageable = PageRequest.of(page, 5, Sort.by(Sort.Direction.DESC, "reviewId"));
 //        Sort sort = Sort.by(Direction.DESC, "reviewId", "reviewDate");
 //        List<Review> list = reviewRepository.findAll(sort);
 //        return list.stream().map(ReviewResponseDto::new).collect(Collectors.toList());

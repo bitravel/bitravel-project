@@ -13,9 +13,9 @@ import com.bitravel.data.entity.Board;
 public interface BoardRepository extends JpaRepository<Board, Long>{
 	Page<Board> findByNicknameContainingOrBoardTitleContainingOrBoardContentContaining(String nickname, String boardTitle, String boardContent, Pageable pageable);
 
-	Page<BoardResponseDto> findByNicknameContaining(String keyword, Pageable pageable);
+	Page<Board> findByNicknameContaining(String keyword, Pageable pageable);
 
-	Page<BoardResponseDto> findByBoardTitleContaining(String keyword, Pageable pageable);
+	Page<Board> findByBoardTitleContaining(String keyword, Pageable pageable);
 	
-	Page<BoardResponseDto> findByBoardTitleContainingOrBoardContentContaining(String boardTitle, String boardContent, Pageable pageable);
+	Page<Board> findByBoardTitleContainingOrBoardContentContaining(String boardTitle, String boardContent, Pageable pageable);
 }

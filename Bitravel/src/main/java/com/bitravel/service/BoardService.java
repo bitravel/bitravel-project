@@ -73,7 +73,7 @@ public class BoardService {
      * 게시글 닉네임 검색 결과 조회
      */
     @Transactional
-    public Page<BoardResponseDto> findBoardsByNickname(String keyword, Pageable pageable) {
+    public Page<Board> findBoardsByNickname(String keyword, Pageable pageable) {
         return boardRepository.findByNicknameContaining(keyword, pageable);
     }
     
@@ -81,7 +81,7 @@ public class BoardService {
      * 게시글 제목 검색 결과 조회
      */
     @Transactional
-    public Page<BoardResponseDto> findBoardsByTitle(String keyword, Pageable pageable) {
+    public Page<Board> findBoardsByTitle(String keyword, Pageable pageable) {
         return boardRepository.findByBoardTitleContaining(keyword, pageable);
     }
     
@@ -89,7 +89,7 @@ public class BoardService {
      * 게시글 제목+내용 검색 결과 조회
      */
     @Transactional
-    public Page<BoardResponseDto> findBoardsByTitleAndContent(String keyword, Pageable pageable) {
+    public Page<Board> findBoardsByTitleAndContent(String keyword, Pageable pageable) {
         return boardRepository.findByBoardTitleContainingOrBoardContentContaining(keyword, keyword, pageable);
     }
     

@@ -68,12 +68,12 @@ public class TravelService {
 	 * 여행지 목록 조회 (여행지 이름)
 	 */
 	@Transactional(readOnly = true)
-	public List<Travel> detailsByName(String name) {
+	public List<TravelSimpleDto> detailsByName(String name) {
 		List<Travel> list = travelRepository.findByTravelNameContaining(name);
 		if(list.size() == 0) {
 			throw new CustomException(ErrorCode.POSTS_NOT_FOUND);
 		}
-		return list;
+		return list.stream().map(TravelSimpleDto::new).collect(Collectors.toList());
 	}
 
 	/**
