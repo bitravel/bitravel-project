@@ -72,7 +72,7 @@
     </div>
     <!-- /.card-content -->
     </th:block>
-	<!--  reply - box -->
+	<!--  댓글  -->
 	<th:block layout:fragment="add-content">
 		<div class="box-content">
 			<div class="card-content">
@@ -80,10 +80,10 @@
 					<h4 class="box-title pull-left">Comment</h4>
 					<!-- /.box-title -->
 				</div>
-
-				<form class="form-horizontal form-view">
+				<form class="form-horizontal form-view" >
 					<div class="input-group margin-bottom-20">
-						<input type="text" id="content" class="form-control" />
+						<input type="text" id="content" class="form-control" onkeydown="javascript: if (event.keyCode == 13) {insertComment();}">
+						<input type="text" style="width:0px; visibility: hidden;">
 						<div class="input-group-btn">
 							<button type="button" class="btn waves-effect waves-light" onclick="insertComment()">
 							<i class="fa fa-commenting" aria-hidden="true"></i>
@@ -352,7 +352,7 @@
             	alert('오류가 발생하였습니다.');
             });
     	}
-
+       
     /*]]>*/
     </script>
   </th:block>
