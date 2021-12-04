@@ -39,7 +39,7 @@ async function loginToken(param) {
 	        
 	}).then(response => {
 	    if(response.status==401) {
-			throw new Error('인증에 실패하였습니다. 올바른 비밀번호를 입력하세요.');
+		throw new Error('인증에 실패하였습니다. 올바른 비밀번호를 입력하세요.');
 		} else if (response.status==500) {
 	        throw new Error('인증에 실패하였습니다. 올바른 아이디를 입력하세요.');
 		}else if (!response.ok) {
@@ -52,7 +52,7 @@ async function loginToken(param) {
 	    var expireDate = time+24*60*60*1000;
 	    now.setTime(expireDate);
 	    // js에서는 Http only를 설정할 수 없고, server에서 설정할 수 있어야 하나
-	    // 현재 spring에서 server-less 설정이 되어 있고 Spring security 적용 중이어 cookie를 다루는 것이 까다롭다.
+	    // 현재 spring에서 state-less 설정이 되어 있고 Spring security 적용 중이어 cookie를 다루는 것이 까다롭다.
 	    // 시간대는 UTC 기준이다. (한국보다 9시간 느림)
 	    document.cookie = "Authorization="+json.token+"; expires="+now.toUTCString()+"; path=/; domain=localhost;secure=true;";
 					
