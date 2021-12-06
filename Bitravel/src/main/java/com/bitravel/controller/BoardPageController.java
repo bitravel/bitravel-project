@@ -3,6 +3,7 @@ package com.bitravel.controller;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -46,11 +47,12 @@ public class BoardPageController {
      * 게시글 상세 페이지
      */
     @GetMapping("/detail/{id}")
-    public String openDetailWriting(@PathVariable final Long id, Model model, @RequestParam(value = "page") final Long page) {
+    public String openDetailWriting(@PathVariable final Long id, Model model, @RequestParam(value = "page") @Nullable final Long page) {
         model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
         
         return "board/detail";
     }
+    
     /**
      * 게시글 통합 검색
      */
