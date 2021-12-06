@@ -515,12 +515,12 @@
 				        			location.href = '/board/list';
 				        		} else {
 				        			alert('저장되었습니다.');
-									location.href = '/board/detail/'+id;
+									location.href = "javascript:history.back(-1)";
 				        		}
 				        		
 				        
 				        	}).catch(error => {
-				        		alert('오류가 발생하였습니다.');
+				        		alert('저장에 실패했습니다.');
 				        	});
 				        }
 				
