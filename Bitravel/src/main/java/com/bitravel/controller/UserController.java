@@ -134,7 +134,11 @@ public class UserController {
 	@GetMapping("/user/list")
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public ResponseEntity<List<UserDto>> allUserList() {
-		return ResponseEntity.ok(userService.getAllUserList());
+		List<UserDto> list = userService.getAllUserList();
+		if(list.size()<1000)
+			return ResponseEntity.ok(list);
+		else
+			return ResponseEntity.ok(list.subList(0, 1000));
 	}
 	
 	@GetMapping("/user/search/nickname")
