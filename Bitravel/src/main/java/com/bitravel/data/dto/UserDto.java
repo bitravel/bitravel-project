@@ -40,6 +40,8 @@ public class UserDto {
 	
 	private Integer point;
 	
+	private String userImage;
+	
 	@NotNull
 	private String gender;
 	
@@ -75,6 +77,7 @@ public class UserDto {
 		this.userLargeGov = entity.getUserLargeGov();
 		this.userSmallGov = entity.getUserSmallGov();
 		this.userDate = entity.getUserDate();
+		this.userImage = entity.getUserImage();
 		Iterator<Authority> iterator = entity.getAuthorities().iterator();
 		while(iterator.hasNext()) {
 			this.userAuthority = iterator.next().getRoleName();

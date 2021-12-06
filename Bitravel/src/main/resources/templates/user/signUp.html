@@ -17,6 +17,76 @@
 	rel="stylesheet">
 <!-- Main CSS -->
 <link href="/assets/css/theme.min.css" rel="stylesheet">
+<style>
+    .round{
+        border-radius: 30px !important;
+        -moz-border-radius: 30px !important;
+        -khtml-border-radius: 30px !important;
+        -webkit-border-radius: 30px !important;
+    }
+
+    .photo {
+        display: inline-block;
+        vertical-align: middle;
+        border: 1px solid #d4d4d4;
+        margin: 0;
+        text-align: center;
+
+        background-size: 200px;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-color: #ECEFF1;
+        width:150px;
+        height:150px;
+        margin:0 auto 20px;
+        position:relative;
+    }
+
+    .icon_camera {
+        position:absolute;
+        bottom: -2px;
+        right: -5px;
+        min-width: 8px;
+        height: 30px;
+        line-height: 20px;
+        margin-top: -11px;
+        padding: 0 6px;
+        font-weight: normal;
+        font-size: 25px;
+        color: white;
+        text-align: center;
+        text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+        background: #4287f5;
+        border: 1px solid #166df7;
+        border-radius: 11px;
+        background-image: -webkit-linear-gradient(top, #4287f5, #166df7);
+        background-image: -moz-linear-gradient(top, #4287f5, #166df7);
+        background-image: -o-linear-gradient(top, #4287f5, #166df7);
+        background-image: linear-gradient(to bottom, #4287f5, #166df7);
+        -webkit-box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
+        box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
+    }
+
+
+    /* 이미지 */
+    .profile-pic {
+        max-width: 200px;
+        max-height: 200px;
+        display: block;
+    }
+
+    .file-upload {
+        display: none;
+    }
+
+    
+    .upload-button:hover {
+        transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+        color: #999;
+    }
+    
+</style>
+
 <title>BITravel 회원 가입</title>
 </head>
 
@@ -40,9 +110,23 @@
 					<div class=" col-xl-4 col-lg-5 col-md-6 col-sm-8 z-index-2">
 
 						<h2 class="mb-1 display-6">Welcome to BITravel!</h2>
-						<p class="mb-4 text-muted">회원 정보를 입력해주세요.</p>
+						<p class="mb-5 text-muted">회원 정보를 입력해주세요.</p>
 						<div class="position-relative" style="text-align: center">
 							<div>
+								<!-- 프로필 사진 업로드 -->
+								<form id="image-form" method="post" enctype="multipart/form-data">
+									<div class="round photo profile-pic" id="profile-pic" style="background-image: url(/assets/img/avatar/1.jpg); ">
+										<div class="icon_camera">
+											<i class="bi bi-camera upload-button" ></i>
+											<input class="file-upload" type="file" accept="image/*" id="g_img[]" name="g_img[]"/>
+										</div>
+									</div>
+									<div class="input-icon-group mb-4 small" style="width: 100%;">
+									프로필 이미지를 등록해 주세요.<br>(최대 용량 10MB, 정사각형 권장)
+									</div>
+								</form>
+
+								<!-- 전체 회원 가입 정보 -->
 								<form id="signup-form" method="post" autocomplete="off">
 									<!--input-with-icon-->
 									<div class="input-icon-group mb-3">
@@ -105,6 +189,7 @@
 									</div>
 									<input type="hidden" name="nicknameValidation"
 										value="unchecked"> <br>
+								<input type="hidden" id="userImage" value=""/>
 									<!-- Radio button for gender -->
 									<div class="input-icon-group mb-3" style="width: 100%;">
 										<input type="radio" class="btn-check" name="gender" id="Man"
