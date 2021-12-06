@@ -206,7 +206,7 @@ public class ReportService {
 	 */
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public List<Report> getReportListChecked() {
-		return reportRepository.findByCheckResultIsNull();
+		return reportRepository.findByCheckResultIsNotNull();
 	}
 	
 }
