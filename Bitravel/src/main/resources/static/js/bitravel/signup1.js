@@ -133,7 +133,7 @@
 					document.getElementById('userImage').value = url;
                 },
                 error: function (request, error) {
-                    //서버로부터 응답이 정상적으로 처리되지 못햇을 때 실행
+                    //서버로부터 응답이 정상적으로 처리되지 못했을 때 실행
 					rtnmsg = request.responseText;
 					document.getElementById('userImage').value = rtnmsg;
 					alert("Error : "+error);
