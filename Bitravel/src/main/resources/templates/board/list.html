@@ -384,7 +384,7 @@
                             <tbody id="list">
                             <tr th:each="list, index: ${boardList}">
                             	
-                            	<td>[[${list.boardId}]]</td>
+                            	<td>[[${boardList.totalElements-(((boardList.number)*boardList.size) + index.index)}]]</td>
                             	<td>
                             		<a th:href="@{'/board/detail/'+${list.boardId}(page=${boardList.number+1})}">
                             			[[${list.boardTitle}]]
