@@ -60,7 +60,6 @@
 				</form>
 				<br>
 				<!--테이블-->
-				<form id="admin-user-form" method="post" autocomplete="off">
 					<table class="table table-striped">
 						<thead>
 							<tr>
@@ -79,7 +78,6 @@
 						<tbody id="userList">
 						</tbody>
 					</table>
-					</form>
 				</div>
 
 				<!-- Modal footer -->
@@ -98,7 +96,7 @@
 
 				<!-- Modal Header -->
 				<div class="modal-header">
-					<h4 class="modal-title">신고목록</h4>
+					<h4 class="modal-title">신고관리 목록</h4>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 				</div>
 				<!--Modal navbar-->
@@ -107,63 +105,38 @@
 				</div>
 				<!-- Modal body -->
 				<div class="modal-body">
-
-					<div class="btn-group">
-						<div class="btn-group">
-							<button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">이름</button>
-							<div class="dropdown-menu">
-								<a class="dropdown-item" href="#">이름</a>
-								<a class="dropdown-item" href="#">이메일</a>
-							</div>
-						</div>
-						<div></div>
-						<div class="btn-group">
-							<button type="button" class="btn btn-primary">조회</button>
-							<button type="button" class="btn btn-primary">삭제</button>
-						</div>
-					</div>
-					<!--테이블-->
-					<table class="table table-striped" id="reportList">
+				<form id="report-search-form" method="POST" autocomplete="off">
+				<div class="input-group w-75">
+						<select class="btn btn-secondary dropdown-toggle" name="select1">
+							<option value="t">제목</option>
+							<option value="tc">내용</option>
+							<option value="reporter">신고한 유저</option>
+							<option value="reported">신고받은 유저</option>
+						</select>
+						<input class="form-control" type="text" placeholder="신고정보 검색" id="reportSearch">
+						<button type="button" class="btn btn-secondary" id="search2" onclick="searchReport();">검색</button>
+						<button type="button" class="btn btn-secondary" id="all2" onclick="findAllReport();">전체보기</button>
+						<button type="button" class="btn btn-secondary" id="checked2" onclick="findUncheckedReport();">미처리내역</button>
+						<button type="button" class="btn btn-secondary" id="check2" onclick="checkReport();">처리완료</button>
+					</div>	
+				</form>
+				<br>
+				<!--테이블-->
+					<table class="table table-striped">
 						<thead>
 							<tr>
+								<th>선택</th>
 								<th>번호</th>
-								<th>아이디</th>
-								<th>사용자 이름</th>
-								<th>사용자 이메일</th>
-								<th>전화번호</th>
-								<th>등록일</th>
-								<th>가입상태</th>
+								<th>신고한 유저</th>
+								<th>신고받은 유저</th>
+								<th>신고제목</th>
+								<th>신고링크</th>
+								<th>신고일시</th>
+								<th>처리여부</th>
+								<th>처리일시</th>
 							</tr>
 						</thead>
-						<tbody>
-
-							<tr>
-								<td>1</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
-							<tr>
-								<td>2</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
-							<tr>
-								<td>3</td>
-								<td>Doe</td>
-								<td>john@example.com</td>
-								<td>dkdksdk@.cs.sc</td>
-								<td>010-2323-23234</td>
-								<td>2014-02-14</td>
-								<td>회원 가입 상태</td>
-							</tr>
+						<tbody id="reportList">
 						</tbody>
 					</table>
 				</div>
@@ -172,6 +145,7 @@
 				<div class="modal-footer">
 					<button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
 				</div>
+
 			</div>
 		</div>
 	</div>

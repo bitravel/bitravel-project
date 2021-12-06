@@ -4,7 +4,7 @@
  	$(document).ready(function() {	
 	
 	const largeSelect = document.getElementById('nowLarge');
-	
+	const smallSelect = document.getElementById('nowSmall');
 	/**
      * 광역지자체 선택이 안되있을 것이므로 기초지자체는 선택 불가능하게 설정
      */
@@ -38,13 +38,46 @@
     	alert('리스트 불러오기에 실패했습니다.');
     	
    	});
-    
+	
+	/**
+     * 이미지 등록 후 div background에 이미지 가져오기
+     */
+	var readURL = function(input) {
+    	if (input.files && input.files[0]) {
+	        var reader = new FileReader();
+			
+			if(!reg_ok(input.files[0])) {
+				return false;
+			}
+
+			reader.onload = function (e) {
+				$('.profile-pic').attr('src', e.target.result);
+				$('.profile-pic').css({"background":"url("+e.target.result+")"}); //배경이미지로-
+				$('.profile-pic').css('background-size','cover');
+				$('.profile-pic').css('background-position','center center');
+				$('.profile-pic').css('background-repeat','no-repeat');
+				$('.upload-button').focus();
+			}
+
+			reader.readAsDataURL(input.files[0]);
+
+			
+		}
+	}
+
+	$(".file-upload").on('change', function(){
+		readURL(this);
+    });
+
+    $(".upload-button").on('click', function() {
+        $(".file-upload").click();
+    });
+
+
 	/**
      * 광역지자체 값이 바뀔 때마다 기초자치단체 리스트 가져오기
      */
    		$('#nowLarge').on("change", function(){
-   			
-   			const smallSelect = document.getElementById('nowSmall');
    			
 	    	if(largeSelect.value == "") {
 	    		smallSelect.disabled = true;
@@ -71,14 +104,72 @@
 	    	   			tag += "<option value='"+item+"'>"+item+"</option>\n";
 	    	   		});
 	    	   		smallSelect.innerHTML = tag;
-	    	   		
 	    	   	}).catch(error => {
 	    	    	alert('리스트 불러오기에 실패했습니다.');
 	    	   	});	
 	    	}
-	    });
+		});
 	});
 	
+	/**
+     * 업로드된 파일을 서버에 저장 후 url pattern return
+     */
+	function reg_ok(file){
+        if (confirm('등록 하시겠습니까?')) {
+			
+			var imageData = new FormData();
+			imageData.append('file', file);
+
+            $.ajax({
+                url: '/image', //request 보낼 서버의 경로
+                type: 'POST', // 메소드(get, post, put 등)
+                enctype: 'multipart/form-data',
+                data: imageData, //보낼 데이터,
+				processData: false,
+				cache : false,
+                contentType: false,
+                timeout: 5000,
+                success: function (url) {
+					document.getElementById('userImage').value = url;
+                },
+                error: function (request, error) {
+                    //서버로부터 응답이 정상적으로 처리되지 못했을 때 실행
+					rtnmsg = request.responseText;
+					document.getElementById('userImage').value = rtnmsg;
+					alert("Error : "+error);
+                    console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                }
+			});
+			return true;
+
+        } else {
+			return false;
+		}
+    }
+
+
+	$('#foreignCheck').on("change", function(){
+
+		const largeSelect = document.getElementById('nowLarge');
+		const smallSelect = document.getElementById('nowSmall');
+
+		var foreign = document.getElementById('foreignCheck');
+		if(foreign.checked) {
+			largeSelect.disabled = true;
+	    	largeSelect.disabled = 'disabled';
+	    	smallSelect.disabled = true;
+	    	smallSelect.disabled = 'disabled';
+	    } else {
+			largeSelect.disabled = '';
+	    	largeSelect.disabled = false;
+	    	smallSelect.disabled = '';
+	    	smallSelect.disabled = false;
+		}
+
+	});
+
+
+
 		/**
          * Gender radio button의 선택 여부에 따라 label 색 바꿔줌
          */
@@ -167,7 +258,7 @@
         		alert('올바른 이메일 형식이 아닙니다.');	
         		form.signUpMail.focus();
         		return false;
-        	}
+			}
             
         	if (!form.signUpPassword.value.trim()) {
         		alert('비밀번호를 입력해 주세요.');
@@ -230,9 +321,15 @@
 	        		form.nowSmall.focus();
 	        		return false;
 	        	}
-        	}
-        	
-        	
+			}
+
+        	if(!form.userImage.value) {
+				if(!confirm("프로필 사진을 등록하지 않았습니다.\n등록하지 않고 진행하시겠습니까?")) {
+					document.getElementById('profile-pic').focus();
+					return false;
+				}
+				console.log(form.userImage.value);
+			}
      		
         	if (!form.flexCheckDefault.checked) {
         		alert('이용약관에 동의해 주세요.');
@@ -261,7 +358,8 @@
         		ageString: form.age.value,
         		gender: form.gender.value,
         		userLargeGov: form.nowLarge.value,
-        		userSmallGov: form.nowSmall.value,
+				userSmallGov: form.nowSmall.value,
+				userImage: form.userImage.value
         	};
         	
         	if(form.foreignCheck.checked) {

@@ -69,6 +69,9 @@ public class User implements UserDetails {
     @Column(name = "point")
     private Integer point;
     
+    @Column(name = "userImage")
+    private String userImage;
+    
     @Column(name = "gender")
     private String gender;
     

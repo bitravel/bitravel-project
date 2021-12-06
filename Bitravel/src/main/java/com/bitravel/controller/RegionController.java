@@ -81,7 +81,10 @@ public class RegionController {
 					return o1.getTravelName().compareTo(o2.getTravelName());
 			}
 		});
-			
+		
+		if(list.size() < 48) {
+			return list;
+		}
 		return list.subList(0, 48);
 	}
 	

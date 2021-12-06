@@ -40,6 +40,8 @@ public class UserDto {
 	
 	private Integer point;
 	
+	private String userImage;
+	
 	@NotNull
 	private String gender;
 	
@@ -57,11 +59,9 @@ public class UserDto {
 	private String userSmallGov;
 	
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	@NotNull
 	private Timestamp userDate;
 	
 	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
-	@NotNull
 	private String userAuthority;
 	
 	// Response로 User Entity를 가져오는 경우
@@ -77,6 +77,7 @@ public class UserDto {
 		this.userLargeGov = entity.getUserLargeGov();
 		this.userSmallGov = entity.getUserSmallGov();
 		this.userDate = entity.getUserDate();
+		this.userImage = entity.getUserImage();
 		Iterator<Authority> iterator = entity.getAuthorities().iterator();
 		while(iterator.hasNext()) {
 			this.userAuthority = iterator.next().getRoleName();
