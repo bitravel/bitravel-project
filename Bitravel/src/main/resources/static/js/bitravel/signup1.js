@@ -328,6 +328,8 @@
 					document.getElementById('profile-pic').focus();
 					return false;
 				}
+				// 기본 이미지 설정
+				form.userImage.value = "/assets/img/avatar/4.jpg"
 				console.log(form.userImage.value);
 			}
      		
