@@ -25,7 +25,8 @@
              
 				});
 				
-				document.getElementById('tImage').setAttribute('src', travel['travelImage']);
+				if(travel['travelImage'])
+					document.getElementById('tImage').setAttribute('src', travel['travelImage']);
            		
             	if(travel['largeGov']!="서울" && travel['largeGov']!="부산" && 
             			travel['largeGov']!="대구" && travel['largeGov']!="광주" && 
