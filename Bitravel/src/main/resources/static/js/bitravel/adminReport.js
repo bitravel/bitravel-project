@@ -184,10 +184,28 @@ function drawList(json) {
 					<td>${obj.reportedEmail}</td>
 					<td>${obj.reportTitle}</td>
 					<td><a href=${obj.reportContent} target="_blank">바로가기</a></td>
-					<td>${obj.reportComment}</td>
-    				<td>${moment(obj.reportDate).format('YYYY-MM-DD HH:mm:ss')}</td>
+					`;
+					if(obj.reportComment) {
+						html += `
+						<td>${obj.reportComment}</td>
+						`;
+					} else {
+						html += `
+						<td>-</td>
+						`;
+					}
+					html += `
+						<td>${moment(obj.reportDate).format('YYYY-MM-DD HH:mm:ss')}</td>
+					`;
+					if(obj.checkResult) {
+						html += `
 					<td>${obj.checkResult}</td>
 					`;
+					} else {
+						html += `
+						<td>-</td>
+						`;
+					}
 					if(obj.checkResult) {
 						html += `
 						<td>${moment(obj.checkDate).format('YYYY-MM-DD HH:mm:ss')}</td>
