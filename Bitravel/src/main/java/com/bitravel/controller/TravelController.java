@@ -29,7 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class TravelController {
 
     private final TravelService travelService;
-
+    
     /**
      * 여행지 작성
      */
@@ -47,6 +47,7 @@ public class TravelController {
     public Boolean save(@PathVariable final Long id, @RequestBody final Travel params) {
         return travelService.update(id, params);
     }
+    
     /**
      * 여행지 상세 정보 조회
      */
