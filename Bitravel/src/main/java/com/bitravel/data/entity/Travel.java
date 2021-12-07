@@ -1,10 +1,13 @@
 package com.bitravel.data.entity;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import lombok.AccessLevel;
@@ -72,6 +75,8 @@ public class Travel {
 
 	// @Column(name = "imageUrl") // 이미지 URL 가능 여부 확인
 	// private String imageUrl;
+	@ManyToMany(mappedBy = "travelSet") 
+	private Set<Review> reviewSet;
 	
 	public void update(Travel travel) {
 		this.address = travel.address;
