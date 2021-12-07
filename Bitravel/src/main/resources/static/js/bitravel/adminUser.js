@@ -59,7 +59,7 @@ function searchKeyword() {
 
 
 function deleteUser() {
-	var allInput = document.getElementsByClassName('form-check-input');
+	var allInput = document.getElementsByName('user-check');
 	var deleteList = new Array();
 	for(var i=0;i<allInput.length;i++) {
 		if(allInput[i].checked)
@@ -99,7 +99,7 @@ function drawListUser(json) {
 			html += `
 			<tr>
 			<td>
-			<input class="form-check-input" type="checkbox" value="${obj.userId}" id="${obj.userId}">
+			<input class="form-check-input" name="user-check" type="checkbox" value="${obj.userId}" id="${obj.userId}">
 			</td>
     			<td>${idx+1}</td>
     				<td>
