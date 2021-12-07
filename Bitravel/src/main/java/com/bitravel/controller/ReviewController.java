@@ -93,7 +93,6 @@ public class ReviewController {
 	/**
 	 * 후기 상세 정보 조회
 	 */
-	@Transactional // 객체 생성한 것을 메소드 실행 기간동안 계속 유지해야 할 경우 Transactional을 사용해야 합니다.
 	@GetMapping("/reviews/{id}")
 	@ApiOperation(value = "후기 내용 조회", notes = "개별 후기의 정보를 조회하는 API. Review entity 클래스의 bid값을 기준으로 데이터를 가져온다.")
 	public ReviewResponseDto detail(@PathVariable final Long id) {
