@@ -105,6 +105,7 @@ public class TokenProvider implements InitializingBean {
 		principal.setNickname(user.getNickname());
 		principal.setPoint(user.getPoint());
 		principal.setAge(user.getAge());
+		principal.setUserImage(user.getUserImage());
 		principal.setUserLargeGov(user.getUserLargeGov());
 		principal.setUserSmallGov(user.getUserSmallGov());
 		// 해당 유저에 대한 권한을 부여하여 반환

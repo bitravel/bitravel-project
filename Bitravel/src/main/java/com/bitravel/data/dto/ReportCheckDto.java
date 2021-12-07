@@ -1,21 +1,21 @@
 package com.bitravel.data.dto;
 
+import java.util.List;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ReportDto {
+public class ReportCheckDto {
 	
-	private String reportTitle;
-	private String reportType;
-	private String postId;
-
+	private String result;
+	
+	private List<Long> list;
+	
 }

@@ -25,7 +25,6 @@ public class SecurityUtil {
 			return Optional.empty();
 		}
 		String email = null;
-		log.info(authentication.getPrincipal().toString());
 		
 		// Spring Security를 구현하기 위해서는 user class가 user details도 구현할 수 있어야 함 (구현 가능)
 		// 인증 결과로 저장하고 있는 값이 class이면 거기에서 따로 메일을 꺼내고, String이면 바로 이메일로 적용함

@@ -106,10 +106,10 @@
 				<!-- Modal body -->
 				<div class="modal-body">
 				<form id="report-search-form" method="POST" autocomplete="off">
-				<div class="input-group w-75">
-						<select class="btn btn-secondary dropdown-toggle" name="select1">
+				<div class="input-group w-75 mb-4">
+						<select class="btn btn-secondary dropdown-toggle" name="select2">
 							<option value="t">제목</option>
-							<option value="tc">내용</option>
+							<option value="c">글 번호</option>
 							<option value="reporter">신고한 유저</option>
 							<option value="reported">신고받은 유저</option>
 						</select>
@@ -117,10 +117,16 @@
 						<button type="button" class="btn btn-secondary" id="search2" onclick="searchReport();">검색</button>
 						<button type="button" class="btn btn-secondary" id="all2" onclick="findAllReport();">전체보기</button>
 						<button type="button" class="btn btn-secondary" id="checked2" onclick="findUncheckedReport();">미처리내역</button>
-						<button type="button" class="btn btn-secondary" id="check2" onclick="checkReport();">처리완료</button>
-					</div>	
+						<button type="button" class="btn btn-secondary" id="checked2" onclick="findCheckedReport();">완료내역</button>
+						<button type="button" class="btn btn-secondary" id="check2" onclick="checkReport();">처리하기</button>
+					</div>
+					<input class="form-radio-input" type="radio" value="board" id="boardCheck" name="listType"> <label for="boardCheck">게시물</label>
+					<input class="form-radio-input" type="radio" value="review" id="reviewCheck" name="listType"> <label for="reviewCheck">후기</label>
+					<input class="form-radio-input" type="radio" value="bcomment" id="bcommentCheck" name="listType"> <label for="bcommentCheck">게시물 댓글</label>
+					<input class="form-radio-input" type="radio" value="rcomment" id="rcommentCheck" name="listType"> <label for="rcommentCheck">후기 댓글</label>
+					<input class="form-radio-input" type="radio" value="all" id="allCheck" name="listType" checked> <label for="allCheck">전체</label>
+					<br>	
 				</form>
-				<br>
 				<!--테이블-->
 					<table class="table table-striped">
 						<thead>
@@ -131,6 +137,7 @@
 								<th>신고받은 유저</th>
 								<th>신고제목</th>
 								<th>신고링크</th>
+								<th>댓글번호</th>
 								<th>신고일시</th>
 								<th>처리여부</th>
 								<th>처리일시</th>

@@ -17,35 +17,7 @@ function findAll() {
    			return response.json();
 		}
 	}).then(json => {
-		let html = '';
-
-		if (!json.length) {
-			html = '<td colspan="10">가입 회원이 없습니다.</td>';
-		} else {
-			json.forEach((obj, idx) => {
-			html += `
-			<tr>
-			<td>
-			<input class="form-check-input" type="checkbox" value="${obj.userId}" id="${obj.userId}">
-			</td>
-    			<td>${idx+1}</td>
-    				<td>
-    					${obj.realname}
-    				</td>
-					<td>${obj.nickname}</td>
-					<td>${obj.email}</td>
-					<td>${obj.ageString}</td>
-					<td>${obj.gender}</td>
-					<td>${obj.userLargeGov} ${obj.userSmallGov}</td>
-    				<td>${moment(obj.userDate).format('YYYY-MM-DD HH:mm:ss')}</td>
-    				<td>${obj.userAuthority}</td>
-					</tr>
-					`;
-					});
-				}
-
-		document.getElementById('userList').innerHTML = html;
-
+		drawListUser(json);
 	});
 }
 
@@ -79,34 +51,7 @@ function searchKeyword() {
         		}
 				return response.json();
         	}).then(json => {
-		let html = '';
-		if (!json.length) {
-			html = '<td colspan="10">조건에 맞는 회원이 없습니다.</td>';
-		} else {
-			json.forEach((obj, idx) => {
-			html += `
-			<tr>
-			<td>
-			<input class="form-check-input" type="checkbox" value="${obj.userId}" id="${obj.userId}">
-			</td>
-    			<td>${idx+1}</td>
-    				<td>
-    					${obj.realname}
-    				</td>
-					<td>${obj.nickname}</td>
-					<td>${obj.email}</td>
-					<td>${obj.ageString}</td>
-					<td>${obj.gender}</td>
-					<td>${obj.userLargeGov} ${obj.userSmallGov}</td>
-    				<td>${moment(obj.userDate).format('YYYY-MM-DD HH:mm:ss')}</td>
-    				<td>${obj.userAuthority}</td>
-					</tr>
-					`;
-					});
-				}
-
-		document.getElementById('userList').innerHTML = html;
-
+				drawListUser(json);
 	}).catch(error => {
         		alert('오류가 발생하였습니다. \n'+error);
         	});
@@ -114,7 +59,7 @@ function searchKeyword() {
 
 
 function deleteUser() {
-	var allInput = document.getElementsByClassName('form-check-input');
+	var allInput = document.getElementsByName('user-check');
 	var deleteList = new Array();
 	for(var i=0;i<allInput.length;i++) {
 		if(allInput[i].checked)
@@ -143,5 +88,34 @@ function deleteUser() {
         	}).catch(error => {
         		alert('오류가 발생하였습니다. \n'+error);
         	});
+}
 
+function drawListUser(json) {
+		let html = '';
+		if (!json.length) {
+			html = '<td colspan="10" style="text-align:center;">조건에 맞는 회원이 없습니다.</td>';
+		} else {
+			json.forEach((obj, idx) => {
+			html += `
+			<tr>
+			<td>
+			<input class="form-check-input" name="user-check" type="checkbox" value="${obj.userId}" id="${obj.userId}">
+			</td>
+    			<td>${idx+1}</td>
+    				<td>
+    					${obj.realname}
+    				</td>
+					<td>${obj.nickname}</td>
+					<td>${obj.email}</td>
+					<td>${obj.ageString}</td>
+					<td>${obj.gender}</td>
+					<td>${obj.userLargeGov} ${obj.userSmallGov}</td>
+    				<td>${moment(obj.userDate).format('YYYY-MM-DD HH:mm:ss')}</td>
+    				<td>${obj.userAuthority}</td>
+					</tr>
+					`;
+					});
+				}
+
+		document.getElementById('userList').innerHTML = html;
 }
