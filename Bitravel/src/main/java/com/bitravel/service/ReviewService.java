@@ -1,16 +1,12 @@
 package com.bitravel.service;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,9 +63,6 @@ public class ReviewService {
     public Page<Review> findAll(Pageable pageable) {
     	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
 		pageable = PageRequest.of(page, 5, Sort.by(Sort.Direction.DESC, "reviewId"));
-//        Sort sort = Sort.by(Direction.DESC, "reviewId", "reviewDate");
-//        List<Review> list = reviewRepository.findAll(sort);
-//        return list.stream().map(ReviewResponseDto::new).collect(Collectors.toList());
 		return reviewRepository.findAll(pageable);
     }
     
@@ -77,72 +70,45 @@ public class ReviewService {
      * 후기 통합 검색 결과 조회
      */
     @Transactional
-    public List<ReviewResponseDto> findReviews(String keyword) {
+    public Page<Review> findReviews(String keyword, Pageable pageable) {
 
-        List<Review> list = reviewRepository.findByNicknameContainingOrReviewTitleContainingOrReviewContentContaining(keyword, keyword, keyword);
-        Collections.sort(list, new Comparator<Review>() {
-			@Override
-			public int compare(Review o1, Review o2) {
-				return (int) (o2.getReviewId()-o1.getReviewId());
-			}
-        });
-        return list.stream().map(ReviewResponseDto::new).collect(Collectors.toList());
+    	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+    	pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "reviewId"));
+        return reviewRepository.findByNicknameContainingOrReviewTitleContainingOrReviewContentContaining(keyword, keyword, keyword, pageable);
     }
     
     /**
      * 후기 닉네임 검색 결과 조회
      */
     @Transactional
-    public List<ReviewResponseDto> findReviewsByNickname(String keyword) {
-
-        List<Review> list = reviewRepository.findByNicknameContaining(keyword);
-        Collections.sort(list, new Comparator<Review>() {
-			@Override
-			public int compare(Review o1, Review o2) {
-				return (int) (o2.getReviewId()-o1.getReviewId());
-			}
-        });
-        return list.stream().map(ReviewResponseDto::new).collect(Collectors.toList());
+    public Page<Review> findReviewsByNickname(String keyword, Pageable pageable) {
+    	return reviewRepository.findByNicknameContaining(keyword, pageable);
     }
     
     /**
      * 후기 제목 검색 결과 조회
      */
     @Transactional
-    public List<ReviewResponseDto> findReviewsByTitle(String keyword) {
-
-        List<Review> list = reviewRepository.findByReviewTitleContaining(keyword);
-        Collections.sort(list, new Comparator<Review>() {
-			@Override
-			public int compare(Review o1, Review o2) {
-				return (int) (o2.getReviewId()-o1.getReviewId());
-			}
-        });
-        return list.stream().map(ReviewResponseDto::new).collect(Collectors.toList());
+    public Page<Review> findReviewsByTitle(String keyword, Pageable pageable) {
+    	return reviewRepository.findByReviewTitleContaining(keyword, pageable);
     }
     
     /**
      * 후기 제목+내용 검색 결과 조회
      */
     @Transactional
-    public List<ReviewResponseDto> findReviewsByTitleAndContent(String keyword) {
-
-        List<Review> list = reviewRepository.findByReviewTitleContainingOrReviewContentContaining(keyword, keyword);
-        Collections.sort(list, new Comparator<Review>() {
-			@Override
-			public int compare(Review o1, Review o2) {
-				return (int) (o2.getReviewId()-o1.getReviewId());
-			}
-        });
-        return list.stream().map(ReviewResponseDto::new).collect(Collectors.toList());
+    public Page<Review> findReviewsByTitleAndContent(String keyword, Pageable pageable) {
+    	return reviewRepository.findByReviewTitleContainingOrReviewContentContaining(keyword, keyword, pageable);
     }
     
     /**
      * 후기 상세 정보 조회
      */
     @Transactional(readOnly = true)
-    public Review detail(Long id) {
-    	return reviewRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND)); 
+    public ReviewResponseDto detail(Long id) {
+    	Review entity = reviewRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+    	entity.increaseView();
+    	return new ReviewResponseDto(entity);
     }
 
     /**

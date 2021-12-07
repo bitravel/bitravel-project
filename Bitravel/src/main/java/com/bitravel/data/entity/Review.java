@@ -89,6 +89,12 @@ public class Review {
             joinColumns = {@JoinColumn(name = "reviewId", referencedColumnName = "reviewId")},
             inverseJoinColumns = {@JoinColumn(name = "travelId", referencedColumnName = "travelId")})
     private Set<Travel> travelSet;
+    
+    //조회수 증가
+    public void increaseView()
+    {
+    	this.reviewView++;
+    }
   
 }
 
