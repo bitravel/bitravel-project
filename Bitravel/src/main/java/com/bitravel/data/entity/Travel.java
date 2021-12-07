@@ -31,6 +31,9 @@ public class Travel {
 	@Column(name = "travelName") // 여행지 이름
 	private String travelName;
 	
+	@Column(name = "travelImage") // 여행지 이미지
+	private String travelImage;
+	
 	@Column(name = "travelSummary") // 여행지 요약정보
 	private String travelSummary;
 	
@@ -84,6 +87,7 @@ public class Travel {
 		this.parking = travel.parking;
 		this.pet = travel.pet;
 		this.travelName = travel.travelName;
+		this.travelImage = travel.travelImage;
 		this.travelDetail = travel.travelDetail;
 		this.travelSummary = travel.travelSummary;
 		this.travelTel = travel.travelTel;
