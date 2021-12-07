@@ -398,9 +398,6 @@
 										<button class="btn btn-primary" type="button" onclick="findTravelName();">Search</button>
 									</form>
 								</div>
-								<div class="btn-group">
-									<button type="button" class="btn btn-primary">등록</button>
-								</div>
 							</div>
 							<!--테이블-->
 							<table class="table table-striped">
@@ -433,6 +430,14 @@
                     <div class="row mb-7 mb-15 justify-content-center">
 
                         <form id="form" class="form-horizontal">
+						<input type="hidden" id="travelId" class="form-control"	placeholder="여행지 Id" />
+						<div class="form-group">
+							<label for="reviewTitle" class="col-sm-2 control-label">여행지명</label>
+							<div class="col-sm-10">
+								<input type="text" id="travelName" class="form-control"
+									placeholder="제목을 입력해 주세요." />
+							</div>
+						</div>
 						<div class="form-group">
 							<label for="reviewTitle" class="col-sm-2 control-label">제목</label>
 							<div class="col-sm-10">
@@ -663,7 +668,6 @@
 		* 썸머노트 에디터
 		**/
 		
-		
 		$(document).ready(function() {
 			 $('#summernote').summernote({
 		    		placeholder: '내용을 입력하세요. (10자 이상)',
@@ -722,14 +726,14 @@
 				let html = '';
 
 				if (!json.length) {
-					html = '<td colspan="4">등록된 게시글이 없습니다.</td>';
+					html = '<td colspan="4">등록된 여행지가 없습니다.</td>';
 				} else {
 					json.forEach((obj, idx) => {
 						html += `
 							<tr>
     							<td>${json.length - idx}</td>
     							<td class="text-left">
-    								<a href="javascript: void(0);" onclick="put(${obj.travelId, obj.travelName})">${obj.travelName}</a>
+    								<a href="javascript: void(0);" onclick="put('${obj.travelId}','${obj.travelName}')">${obj.travelName}</a>
     							</td>
     							<td>${obj.address}</td>
     							<td>${obj.travelId}</td>
@@ -775,14 +779,18 @@
         	if ( !isValid() ) {
         		return false;
         	}
-        
+        	
         	const form = document.getElementById('form');
+        	var travelArray = [];
+        	travelArray.push(form.travelId.value);
         	const params = {
-        		travelId: form.travelId.value,
-        		travelName: form.travelName.value,
-        		boardTitle: form.boardTitle.value,
-        		boardContent: form.summernote.value
+        		
+        		//travelName: form.travelName.value,
+        		reviewTitle: form.reviewTitle.value,
+        		reviewContent: form.summernote.value,
+        		travelId : travelArray
         	};
+        	console.log(params);
         	
         	const id = /*[[ ${id} ]]*/;
         	const uri = ( id ) ? `/api/reviews/${id}` : '/api/reviews';
@@ -791,7 +799,8 @@
         	fetch(uri, {
         		method: method, /*데이터 생성은 무조건 post 방식 이용*/
         		headers: {'Content-Type': 'application/json'}, /*API 호출 시, GET 방식이 아닌 요청은 Content-Type을 application/json으로 설정한다. */
-        		body: JSON.stringify(params) /*데이터 전달에 사용되는 옵션으로, params 객체에 담긴 게시글 정보를 API 서버로 전달한다.*/
+        		body: JSON.stringify(
+        				params) /*데이터 전달에 사용되는 옵션으로, params 객체에 담긴 게시글 정보를 API 서버로 전달한다.*/
         
         	}).then(response => {
         		if (!response.ok) {
@@ -840,6 +849,9 @@
 		   	});
 		}
 		
+		/**
+		* 뒤로가기 
+		**/
 		
 		function goBack() {
 			
@@ -858,8 +870,8 @@
         	var travelId = travelId;
         	var travelName = travelName;
         	//모달창 닫기
-        	$("#모달창 아이디값").modal("hide");
-        	$("travelId").val(travelId);
+        	$("#myModal_1").modal("hide");
+        	$("#travelId").val(travelId);
             $("#travelName").val(travelName);
         }
  

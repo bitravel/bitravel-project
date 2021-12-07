@@ -33,7 +33,7 @@ public class ReviewRequestDto {
                 .reviewContent(reviewContent)
                 .userEmail(userEmail)
                 .nickname(nickname)
-                .reviewLevel(reviewLevel)
+                //.reviewLevel(reviewLevel)
                 .build();
     }
 

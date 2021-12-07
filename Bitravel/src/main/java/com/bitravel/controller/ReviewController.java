@@ -1,7 +1,5 @@
 package com.bitravel.controller;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,41 +46,41 @@ public class ReviewController {
 //		return reviewService.findAll();
 //	}
 	
-	/**
-	 * 후기 통합 검색
-	 */
-	@GetMapping("/reviews/search/all")
-	@ApiOperation(value = "후기 통합 검색 목록", notes = "후기를 닉네임 또는 제목 또는 내용으로 조회하는 API.")
-	public List<ReviewResponseDto> findReviews(String keyword) {
-		return reviewService.findReviews(keyword);
-	}
+//	/**
+//	 * 후기 통합 검색
+//	 */
+//	@GetMapping("/reviews/search/all")
+//	@ApiOperation(value = "후기 통합 검색 목록", notes = "후기를 닉네임 또는 제목 또는 내용으로 조회하는 API.")
+//	public List<ReviewResponseDto> findReviews(String keyword) {
+//		return reviewService.findReviews(keyword);
+//	}
 
-	/**
-	 * 후기 닉네임 검색
-	 */
-	@GetMapping("/reviews/search/nickname")
-	@ApiOperation(value = "후기 닉네임 검색 목록", notes = "후기를 닉네임으로 조회하는 API.")
-	public List<ReviewResponseDto> findReviewsByNickname(String keyword) {
-		return reviewService.findReviewsByNickname(keyword);
-	}
-	
-	/**
-	 * 후기 제목 검색
-	 */
-	@GetMapping("/reviews/search/title")
-	@ApiOperation(value = "후기 제목 검색 목록", notes = "후기를 제목으로 조회하는 API.")
-	public List<ReviewResponseDto> findReviewsByTitle(String keyword) {
-		return reviewService.findReviewsByTitle(keyword);
-	}
-	
-	/**
-	 * 후기 제목+내용 검색
-	 */
-	@GetMapping("/reviews/search/titleandcontent")
-	@ApiOperation(value = "후기 제목+내용 검색 목록", notes = "후기를 제목 또는 내용으로 조회하는 API.")
-	public List<ReviewResponseDto> findReviewsByTitleAndContent(String keyword) {
-		return reviewService.findReviewsByTitleAndContent(keyword);
-	}
+//	/**
+//	 * 후기 닉네임 검색
+//	 */
+//	@GetMapping("/reviews/search/nickname")
+//	@ApiOperation(value = "후기 닉네임 검색 목록", notes = "후기를 닉네임으로 조회하는 API.")
+//	public List<ReviewResponseDto> findReviewsByNickname(String keyword) {
+//		return reviewService.findReviewsByNickname(keyword);
+//	}
+//	
+//	/**
+//	 * 후기 제목 검색
+//	 */
+//	@GetMapping("/reviews/search/title")
+//	@ApiOperation(value = "후기 제목 검색 목록", notes = "후기를 제목으로 조회하는 API.")
+//	public List<ReviewResponseDto> findReviewsByTitle(String keyword) {
+//		return reviewService.findReviewsByTitle(keyword);
+//	}
+//	
+//	/**
+//	 * 후기 제목+내용 검색
+//	 */
+//	@GetMapping("/reviews/search/titleandcontent")
+//	@ApiOperation(value = "후기 제목+내용 검색 목록", notes = "후기를 제목 또는 내용으로 조회하는 API.")
+//	public List<ReviewResponseDto> findReviewsByTitleAndContent(String keyword) {
+//		return reviewService.findReviewsByTitleAndContent(keyword);
+//	}
 	
 	/**
 	 * 후기 수정
@@ -99,7 +97,7 @@ public class ReviewController {
 	@GetMapping("/reviews/{id}")
 	@ApiOperation(value = "후기 내용 조회", notes = "개별 후기의 정보를 조회하는 API. Review entity 클래스의 bid값을 기준으로 데이터를 가져온다.")
 	public ReviewResponseDto detail(@PathVariable final Long id) {
-		return new ReviewResponseDto(reviewService.detail(id));
+		return reviewService.detail(id);
 	}
 	/**
 	 * 후기 삭제
