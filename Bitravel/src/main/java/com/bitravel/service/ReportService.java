@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bitravel.data.dto.ReportCheckDto;
 import com.bitravel.data.dto.ReportDto;
 import com.bitravel.data.entity.BoardComment;
 import com.bitravel.data.entity.Report;
@@ -207,6 +208,24 @@ public class ReportService {
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public List<Report> getReportListChecked() {
 		return reportRepository.findByCheckResultIsNotNull();
+	}
+	
+	/**
+	 * 신고내역 처리 완료하기
+	 */
+	@Transactional
+	public Boolean checkReport(ReportCheckDto param) {		
+		List<Long> list = param.getList();
+		
+		for(int i=0;i<list.size();i++) {
+			Optional<Report> rp = reportRepository.findById(list.get(i));
+			if (rp.isEmpty())
+				return false;
+			else {
+				rp.get().setCheckResult(param.getResult());
+			}
+		}	
+		return true;		
 	}
 	
 }

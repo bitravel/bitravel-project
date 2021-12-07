@@ -128,7 +128,42 @@ function searchReport() {
 
 
 function checkReport() {
-	var allInput = document.getElementsByClassName('form-check-input');
+	var allInput = document.getElementsByName('report-check');
+	var checkList = new Array();
+	for (var i=0;i<allInput.length;i++) {
+		if(allInput[i].checked)
+			checkList.push(allInput[i].value);
+	}
+
+	var result = prompt("선택한 신고 내역들의 처리 내용을 입력하세요.");
+	if(!confirm(result+"의 내용으로 총 "+checkList.length+"개의 신고 처리를 실행하시겠습니까?")) {
+		return false;
+	}
+
+	var param = {
+		list:checkList,
+		result:result
+	}
+
+	fetch('/api/reports/check', {
+        		method: 'POST', /*데이터 생성은 무조건 post 방식 이용*/
+        		headers: { 
+        			'Content-Type': 'application/json',
+        		}, /*API 호출 시, GET 방식이 아닌 요청은 Content-Type을 application/json으로 설정한다. */
+        		body: JSON.stringify(param), /*데이터 전달에 사용되는 옵션으로, params 객체에 담긴 게시글 정보를 API 서버로 전달한다.*/
+        
+        	}).then(response => {
+        		if (!response.ok) {
+        			throw new Error('일시적인 오류입니다. 다시 시도해 보세요.');
+        		}
+				
+        		alert(checkList+'번 신고 내역 처리가 '+result+'로 완료되었습니다.');
+        		findAllReport();
+        
+        	}).catch(error => {
+        		alert('오류가 발생하였습니다. \n'+error);
+        	});
+
 }
 
 function drawList(json) {
@@ -140,7 +175,7 @@ function drawList(json) {
 			html += `
 			<tr>
 			<td>
-			<input class="form-check-input" type="checkbox" value="${obj.reportId}" id="${obj.reportId}">
+			<input class="form-check-input" name="report-check" type="checkbox" value="${obj.reportId}" id="${obj.reportId}">
 			</td>
     			<td>${idx+1}</td>
     				<td>
@@ -164,7 +199,7 @@ function drawList(json) {
 						</tr>
 						`;
 					}
-				});
+		});
 	}
 
 	document.getElementById('reportList').innerHTML = html;

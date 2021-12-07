@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bitravel.data.dto.ReportCheckDto;
 import com.bitravel.data.dto.ReportDto;
 import com.bitravel.data.entity.Report;
 import com.bitravel.service.ReportService;
@@ -151,5 +152,17 @@ public class ReportController {
 		else
 			return ResponseEntity.badRequest().body(null);
 	}
-
+	
+	/**
+	 * 신고내역 처리 완료하기
+	 */
+	@PostMapping("/reports/check")
+	@ApiOperation(value = "기초자치단체 목록 검색", notes = "전체 기초자치단체 목록을 출력하는 API. Report entity 클래스의 모든 데이터를 가져온다.")
+	public ResponseEntity<?> checkReport(@RequestBody final ReportCheckDto param) {
+		
+		if(reportService.checkReport(param))
+			return ResponseEntity.ok(null);
+		else
+			return ResponseEntity.badRequest().body(null);
+	}
 }
