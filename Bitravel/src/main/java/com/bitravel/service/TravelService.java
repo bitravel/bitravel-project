@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.boot.configurationprocessor.json.JSONException;
@@ -21,6 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bitravel.data.dto.TravelSimpleDto;
 import com.bitravel.data.dto.WeatherDto;
 import com.bitravel.data.entity.Travel;
+import com.bitravel.data.entity.TravelImage;
+import com.bitravel.data.repository.TravelImageRepository;
 import com.bitravel.data.repository.TravelRepository;
 import com.bitravel.exception.CustomException;
 import com.bitravel.exception.ErrorCode;
@@ -34,69 +37,87 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 public class TravelService {
-	
+
 	private final TravelRepository travelRepository;
-	
-    /**
-     * 여행지 생성
-     */
-    @Transactional
-    public Long save(Travel params) {
+	private final TravelImageRepository travelImageRepository;
 
-        Travel entity = travelRepository.save(params);
-        return entity.getTravelId();
-    }
+	/**
+	 * 여행지 생성
+	 */
+	@Transactional
+	public Long save(Travel params) {
 
-    /**
-     * 여행지 리스트 조회
-     */
-    public Page<Travel> findAll(Pageable pageable) {
-    	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
-    	pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardId"));
-    	return travelRepository.findAll(pageable);
-    }
+		Travel entity = travelRepository.save(params);
+		return entity.getTravelId();
+	}
+
+	/**
+	 * 여행지 리스트 조회
+	 */
+	public Page<Travel> findAll(Pageable pageable) {
+		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+		pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardId"));
+		return travelRepository.findAll(pageable);
+	}
 
 	/**
 	 * 여행지 상세 정보 조회 (여행지 ID)
 	 */
-	@Transactional(readOnly = true)
+	@Transactional
 	public Travel detailById(Long id) {
-		return travelRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+		Travel entity = travelRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+		addImage(entity);
+		return entity;
 	}
 
 	/**
 	 * 여행지 목록 조회 (여행지 이름)
 	 */
-	@Transactional(readOnly = true)
+	@Transactional
 	public List<TravelSimpleDto> detailsByName(String name) {
 		List<Travel> list = travelRepository.findByTravelNameContaining(name);
 		if(list.size() == 0) {
 			throw new CustomException(ErrorCode.POSTS_NOT_FOUND);
 		}
+		
+		for(int i=0;i<list.size();i++) {
+			addImage(list.get(i));
+		}
+
 		return list.stream().map(TravelSimpleDto::new).collect(Collectors.toList());
 	}
 
 	/**
 	 * 여행지 목록 조회 (광역자치단체)
 	 */
-	@Transactional(readOnly = true)
+	@Transactional
 	public List<Travel> detailsByLargeGov(String largeGov) {
 		List<Travel> list = travelRepository.findByLargeGov(largeGov);
 		if(list.size() == 0) {
 			throw new CustomException(ErrorCode.POSTS_NOT_FOUND);
 		}
+		
+		for(int i=0;i<list.size();i++) {
+			addImage(list.get(i));
+		}
+		
 		return list;
 	}
 
 	/**
 	 * 여행지 목록 조회 (기초자치단체)
 	 */
-	@Transactional(readOnly = true)
+	@Transactional
 	public List<Travel> detailsBySmallGov(String largeGov, String smallGov) {
 		List<Travel> list = travelRepository.findByLargeGovAndSmallGov(largeGov, smallGov);
 		if(list.size() == 0) {
 			throw new CustomException(ErrorCode.POSTS_NOT_FOUND);
 		}
+		
+		for(int i=0;i<list.size();i++) {
+			addImage(list.get(i));
+		}
+		
 		return list;
 	}
 
@@ -142,10 +163,10 @@ public class TravelService {
 		travelRepository.deleteById(id);
 		return true;
 	}
-	
+
 	public String weathersShortByTravel(final WeatherDto now) throws IOException, JSONException {
-    	String myWeather = 	
-       			"k9ex5ipQp8k%2Baiet3GfC015PcRbjkuEv%2Bq8XD2ScEoT0CMfyyZgG5%2BjRCpsuFqQ2LFtwGcZdiDuigKZLvnn7yg%3D%3D";
+		String myWeather = 	
+				"k9ex5ipQp8k%2Baiet3GfC015PcRbjkuEv%2Bq8XD2ScEoT0CMfyyZgG5%2BjRCpsuFqQ2LFtwGcZdiDuigKZLvnn7yg%3D%3D";
 		String url = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey=";
 		url += myWeather;
 		url += "&pageNo=1&numOfRows=650&dataType=JSON&base_date=";
@@ -158,17 +179,17 @@ public class TravelService {
 		url += Math.round(Double.parseDouble(now.getLongitude()));
 		log.info(url);
 		HashMap<String, Object> resultMap = getDataFromJson(url, "UTF-8");
-		
+
 		log.info("Successfully got the information from Weather api (short)");
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("weather", resultMap);
-		
+
 		return jsonObj.toString();
 	}
-	
+
 	public String weathersMiddleByTravel(final WeatherDto now) throws IOException, JSONException {
-    	String myWeather = 	
-       			"k9ex5ipQp8k%2Baiet3GfC015PcRbjkuEv%2Bq8XD2ScEoT0CMfyyZgG5%2BjRCpsuFqQ2LFtwGcZdiDuigKZLvnn7yg%3D%3D";
+		String myWeather = 	
+				"k9ex5ipQp8k%2Baiet3GfC015PcRbjkuEv%2Bq8XD2ScEoT0CMfyyZgG5%2BjRCpsuFqQ2LFtwGcZdiDuigKZLvnn7yg%3D%3D";
 		String url = "http://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst?serviceKey=";
 		url += myWeather;
 		url += "&pageNo=1&numOfRows=10&dataType=JSON&regId=";
@@ -177,11 +198,11 @@ public class TravelService {
 		url += now.getTimeMiddle();
 		log.info(url);
 		HashMap<String, Object> resultMap = getDataFromJson(url, "UTF-8");
-		
+
 		log.info("Successfully got the information from Weather api (middle)");
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("weather", resultMap);
-		
+
 		return jsonObj.toString();
 	}
 
@@ -190,9 +211,9 @@ public class TravelService {
 		URL apiURL = new URL(url);
 		HttpURLConnection conn = null;
 		BufferedReader br = null;
-		
+
 		HashMap<String, Object> resultMap = new HashMap<String, Object>();
-		
+
 		try {
 			conn = (HttpURLConnection) apiURL.openConnection();
 			conn.setConnectTimeout(5000);
@@ -200,14 +221,14 @@ public class TravelService {
 			conn.setDoOutput(true);
 			conn.setRequestMethod("GET");
 			conn.connect();
-			
+
 			br = new BufferedReader(new InputStreamReader(conn.getInputStream(), encoding));
 			String line = null;
 			StringBuffer result = new StringBuffer();			
 			while((line=br.readLine())!=null)
 				result.append(line);
 			ObjectMapper mapper = new ObjectMapper();
-			
+
 			resultMap = mapper.readValue(result.toString(), HashMap.class);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -216,5 +237,17 @@ public class TravelService {
 			if(br != null) br.close();
 		}
 		return resultMap;
+	}
+	
+	private void addImage (Travel entity) {
+		if(entity.getTravelImage()==null) {
+			Optional<TravelImage> ti = travelImageRepository.findByIsUpdatedAndTravelName(false, entity.getTravelName());
+			if(ti.isPresent()) {
+				entity.setTravelImage(ti.get().getTravelImage());
+				travelRepository.save(entity);
+				ti.get().setUpdated(true);
+				travelImageRepository.save(ti.get());
+			}	
+		}
 	}
 }

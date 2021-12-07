@@ -24,6 +24,7 @@ public class TravelSimpleDto {
 	private String largeGov;
 	private String smallGov;
 	private Integer travelView;
+	private String travelImage;
 	
 	public TravelSimpleDto(Travel entity) {
 		this.travelId = entity.getTravelId();
@@ -34,6 +35,7 @@ public class TravelSimpleDto {
 		this.largeGov = entity.getLargeGov();
 		this.smallGov = entity.getSmallGov();
 		this.travelView = entity.getTravelView();
+		this.travelImage = entity.getTravelImage();
 	}
 	
 }

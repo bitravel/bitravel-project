@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.bitravel.data.entity.UploadFile;
-import com.bitravel.service.ImageService;
+import com.bitravel.service.UploadImageService;
 
 @Controller
-public class ImageController {
+public class UploadImageController {
 
 	@Autowired
-	ImageService imageService;
+	UploadImageService imageService;
 	
 	@Autowired
 	ResourceLoader resourceLoader;

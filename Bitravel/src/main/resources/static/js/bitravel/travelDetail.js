@@ -23,7 +23,10 @@
 	              			elem.innerHTML = json[key];
              		}
              
-            	});
+				});
+				
+				if(travel['travelImage'])
+					document.getElementById('tImage').setAttribute('src', travel['travelImage']);
            		
             	if(travel['largeGov']!="서울" && travel['largeGov']!="부산" && 
             			travel['largeGov']!="대구" && travel['largeGov']!="광주" && 
@@ -69,7 +72,7 @@
 					travel['smallGov']=="동해시" || travel['smallGov']=="삼척시" ||
 					travel['smallGov']=="태백시") {
 				regionCode = "11D20000";
-			} else if (travel['largeGov'=="강원"]) {
+			} else if (travel['largeGov']=="강원") {
 				regionCode = "11D10000";
 			} else if (travel['largeGov']=="대전" || travel['largeGov']=="세종" ||
 					travel['largeGov']=="충남") {
@@ -88,6 +91,7 @@
 			} else if (travel['largeGov']=="제주") {
 				regionCode = "11G00000";
 			}
+			
 			if(hour<10) {
 				hour = '0'+hour;
 			}
