@@ -16,14 +16,14 @@ import com.bitravel.data.entity.UploadFile;
 import com.bitravel.data.repository.UploadFileRepository;
 
 @Service
-public class ImageService {
-
+public class UploadImageService {
+	
 	@Autowired
-	UploadFileRepository uploadFileRepository;
+	UploadFileRepository uploadFileRepository;	
 	
 	private final Path rootLocation; // d:/image/
 
-	public ImageService(String uploadPath) {
+	public UploadImageService(String uploadPath) {
 		this.rootLocation = Paths.get(uploadPath);
 		System.out.println(rootLocation.toString());
 	}
