@@ -10,6 +10,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -76,8 +78,7 @@ public class Travel {
 	@Column(name = "travelView") // 여행지 조회수
 	private Integer travelView;
 
-	// @Column(name = "imageUrl") // 이미지 URL 가능 여부 확인
-	// private String imageUrl;
+	@JsonIgnore // 임시
 	@ManyToMany(mappedBy = "travelSet") 
 	private Set<Review> reviewSet;
 	
