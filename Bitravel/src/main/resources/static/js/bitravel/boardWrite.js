@@ -76,6 +76,11 @@ function isValid() {
 		form.summernote.value = '';
 		form.summernote.focus();
 		return false;
+	} if (form.summernote.value.length>10000) {
+		alert('글 내용이 너무 깁니다.');
+		form.summernote.value = form.summernote.value.slice(0, 9999);
+		form.summernote.focus();
+		return false;
 	}
 
 	return true;
