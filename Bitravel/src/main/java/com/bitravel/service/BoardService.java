@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bitravel.data.dto.BoardRequestDto;
 import com.bitravel.data.dto.BoardResponseDto;
 import com.bitravel.data.entity.Board;
+import com.bitravel.data.repository.BoardCommentRepository;
 import com.bitravel.data.repository.BoardRepository;
 import com.bitravel.data.repository.UserRepository;
 import com.bitravel.exception.CustomException;
@@ -24,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BoardService {
 	
 	private final BoardRepository boardRepository;
+	private final BoardCommentRepository bCommentRepository;
 	private final UserRepository userRepository;
 	
     /**
@@ -127,6 +129,8 @@ public class BoardService {
         	log.info("유효하지 않은 삭제 요청입니다.");
         	return false;
         }
+        // 해당 글의 댓글도 같이 삭제해야 함
+        bCommentRepository.deleteAllByBoard(entity);
     	boardRepository.deleteById(id);
     	return true;
     }
