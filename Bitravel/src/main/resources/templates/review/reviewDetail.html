@@ -439,7 +439,12 @@
                     </div>
                 </div>
             </section>
-            
+            <div class="btn_wrap text-center" style="margin-bottom:50px;">
+			<a href="javascript: void(0);" onclick="goList();" class="btn btn-default waves-effect waves-light">뒤로가기</a>
+			<a href="javascript: void(0);" onclick="goWrite();"
+				class="btn btn-primary waves-effect waves-light">수정하기</a>
+			<button type="button" onclick="deleteBoard();" class="btn btn-danger waves-effect waves-light">삭제하기</button>
+			</div>
             
         </main>
         <!--Footer Start-->
@@ -887,7 +892,7 @@
          * 수정하기
          */
         function goWrite() {
-        	location.href = `/board/write?id=[[ ${id} ]]`;
+        	location.href = `/review/write?id=[[ ${id} ]]`;
         }
 
         /**
@@ -901,13 +906,13 @@
             	return false;
             }
 
-            fetch(`/api/boards/${id}`, {
+            fetch(`/api/reviews/${id}`, {
             	method: 'DELETE',
               	headers: { 'Content-Type': 'application/json' },
 
             }).then(response => {
             	if (!response.ok) {
-               		throw new Error('Request failed...');
+               		throw new Error('삭제가 불가능합니다. 관리자에게 문의하세요.');
               	}
 
               	alert('삭제되었습니다.');

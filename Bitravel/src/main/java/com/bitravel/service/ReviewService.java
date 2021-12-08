@@ -14,6 +14,7 @@ import com.bitravel.data.dto.ReviewRequestDto;
 import com.bitravel.data.dto.ReviewResponseDto;
 import com.bitravel.data.entity.Review;
 import com.bitravel.data.entity.Travel;
+import com.bitravel.data.repository.ReviewCommentRepository;
 import com.bitravel.data.repository.ReviewRepository;
 import com.bitravel.data.repository.TravelRepository;
 import com.bitravel.data.repository.UserRepository;
@@ -32,6 +33,7 @@ public class ReviewService {
 	private final ReviewRepository reviewRepository;
 	private final TravelRepository travelRepository;
     private final UserRepository userRepository;
+    private final ReviewCommentRepository rCommentRepository;
 	
     /**
      * 후기 생성
@@ -147,6 +149,7 @@ public class ReviewService {
         	log.info("유효하지 않은 삭제 요청입니다.");
         	return false;
         }
+        rCommentRepository.deleteAllByReview(entity);
     	reviewRepository.deleteById(id);
     	return true;
     }
