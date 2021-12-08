@@ -2,109 +2,106 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="/assets/img/favicon.ico" type="image/ico">
-<!--Icons-->
-<link href="/assets/fonts/iconsmind/iconsmind.css" rel="stylesheet">
-<link href="/assets/fonts/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-<!--Google fonts-->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-	href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@200;300;400;500;600;700&display=swap"
-	rel="stylesheet">
-<!-- Main CSS -->
-<link href="/assets/css/theme.min.css" rel="stylesheet">
-<style>
-    .round{
-        border-radius: 30px !important;
-        -moz-border-radius: 30px !important;
-        -khtml-border-radius: 30px !important;
-        -webkit-border-radius: 30px !important;
-    }
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" href="/assets/img/favicon.ico" type="image/ico">
+	<!--Icons-->
+	<link href="/assets/fonts/iconsmind/iconsmind.css" rel="stylesheet">
+	<link href="/assets/fonts/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	<!--Google fonts-->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@200;300;400;500;600;700&display=swap"
+		rel="stylesheet">
+	<!-- Main CSS -->
+	<link href="/assets/css/theme.min.css" rel="stylesheet">
+	<style>
+		.round {
+			border-radius: 30px !important;
+			-moz-border-radius: 30px !important;
+			-khtml-border-radius: 30px !important;
+			-webkit-border-radius: 30px !important;
+		}
 
-    .photo {
-        display: inline-block;
-        vertical-align: middle;
-        border: 1px solid #d4d4d4;
-        margin: 0;
-        text-align: center;
+		.photo {
+			display: inline-block;
+			vertical-align: middle;
+			border: 1px solid #d4d4d4;
+			margin: 0;
+			text-align: center;
 
-        background-size: 200px;
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-color: #ECEFF1;
-        width:150px;
-        height:150px;
-        margin:0 auto 20px;
-        position:relative;
-    }
+			background-size: 200px;
+			background-position: center center;
+			background-repeat: no-repeat;
+			background-color: #ECEFF1;
+			width: 150px;
+			height: 150px;
+			margin: 0 auto 20px;
+			position: relative;
+		}
 
-    .icon_camera {
-        position:absolute;
-        bottom: -2px;
-        right: -5px;
-        min-width: 8px;
-        height: 30px;
-        line-height: 20px;
-        margin-top: -11px;
-        padding: 0 6px;
-        font-weight: normal;
-        font-size: 25px;
-        color: white;
-        text-align: center;
-        text-shadow: 0 1px rgba(0, 0, 0, 0.2);
-        background: #4287f5;
-        border: 1px solid #166df7;
-        border-radius: 11px;
-        background-image: -webkit-linear-gradient(top, #4287f5, #166df7);
-        background-image: -moz-linear-gradient(top, #4287f5, #166df7);
-        background-image: -o-linear-gradient(top, #4287f5, #166df7);
-        background-image: linear-gradient(to bottom, #4287f5, #166df7);
-        -webkit-box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
-        box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
-    }
+		.icon_camera {
+			position: absolute;
+			bottom: -2px;
+			right: -5px;
+			min-width: 8px;
+			height: 30px;
+			line-height: 20px;
+			margin-top: -11px;
+			padding: 0 6px;
+			font-weight: normal;
+			font-size: 25px;
+			color: white;
+			text-align: center;
+			text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+			background: #4287f5;
+			border: 1px solid #166df7;
+			border-radius: 11px;
+			background-image: -webkit-linear-gradient(top, #4287f5, #166df7);
+			background-image: -moz-linear-gradient(top, #4287f5, #166df7);
+			background-image: -o-linear-gradient(top, #4287f5, #166df7);
+			background-image: linear-gradient(to bottom, #4287f5, #166df7);
+			-webkit-box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
+			box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
+		}
 
 
-    /* 이미지 */
-    .profile-pic {
-        max-width: 200px;
-        max-height: 200px;
-        display: block;
-    }
+		/* 이미지 */
+		.profile-pic {
+			max-width: 200px;
+			max-height: 200px;
+			display: block;
+		}
 
-    .file-upload {
-        display: none;
-    }
+		.file-upload {
+			display: none;
+		}
 
-    
-    .upload-button:hover {
-        transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
-        color: #999;
-    }
-    
-</style>
 
-<title>BITravel 회원 가입</title>
+		.upload-button:hover {
+			transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+			color: #999;
+		}
+	</style>
+
+	<title>BITravel 회원 가입</title>
 </head>
 
 <body>
 	<!--Preloader Spinner-->
-<!--<div class="spinner-loader bg-gradient-secondary text-white">
+	<!--<div class="spinner-loader bg-gradient-secondary text-white">
 		<div class="spinner-border text-primary" role="status"></div>
 		<span class="small d-block ms-2">Loading...</span>
-	</div>-->	
+	</div>-->
 
 	<!--Main content-->
 	<main>
 		<!--page-hero-->
 		<section class="bg-white position-relative">
-			<div
-				class="bg-pattern text-muted opacity-10 w-100 h-100 start-0 top-0 position-absolute"></div>
-			<div
-				class="bg-gradientwhite flip-y w-50 h-100 start-50 top-0 translate-middle-x position-absolute"></div>
+			<div class="bg-pattern text-muted opacity-10 w-100 h-100 start-0 top-0 position-absolute"></div>
+			<div class="bg-gradientwhite flip-y w-50 h-100 start-50 top-0 translate-middle-x position-absolute"></div>
 			<div class="container py-9 pt-lg-12 position-relative z-index-1">
 				<div class="row align-items-center justify-content-center">
 					<div class=" col-xl-4 col-lg-5 col-md-6 col-sm-8 z-index-2">
@@ -115,14 +112,16 @@
 							<div>
 								<!-- 프로필 사진 업로드 -->
 								<form id="image-form" method="post" enctype="multipart/form-data">
-									<div class="round photo profile-pic" id="profile-pic" style="background-image: url(/assets/img/avatar/1.jpg); ">
+									<div class="round photo profile-pic" id="profile-pic"
+										style="background-image: url(/assets/img/avatar/1.jpg); ">
 										<div class="icon_camera">
-											<i class="bi bi-camera upload-button" ></i>
-											<input class="file-upload" type="file" accept="image/*" id="g_img[]" name="g_img[]"/>
+											<i class="bi bi-camera upload-button"></i>
+											<input class="file-upload" type="file" accept="image/*" id="g_img[]"
+												name="g_img[]" />
 										</div>
 									</div>
 									<div class="input-icon-group mb-4 small" style="width: 100%;">
-									프로필 이미지를 등록해 주세요.<br>(최대 용량 10MB, 정사각형 권장)
+										프로필 이미지를 등록해 주세요.<br>(최대 용량 10MB, 정사각형 권장)
 									</div>
 								</form>
 
@@ -130,37 +129,32 @@
 								<form id="signup-form" method="post" autocomplete="off">
 									<!--input-with-icon-->
 									<div class="input-icon-group mb-3">
-										<span class="input-icon"> <svg
-												xmlns="http://www.w3.org/2000/svg" fill="currentColor"
-												class="bi bi-envelope" viewBox="0 0 16 16">
-                                                    <path
+										<span class="input-icon"> <svg xmlns="http://www.w3.org/2000/svg"
+												fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+												<path
 													d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383l-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
-                                                </svg>
-										</span> <input type="email" class="form-control" id="signUpMail"
-											name="email" autofocus placeholder="이메일을 입력하세요.">
+											</svg>
+										</span> <input type="email" class="form-control" id="signUpMail" name="email"
+											autofocus placeholder="이메일을 입력하세요.">
 									</div>
 									<!--input-with-icon-->
 									<div class="input-icon-group mb-3">
-										<span class="input-icon"> <svg
-												xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-												fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
-                                                    <path
+										<span class="input-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="16"
+												height="16" fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
+												<path
 													d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z" />
-                                                    <path
-													d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
-                                                </svg>
-										</span> <input type="password" class="form-control"
-											id="signUpPassword" name="password"
-											placeholder="비밀번호를 입력하세요.">
+												<path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+											</svg>
+										</span> <input type="password" class="form-control" id="signUpPassword"
+											name="password" placeholder="비밀번호를 입력하세요.">
 									</div>
 									<!--input-with-icon-->
 									<div class="input-icon-group mb-3">
-										<span class="input-icon"> <svg
-												xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-												fill="currentColor" class="bi bi-person-circle"
+										<span class="input-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="16"
+												height="16" fill="currentColor" class="bi bi-person-circle"
 												viewBox="0 0 16 16">
-											  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-											  <path fill-rule="evenodd"
+												<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+												<path fill-rule="evenodd"
 													d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
 											</svg>
 										</span> <input type="text" class="form-control" id="signUpRealName"
@@ -168,40 +162,35 @@
 									</div>
 									<!--input-with-icon-->
 									<div class="input-icon-group mb-3">
-										<span class="input-icon"> <svg
-												xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-												fill="currentColor" class="bi bi-person-badge"
+										<span class="input-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="16"
+												height="16" fill="currentColor" class="bi bi-person-badge"
 												viewBox="0 0 16 16">
-  												<path
+												<path
 													d="M6.5 2a.5.5 0 0 0 0 1h3a.5.5 0 0 0 0-1h-3zM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-  													<path
+												<path
 													d="M4.5 0A2.5 2.5 0 0 0 2 2.5V14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2.5A2.5 2.5 0 0 0 11.5 0h-7zM3 2.5A1.5 1.5 0 0 1 4.5 1h7A1.5 1.5 0 0 1 13 2.5v10.795a4.2 4.2 0 0 0-.776-.492C11.392 12.387 10.063 12 8 12s-3.392.387-4.224.803a4.2 4.2 0 0 0-.776.492V2.5z" />
-												</svg>
+											</svg>
 										</span> <input type="text" class="form-control" id="signUpNickname"
 											name="nickname" autofocus placeholder="닉네임을 입력하세요."
 											aria-describedby="basic-addon2">
 									</div>
 									<div class="input-icon-group mb-3">
-										<button class="btn btn-dark"
-											style="width: 100%; text-align: center" type="button"
-											id="nicknameCheck" onclick="isValidNickname()">닉네임
+										<button class="btn btn-dark" style="width: 100%; text-align: center"
+											type="button" id="nicknameCheck" onclick="isValidNickname()">닉네임
 											중복 확인</button>
 									</div>
-									<input type="hidden" name="nicknameValidation"
-										value="unchecked"> <br>
-								<input type="hidden" id="userImage" value=""/>
+									<input type="hidden" name="nicknameValidation" value="unchecked"> <br>
+									<input type="hidden" id="userImage" value="" />
 									<!-- Radio button for gender -->
 									<div class="input-icon-group mb-3" style="width: 100%;">
-										<input type="radio" class="btn-check" name="gender" id="Man"
-											value="Man" autocomplete="off"> <label
-											class="btn btn-outline-secondary" for="Man">남성</label>
-										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio"
-											class="btn-check" name="gender" id="Woman" value="Woman"
-											autocomplete="off"> <label
+										<input type="radio" class="btn-check" name="gender" id="Man" value="Man"
+											autocomplete="off"> <label class="btn btn-outline-secondary"
+											for="Man">남성</label>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" class="btn-check"
+											name="gender" id="Woman" value="Woman" autocomplete="off"> <label
 											class="btn btn-outline-secondary" for="Woman">여성</label>
-										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio"
-											class="btn-check" name="gender" id="Private" value="Private"
-											autocomplete="off"> <label
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <input type="radio" class="btn-check"
+											name="gender" id="Private" value="Private" autocomplete="off"> <label
 											class="btn btn-outline-secondary" for="Private">비공개</label>
 									</div>
 									<br>
