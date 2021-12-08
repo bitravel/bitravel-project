@@ -62,6 +62,7 @@ public class BoardService {
 
     	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
     	pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardId"));
+    	
         return boardRepository.findByNicknameContainingOrBoardTitleContainingOrBoardContentContaining(keyword, keyword, keyword, pageable);
     }
     
@@ -70,6 +71,10 @@ public class BoardService {
      */
     @Transactional
     public Page<Board> findBoardsByNickname(String keyword, Pageable pageable) {
+    	
+    	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+    	pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardId"));
+    	
         return boardRepository.findByNicknameContaining(keyword, pageable);
     }
     
@@ -78,6 +83,10 @@ public class BoardService {
      */
     @Transactional
     public Page<Board> findBoardsByTitle(String keyword, Pageable pageable) {
+    	
+    	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+    	pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardId"));
+    	
         return boardRepository.findByBoardTitleContaining(keyword, pageable);
     }
     
@@ -86,6 +95,10 @@ public class BoardService {
      */
     @Transactional
     public Page<Board> findBoardsByTitleAndContent(String keyword, Pageable pageable) {
+    	
+    	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+    	pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardId"));
+    	
         return boardRepository.findByBoardTitleContainingOrBoardContentContaining(keyword, keyword, pageable);
     }
     
