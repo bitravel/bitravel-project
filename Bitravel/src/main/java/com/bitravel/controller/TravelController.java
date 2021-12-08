@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import org.springframework.boot.configurationprocessor.json.JSONException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -62,8 +63,12 @@ public class TravelController {
      */
     @GetMapping("/travels/name/{name}")
     @ApiOperation(value = "여행지 이름 검색", notes = "여행지 이름으로 검색한 결과를 목록으로 출력하는 API. Travel entity 클래스의 travelName값을 기준으로 데이터를 가져온다.")
-    public List<TravelSimpleDto> detailsByName(@PathVariable final String name) {
-    	return travelService.detailsByName(name);
+    public ResponseEntity <List<TravelSimpleDto>> detailsByName(@PathVariable final String name) {
+    	List<TravelSimpleDto> list = travelService.detailsByName(name);
+    	if(list.size()<20)
+    		return ResponseEntity.ok(list);
+    	else
+    		return ResponseEntity.ok(list.subList(0, 20));
     }
     
     /**
