@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>회원관리</title>
 
-<!--모달-->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>회원관리</title>
+
+	<!--모달-->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <body>
@@ -17,12 +18,14 @@
 	<!-- The Modal -->
 	<div class="container mt-3">
 		<hr>
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal_1" id="openAdminUser">
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal_1"
+			id="openAdminUser">
 			회원관리 페이지 열기
 		</button>
 
 		<hr>
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal_2"  id="openAdminReport">
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal_2"
+			id="openAdminReport">
 			신고관리 페이지 열기
 		</button>
 		<hr>
@@ -45,21 +48,23 @@
 				</div>
 				<!-- Modal body -->
 				<div class="modal-body">
-				<form id="user-search-form" method="POST" autocomplete="off">
-				<div class="input-group w-50">
-						<select class="btn btn-secondary dropdown-toggle" name="select1">
-							<option value="realname">이름</option>
-							<option value="email">이메일</option>
-							<option value="nickname">닉네임</option>
-						</select>
-						<input class="form-control" type="text" placeholder="회원정보 검색" id="userSearch">
-						<button type="button" class="btn btn-secondary" id="search1" onclick="searchKeyword();">검색</button>
-						<button type="button" class="btn btn-secondary" id="all1" onclick="findAll();">전체보기</button>
-						<button type="button" class="btn btn-secondary" id="delete1" onclick="deleteUser();">삭제</button>
-					</div>	
-				</form>
-				<br>
-				<!--테이블-->
+					<form id="user-search-form" method="POST" autocomplete="off">
+						<div class="input-group w-50">
+							<select class="btn btn-secondary dropdown-toggle" name="select1">
+								<option value="realname">이름</option>
+								<option value="email">이메일</option>
+								<option value="nickname">닉네임</option>
+							</select>
+							<input class="form-control" type="text" placeholder="회원정보 검색" id="userSearch">
+							<button type="button" class="btn btn-secondary" id="search1"
+								onclick="searchKeyword();">검색</button>
+							<button type="button" class="btn btn-secondary" id="all1" onclick="findAll();">전체보기</button>
+							<button type="button" class="btn btn-secondary" id="delete1"
+								onclick="deleteUser();">삭제</button>
+						</div>
+					</form>
+					<br>
+					<!--테이블-->
 					<table class="table table-striped">
 						<thead>
 							<tr>
@@ -105,29 +110,39 @@
 				</div>
 				<!-- Modal body -->
 				<div class="modal-body">
-				<form id="report-search-form" method="POST" autocomplete="off">
-				<div class="input-group w-75 mb-4">
-						<select class="btn btn-secondary dropdown-toggle" name="select2">
-							<option value="t">제목</option>
-							<option value="c">글 번호</option>
-							<option value="reporter">신고한 유저</option>
-							<option value="reported">신고받은 유저</option>
-						</select>
-						<input class="form-control" type="text" placeholder="신고정보 검색" id="reportSearch">
-						<button type="button" class="btn btn-secondary" id="search2" onclick="searchReport();">검색</button>
-						<button type="button" class="btn btn-secondary" id="all2" onclick="findAllReport();">전체보기</button>
-						<button type="button" class="btn btn-secondary" id="checked2" onclick="findUncheckedReport();">미처리내역</button>
-						<button type="button" class="btn btn-secondary" id="checked2" onclick="findCheckedReport();">완료내역</button>
-						<button type="button" class="btn btn-secondary" id="check2" onclick="checkReport();">처리하기</button>
-					</div>
-					<input class="form-radio-input" type="radio" value="board" id="boardCheck" name="listType"> <label for="boardCheck">게시물</label>
-					<input class="form-radio-input" type="radio" value="review" id="reviewCheck" name="listType"> <label for="reviewCheck">후기</label>
-					<input class="form-radio-input" type="radio" value="bcomment" id="bcommentCheck" name="listType"> <label for="bcommentCheck">게시물 댓글</label>
-					<input class="form-radio-input" type="radio" value="rcomment" id="rcommentCheck" name="listType"> <label for="rcommentCheck">후기 댓글</label>
-					<input class="form-radio-input" type="radio" value="all" id="allCheck" name="listType" checked> <label for="allCheck">전체</label>
-					<br>	
-				</form>
-				<!--테이블-->
+					<form id="report-search-form" method="POST" autocomplete="off">
+						<div class="input-group w-75 mb-4">
+							<select class="btn btn-secondary dropdown-toggle" name="select2">
+								<option value="t">제목</option>
+								<option value="c">글 번호</option>
+								<option value="reporter">신고한 유저</option>
+								<option value="reported">신고받은 유저</option>
+							</select>
+							<input class="form-control" type="text" placeholder="신고정보 검색" id="reportSearch">
+							<button type="button" class="btn btn-secondary" id="search2"
+								onclick="searchReport();">검색</button>
+							<button type="button" class="btn btn-secondary" id="all2"
+								onclick="findAllReport();">전체보기</button>
+							<button type="button" class="btn btn-secondary" id="checked2"
+								onclick="findUncheckedReport();">미처리내역</button>
+							<button type="button" class="btn btn-secondary" id="checked2"
+								onclick="findCheckedReport();">완료내역</button>
+							<button type="button" class="btn btn-secondary" id="check2"
+								onclick="checkReport();">처리하기</button>
+						</div>
+						<input class="form-radio-input" type="radio" value="board" id="boardCheck" name="listType">
+						<label for="boardCheck">게시물</label>
+						<input class="form-radio-input" type="radio" value="review" id="reviewCheck" name="listType">
+						<label for="reviewCheck">후기</label>
+						<input class="form-radio-input" type="radio" value="bcomment" id="bcommentCheck"
+							name="listType"> <label for="bcommentCheck">게시물 댓글</label>
+						<input class="form-radio-input" type="radio" value="rcomment" id="rcommentCheck"
+							name="listType"> <label for="rcommentCheck">후기 댓글</label>
+						<input class="form-radio-input" type="radio" value="all" id="allCheck" name="listType" checked>
+						<label for="allCheck">전체</label>
+						<br>
+					</form>
+					<!--테이블-->
 					<table class="table table-striped">
 						<thead>
 							<tr>
@@ -157,10 +172,10 @@
 		</div>
 	</div>
 
-     <!-- scripts -->
+	<!-- scripts -->
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script src="/assets/js/moment.min.js"></script>
-	<script type="text/javascript" src="/js/bitravel/adminUser.js"></script>	
+	<script type="text/javascript" src="/js/bitravel/adminUser.js"></script>
 	<script type="text/javascript" src="/js/bitravel/adminReport.js"></script>
 </body>
 

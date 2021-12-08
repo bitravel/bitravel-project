@@ -487,6 +487,7 @@
 				success : function(url) {
 					$(el).summernote('insertImage', url, function($image) {
 						$image.css('width', "50%");
+						console.log(url);
 					});
 				}
 			});
@@ -569,12 +570,16 @@
         	const form = document.getElementById('form');
         	var travelArray = [];
         	travelArray.push(form.travelId.value);
+        	const rimage = form.summernote.value;
+        	const thumbNail = rimage.match("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>");
+        	console.log(thumbNail[1]);
         	const params = {
         		
         		//travelName: form.travelName.value,
         		reviewTitle: form.reviewTitle.value,
         		reviewContent: form.summernote.value,
-        		travelId : travelArray
+        		travelId : travelArray,
+        		thumbNail : thumbNail[1]
         	};
         	console.log(params);
         	

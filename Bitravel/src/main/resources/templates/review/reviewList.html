@@ -554,14 +554,14 @@
                 	<div class="swiper-slide" th:each="list: ${reviewList}">
                         <div class="vh-auto bg-white">
                             <article class="card-hover border-0 d-flex">
-                                <a href="#" class="stretched-link"></a>
+                                <a th:href="@{'/review/detail/'+${list.reviewId}(page=${reviewList.number+1})}" class="stretched-link"></a>
                                 <div class="card-body position-relative p-0" >
-                                    <div class="d-block position-relative overflow-hidden mb-4">
-                                        <img src="/assets/img/800x600/2.jpg" class="img-fluid img-zoom" alt="">
+                                    <div class="d-block position-relative overflow-hidden mb-4" style="text-align: center;">
+                                        <img th:src="${list.thumbNail}" onerror="this.src='/assets/img/800x600/2.jpg'" style="height:400px " class="img-fluid img-zoom" alt="">
                                     </div>
                                     <h5 class="mb-3">[[${list.reviewTitle}]]</h5>
                                     <div class="blog-content">
-                                        <p class="mb-4">[[${list.reviewContent}]]</p>
+                                        <!-- <p class="mb-4">[[${list.reviewContent}]]</p> -->
                                         <div class="text-primary fw-semibold small pb-2 border-bottom border-primary" th:text="${#dates.format(list.reviewDate, 'yyyy-MM-dd')}">
                                            [[${list.reviewDate}]]</div>
                                     </div>
@@ -1087,5 +1087,15 @@
     <script src="/assets/js/theme.bundle.js"></script>
     
 </body>
+<script th:inline="javascript">
+	/*<![CDATA[*/
+		/**
+		 * 썸네일 만들기
+		 */
+
+		 
+		
+		/*]]>*/
+    </script>
 
 </html>

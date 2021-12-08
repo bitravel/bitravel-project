@@ -23,7 +23,7 @@
     <link href="https://unpkg.com/filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css" rel="stylesheet">
     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
         rel="stylesheet">
-    
+
     <!-- Main CSS -->
     <link href="/assets/css/theme.min.css" rel="stylesheet">
 
@@ -47,9 +47,9 @@
                             <i></i>
                         </span>
                     </button>
-                    
+
                     <!--회원 정보 관련 : 회원 전용 메뉴 -->
-                    <div class="nav-item me-3 me-lg-0 dropdown"  sec:authorize="isAuthenticated()">
+                    <div class="nav-item me-3 me-lg-0 dropdown" sec:authorize="isAuthenticated()">
                         <a href="#" class="btn btn-secondary rounded-pill py-0 ps-0 pe-3" data-bs-auto-close="outside"
                             data-bs-toggle="dropdown">
                             <img th:src="${#authentication.principal.userImage}" alt="" class="avatar sm rounded-circle me-1">
@@ -1028,15 +1028,15 @@
     <script src="/js/bitravel/travelDetail.js"></script>
     <th:block layout:fragment="script">
     <script th:inline="javascript">
-    
+
         var travel;
         const id = "[[${id}]]";
-        
-		window.onload = () => {
-               
-			findTravel(id);
-		}
-		
+
+        window.onload = () => {
+
+            findTravel(id);
+        }
+
     </script>
     </th:block>
 </body>

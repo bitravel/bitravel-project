@@ -55,7 +55,7 @@
                     </button>
 
                     <!--회원 정보 관련 : 회원 전용 메뉴 -->
-                    <div class="nav-item me-3 me-lg-0 dropdown"  sec:authorize="isAuthenticated()">
+                    <div class="nav-item me-3 me-lg-0 dropdown" sec:authorize="isAuthenticated()">
                         <a href="#" class="btn btn-secondary rounded-pill py-0 ps-0 pe-3" data-bs-auto-close="outside"
                             data-bs-toggle="dropdown">
                             <img src="/assets/img/avatar/4.jpg" alt="" class="avatar sm rounded-circle me-1">
@@ -69,14 +69,15 @@
                                     </div>
                                     <div>
                                         <h5 class="mb-0" sec:authentication="principal.nickname"></h5>
-                                        <span class="text-muted d-block mb-2" sec:authentication="principal.email"></span>
+                                        <span class="text-muted d-block mb-2"
+                                            sec:authentication="principal.email"></span>
                                         <div class="small d-inline-block link-underline fw-semibold text-muted">View
                                             account</div>
                                     </div>
                                 </div>
                             </a>
-                                <span class="d-block text-end dropdown-item p-3">
-                                    <a href="/api/logout" class="text-dark">
+                            <span class="d-block text-end dropdown-item p-3">
+                                <a href="/api/logout" class="text-dark">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                                         class="bi bi-box-arrow-right me-2" viewBox="0 0 16 16">
                                         <path fill-rule="evenodd"
@@ -87,12 +88,12 @@
                                         </path>
                                     </svg>
                                     로그아웃
-                                    </a>
-                                </span>
+                                </a>
+                            </span>
                         </div>
                     </div>
                     <!--회원 정보 관련 : 비회원 메뉴 -->
-                    <div class="nav-item me-3 me-lg-0 dropdown"  sec:authorize="isAnonymous()">
+                    <div class="nav-item me-3 me-lg-0 dropdown" sec:authorize="isAnonymous()">
                         <a href="#" class="btn btn-secondary rounded-pill py-0 ps-0 pe-2" data-bs-auto-close="outside"
                             data-bs-toggle="dropdown">
                             <img src="/assets/img/avatar/4.jpg" alt="" class="avatar sm rounded-circle me-1">
@@ -100,25 +101,31 @@
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs p-0">
                             <span class="d-block text-center mt-4 mb-2 text-muted">
-                            더 많은 BITravel의 서비스를 즐겨 보세요.</span>
+                                더 많은 BITravel의 서비스를 즐겨 보세요.</span>
                             <span class="d-block text-end mb-2 me-3">
-                            <a href="/login" class="text-dark me-2"> 
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-									  <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z"/>
-									  <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
-									</svg> 
-                                	로그인
-                               </a>
-                            <a href="/signup" class="text-dark">
-									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-plus-fill" viewBox="0 0 16 16">
-									  <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
-									  <path fill-rule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
-									</svg>
-                                    가입  
-                            </a>
+                                <a href="/login" class="text-dark me-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z" />
+                                        <path fill-rule="evenodd"
+                                            d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                                    </svg>
+                                    로그인
+                                </a>
+                                <a href="/signup" class="text-dark">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                        <path fill-rule="evenodd"
+                                            d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
+                                    </svg>
+                                    가입
+                                </a>
                             </span>
                         </div>
-                    </div>                    
+                    </div>
                 </div>
 				<div class="collapse navbar-collapse" id="mainNavbarTheme">
 					<ul class="navbar-nav mx-auto">
@@ -153,7 +160,7 @@
         </section>
         <br><br>
 
-		<!-- 게시글 영역 -->
+        <!-- 게시글 영역 -->
         <div class="container py-6">
             <div class="row mb-3 justify-content-center">
 
@@ -173,16 +180,17 @@
                                 </tr>
                             </thead>
                             <tbody id="list">
-                            <tr th:each="list, index: ${boardList}">
-                            	
-                            	<td>[[${boardList.totalElements-(((boardList.number)*boardList.size) + index.index)}]]</td>
-                            	<td>
-                            		<a th:href="@{'/board/detail/'+${list.boardId}(page=${boardList.number+1})}">
-                            			[[${list.boardTitle}]]
-                            		</a>
-                            	</td>
-                            	<td>[[${list.nickname}]]</td>
-                            	<td th:text="${#dates.format(list.boardDate, 'yyyy-MM-dd HH:mm:ss')}">
+                                <tr th:each="list, index: ${boardList}">
+
+                                    <td>[[${boardList.totalElements-(((boardList.number)*boardList.size) +
+                                        index.index)}]]</td>
+                                    <td>
+                                        <a th:href="@{'/board/detail/'+${list.boardId}(page=${boardList.number+1})}">
+                                            [[${list.boardTitle}]]
+                                        </a>
+                                    </td>
+                                    <td>[[${list.nickname}]]</td>
+                                    <td th:text="${#dates.format(list.boardDate, 'yyyy-MM-dd HH:mm:ss')}">
                             		[[${list.boardDate}]]</td>
                             	<td>[[${list.boardView}]]</td>
                             </tr>
@@ -224,33 +232,33 @@
                             
                             <!-- first page -->
                             <li class="page-item" >
-						      <a class="page-link" th:href="@{./list(keyword=${keyword}, page=1)}" aria-label="First">
+						      <a class="page-link" th:href="@{./list(keyword=${param.keyword}, page=1)}" aria-label="First">
 						        <span aria-hidden="true"> FIRST </span>
 						      </a>
 						    </li>
 						    
                             <!-- previous page -->
                             <li class="page-item" th:class="${boardList.first} ? 'disabled'">
-                                <a class="page-link" th:href="${boardList.first} ? '#' : @{./list(keyword=${keyword}, page=${boardList.number})}" aria-label="Previous">
+                                <a class="page-link" th:href="${boardList.first} ? '#' : @{./list(keyword=${param.keyword}, page=${boardList.number})}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
                             
                             <!-- present page -->
                             <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == boardList.number + 1} ? 'active'">
-                            <a class="page-link" th:text="${page}" th:href="@{./list(keyword=${keyword}, page=${page})}">&nbsp;</a>
+                            <a class="page-link" th:text="${page}" th:href="@{./list(keyword=${param.keyword}, page=${page})}">&nbsp;</a>
                             </li>
 							
 							<!-- next page -->
                             <li class="page-item" th:class="${boardList.last} ? 'disabled'">
-                                <a class="page-link" th:href="${boardList.last} ? '#' : @{./list(keyword=${keyword}, page=${boardList.number + 2})}" aria-label="Next">
+                                <a class="page-link" th:href="${boardList.last} ? '#' : @{./list(keyword=${param.keyword}, page=${boardList.number + 2})}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
                             
                             <!-- last page -->
                             <li class="page-item">
-						      <a class="page-link" th:href="@{./list(keyword=${keyword}, page=${boardList.totalPages})}" aria-label="Last">
+						      <a class="page-link" th:href="@{./list(keyword=${param.keyword}, page=${boardList.totalPages})}" aria-label="Last">
 						        <span aria-hidden="true">LAST</span>
 						      </a>
 						    </li>
@@ -442,9 +450,9 @@
 
     <!-- begin Back to Top button -->
     <a href="#" class="toTop">
-        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 9' class="align-middle rotate-180" width="13"
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 9" class="align-middle rotate-180" width="13"
             height="9">
-            <path fill='currentColor'
+            <path fill="currentColor"
                 d="M12.25 2.30062L10.8988 0.949371L6.5 5.33854L2.10125 0.949371L0.75 2.30062L6.5 8.05062L12.25 2.30062Z">
             </path>
         </svg>
@@ -456,85 +464,16 @@
     <!-- 테이블 스크립트 -->
     <!-- begin Back to Top button -->
     <a href="#" class="toTop">
-        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 9' class="align-middle rotate-180" width="13"
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 9" class="align-middle rotate-180" width="13"
             height="9">
-            <path fill='currentColor'
+            <path fill="currentColor"
                 d="M12.25 2.30062L10.8988 0.949371L6.5 5.33854L2.10125 0.949371L0.75 2.30062L6.5 8.05062L12.25 2.30062Z">
             </path>
         </svg>
     </a>
     <script th:src="@{/assets/js/moment.min.js}"></script> 
 		<!-- moment.js DB가져올때 쓰임 -->
-
 </body>
 
-<script th:inline="javascript">
-	/*<![CDATA[*/
-
-		/**
-		 * 페이지 로딩 시점에 실행되는 함수
-		 
-			window.onload = () => {
-			findAll();
-		}
-		*/
-			
-		/**
-		 * 게시글 리스트 조회
-		 
-		 function findAll() {
-
-			fetch('/board/list').then(response => {
-				if (response.ok) {
-   					return response.json();
-				}
-			}).then(json => {
-				let html = '';
-
-				if (!json.length) {
-					html = '<td colspan="4">등록된 게시글이 없습니다.</td>';
-				} else {
-					json.forEach((obj, idx) => {
-						html += `
-							<tr>
-    							<td>${json.length - idx}</td>
-    							<td class="text-left">
-    								<a href="javascript: void(0);" onclick="goView(${obj.boardId})">${obj.boardTitle}</a>
-    							</td>
-    							<td>${obj.nickname}</td>
-    							<td>${moment(obj.boardDate).format('YYYY-MM-DD HH:mm:ss')}</td>
-    							<td>${obj.boardView}</td>
-							</tr>
-						`;
-					});
-				}
-
-				document.getElementById('list').innerHTML = html;
-			});
-		}
-		*/
-		
-		 /**
-		 * 게시글 조회
-		 */
-		function goView(id) {
-			location.href = `/board/detail/${id}`;
-		}
-		/**
-		* 검색 옵션 변경
-		**/
-		function option_bt(act) { 
-		    if (act=='all'){
-		    	document.edit.action = "/board/search/all/list";
-		    } else if (act=='title') {
-		    	document.edit.action = "/board/search/title/list";
-		    } else if (act=='titleandcontent') {
-		    	document.edit.action = "/board/search/titleandcontent/list";
-		    } else {
-		    	document.edit.action = "/board/search/nickname/list";
-		    }
-		}
-
-	/*]]>*/
-    </script>
+<script th:inline="javascript" src="/js/bitravel/boardList.js"></script>
 </html>
