@@ -28,8 +28,6 @@
 ### [김종희](https://github.com/spacekay)
 프로젝트 기획, 일정 및 VCS 관리, DB 구성, 회원/여행지 관련 기능 FE·BE, (추후 추가)
 
-### [한승용](https://github.com/MochiMom)
-프로젝트 기획, HTML 페이지 레이아웃 구성 및 제작, (추후 추가) 
 
 ## 일정표 확인
 https://docs.google.com/spreadsheets/d/1xrJY5oFsCTjjSEwxY2uCujWKFVm5Q1uY/edit?rtpof=true
