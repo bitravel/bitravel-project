@@ -1,5 +1,6 @@
 package com.bitravel.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -84,8 +85,12 @@ public class BoardController {
      */
     @PatchMapping("/boards/{id}")
     @ApiOperation(value = "글 수정", notes = "글 내용을 수정하는 API. Board entity 클래스로 데이터를 수정한다.<br>이때엔 정보를 등록할 때와는 다르게 bid 값을 함깨 보내줘야한다.")
-    public Boolean save(@PathVariable final Long id, @RequestBody final BoardRequestDto params) {
-        return boardService.update(id, params);
+    public ResponseEntity<?> save(@PathVariable final Long id, @RequestBody final BoardRequestDto params) {    
+    	if(boardService.update(id, params)) {
+    		return ResponseEntity.ok(null);
+    	} else {
+    		return ResponseEntity.badRequest().body(null);
+    	}
     }
     /**
      * 게시글 상세 정보 조회
