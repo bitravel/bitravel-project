@@ -62,8 +62,10 @@ public class Review {
     
     private String nickname; // 작성자 닉네임
     
+    private String thumbNail;
+    
     @Builder
-    public Review(String reviewTitle, String reviewContent, String userEmail,Long reviewId, int reviewView, int reviewRecom, int reviewLevel, Timestamp reviewDate, Set<Travel> travelSet, String nickname) {
+    public Review(String reviewTitle, String reviewContent, String userEmail,Long reviewId, int reviewView, int reviewRecom, int reviewLevel, Timestamp reviewDate, Set<Travel> travelSet, String nickname, String thumbNail) {
     	this.reviewTitle = reviewTitle;
     	this.reviewContent = reviewContent;
     	this.reviewId = reviewId;
@@ -74,6 +76,7 @@ public class Review {
     	this.userEmail = userEmail;
     	this.nickname = nickname;
     	this.travelSet = travelSet;
+    	this.thumbNail = thumbNail;
     }
     
     public void update(String reviewTitle, String reviewContent, Set<Travel> travelSet) {

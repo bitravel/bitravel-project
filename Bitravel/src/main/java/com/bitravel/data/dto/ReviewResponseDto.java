@@ -23,6 +23,7 @@ public class ReviewResponseDto {
     private int reviewView; // 조회수
     private Timestamp reviewDate; // 작성날짜
     private int reviewRecom; // 추천수
+    private String thumbNail; //썸네일
     private List<TravelSimpleDto> travelList;
 
     public ReviewResponseDto(Review entity) {
@@ -35,6 +36,7 @@ public class ReviewResponseDto {
     	this.reviewDate = entity.getReviewDate();
     	this.userEmail = entity.getUserEmail();
     	this.nickname = entity.getNickname();
+    	this.thumbNail = entity.getThumbNail();
     	this.travelList = this.extractId(entity.getTravelSet());
     }
     

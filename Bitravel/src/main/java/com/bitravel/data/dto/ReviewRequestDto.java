@@ -22,6 +22,7 @@ public class ReviewRequestDto {
     private String reviewContent; // 내용
     private Integer reviewLevel; // 글 레벨 (답글 여부 확인)
     private List<Long> travelId; // 부여된 여행지 정보들
+    private String thumbNail; // 썸네일 경로
     
     @JsonIgnore
     private Set<Travel> travel;
@@ -33,6 +34,7 @@ public class ReviewRequestDto {
                 .reviewContent(reviewContent)
                 .userEmail(userEmail)
                 .nickname(nickname)
+                .thumbNail(thumbNail)
                 //.reviewLevel(reviewLevel)
                 .build();
     }
