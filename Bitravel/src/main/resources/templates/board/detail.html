@@ -1,24 +1,19 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" layout:decorator="layout"
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" layout:decorator="layout1"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<th:block layout:fragment="modal">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title id="pageTitle">여행 게시판 :: BITravel</title>
+</head>
+
+<th:block layout:fragment="modal-board">
 	<div id="commentModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel"
 		aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
 				<div class="modal-body">
 					<form>
-						<!-- <div class="form-group">
-		                        <label for="modalWriter" class="col-form-label">작성자</label>
-		                        <input type="text" id="modalWriter" class="form-control" placeholder="작성자를 입력해 주세요." />
-		                    </div> -->
 						<div class="form-group">
 							<label for="modalContent" class="col-form-label">내용</label>
 							<textarea id="modalContent" class="form-control" placeholder="내용을 입력해 주세요."></textarea>
@@ -26,12 +21,12 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" id="btnModalCancel" class="btn btn-default waves-effect waves-light"
-						data-dismiss="modal">취소하기</button>
-					<button type="button" id="btnCommentUpdate" class="btn btn-primary waves-effect waves-light"
+					<button type="button" id="btnModalCancel" onclick="closeModal();"
+						class="btn btn-outline-secondary waves-effect waves-light" data-dismiss="modal">취소하기</button>
+					<button type="button" id="btnCommentUpdate" class="btn btn-outline-primary waves-effect waves-light"
 						onclick="updateComment()">수정하기</button>
 					<button type="button" id="btnCommentDelete"
-						class="btn btn-danger waves-effect waves-light">삭제하기</button>
+						class="btn btn-outline-danger waves-effect waves-light">삭제하기</button>
 				</div>
 			</div>
 		</div>
@@ -39,78 +34,92 @@
 </th:block>
 
 <th:block layout:fragment="content">
-	<div class="card-content">
-		<form class="form-horizontal form-view">
-
-			<div class="form-group">
-				<label for="inp-type-1" class="col-sm-2 control-label">제목</label>
-				<div class="col-sm-10">
-					<p id="boardTitle" class="form-control"></p>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="inp-type-2" class="col-sm-2 control-label">이름</label>
-				<div class="col-sm-10">
-					<p id="nickname" class="form-control"></p>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="inp-type-5" class="col-sm-2 control-label">내용</label>
-				<div class="col-sm-10">
-					<p id="boardContent" class="form-control"></p>
-				</div>
-			</div>
-
-			<div class="form-group">
-				<label for="inp-type-5" class="col-sm-2 control-label">등록일</label>
-				<div class="col-sm-10">
-					<p id="boardDate" class="form-control"></p>
-				</div>
-			</div>
-
-			<!-- <div class="form-group">
-    			<label for="inp-type-5" class="col-sm-2 control-label">조회 수</label>
-    			<div class="col-sm-10"><p id="hits" class="form-control"></p></div>
-    		</div> -->
-
-		</form>
-
-		<div class="btn_wrap text-center">
-			<a href="javascript: void(0);" onclick="goList();" class="btn btn-default waves-effect waves-light">뒤로가기</a>
-			<a href="javascript: void(0);" onclick="goWrite();"
-				class="btn btn-primary waves-effect waves-light">수정하기</a>
-			<button type="button" onclick="deleteBoard();" class="btn btn-danger waves-effect waves-light">삭제하기</button>
-		</div>
-	</div>
-	<!-- /.card-content -->
-</th:block>
-<!--  댓글  -->
-<th:block layout:fragment="add-content">
-	<div class="box-content">
-		<div class="card-content">
-			<div class="clearfix">
-				<h4 class="box-title pull-left">Comment</h4>
-				<!-- /.box-title -->
-			</div>
+	<main class="main-content position-relative z-index-2 mb-4 bg-white" id="main-content">
+        <section class="position-relative bg-light">
+            <div class="container  pt-11 pb-7 pb-lg-9">
+                <div class="row pt-lg-5">
+                    <div class="col-lg-9">
+                        <h2 class="display-4">여행 게시판</h2>
+                        <br>
+                        <p>자유롭게 여행에 관련한 이야기를 나눠 보세요.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+	</main>
+	<div class="container col-lg-8 col-10 col-sm-9 py-2 pb-0">
+		<div class="form-control p-4">
 			<form class="form-horizontal form-view">
-				<div class="input-group margin-bottom-20">
-					<input type="text" id="content" class="form-control"
-						onkeydown="javascript: if (event.keyCode == 13) {insertComment();}">
-					<input type="text" style="width:0px; visibility: hidden;">
-					<div class="input-group-btn">
-						<button type="button" class="btn waves-effect waves-light" onclick="insertComment()">
-							<i class="fa fa-commenting" aria-hidden="true"></i>
-						</button>
+				<div class="form-group">
+					<div class="col-sm">
+						<span id="boardTitle" class="fs-4 fw-bold"></span>
+						<hr style="margin-top:0.5rem; margin-bottom:1rem;">
 					</div>
 				</div>
-				<ul class="notice-list"></ul>
+
+				<div class="form-group">
+					<div class="col-sm mb-3">
+						<table class="text-muted" style="width:100%; table-layout:fixed;">
+							<tr>
+								<td style="width:30%;">
+									작성자:
+									<span id="nickname" class="text-dark"></span> </td>
+								<td style="width:50%;text-align:right;">
+									등록일:
+									<span id="boardDate" class="text-dark"></span>
+								</td>
+								<td style="width:20%; text-align:right;">
+									조회수: <span id="boardView" class="text-dark"></span></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm mb-5">
+						<p id="boardContent" style="word-break:normal;"></p>
+					</div>
+				</div>
+
 			</form>
+			<div class="btn_wrap text-center">
+				<a href="javascript: void(0);" onclick="goList();"
+					class="btn btn-outline-secondary waves-effect waves-light me-2">뒤로가기</a>
+				<a href="javascript: void(0);" onclick="goWrite();"
+					class="btn btn-outline-primary waves-effect waves-light me-2">수정하기</a>
+				<button type="button" onclick="deleteBoard();"
+					class="btn btn-outline-danger waves-effect waves-light me-2">삭제하기</button>
+			</div>
 		</div>
 		<!-- /.card-content -->
 	</div>
-	<!-- /.box-content -->
+
+</th:block>
+<!--  댓글  -->
+<th:block layout:fragment="add-content">
+	<div class="container col-lg-8 col-10 col-sm-9 py-2 pb-0 mt-5 mb-5">
+		<div class="box-content">
+			<div class="card-content">
+				<div class="clearfix">
+					<h4 class="box-title pull-left">Comment</h4>
+					<!-- /.box-title -->
+				</div>
+				<form class="form-horizontal form-view">
+					<div class="input-group mb-3">
+						<input type="text" id="content" class="form-control"
+							onkeydown="javascript: if (event.keyCode == 13) {insertComment();}">
+						<button type="button" class="btn btn-secondary waves-effect waves-light"
+							onclick="insertComment()">
+							<i class="fa fa-commenting" aria-hidden="true"></i>
+						</button>
+					</div>
+					<table class="notice-list" style="width:100%; table-layout:fixed;"></table>
+				</form>
+			</div>
+			<!-- /.card-content -->
+		</div>
+		<!-- /.box-content -->
+	</div>
 </th:block>
 
 <th:block layout:fragment="script">

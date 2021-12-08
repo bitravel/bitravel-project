@@ -46,7 +46,7 @@ public class BoardCommentService {
     /**
      * 특정 게시물에 댓글 작성
      */
-	public Long saveComment(BoardCommentRequestDto params) {
+	public BoardComment saveComment(BoardCommentRequestDto params) {
     	// JWT 구현 전에는 anonymousUser로 기록됨
     	String nowUserEmail = SecurityUtil.getCurrentEmail().get();
     	params.setUserEmail(nowUserEmail);
@@ -57,8 +57,7 @@ public class BoardCommentService {
     	}
     	Board board = boardRepository.findById(params.getBoardId()).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
     	params.setBoard(board);
-        BoardComment entity = bCommentRepository.save(params.toEntity());
-        return entity.getBCommentId();
+        return bCommentRepository.save(params.toEntity());
 	}
 	
     /**

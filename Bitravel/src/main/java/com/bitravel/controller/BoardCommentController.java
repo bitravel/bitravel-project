@@ -18,7 +18,9 @@ import com.bitravel.service.BoardCommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -52,8 +54,14 @@ public class BoardCommentController {
      */
     @PostMapping("/boards/comments/{id}")
     @ApiOperation(value = "댓글 작성", notes = "댓글 내용을 저장하는 API. BoardComment entity 클래스로 데이터를 저장한다.")
-    public Long save(@RequestBody final BoardCommentRequestDto params) {    	
-    	return bCommentService.saveComment(params);
+    public Boolean save(@RequestBody final BoardCommentRequestDto params) { 
+    	try {
+    		bCommentService.saveComment(params);
+    	} catch (Exception e) {
+    		log.info(e.getMessage());
+    		return false;
+    	}
+    	return true;
     }
     
     /**

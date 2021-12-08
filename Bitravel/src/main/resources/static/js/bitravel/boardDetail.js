@@ -1,7 +1,6 @@
 /**
-		 * 게시글 상세 조회
-		 */
-
+* 게시글 상세 조회
+*/
 function findBoard() {
 
 	fetch(`/api/boards/${id}`).then(response => {
@@ -41,6 +40,14 @@ function openModal(commentId, nickname, content) {
 }
 
 /**
+ * 댓글 수정 창 닫기
+ */
+function closeModal() {
+
+	$("#commentModal").modal("hide");
+}
+
+/**
  * 댓글 유효성 검사
  */
 function isValid() {
@@ -50,6 +57,12 @@ function isValid() {
 	if (!content.value.trim()) {
 		alert('내용을 입력해 주세요.');
 		content.value = '';
+		content.focus();
+		return false;
+	}
+	if(content.value.length>1000) {
+		alert('댓글은 최대 1000자까지 입력 가능합니다.');
+		content.value = content.value.slice(0,999);
 		content.focus();
 		return false;
 	}
@@ -71,7 +84,6 @@ function insertComment() {
 	var uri = `/api/boards/comments/${id}`;
 	var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "POST" };
 	var params = { "boardId": id, "commentContent": content.value };
-	console.log(params);
 	$.ajax({
 		url: uri,
 		type: "POST",
@@ -79,7 +91,7 @@ function insertComment() {
 		dataType: 'json',
 		data: JSON.stringify(params),
 		success: function (response) {
-			if (response.result == false) {
+			if (response.result==false) {
 				alert("댓글 등록에 실패하였습니다.");
 				return false;
 			}
@@ -87,7 +99,7 @@ function insertComment() {
 			content.value = "";
 		},
 		error: function (xhr, status, error) {
-			alert("에러가 발생하였습니다.");
+			alert("일시적인 오류가 발생하였습니다.");
 			return false;
 		}
 	});
@@ -98,8 +110,20 @@ function insertComment() {
 **/
 function updateComment(commentId) {
 
-	var writer = document.getElementById("modalWriter");
 	var content = document.getElementById("modalContent");
+
+	if (!content.value.trim()) {
+		alert('내용을 입력해 주세요.');
+		content.value = '';
+		content.focus();
+		return false;
+	}
+	if(content.value.length>1000) {
+		alert('댓글은 최대 1000자까지 입력 가능합니다.');
+		content.value = content.value.slice(0,999);
+		content.focus();
+		return false;
+	}
 
 	var uri = `/api/boards/comments/${commentId}`;
 	var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "PATCH" };
@@ -175,16 +199,15 @@ function printCommentList() {
 		let html = '';
 
 		if (!json.length) {
-			html = '<td colspan="4">등록된 게시글이 없습니다.</td>';
+			html = '<td colspan="10" style="text-align:center;">등록된 댓글이 없습니다.</td>';
 		} else {
 			json.forEach((obj) => {
 				html += `
-									<li>
-										<span class="name">${obj.nickname}</span>
-										<span class="desc">${obj.commentContent}</span>
-										
-										<button type="button" onclick="openModal(${obj.bcommentId}, '${obj.nickname}', '${obj.commentContent}' )" class="btn btn-xs btn-circle"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i></button>
-									</li>
+									<tr class="form-control mb-2">
+										<td style="width:15%;"><span class="fw-bold">${obj.nickname}</span></td>
+										<td style="width:80%;"><span class="desc">${obj.commentContent}</span></td>			
+										<td style="width:5%;"><button type="button" onclick="openModal(${obj.bcommentId}, '${obj.nickname}', '${obj.commentContent}' )" class="btn btn-sm btn-outline-default btn-circle"><i class="bi bi-pencil-fill" aria-hidden="true"></i></button></td>
+									</tr>
 								`;
 			});
 		}
