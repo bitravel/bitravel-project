@@ -34,51 +34,6 @@ public class BoardController {
     public Long save(@RequestBody final BoardRequestDto params) {
         return boardService.save(params);
     }
-
-    /**
-     * 게시글 리스트 조회
-     */
-//    @GetMapping("/boards")
-//    @ApiOperation(value = "글 목록 조회", notes = "글 목록을 조회하는 API.")
-//    public List<BoardResponseDto> findAll() {
-//        return boardService.findAll();
-//    }
-    
-    /**
-	 * 게시글 통합 검색
-	 */
-//	@GetMapping("/boards/search/all")
-//	@ApiOperation(value = "게시글 통합 검색 목록", notes = "게시글을 닉네임 또는 제목 또는 내용으로 조회하는 API.")
-//	public List<BoardResponseDto> findBoards(String keyword) {
-//		return boardService.findBoards(keyword);
-//	}
-
-//	/**
-//	 * 게시글 닉네임 검색
-//	 */
-//	@GetMapping("/boards/search/nickname")
-//	@ApiOperation(value = "게시글 닉네임 검색 목록", notes = "게시글을 닉네임으로 조회하는 API.")
-//	public Page<BoardResponseDto> findBoardsByNickname(String keyword) {
-//		return boardService.findBoardsByNickname(keyword);
-//	}
-//	
-//	/**
-//	 * 게시글 제목 검색
-//	 */
-//	@GetMapping("/boards/search/title")
-//	@ApiOperation(value = "게시글 제목 검색 목록", notes = "게시글을 제목으로 조회하는 API.")
-//	public Page<BoardResponseDto> findBoardsByTitle(String keyword) {
-//		return boardService.findBoardsByTitle(keyword);
-//	}
-//	
-//	/**
-//	 * 게시글 제목+내용 검색
-//	 */
-//	@GetMapping("/boards/search/titleandcontent")
-//	@ApiOperation(value = "게시글 제목+내용 검색 목록", notes = "게시글을 제목 또는 내용으로 조회하는 API.")
-//	public Page<BoardResponseDto> findBoardsByTitleAndContent(String keyword) {
-//		return boardService.findBoardsByTitleAndContent(keyword);
-//	}
     
     /**
      * 게시글 수정
