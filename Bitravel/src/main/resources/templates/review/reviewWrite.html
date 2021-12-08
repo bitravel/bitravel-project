@@ -34,6 +34,7 @@
         <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css" rel="stylesheet">
         <!-- Main CSS -->
         <link href="/assets/css/theme.min.css" rel="stylesheet">
+        <link rel="stylesheet" th:href="@{/css/style.css}" />
         <!--모달-->
         <style> .note-dialog .modal-dialog{ z-index:1050; } .modal-nav </style>
 		
@@ -148,13 +149,7 @@
                 </div>
 
             </section>
-            <!-- 모달 버튼 -->
-            <div class="container mt-3">
-				<hr>
-				<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal_1">
-					여행지 추가
-				</button>
-			</div>
+            
 			<!-- 모달 내부 내용 -->
             <div class="modal" id="myModal_1">
 				<div class="modal-dialog modal-fullscreen">
@@ -162,7 +157,7 @@
 		
 						<!-- Modal Header -->
 						<div class="modal-header">
-							<h4 class="modal-title">회원관리 목록</h4>
+							<h4 class="modal-title">여행지 조회</h4>
 							<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 						</div>
 						<!--Modal navbar-->
@@ -182,6 +177,7 @@
 										<input class="form-control me-2" type="text" id="name" onkeypress="findTravelName()" placeholder="Search" >
 										<input type="text" style="width:0px; visibility: hidden;">
 										<button class="btn btn-primary" type="button" onclick="findTravelName();">Search</button>
+										<button class="btn btn-primary" type="button" onclick="addTravel();">추가하기</button>
 									</form>
 								</div>
 							</div>
@@ -189,6 +185,7 @@
 							<table class="table table-striped">
 								<thead>
 									<tr>
+										<th>선택</th>
 										<th>번호</th>
 										<th>여행지</th>
 										<th>주소</th>
@@ -214,16 +211,24 @@
             <section class="position-relative">
                 <div class="container py-2 py-1 mb-9">
                     <div class="row mb-7 mb-15 justify-content-center">
+												<!-- 모달 버튼 -->
+			            <div class="container mt-3">
+							<hr>
+							<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal_1">
+								여행지 추가
+							</button>
+						</div>
+                        <form id="form" class="form-horizontal" name="only-form">
 
-                        <form id="form" class="form-horizontal">
-						<input type="hidden" id="travelId" class="form-control"	placeholder="여행지 Id" />
-						<div class="form-group">
+						<div class="form-group" name="form-line">
 							<label for="reviewTitle" class="col-sm-2 control-label">여행지명</label>
 							<div class="col-sm-10">
+								<input type="hidden" id="travelId" class="form-control"	placeholder="여행지 Id" />
 								<input type="text" id="travelName" class="form-control"
-									placeholder="제목을 입력해 주세요." />
+									placeholder="여행지를 입력해 주세요." readonly/>
 							</div>
 						</div>
+
 						<div class="form-group">
 							<label for="reviewTitle" class="col-sm-2 control-label">제목</label>
 							<div class="col-sm-10">
@@ -440,7 +445,7 @@
 
         <!-- 글작성 scripts -->
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js"></script>
-
+		<script th:src="@{/plugin/bootstrap/js/bootstrap.min.js}"></script>
     </body>
     <script th:inline="javascript">
 	/*<![CDATA[*/
@@ -518,9 +523,11 @@
 					json.forEach((obj, idx) => {
 						html += `
 							<tr>
+								<td>
+								<input class="form-check-input" name="travel-check" type="checkbox" value="${obj.travelId}" id="${obj.travelId}"></td>
     							<td>${json.length - idx}</td>
     							<td class="text-left">
-    								<a href="javascript: void(0);" onclick="put('${obj.travelId}','${obj.travelName}')">${obj.travelName}</a>
+    								<a href="javascript: void(0);" onclick="put('${obj.travelId}','${obj.travelName}'); addTravel();">${obj.travelName}</a>
     							</td>
     							<td>${obj.address}</td>
     							<td>${obj.travelId}</td>
@@ -570,6 +577,8 @@
         	const form = document.getElementById('form');
         	var travelArray = [];
         	travelArray.push(form.travelId.value);
+        	travelArray.push(form.travelId1.value);
+        	travelArray.push(form.travelId2.value);
         	const rimage = form.summernote.value;
         	const thumbNail = rimage.match("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>");
         	console.log(thumbNail[1]);
@@ -636,7 +645,7 @@
 
 		   	}).catch(error => {
 		    	alert('게시글 정보를 찾을 수 없습니다.');
-		    	location.href = '/review/reviewList';
+		    	location.href = '/review/list';
 		   	});
 		}
 		
@@ -649,9 +658,9 @@
 			const id = /*[[ ${id} ]]*/;
 			
 			if(!id)
-				location.href = '/review/reviewList';
+				location.href = '/review/list';
 			else
-				location.href = '/review/reviewDetail/'+id;
+				location.href = '/review/detail/'+id;
 			
 		}
 		/**
@@ -660,12 +669,63 @@
 		function put(travelId, travelName) {
         	var travelId = travelId;
         	var travelName = travelName;
+        	var allSelect = (document.getElementsByName('form-line').length);
+        	//var travelId = 'travelId' + allSelect;
+        	//var travelName = 'travelName' + allSelect;
         	//모달창 닫기
-        	$("#myModal_1").modal("hide");
-        	$("#travelId").val(travelId);
-            $("#travelName").val(travelName);
+        	if (allSelect == 1){
+        		$("#myModal_1").modal("hide");
+        		$("#travelId").val(travelId);
+            	$("#travelName").val(travelName);
+        	}else if(allSelect == 2){
+        		$("#myModal_1").modal("hide");
+        		$("#travelId1").val(travelId);
+            	$("#travelName1").val(travelName);
+        	}else {
+        		$("#myModal_1").modal("hide");
+        		$("#travelId2").val(travelId);
+            	$("#travelName2").val(travelName);
+       		}	
         }
- 
+		/**
+		*
+		
+		function addTravel() {
+			var allInput = document.getElementsByName('travel-check');
+			var checkList = new Array();
+			for (var i = 0; i < allInput.length; i++) {
+				if (allInput[i].checked)
+					checkList.push(allInput[i].value);
+			}
+			$("#myModal_1").modal("hide");
+			$(".notice-list").val(checkList);
+			$("#travelId").val(checkList);
+		}
+ 		**/
+ 		// 여행지 하나 추가하기
+ 		function addTravel() {
+ 			var allSelect = (document.getElementsByName('form-line').length);
+
+ 			if (allSelect == 3) {
+ 				alert('최대 3곳까지 등록할 수 있습니다.');
+ 				return false;
+ 			}
+
+ 			var travelId = 'travelId' + allSelect;
+ 			var travelName = 'travelName' + allSelect;
+ 			tag = "<label for='reviewTitle' name='line' class='col-sm-2 control-label'>여행지명</label>\n";
+ 			tag += "<div class='col-sm-10'>\n<input type='hidden' id='travelId" + allSelect + "'class='form-control'placeholder='여행지 Id'/>";
+ 			tag += "<input type='text' id='travelName" + allSelect + "' class='form-control' placeholder='여행지를 선택해 주세요.' readonly/>\n </div>"
+ 			var parent = document.getElementsByName('only-form')[0];
+ 			var newElement = document.createElement('parent');
+ 			var firstChild = parent.firstChild;
+ 			newElement.setAttribute('class', 'form-group');
+ 			newElement.setAttribute('name', 'form-line')
+ 			newElement.innerHTML = tag;
+ 			parent.insertBefore(newElement, firstChild);
+ 		}
+ 		
+ 		
 	/*]]>*/
     </script>
 </html>
