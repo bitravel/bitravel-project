@@ -43,10 +43,12 @@
                             <tbody id="list">
                                 <tr th:each="list, index: ${boardList}">
 
-                                    <td class="text-muted text-center">[[${boardList.totalElements-(((boardList.number)*boardList.size) +
+                                    <td class="text-muted text-center">
+                                        [[${boardList.totalElements-(((boardList.number)*boardList.size) +
                                         index.index)}]]</td>
                                     <td>
-                                        <a th:href="@{'/board/detail/'+${list.boardId}(page=${boardList.number+1})}" class="text-dark">
+                                        <a th:href="@{'/board/detail/'+${list.boardId}(page=${boardList.number+1})}"
+                                            class="text-dark">
                                             [[${list.boardTitle}]]
                                         </a>
                                     </td>
@@ -66,7 +68,7 @@
                         <form action="/board/search/all/list" name="edit" method="GET" class="input-group">
                             <label for="selectSizing" class="mb-2"></label>
                             <div class="width-120">
-                                <select onchange="option_bt(this.value);" data-choices="{'searchEnabled':false}" class="form-control">
+                                <select onchange="option_bt(this.value);" data-choices='{"searchEnabled":false}' class="form-control">
                                     <option value="all">전체</option>
                                     <option value="title">제목</option>
                                     <option value="titleandcontent">제목+내용</option>
