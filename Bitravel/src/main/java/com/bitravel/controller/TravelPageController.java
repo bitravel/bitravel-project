@@ -45,7 +45,7 @@ public class TravelPageController {
     /**
      * 여행지 상세 페이지
      */
-    @GetMapping("/detail/{id}")
+    @GetMapping("/{id}")
     public String openDetailWriting(@PathVariable final Long id, Model model) {
     	String weatherKey = "k9ex5ipQp8k%2Baiet3GfC015PcRbjkuEv%2Bq8XD2ScEoT0CMfyyZgG5%2BjRCpsuFqQ2LFtwGcZdiDuigKZLvnn7yg%3D%3D";
         model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
