@@ -1,7 +1,13 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>
+    개별 여행지 정보 :: BITravel
+    </title>
+</head>
+
 <body>
 <br>
 <th:block layout:fragment="content">
@@ -23,10 +29,19 @@ layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layo
         <p id="travelSummary"></p>
     </div>
     
+    <!-- 이미지 -->
     <div class="d-flex align-items-center justify-content-center mb-4 pt-2">
         <div class="d-block position-relative overflow-hidden mb-4">
             <img src="#" class="img-fluid width-500" alt="" id="tImage">
         </div>    
+    </div>
+    
+    <!-- 지도 -->
+    <div class="container py-2 pb-0 mt-1">
+    <h2 class="mb-4 py-3 border-bottom border-4 border-secondary">지도 보기</h2>
+    </div>
+    <div class="d-flex align-items-center justify-content-center mb-4 pt-2">
+    <div id="map" style="width:1000px;height:400px;"></div>
     </div>
 
     <div class="container py-2 pb-0 mb-5">
@@ -482,6 +497,7 @@ layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layo
 </th:block>
     <!-- scripts -->
     <th:block layout:fragment="script">
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ede838b85cf414c871ae743db9dce098"></script>
     <script src="/js/bitravel/travelDetail.js"></script>    
     <script th:inline="javascript">
 
@@ -491,7 +507,6 @@ layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layo
         window.onload = () => {
 
             findTravel(id);
-
         }
 
     </script>

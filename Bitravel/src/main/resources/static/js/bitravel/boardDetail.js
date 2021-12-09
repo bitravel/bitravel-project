@@ -204,9 +204,9 @@ function printCommentList() {
 			json.forEach((obj) => {
 				html += `
 									<tr class="form-control mb-2">
-										<td style="width:15%;"><span class="fw-bold">${obj.nickname}</span></td>
-										<td style="width:80%;"><span class="desc">${obj.commentContent}</span></td>			
-										<td style="width:5%;"><button type="button" onclick="openModal(${obj.bcommentId}, '${obj.nickname}', '${obj.commentContent}' )" class="btn btn-sm btn-outline-default btn-circle"><i class="bi bi-pencil-fill" aria-hidden="true"></i></button></td>
+										<td style="width:20%;"><span class="fw-bold">${obj.nickname}</span></td>
+										<td style="width:78%;"><span class="desc">${obj.commentContent}</span></td>			
+										<td style="width:2%;"><button type="button" onclick="openModal(${obj.bcommentId}, '${obj.nickname}', '${obj.commentContent}' )" class="btn btn-sm btn-outline-default btn-circle"><i class="bi bi-pencil-fill" aria-hidden="true"></i></button></td>
 									</tr>
 								`;
 			});
