@@ -1,11 +1,13 @@
 package com.bitravel.service;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bitravel.data.dto.RegionDto;
 import com.bitravel.data.entity.Region;
 import com.bitravel.data.entity.UserRegion;
 import com.bitravel.data.repository.RegionRepository;
@@ -106,6 +108,52 @@ public class RegionService {
 		}
 		userRegionRepository.deleteById(id);
 		return true;
+	}
+
+	/**
+	 * 전체 광역자치단체별 좌표 검색
+	 */
+	public List<RegionDto> ListOfLargeGovAndCoordinate() {
+		// 전체 광역자치단체 검색
+		List<Region> all = regionRepository.findAll();
+		List<RegionDto> list = new ArrayList<>();		
+
+		HashSet<String> largeSet = new HashSet<>();
+		
+		// 데이터 완성 후 코드 깔끔하게 바꿀 예정
+		
+		for(int i=0;i<all.size();i++) {
+			RegionDto data = new RegionDto(all.get(i));
+			String now = all.get(i).getLargeGov();
+			if(!largeSet.contains(now)) {
+				double latSum = 0;
+				double longSum = 0;
+				int t = 0;
+				boolean flag = true;
+				try {
+					while(all.get(i+t).getLargeGov().equals(now)) {						
+						latSum += Double.parseDouble(all.get(i+t).getRegionLat());
+						longSum += Double.parseDouble(all.get(i+t).getRegionLong());
+						t++;
+						if(i+t>=all.size())
+							break;
+					}
+				} catch(Exception e) {
+					flag = false;
+				}
+				if(flag) {
+					latSum /= t;
+					longSum /= t;
+					data.setRegionLat(Double.toString(latSum));
+					data.setRegionLong(Double.toString(longSum));
+				}
+				list.add(data);
+				largeSet.add(now);
+			} else {
+				continue;
+			}
+		}
+		return list;
 	}
 
 }

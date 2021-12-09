@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bitravel.data.dto.RegionDto;
 import com.bitravel.data.dto.TravelSimpleDto;
 import com.bitravel.data.entity.Region;
 import com.bitravel.data.entity.UserRegion;
@@ -106,7 +107,16 @@ public class RegionController {
 	public List<String> ListOfLargeGov() {
 		return regionService.ListOfLargeGov();
 	}
-
+	
+	/**
+	 * 전체 광역자치단체별 좌표 검색
+	 */
+	@GetMapping("/regions/list/cdn")
+	@ApiOperation(value = "광역자치단체 목록 검색", notes = "광역자치단체별 기초자치단체 목록을 출력하는 API. Region entity 클래스의 LargeGov값을 기준으로 데이터를 가져온다.")
+	public List<RegionDto> ListOfLargeGovAndCoordinate() {
+		return regionService.ListOfLargeGovAndCoordinate();
+	}
+	
 	/**
 	 * 광역자치단체별 기초자치단체 검색
 	 */

@@ -33,4 +33,10 @@ public class Region {
 	@Column(name = "smallGov")
 	private String smallGov;
 	
+	@Column(name = "regionLat")
+	private String regionLat; // 해당 지역 latitude
+	
+	@Column(name = "regionLong")
+	private String regionLong; // 해당 지역 Longitude
+	
 }
