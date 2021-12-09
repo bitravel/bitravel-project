@@ -30,6 +30,7 @@ import com.bitravel.data.entity.UserTravel;
 import com.bitravel.data.repository.UserRepository;
 import com.bitravel.data.repository.UserTravelRepository;
 import com.bitravel.jwt.TokenProvider;
+import com.bitravel.util.SecurityUtil;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -165,10 +166,7 @@ public class UserService {
 	// 자기 자신 (로그인된 정보) 불러오기
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Optional<UserDto> getMyUserWithAuthorities() {
-		log.debug("here?");
-		//return SecurityUtil.getCurrentEmail().flatMap(userRepository::findOneWithAuthoritiesByEmail);
-		// Service logic 점검용
-		return userRepository.findOneWithAuthoritiesByEmail(Optional.ofNullable("admin").get()).map(UserDto::new);
+		return SecurityUtil.getCurrentEmail().flatMap(userRepository::findOneWithAuthoritiesByEmail).map(UserDto::new);
 	}
 
 	// 아이디(회원 일련번호-PK)로 찾기

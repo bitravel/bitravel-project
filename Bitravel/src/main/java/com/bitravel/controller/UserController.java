@@ -2,6 +2,7 @@ package com.bitravel.controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -110,7 +111,11 @@ public class UserController {
 	@GetMapping("/user")
 	//@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	public ResponseEntity<UserDto> myUserInfo() {
-		return ResponseEntity.ok(userService.getMyUserWithAuthorities().get());	
+		Optional<UserDto> userInfo = userService.getMyUserWithAuthorities();
+		if(userInfo.isEmpty())
+			return ResponseEntity.badRequest().body(null);
+		else
+			return ResponseEntity.ok(userInfo.get());	
 	}
 
 	@GetMapping("/signup")
@@ -122,7 +127,11 @@ public class UserController {
 	@PostMapping("/user/details")
 	//@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	public ResponseEntity<UserDto> userInfoEmail(String email) {
-		return ResponseEntity.ok(userService.getUserWithAuthorities(email).get());
+		Optional<UserDto> userInfo = userService.getUserWithAuthorities(email);
+		if(userInfo.isEmpty())
+			return ResponseEntity.badRequest().body(null);
+		else
+			return ResponseEntity.ok(userInfo.get());
 	}
 
 	//@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
