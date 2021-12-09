@@ -177,7 +177,6 @@
 										<input class="form-control me-2" type="text" id="name" onkeypress="findTravelName()" placeholder="Search" >
 										<input type="text" style="width:0px; visibility: hidden;">
 										<button class="btn btn-primary" type="button" onclick="findTravelName();">Search</button>
-										<button class="btn btn-primary" type="button" onclick="addTravel();">추가하기</button>
 									</form>
 								</div>
 							</div>
@@ -185,7 +184,6 @@
 							<table class="table table-striped">
 								<thead>
 									<tr>
-										<th>선택</th>
 										<th>번호</th>
 										<th>여행지</th>
 										<th>주소</th>
@@ -212,20 +210,18 @@
                 <div class="container py-2 py-1 mb-9">
                     <div class="row mb-7 mb-15 justify-content-center">
 												<!-- 모달 버튼 -->
-			            <div class="container mt-3">
-							<hr>
-							<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal_1">
-								여행지 추가
-							</button>
-						</div>
+			           
                         <form id="form" class="form-horizontal" name="only-form">
 
 						<div class="form-group" name="form-line">
-							<label for="reviewTitle" class="col-sm-2 control-label">여행지명</label>
-							<div class="col-sm-10">
+							<label for="reviewTitle" class="col-sm-2 control-label">여행지</label>
+							<div class="col-sm-10" style="display: flex;">
 								<input type="hidden" id="travelId" class="form-control"	placeholder="여행지 Id" />
 								<input type="text" id="travelName" class="form-control"
 									placeholder="여행지를 입력해 주세요." readonly/>
+								<button type="button" class="btn btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal_1" style="margin-left: 10px;">
+								추가 
+								</button>
 							</div>
 						</div>
 
@@ -523,8 +519,6 @@
 					json.forEach((obj, idx) => {
 						html += `
 							<tr>
-								<td>
-								<input class="form-check-input" name="travel-check" type="checkbox" value="${obj.travelId}" id="${obj.travelId}"></td>
     							<td>${json.length - idx}</td>
     							<td class="text-left">
     								<a href="javascript: void(0);" onclick="put('${obj.travelId}','${obj.travelName}'); addTravel();">${obj.travelName}</a>
@@ -688,24 +682,13 @@
        		}	
         }
 		/**
-		*
-		
-		function addTravel() {
-			var allInput = document.getElementsByName('travel-check');
-			var checkList = new Array();
-			for (var i = 0; i < allInput.length; i++) {
-				if (allInput[i].checked)
-					checkList.push(allInput[i].value);
-			}
-			$("#myModal_1").modal("hide");
-			$(".notice-list").val(checkList);
-			$("#travelId").val(checkList);
-		}
+		*여행지 하나 추가하기
  		**/
- 		// 여행지 하나 추가하기
+ 		
  		function addTravel() {
  			var allSelect = (document.getElementsByName('form-line').length);
-
+			var allSelect1 = allSelect + 1;
+			
  			if (allSelect == 3) {
  				alert('최대 3곳까지 등록할 수 있습니다.');
  				return false;
@@ -713,18 +696,42 @@
 
  			var travelId = 'travelId' + allSelect;
  			var travelName = 'travelName' + allSelect;
- 			tag = "<label for='reviewTitle' name='line' class='col-sm-2 control-label'>여행지명</label>\n";
- 			tag += "<div class='col-sm-10'>\n<input type='hidden' id='travelId" + allSelect + "'class='form-control'placeholder='여행지 Id'/>";
- 			tag += "<input type='text' id='travelName" + allSelect + "' class='form-control' placeholder='여행지를 선택해 주세요.' readonly/>\n </div>"
- 			var parent = document.getElementsByName('only-form')[0];
- 			var newElement = document.createElement('parent');
- 			var firstChild = parent.firstChild;
+ 			tag = "<label for='reviewTitle' name='line' class='col-sm-2 control-label'>여행지</label>\n";
+ 			tag += "<div class='col-sm-10' style='display: flex;'>\n<input type='hidden' id='travelId" + allSelect + "'class='form-control'placeholder='여행지 Id'/>";
+ 			tag += "<input type='text' id='travelName" + allSelect + "' class='form-control' placeholder='여행지를 선택해 주세요.' readonly/>\n ";
+ 			tag += "<button type='button' class='btn btn-outline-danger' id='removeBt" + allSelect + "'onclick='removeTravel(this.id)' style='margin-left: 10px;'>삭제</button>\n </div>"
+ 			var div = document.getElementsByName('only-form')[0];
+ 			var newElement = document.createElement('div');
+ 			var firstChild = div.firstChild;
  			newElement.setAttribute('class', 'form-group');
- 			newElement.setAttribute('name', 'form-line')
+ 			newElement.setAttribute('name', 'form-line');
+ 			newElement.setAttribute('id', 'removeId'+allSelect)
  			newElement.innerHTML = tag;
- 			parent.insertBefore(newElement, firstChild);
+ 			div.insertBefore(newElement, firstChild);
  		}
  		
+ 		
+		
+ 		/**
+ 		* 여행지 삭제
+ 		**/
+ 		function removeTravel(id) {
+ 			var allSelect = (document.getElementsByName('form-line').length);
+ 			
+ 			var ele1 = document.getElementById('removeId1');
+ 			var ele2 = document.getElementById('removeId2');
+ 			
+ 			if (id == 'removeBt1') {
+ 				ele1.remove();
+ 				return true;
+ 			} else if (id == 'removeBt2'){
+ 				ele2.remove();
+ 				return true;
+ 			} else {
+ 				alert("다시한번 시도해 주세요.")
+ 				return false;
+ 			}
+ 		}
  		
 	/*]]>*/
     </script>
