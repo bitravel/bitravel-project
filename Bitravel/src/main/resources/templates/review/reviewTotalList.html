@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" layout:decorator="layout1"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title id="pageTitle">후기 게시판 :: BITravel</title>
+</head>
+
+<th:block layout:fragment="content">
+    <!--Header Start-->
+    <header class="z-index-fixed">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <div class="container position-relative">
+                <a class="navbar-brand" href="index.html">
+                    <img src="/assets/img/logo/logo.svg" alt="" class="img-fluid">
+                </a>
+
+                <div class="d-flex align-items-center navbar-no-collapse-items order-lg-last">
+                    <button class="navbar-toggler order-last" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#mainNavbarTheme" aria-controls="mainNavbarTheme" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon">
+                            <i></i>
+                        </span>
+                    </button>
+
+                    <!--회원 정보 관련 : 회원 전용 메뉴 -->
+                    <div class="nav-item me-3 me-lg-0 dropdown" sec:authorize="isAuthenticated()">
+                        <a href="#" class="btn btn-secondary rounded-pill py-0 ps-0 pe-3" data-bs-auto-close="outside"
+                            data-bs-toggle="dropdown">
+                            <img src="/assets/img/avatar/4.jpg" alt="" class="avatar sm rounded-circle me-1">
+                            <small sec:authentication="principal.nickname"></small>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs p-0">
+                            <a href="#" class="dropdown-header border-bottom p-4">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <img src="/assets/img/avatar/4.jpg" alt="" class="avatar xl rounded-pill me-3">
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-0" sec:authentication="principal.nickname"></h5>
+                                        <span class="text-muted d-block mb-2"
+                                            sec:authentication="principal.email"></span>
+                                        <div class="small d-inline-block link-underline fw-semibold text-muted">View
+                                            account</div>
+                                    </div>
+                                </div>
+                            </a>
+                            <span class="d-block text-end dropdown-item p-3">
+                                <a href="/api/logout" class="text-dark">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                                        class="bi bi-box-arrow-right me-2" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z">
+                                        </path>
+                                        <path fill-rule="evenodd"
+                                            d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z">
+                                        </path>
+                                    </svg>
+                                    로그아웃
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                    <!--회원 정보 관련 : 비회원 메뉴 -->
+                    <div class="nav-item me-3 me-lg-0 dropdown" sec:authorize="isAnonymous()">
+                        <a href="#" class="btn btn-secondary rounded-pill py-0 ps-0 pe-2" data-bs-auto-close="outside"
+                            data-bs-toggle="dropdown">
+                            <img src="/assets/img/avatar/4.jpg" alt="" class="avatar sm rounded-circle me-1">
+                            <small>로그인</small>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs p-0">
+                            <span class="d-block text-center mt-4 mb-2 text-muted">
+                                더 많은 BITravel의 서비스를 즐겨 보세요.</span>
+                            <span class="d-block text-end mb-2 me-3">
+                                <a href="/login" class="text-dark me-2">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0v-2z" />
+                                        <path fill-rule="evenodd"
+                                            d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                                    </svg>
+                                    로그인
+                                </a>
+                                <a href="/signup" class="text-dark">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+                                        <path
+                                            d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                        <path fill-rule="evenodd"
+                                            d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
+                                    </svg>
+                                    가입
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+				<div class="collapse navbar-collapse" id="mainNavbarTheme">
+					<ul class="navbar-nav mx-auto">
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" href="/board/list" role="button">여행지
+						</a></li>
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" href="/review/list"
+							role="button">여행후기 </a></li>
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" href="/board/list" role="button">게시판
+						</a></li>
+					</ul>
+				</div>
+			</div>
+        </nav>
+    </header>
+    <!--메인 -->
+    <main class="main-content position-relative z-index-2 bg-white" id="main-content">
+        <section class="position-relative bg-light">
+            <div class="container  pt-11 pb-7 pb-lg-9">
+                <div class="row pt-lg-5">
+                    <div class="col-lg-8">
+                        <h2 class="display-4">후기 게시판</h2>
+                        <br>
+                        <p>다양한 여행 후기를 공유해 보세요.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 게시글 영역 -->
+        <div class="container py-6">
+            <div class="row mb-3 justify-content-center">
+
+                <!-- 가로길이 조정  -->
+                <div class="col-xxl-12 mb-4">
+                    <!-- 테이블 시작 -->
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr class="text-muted">
+                                    <th scope="col" class="text-center" style="width:10%;">번호</th>
+                                    <th scope="col" style="width:45%;">제목</th>
+                                    <th scope="col" style="width:10%;">작성자</th>
+                                    <th scope="col" class="text-center" style="width:23%;">날짜</th>
+                                    <th scope="col" class="text-center" style="width:12%;">조회수</th>
+                                </tr>
+                            </thead>
+                            <tbody id="list">
+                                <tr th:each="list, index: ${reviewList}">
+
+                                    <td class="text-muted text-center">
+                                        [[${reviewList.totalElements-(((reviewList.number)*reviewList.size) +
+                                        index.index)}]]</td>
+                                    <td>
+                                        <a th:href="@{'/review/detail/'+${list.reviewId}(page=${reviewList.number+1})}"
+                                            class="text-dark">
+                                            [[${list.reviewTitle}]]
+                                        </a>
+                                    </td>
+                                    <td>[[${list.nickname}]]</td>
+                                    <td class="text-center small" th:text="${#dates.format(list.reviewDate, 'yyyy-MM-dd HH:mm')}">
+                            		[[${list.reviewDate}]]</td>
+                            	<td class="text-center">[[${list.reviewView}]]</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+             	</div>
+        <!-- 테이블 종료 -->
+		<!--/* 검색 영역 */-->
+				<div class="row col-8 ">
+                    <div class="d-flex justify-content-center">
+                        <form action="/review/search/all/list" name="edit" method="GET" class="input-group">
+                            <label for="selectSizing" class="mb-2"></label>
+                            <div class="width-120">
+                                <select onchange="option_bt(this.value);" data-choices='{"searchEnabled":false}' class="form-control">
+                                    <option value="all">전체</option>
+                                    <option value="title">제목</option>
+                                    <option value="titleandcontent">제목+내용</option>
+                                    <option value="nickname">작성자</option>
+                                </select>
+                            </div>
+                            &nbsp;&nbsp;
+                            <input type="text" name="keyword" class="form-control" placeholder="키워드를 입력해 주세요." />
+                            <button type="submit" class="btn btn-secondary">
+                                <span aria-hidden="true" class="glyphicon glyphicon-search">검색</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+          <!-- 글쓰기 버튼 -->
+                <div class="width-30">
+                    <a href="/review/write" class="btn btn-outline-secondary">글쓰기</a>
+                </div>
+                    <nav aria-label="Page navigation example">
+                        <br>
+                        <ul class="pagination justify-content-center"
+                        	th:with="start=${T(Math).floor(reviewList.number/10) * 10 + 1},
+              						last=${start + 9 < reviewList.totalPages ? start + 9 : reviewList.totalPages}">
+                            
+                            <!-- first page -->
+                            <li class="page-item" >
+						      <a class="page-link" th:href="@{./list(keyword=${param.keyword}, page=1)}" aria-label="First">
+						        <span aria-hidden="true"> FIRST </span>
+						      </a>
+						    </li>
+						    
+                            <!-- previous page -->
+                            <li class="page-item" th:class="${reviewList.first} ? 'disabled'">
+                                <a class="page-link" th:href="${reviewList.first} ? '#' : @{./list(keyword=${param.keyword}, page=${reviewList.number})}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            
+                            <!-- present page -->
+                            <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == reviewList.number + 1} ? 'active'">
+                            <a class="page-link" th:text="${page}" th:href="@{./list(keyword=${param.keyword}, page=${page})}">&nbsp;</a>
+                            </li>
+							
+							<!-- next page -->
+                            <li class="page-item" th:class="${reviewList.last} ? 'disabled'">
+                                <a class="page-link" th:href="${reviewList.last} ? '#' : @{./list(keyword=${param.keyword}, page=${reviewList.number + 2})}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            
+                            <!-- last page -->
+                            <li class="page-item">
+						      <a class="page-link" th:href="@{./list(keyword=${param.keyword}, page=${reviewList.totalPages})}" aria-label="Last">
+						        <span aria-hidden="true">LAST</span>
+						      </a>
+						    </li>
+						    
+                        </ul>
+                    </nav>
+	           </div>
+	       </div>
+	   </main>
+</th:block>
+<th:block layout:fragment="script">
+<script th:inline="javascript" src="/js/bitravel/reviewList.js"></script>
+</th:block>
+</html>
