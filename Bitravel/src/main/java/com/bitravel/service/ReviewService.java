@@ -64,7 +64,7 @@ public class ReviewService {
      */
     public Page<Review> findAll(Pageable pageable) {
     	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
-		pageable = PageRequest.of(page, 5, Sort.by(Sort.Direction.DESC, "reviewId"));
+		pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "reviewId"));
 		return reviewRepository.findAll(pageable);
     }
     
