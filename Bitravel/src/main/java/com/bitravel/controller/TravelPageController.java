@@ -25,11 +25,11 @@ public class TravelPageController {
      * 여행지 리스트 페이지
      */
     @GetMapping("/list")
-    public String travel(Model model, @PageableDefault(size = 10, sort = "travelId", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String travel(Model model, @PageableDefault(size = 9, sort = "travelView", direction = Sort.Direction.DESC) Pageable pageable) {
         
     	model.addAttribute("travelList", travelService.findAll(pageable));
     	
-    	return "travel/travel";
+    	return "travel/list";
     }
 
     /**

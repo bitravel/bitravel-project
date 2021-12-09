@@ -1,0 +1,73 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>지역별 여행지 찾기 :: BITravel</title>
+</head>
+
+<body>
+    <br>
+    <th:block layout:fragment="content">
+        <!--메인 -->
+        <main class="main-content position-relative z-index-2 bg-white" id="main-content">
+            <section class="position-relative bg-light">
+                <div class="container  pt-11 pb-7 pb-lg-9">
+                    <div class="row pt-lg-5">
+                        <div class="col-lg-8">
+                            <h2 class="display-4">지역별 여행지 찾기</h2>
+                            <p>전국의 여행지들을 인기순으로 확인해 보세요.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <!-- 지도 -->
+        <div class="container py-2 pb-0 mt-1">
+            <h2 class="mb-4 py-3 border-bottom border-4 border-secondary">국내 지역 위치 확인</h2>
+        </div>
+        <div class="d-flex align-items-center justify-content-center mb-5 pt-2">
+            <div id="map" style="width:600px;height:550px;"></div>
+        </div>
+        <br>
+
+        <section class="position-relative overflow-hidden">
+            <div class="container pb-7 pb-lg-12 mb-2">
+                <h2 class="mb-5">내 취향에 맞는 제주도 여행지(추천)</h2>
+                <div class="row me-2" id="list">
+                    <div th:each="list, index: ${travelList}"  class="bg-white col-sm-4 mb-5">
+                        <article class="card-hover border-0 d-flex">
+                            <a th:href="@{'/travel/'+${list.travelId}}" class="stretched-link"></a>
+                            <div class="card-body position-relative p-0">
+                                <div class="d-block position-relative overflow-hidden mb-4">
+                                    <img th:src="${list.travelImage}" onerror="this.src='/assets/img/800x600/2.jpg'" class="img-fluid img-zoom" alt="여행지 이미">
+                                </div>
+                                <h5 class="mb-3">[[${list.travelName}]]</h5>
+                                <div class="blog-content">
+                                    <p class="mb-4">[[${list.largeGov}]] [[${list.smallGov}]]</p>
+                                    <div class="text-primary fw-semibold small pb-2 border-bottom border-primary">
+                                        Mar 9, 2021</div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </th:block>
+    <!-- scripts -->
+    <th:block layout:fragment="script">
+        <script type="text/javascript"
+            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ede838b85cf414c871ae743db9dce098"></script>
+        <script src="/js/bitravel/travelList.js"></script>
+        <script th:inline="javascript">
+
+            window.onload = () => {
+                loadMainList();
+            }
+        </script>
+    </th:block>
+</body>
+
+</html>
