@@ -204,15 +204,12 @@ function findWeather(travel) {
 		return response.json();
 
 	}).then(json => {
-		json = json['weather']
-		json = json.replace("{response={header={resultCode=00, resultMsg=NORMAL_SERVICE}, body={dataType=JSON, items={item=[", "");
-		json = json.replaceAll('{', '{"');
-		json = json.replaceAll('=', '":"');
-		json = json.replaceAll(', ', '", "');
-		json = json.replaceAll('}', '"}');
-		json = json.replaceAll('}", "{', '}; {');
-		json = json.replace(']', "; ");
-		var list = json.split("; ");
+		json = json['weather'].response.body.items;
+		json = JSON.stringify(json);
+		json = json.replace('{"item":[', "");
+		json = json.replace(']}', "");
+		json = json.replaceAll('},', '};');
+		var list = json.split(";");
 
 		var skyList = new Array();
 		var ptyList = new Array();
@@ -310,15 +307,11 @@ function findWeather(travel) {
 		return response.json();
 
 	}).then(json => {
-		json = json['weather']
-		json = json.replace("{response={header={resultCode=00, resultMsg=NORMAL_SERVICE}, body={dataType=JSON, items={item=[", "");
-		json = json.replace("]}, pageNo=1, numOfRows=10, totalCount=1}}}", "");
-		json = json.replace('{', '{"');
-		json = json.replaceAll('=', '":"');
-		json = json.replaceAll(', ', '", "');
-		json = json.replace('}', '"}');
+		json = json['weather'].response.body.items.item;
+		json = JSON.stringify(json);
+		json = json.replace('[', "");
+		json = json.replace(']', "");
 		json = JSON.parse(json);
-
 		for (var i = 3; i < 7; i++) {
 			var id = 'weather' + i;
 			var tag = front;
