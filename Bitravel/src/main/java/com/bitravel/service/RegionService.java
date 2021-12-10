@@ -127,27 +127,6 @@ public class RegionService {
 			RegionDto data = new RegionDto(all.get(i));
 			String now = all.get(i).getLargeGov();
 			if(!largeSet.contains(now)) {
-				double latSum = 0;
-				double longSum = 0;
-				int t = 0;
-				boolean flag = true;
-				try {
-					while(all.get(i+t).getLargeGov().equals(now)) {						
-						latSum += Double.parseDouble(all.get(i+t).getRegionLat());
-						longSum += Double.parseDouble(all.get(i+t).getRegionLong());
-						t++;
-						if(i+t>=all.size())
-							break;
-					}
-				} catch(Exception e) {
-					flag = false;
-				}
-				if(flag) {
-					latSum /= t;
-					longSum /= t;
-					data.setRegionLat(Double.toString(latSum));
-					data.setRegionLong(Double.toString(longSum));
-				}
 				list.add(data);
 				largeSet.add(now);
 			} else {
