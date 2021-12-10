@@ -24,7 +24,7 @@ public class TravelPageController {
     /**
      * 여행지 전체 리스트 페이지
      */
-    @GetMapping("/list")
+    @GetMapping("")
     public String travel(Model model, @PageableDefault(size = 9, sort = "travelView", direction = Sort.Direction.DESC) Pageable pageable) {
         
     	model.addAttribute("travelList", travelService.findAll(pageable));

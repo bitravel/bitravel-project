@@ -72,14 +72,14 @@
 
                 <!-- first page -->
                 <li class="page-item">
-                    <a class="page-link" th:href="@{./list(page=1)}" aria-label="First">
+                    <a class="page-link" th:href="@{/travel/(page=1)}" aria-label="First">
                         <span aria-hidden="true"> FIRST </span>
                     </a>
                 </li>
 
                 <!-- previous page -->
                 <li class="page-item" th:class="${travelList.first} ? 'disabled'">
-                    <a class="page-link" th:href="${travelList.first} ? '#' : @{./list(page=${travelList.number})}"
+                    <a class="page-link" th:href="${travelList.first} ? '#' : @{/travel/(page=${travelList.number})}"
                         aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
@@ -87,19 +87,19 @@
 
                 <!-- present page -->
                 <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == travelList.number + 1} ? 'active'">
-                            <a class="page-link" th:text="${page}" th:href="@{./list(page=${page})}">&nbsp;</a>
+                            <a class="page-link" th:text="${page}" th:href="@{/travel/(page=${page})}">&nbsp;</a>
                             </li>
 							
 							<!-- next page -->
                             <li class="page-item" th:class="${travelList.last} ? 'disabled'">
-                                <a class="page-link" th:href="${travelList.last} ? '#' : @{./list(page=${travelList.number + 2})}" aria-label="Next">
+                                <a class="page-link" th:href="${travelList.last} ? '#' : @{/travel/(page=${travelList.number + 2})}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
                             
                             <!-- last page -->
                             <li class="page-item">
-						      <a class="page-link" th:href="@{./list(page=${travelList.totalPages})}" aria-label="Last">
+						      <a class="page-link" th:href="@{/travel/(page=${travelList.totalPages})}" aria-label="Last">
 						        <span aria-hidden="true">LAST</span>
 						      </a>
 						    </li>

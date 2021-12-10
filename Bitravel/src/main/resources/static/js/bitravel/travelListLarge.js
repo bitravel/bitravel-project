@@ -16,7 +16,13 @@ function initMapList(smallList) {
 	 } else if (smallList[0].largeGov=='서울') {
 		level = 9;
 		smallList[0].regionLat = Number(smallList[0].regionLat)+0.03;
+	 } else if (smallList[0].largeGov=='강원') {
+		level = 12;
+		smallList[0].regionLong = Number(smallList[0].regionLong)-0.03;
+		smallList[0].regionLat = Number(smallList[0].regionLat)+0.03;
 	 }
+
+
 	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 	var initOptions = { //지도를 생성할 때 필요한 기본 옵션
 		center: new kakao.maps.LatLng(smallList[0].regionLat, smallList[0].regionLong), //지도의 중심좌표.
@@ -88,7 +94,7 @@ function loadMainList(largeGov) {
 
 function loadNavbar(largeGov) {
 	var smallList = document.getElementById('smallList');
-	var tag0 = '<li class="col-2 col-xl-1 text-center mt-3"><a class="fs-5 fw-bold text-dark" href="/travel/list/';
+	var tag0 = '<li class="col-2 col-xl-1 text-center mt-3"><a class="fs-5 fw-bold text-dark" href="/travel';
 	var tag1 = '" id="navbarDropdown';
 	var tag3 = '">';
 	var tag2 = '</a>';
@@ -111,7 +117,7 @@ function loadNavbar(largeGov) {
 		const newList = JSON.parse(json);
 		newList.forEach(function (item, index, array) {
 			if(largeGov != "세종") {
-				tag += tag0 + largeGov + '/' + item + tag1 + index + tag3 + item + tag2;
+				tag += tag0 + '/list/' + largeGov + '/' + item + tag1 + index + tag3 + item + tag2;
 				tag += '</li>';
 			} else {
 				tag += '<li class="col-2 col-xl-1 text-center mt-3"><span class="fs-5 fw-bold text-dark"';
@@ -120,7 +126,7 @@ function loadNavbar(largeGov) {
 			}			
 		});
 
-		tag += '<li class="col-2 col-xl-1 text-center mt-3"><a class="fs-5 text-muted" href="/travel/list/'+tag1+'99'+tag3+'< 전국';
+		tag += '<li class="col-2 col-xl-1 text-center mt-3"><a class="fs-5 text-muted" href="/travel'+tag1+'99'+tag3+'< 전국';
 
 		smallList.innerHTML += tag;
 
