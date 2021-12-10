@@ -118,6 +118,15 @@ public class RegionController {
 	}
 	
 	/**
+	 * 광역자치단체별 기초자치단체 좌표 검색
+	 */
+	@GetMapping("/regions/list/cdn/{large}")
+	@ApiOperation(value = "광역자치단체 목록 검색", notes = "광역자치단체별 기초자치단체 목록을 출력하는 API. Region entity 클래스의 LargeGov값을 기준으로 데이터를 가져온다.")
+	public List<RegionDto> ListOfSmallGovAndCoordinate(@PathVariable String large) {
+		return regionService.ListOfSmallGovAndCoordinate(large);
+	}
+	
+	/**
 	 * 광역자치단체별 기초자치단체 검색
 	 */
 	@GetMapping("/regions/list/{name}")

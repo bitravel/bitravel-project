@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -154,6 +155,22 @@ public class RegionService {
 			}
 		}
 		return list;
+	}
+
+	public List<RegionDto> ListOfSmallGovAndCoordinate(String large) {
+		// 광역자치단체별 기초자치단체 검색
+		List<Region> list = regionRepository.findByLargeGov(large);
+		double latSum = 0;
+		double longSum = 0;
+		int t = list.size();
+		for(int i=0;i<t;i++) {
+			latSum += Double.parseDouble(list.get(i).getRegionLat());
+			longSum += Double.parseDouble(list.get(i).getRegionLong());
+		}
+		list.add(0, Region.builder().largeGov(large).smallGov(large)
+				.regionLat(Double.toString(latSum/t))
+				.regionLong(Double.toString(longSum/t)).build());
+		return list.stream().map(RegionDto::new).collect(Collectors.toList());
 	}
 
 }
