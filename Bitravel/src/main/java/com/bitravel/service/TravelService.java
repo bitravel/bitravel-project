@@ -56,7 +56,7 @@ public class TravelService {
 	 */
 	public Page<Travel> findAll(Pageable pageable) {
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
-		pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardId"));
+		pageable = PageRequest.of(page, 9, Sort.by(Sort.Direction.DESC, "travelId"));
 		return travelRepository.findAll(pageable);
 	}
 

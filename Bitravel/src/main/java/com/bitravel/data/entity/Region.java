@@ -2,6 +2,8 @@ package com.bitravel.data.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -23,6 +25,7 @@ import lombok.Setter;
 public class Region {
 	
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "regionId", length=50)
 	@JsonIgnore
 	private Long regionId;
@@ -32,5 +35,11 @@ public class Region {
 	
 	@Column(name = "smallGov")
 	private String smallGov;
+	
+	@Column(name = "regionLat")
+	private String regionLat; // 해당 지역 latitude
+	
+	@Column(name = "regionLong")
+	private String regionLong; // 해당 지역 Longitude
 	
 }
