@@ -1,50 +1,49 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-    layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-
+layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>지역별 여행지 찾기 :: BITravel</title>
 </head>
 
 <body>
-    <br>
+   <br>
     <th:block layout:fragment="content">
-        <!--메인 -->
-        <main class="main-content position-relative z-index-2 bg-white" id="main-content">
-            <section class="position-relative bg-light">
-                <div class="container pt-11 pb-7 pb-lg-9">
-                    <div class="row pt-lg-5">
-                        <div class="col-lg-8">
-                            <h2 class="display-4">지역별 여행지 찾기</h2>
-                            <p>전국의 여행지들을 인기순으로 확인해 보세요.</p>
-                        </div>
+    <!--메인 -->
+    <main class="main-content position-relative z-index-2 bg-white" id="main-content">
+        <section class="position-relative bg-light">
+            <div class="container  pt-11 pb-7 pb-lg-9">
+                <div class="row pt-lg-5">
+                    <div class="col-lg-8">
+                        <h2 class="display-4"><span th:text="${largeGov}"></span> 여행지 찾기</h2>
+                        <p><span th:text="${largeGov}"></span>의 다양한 여행지들을 인기순으로 확인해 보세요.</p>
                     </div>
                 </div>
-            </section>
-        </main>
-        <br>
-
+            </div>
+        </section>
+    </main>
+<br>
         <!-- 지역 목록 -->
         <div class="container form-control position-relative mt-2 mb-2">  
-            <ul class="list-unstyled me-auto row" id="largeList">
+            <ul class="list-unstyled me-auto row" id="smallList">
 
             </ul>
         </div>
 
-
         <!-- 지도 -->
-        <div class="container py-2 pb-0 mt-5">
-            <h2 class="mb-4 py-3 border-bottom border-4 border-secondary">국내 지역 위치 확인</h2>
-        </div>
-        <div class="d-flex align-items-center justify-content-center mb-5 pt-2">
-            <div id="map" style="width:600px;height:550px;"></div>
-        </div>
-        <br><br><br>
-        <section class="position-relative overflow-hidden">
-            <div class="container">
-                <h2 class="mb-5">전국에서 가장 인기있는 여행지</h2>
-                <div class="row me-2" id="list">
+    <div class="container py-2 pb-0 mt-5">
+    <h2 class="mb-4 py-3 border-bottom border-4 border-secondary"><span th:text="${largeGov}"></span> 지역 위치 확인</h2>
+    </div>
+    <div class="d-flex align-items-center justify-content-center mb-5 pt-2">
+        <div id="map" style="width:700px;height:550px;"></div>
+    </div>
+    <br><br>
+
+    <!--Swiper-slide 3 items per-view (minimum - 1024px width)-->
+    <section class="position-relative overflow-hidden">
+        <div class="container">
+            <h2 class="mb-5"><span th:text="${largeGov}"></span>에서 가장 인기있는 여행지</h2>
+                            <div class="row me-2" id="list">
                     <div th:each="list, index: ${travelList}" class="bg-white col-sm-4 mb-5">
                         <article class="card-hover border-0 d-flex">
                             <a th:href="@{'/travel/'+${list.travelId}}" class="stretched-link"></a>
@@ -72,14 +71,14 @@
 
                 <!-- first page -->
                 <li class="page-item">
-                    <a class="page-link" th:href="@{./list(page=1)}" aria-label="First">
+                    <a class="page-link" th:href="@{'/travel/list/'+${largeGov}(page=1)}" aria-label="First">
                         <span aria-hidden="true"> FIRST </span>
                     </a>
                 </li>
 
                 <!-- previous page -->
                 <li class="page-item" th:class="${travelList.first} ? 'disabled'">
-                    <a class="page-link" th:href="${travelList.first} ? '#' : @{./list(page=${travelList.number})}"
+                    <a class="page-link" th:href="${travelList.first} ? '#' : @{'/travel/list/'+${largeGov}(page=${travelList.number})}"
                         aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
@@ -87,19 +86,19 @@
 
                 <!-- present page -->
                 <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == travelList.number + 1} ? 'active'">
-                            <a class="page-link" th:text="${page}" th:href="@{./list(page=${page})}">&nbsp;</a>
+                            <a class="page-link" th:text="${page}" th:href="@{'/travel/list/'+${largeGov}(page=${page})}">&nbsp;</a>
                             </li>
 							
 							<!-- next page -->
                             <li class="page-item" th:class="${travelList.last} ? 'disabled'">
-                                <a class="page-link" th:href="${travelList.last} ? '#' : @{./list(page=${travelList.number + 2})}" aria-label="Next">
+                                <a class="page-link" th:href="${travelList.last} ? '#' : @{'/travel/list/'+${largeGov}(page=${travelList.number + 2})}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
                             
                             <!-- last page -->
                             <li class="page-item">
-						      <a class="page-link" th:href="@{./list(page=${travelList.totalPages})}" aria-label="Last">
+						      <a class="page-link" th:href="@{'/travel/list/'+${largeGov}(page=${travelList.totalPages})}" aria-label="Last">
 						        <span aria-hidden="true">LAST</span>
 						      </a>
 						    </li>
@@ -107,17 +106,19 @@
                         </ul>
                     </nav>
                     <br><br>
-    </th:block>
+
+</th:block>
     <!-- scripts -->
     <th:block layout:fragment="script">
-        <script type="text/javascript"
-            src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ede838b85cf414c871ae743db9dce098"></script>
-        <script src="/js/bitravel/travelList.js"></script>
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ede838b85cf414c871ae743db9dce098"></script>
+        <script src="/js/bitravel/travelListLarge.js"></script>
         <script th:inline="javascript">
 
             window.onload = () => {
-                loadMainList();
-                loadNavbar();
+
+                var largeGov = [[${largeGov}]];
+                loadMainList(largeGov);
+                loadNavbar(largeGov);
             }
         </script>
     </th:block>
