@@ -22,7 +22,7 @@ public class TravelPageController {
 	private final TravelService travelService;
 	
     /**
-     * 여행지 리스트 페이지
+     * 여행지 전체 리스트 페이지
      */
     @GetMapping("/list")
     public String travel(Model model, @PageableDefault(size = 9, sort = "travelView", direction = Sort.Direction.DESC) Pageable pageable) {
@@ -31,7 +31,30 @@ public class TravelPageController {
     	
     	return "travel/list";
     }
-
+    
+    /**
+     * 여행지 광역시별 리스트 페이지
+     */
+    @GetMapping("/list/{large}")
+    public String travelLargeGov(@PathVariable String large, Model model, @PageableDefault(size = 9, sort = "travelView", direction = Sort.Direction.DESC) Pageable pageable) {
+    	
+    	model.addAttribute("travelList", travelService.detailsByLargeGov(large, pageable));
+    	model.addAttribute("largeGov", large);
+    	return "travel/listLarge";
+    }
+    
+    /**
+     * 여행지 기초지자체별 리스트 페이지
+     */
+    @GetMapping("/list/{large}/{small}")
+    public String travelSmallGov(@PathVariable String large, @PathVariable String small, Model model, @PageableDefault(size = 9, sort = "travelView", direction = Sort.Direction.DESC) Pageable pageable) {
+    	
+    	model.addAttribute("travelList", travelService.detailsBySmallGov(large, small, pageable));
+    	model.addAttribute("largeGov", large);
+    	model.addAttribute("smallGov", small);
+    	return "travel/listSmall";
+    }
+    
     /**
      * 여행지 등록 페이지
      */

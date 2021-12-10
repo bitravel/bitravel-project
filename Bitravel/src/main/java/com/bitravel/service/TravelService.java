@@ -56,7 +56,7 @@ public class TravelService {
 	 */
 	public Page<Travel> findAll(Pageable pageable) {
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
-		pageable = PageRequest.of(page, 9, Sort.by(Sort.Direction.DESC, "travelId"));
+		pageable = PageRequest.of(page, 9, Sort.by(Sort.Direction.ASC, "travelId"));
 		return travelRepository.findAll(pageable);
 	}
 
@@ -91,6 +91,18 @@ public class TravelService {
 	 * 여행지 목록 조회 (광역자치단체)
 	 */
 	@Transactional
+	public Page<Travel> detailsByLargeGov(String largeGov, Pageable pageable) {
+		
+		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+		pageable = PageRequest.of(page, 9, Sort.by(Sort.Direction.ASC, "travelId"));
+		
+		return travelRepository.findByLargeGov(largeGov, pageable);
+	}
+	
+	/**
+	 * 여행지 목록 조회 (광역자치단체) non-pageable
+	 */
+	@Transactional
 	public List<Travel> detailsByLargeGov(String largeGov) {
 		List<Travel> list = travelRepository.findByLargeGov(largeGov);
 		if(list.size() == 0) {
@@ -103,7 +115,19 @@ public class TravelService {
 		
 		return list;
 	}
-
+	
+	/**
+	 * 여행지 목록 조회 (기초자치단체)
+	 */
+	@Transactional
+	public Page<Travel> detailsBySmallGov(String largeGov, String smallGov, Pageable pageable) {
+		
+		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+		pageable = PageRequest.of(page, 9, Sort.by(Sort.Direction.ASC, "travelId"));
+		
+		return travelRepository.findByLargeGovAndSmallGov(largeGov, smallGov, pageable);
+	}
+	
 	/**
 	 * 여행지 목록 조회 (기초자치단체)
 	 */
