@@ -20,6 +20,10 @@ function initMapList(smallList) {
 		level = 12;
 		smallList[0].regionLong = Number(smallList[0].regionLong)-0.03;
 		smallList[0].regionLat = Number(smallList[0].regionLat)+0.03;
+	 } else if (smallList[0].largeGov=='경북') {
+		level = 12;
+		smallList[0].regionLat = Number(smallList[0].regionLat)+0.3;
+		smallList[0].regionLong = Number(smallList[0].regionLong)+0.8;
 	 }
 
 

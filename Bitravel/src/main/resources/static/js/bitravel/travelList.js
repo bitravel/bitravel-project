@@ -16,6 +16,15 @@ function initMapList(largeList) {
 	for (var i = 0; i < largeList.length; i++) {
 		if (!largeList[i].regionLat)
 			continue;
+
+		if (largeList[i].largeGov=="경기") {
+			largeList[i].regionLat = Number(largeList[i].regionLat)-0.1;
+			largeList[i].regionLong = Number(largeList[i].regionLong)+0.1;
+		} else if (largeList[i].largeGov=="강원") {
+			largeList[i].regionLat = Number(largeList[i].regionLat)-0.2;
+			largeList[i].regionLong = Number(largeList[i].regionLong)+0.1;
+		}
+		
 		var markerPosition = new kakao.maps.LatLng(largeList[i].regionLat, largeList[i].regionLong);
 
 		// 마커를 생성합니다
