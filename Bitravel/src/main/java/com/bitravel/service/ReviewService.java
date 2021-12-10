@@ -13,9 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bitravel.data.dto.ReviewRequestDto;
 import com.bitravel.data.dto.ReviewResponseDto;
 import com.bitravel.data.entity.Review;
+import com.bitravel.data.entity.ReviewTravels;
 import com.bitravel.data.entity.Travel;
 import com.bitravel.data.repository.ReviewCommentRepository;
 import com.bitravel.data.repository.ReviewRepository;
+import com.bitravel.data.repository.ReviewTravelRepository;
 import com.bitravel.data.repository.TravelRepository;
 import com.bitravel.data.repository.UserRepository;
 import com.bitravel.exception.CustomException;
@@ -34,12 +36,48 @@ public class ReviewService {
 	private final TravelRepository travelRepository;
     private final UserRepository userRepository;
     private final ReviewCommentRepository rCommentRepository;
+    private final ReviewTravelRepository reviewTravelRepository;
 	
     /**
      * 후기 생성
      */
     @Transactional
     public Long save(ReviewRequestDto params) {
+    	
+    	
+    	// 생성된 리뷰 번호
+    	//log.info("review sequence : ", review.getReviewId());
+    	
+    	// 1. 리뷰 저장
+    	// 리뷰 SAVE
+//    	Review review = reviewRepository.save(params.toEntity());
+    	
+    	// 2. 여행지 정보 저장
+    	//...
+//    	Review review = reviewRepository.save(params.toEntity());
+//    	Long id = review.getReviewId();
+//    	
+//    	List<Long> travelIds = params.getTravelId();
+//    	int arr = travelIds.size();
+//    	for (int i=0; i<arr; i++) {
+//    		ReviewTravels entity = ReviewTravels.builder()
+//    				.reviewId(id)
+//    				.travelId(travelIds.get(i))
+//    				.build();
+//    		reviewTravelRepository.save(entity);
+//    	}
+//        return id;
+//    	for (Long travelId : params.getTravelId()) {
+//    		// 3. 리뷰-여행지 매핑 정보 저장
+//    		ReviewTravels entity = ReviewTravels.builder()
+//    				.reviewId(review.getReviewId())
+//    				.travelId(travelId)
+//    				.build();
+//    		
+//    		//reviewTravelRepository.save(entity);
+//    	}
+    	
+    	
     	// JWT 구현 전에는 anonymousUser로 기록됨
     	String nowUserEmail = SecurityUtil.getCurrentEmail().get();
     	params.setUserEmail(nowUserEmail);
