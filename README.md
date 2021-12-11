@@ -27,7 +27,7 @@
 프로젝트 기획, HTML 페이지 레이아웃 구성 및 제작, 메인/마이페이지 관련 기능 FE·BE, (추후 추가) 
 
 ### [김종희](https://github.com/spacekay)
-프로젝트 기획, 일정 및 VCS 관리, DB 구성, 회원/여행지/검색결과 관련 기능 FE·BE, (추후 추가)
+프로젝트 기획·배포, 일정 및 VCS 관리, DB 구성, 회원/여행지/검색결과 관련 기능 FE·BE, (추후 추가)
 
 
 ## 일정표 확인
@@ -42,16 +42,17 @@ https://docs.google.com/spreadsheets/d/1xrJY5oFsCTjjSEwxY2uCujWKFVm5Q1uY/edit?rt
 * __페이지 구성__ : Assan 4 templates, Summernote Lite, Bootstrap, Font Awesome 등 기반
 * __레이아웃 설정__ : Thymeleaf 기반 반복 영역 처리
 * __JavaScript__ : 필요에 따라 일부 jQuery 적용, 그 외에는 가능한 경우 Vanilla JS 적용
-* __게시물, 리스트 등 데이터 검색 및 출력__ : fetch API를 통한 Ajax 활용
+* __REST API 실행 결과 출력__ : fetch API를 통한 Ajax 활용
 
 ## Backend
 * __DB 전처리__ : Python Pandas, Selenium
-* __서버 구성__ : Spring Boot
-* __회원 기능__ : jwt (Cookie에 토큰 저장), Redis (로그아웃된 토큰 저장 후 검증)
+* __서버 구성__ : Spring Boot(Tomcat 포함), MySQL, Redis
+* __회원 기능__ : Spring Security, jwt (Cookie에 토큰 저장), Redis (로그아웃된 토큰 저장 후 검증)
 * __게시물/후기 기능__ : @RestController 및 Pageable interface 활용
 * __지도 열람 기능__ : Kakao Maps API 기반 지정 여행지 위치 표시 구현
 * __여행지 날씨 기능__ : 기상청 단기예보/중기예보 API 기반 json data parsing
 * __Custom error page__ : 주요 Status code 대응 (404, 500, 401, 403)
+* __JAR Build__ : Gradle 기반 JAR build 및 Quality Test 준비
 
 ## Status
 * 현재 Front - Back 기능 구현 진행 중 (~ 12. 17.)
