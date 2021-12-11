@@ -34,9 +34,9 @@
 https://docs.google.com/spreadsheets/d/1xrJY5oFsCTjjSEwxY2uCujWKFVm5Q1uY/edit?rtpof=true
 
 ## DB 구성
-(2021-12-05 기준. 추후 변경 가능)
+(2021-12-11 기준. 추후 변경 가능)
 
-![bitravel-db](https://blog.kakaocdn.net/dn/kQnDa/btrmYVcnWl4/04pZR0EE9nfuQQEOu5lDJK/img.png)
+![bitravel-db](https://blog.kakaocdn.net/dn/kK0nW/btrnBMlCXOl/PU5sPBTAVrTm2E5ZUUuQk0/img.png)
 
 ## Frontend
 * __페이지 구성__ : Assan 4 templates, Summernote Lite, Bootstrap, Font Awesome 등 기반
