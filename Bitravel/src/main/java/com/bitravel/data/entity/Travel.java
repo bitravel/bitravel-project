@@ -1,13 +1,10 @@
 package com.bitravel.data.entity;
 
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -98,5 +95,11 @@ public class Travel {
 		this.travelSummary = travel.travelSummary;
 		this.travelTel = travel.travelTel;
 	}
+	
+    //조회수 증가
+    public void increaseView()
+    {
+    	this.travelView++;
+    }
 	
 }
