@@ -554,7 +554,7 @@
         <div class="container pb-7 pb-lg-12 mb-2">
             <h2 class="mb-5">최신 후기</h2>
             <div class="mb-2 t-right">
-            	<a href="/review/total/list" >후기 전체 보기</a>
+            	<a href="/review/total/" >후기 전체 보기</a>
             </div>
             <!-- Swiper -->
             <div class="swiper-container swiper-3">
@@ -562,7 +562,7 @@
                 	<div class="swiper-slide" th:each="list: ${reviewList}">
                         <div class="vh-auto bg-white">
                             <article class="card-hover border-0 d-flex">
-                                <a th:href="@{'/review/detail/'+${list.reviewId}(page=${reviewList.number+1})}" class="stretched-link"></a>
+                                <a th:href="@{'/review/'+${list.reviewId}(page=${reviewList.number+1})}" class="stretched-link"></a>
                                 <div class="card-body position-relative p-0" >
                                     <div class="d-block position-relative overflow-hidden mb-4" style="text-align: center;">
                                         <img th:src="${list.thumbNail}" onerror="this.src='/assets/img/800x600/2.jpg'" style="height:400px " class="img-fluid img-zoom" alt="">

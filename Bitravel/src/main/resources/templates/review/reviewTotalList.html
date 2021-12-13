@@ -153,7 +153,7 @@
                                         [[${reviewList.totalElements-(((reviewList.number)*reviewList.size) +
                                         index.index)}]]</td>
                                     <td>
-                                        <a th:href="@{'/review/detail/'+${list.reviewId}(page=${reviewList.number+1})}"
+                                        <a th:href="@{'/review/'+${list.reviewId}(keyword=${param.keyword}, page=${reviewList.number+1})}"
                                             class="text-dark">
                                             [[${list.reviewTitle}]]
                                         </a>
@@ -171,7 +171,7 @@
 		<!--/* 검색 영역 */-->
 				<div class="row col-8 ">
                     <div class="d-flex justify-content-center">
-                        <form action="/review/search/all/list" name="edit" method="GET" class="input-group">
+                        <form action="/review/search/all/" name="edit" method="GET" class="input-group">
                             <label for="selectSizing" class="mb-2"></label>
                             <div class="width-120">
                                 <select onchange="option_bt(this.value);" data-choices='{"searchEnabled":false}' class="form-control">
@@ -201,33 +201,33 @@
                             
                             <!-- first page -->
                             <li class="page-item" >
-						      <a class="page-link" th:href="@{./list(keyword=${param.keyword}, page=1)}" aria-label="First">
+						      <a class="page-link" th:href="@{./(keyword=${param.keyword}, page=1)}" aria-label="First">
 						        <span aria-hidden="true"> FIRST </span>
 						      </a>
 						    </li>
 						    
                             <!-- previous page -->
                             <li class="page-item" th:class="${reviewList.first} ? 'disabled'">
-                                <a class="page-link" th:href="${reviewList.first} ? '#' : @{./list(keyword=${param.keyword}, page=${reviewList.number})}" aria-label="Previous">
+                                <a class="page-link" th:href="${reviewList.first} ? '#' : @{./(keyword=${param.keyword}, page=${reviewList.number})}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
                             
                             <!-- present page -->
                             <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == reviewList.number + 1} ? 'active'">
-                            <a class="page-link" th:text="${page}" th:href="@{./list(keyword=${param.keyword}, page=${page})}">&nbsp;</a>
+                            <a class="page-link" th:text="${page}" th:href="@{./(keyword=${param.keyword}, page=${page})}">&nbsp;</a>
                             </li>
 							
 							<!-- next page -->
                             <li class="page-item" th:class="${reviewList.last} ? 'disabled'">
-                                <a class="page-link" th:href="${reviewList.last} ? '#' : @{./list(keyword=${param.keyword}, page=${reviewList.number + 2})}" aria-label="Next">
+                                <a class="page-link" th:href="${reviewList.last} ? '#' : @{./(keyword=${param.keyword}, page=${reviewList.number + 2})}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
                             
                             <!-- last page -->
                             <li class="page-item">
-						      <a class="page-link" th:href="@{./list(keyword=${param.keyword}, page=${reviewList.totalPages})}" aria-label="Last">
+						      <a class="page-link" th:href="@{./(keyword=${param.keyword}, page=${reviewList.totalPages})}" aria-label="Last">
 						        <span aria-hidden="true">LAST</span>
 						      </a>
 						    </li>

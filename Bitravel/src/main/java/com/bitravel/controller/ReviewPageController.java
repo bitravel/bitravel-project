@@ -66,7 +66,7 @@ public class ReviewPageController {
 	@ApiOperation(value = "후기 통합 검색 목록", notes = "후기를 닉네임 또는 제목 또는 내용으로 조회하는 API.")
 	public String findBoards(@RequestParam(value = "keyword") String keyword, Model model, @PageableDefault(size = 10, sort = "reviewId", direction = Sort.Direction.DESC) Pageable pageable) {
     	model.addAttribute("reviewList", reviewService.findReviews(keyword, pageable));
-		return "review/reviewList";
+		return "review/reviewTotalList";
 	}
     
     /**
@@ -76,7 +76,7 @@ public class ReviewPageController {
 	@ApiOperation(value = "후기 닉네임 검색 목록", notes = "후기를 닉네임으로 조회하는 API.")
 	public String findBoardsByNickname(@RequestParam(value = "keyword") String keyword, Model model, @PageableDefault(size = 10, sort = "reviewId", direction = Sort.Direction.DESC) Pageable pageable) {
     	model.addAttribute("boardList", reviewService.findReviewsByNickname(keyword, pageable));
-		return "review/reviewList";
+		return "review/reviewTotalList";
 	}
 	
 	/**
@@ -86,7 +86,7 @@ public class ReviewPageController {
 	@ApiOperation(value = "후기 제목 검색 목록", notes = "후기를 제목으로 조회하는 API.")
 	public String findBoardsByTitle(@RequestParam(value = "keyword") String keyword, Model model, @PageableDefault(size = 10, sort = "reviewId", direction = Sort.Direction.DESC) Pageable pageable) {
     	model.addAttribute("boardList", reviewService.findReviewsByTitle(keyword, pageable));
-		return "review/reviewList";
+		return "review/reviewTotalList";
 	}
 	
 	/**
@@ -96,7 +96,7 @@ public class ReviewPageController {
 	@ApiOperation(value = "후기 제목+내용 검색 목록", notes = "후기를 제목 또는 내용으로 조회하는 API.")
 	public String findBoardsByTitleAndContent(@RequestParam(value = "keyword") String keyword, Model model, @PageableDefault(size = 10, sort = "reviewId", direction = Sort.Direction.DESC) Pageable pageable) {
     	model.addAttribute("boardList", reviewService.findReviewsByTitleAndContent(keyword, pageable));
-		return "review/reviewList";
+		return "review/reviewTotalList";
 	}
 
 
