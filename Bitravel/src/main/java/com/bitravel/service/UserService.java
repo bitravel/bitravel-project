@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -188,8 +191,8 @@ public class UserService {
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public List<UserDto> getUserListBynickname(String nickname) {
 		// 인기도 등 다른 조건으로 정렬하는 기능 추가할 수 있음
-		// Sort sort = Sort.by(Direction.ASC, "userId");
-		List<User> list = userRepository.findByNicknameContaining(nickname);
+		Sort sort = Sort.by(Direction.DESC, "point");
+		List<User> list = userRepository.findByNicknameContaining(nickname, sort);
 		return list.stream().map(UserDto::new).collect(Collectors.toList());
 	}
 	
@@ -277,6 +280,12 @@ public class UserService {
 		user.setPoint(point);
 		userRepository.save(user);
 		return true;
+	}
+	
+	public Page<User> findUsersByNickname(String keyword, Pageable pageable) {
+		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+		pageable = PageRequest.of(page, 9, Sort.by(Sort.Direction.ASC, "userId"));
+		return userRepository.findByNicknameContaining(keyword, pageable);
 	}
 	
 }

@@ -27,9 +27,14 @@
     <!-- Main CSS -->
     <link href="/assets/css/theme.min.css" rel="stylesheet">
     <style>
-    html, body {
-        overflow-x: hidden;
-    }
+        html,
+        body {
+            overflow-x: hidden;
+        }
+
+        a:hover {
+            color: #000000 !important;
+        }
     </style>
     <title>BITravel :: 나만의 여행기를 그려보는 곳</title>
 </head>
@@ -39,7 +44,7 @@
     <header class="z-index-fixed">
         <nav class="navbar navbar-expand-lg navbar-light bg-white">
             <div class="container position-relative">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="/">
                     <img src="/assets/img/logo/logo.svg" alt="" class="img-fluid">
                 </a>
                 <div class="d-flex align-items-center navbar-no-collapse-items order-lg-last">
@@ -53,18 +58,17 @@
                 </div>
 
                 <div class="collapse navbar-collapse" id="mainNavbarTheme">
-					<ul class="navbar-nav mx-auto">
-						<li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle" href="/board/list" role="button">여행지
-						</a></li>
-						<li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle" href="/review/list"
-							role="button">여행후기 </a></li>
-						<li class="nav-item dropdown"><a
-							class="nav-link dropdown-toggle" href="/board/list" role="button">게시판
-						</a></li>
-					</ul>
-				</div>
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="/travel"
+                                role="button">여행지
+                            </a></li>
+                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="/review"
+                                role="button">후기</a></li>
+                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="/board"
+                                role="button">게시판
+                            </a></li>
+                    </ul>
+                </div>
                 <!--회원 정보 관련 : 회원 전용 메뉴 -->
                 <div class="nav-item me-3 me-lg-0 dropdown" sec:authorize="isAuthenticated()">
                     <a href="#" class="btn btn-secondary rounded-pill py-0 ps-0 pe-3" data-bs-auto-close="outside"
@@ -73,7 +77,7 @@
                             <small sec:authentication="principal.nickname"></small>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs p-0">
-                            <a href="#" class="dropdown-header border-bottom p-4">
+                            <a href="/mypage" class="dropdown-header border-bottom p-4">
                                 <div class="d-flex align-items-center">
                                     <div>
                                         <img th:src="${#authentication.principal.userImage}" alt="" class="avatar xl rounded-pill me-3">
@@ -134,12 +138,12 @@
         </nav>
         <br>   
         <!-- 헤더 검색창 시작 -->
-        <form action="/search" method="post">
+        <form action="/search" method="get">
         <div class="row">
             <div class="col-xl-6 col-sm-8 col-auto mx-auto d-flex">
-                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="키워드를 입력하세요.">
+                <input type="text" class="form-control" id="searchKeyword" name="keyword" placeholder="키워드를 입력하세요.">
                 &nbsp;&nbsp;
-                <button type="submit" class="ms-sm-1 btn btn-primary btn ">
+                <button type="submit" class="ms-sm-1 btn btn-primary btn">
                     <span class="d-flex align-items-center fw-bold"> 
                         <span>검색</span>
                     </span>
@@ -159,7 +163,7 @@
             <!--Footer col-->
             <div class="col-md-9 col-lg-3 mb-5 mb-lg-0">
                 <div class="d-flex flex-column h-100 justify-content-between">
-                    <a href="#" class="width-90 mb-4 mb-lg-0 d-block">
+                    <a href="/" class="width-90 mb-4 mb-lg-0 d-block">
                         <img src="/assets/img/logo/logo-white.svg" alt="" class="img-fluid">
                     </a>
                     <div class="mt-auto">
@@ -197,107 +201,71 @@
                                     </svg>
                                 </a>
                             </li>
-                            <li class="list-inline-item ms-2">
-                                <a href="#">
-                                    <svg width="24" height="24" fill="currentColor" viewBox="0 0 512 512">
-                                        <path
-                                            d="M344.1 233.6c-28.9 0-32.9 28.8-32.9 28.8h61.4s.4-28.8-28.5-28.8zM204.8 262.4h-54.4v50h51.7c7.8-.2 22.4-2.4 22.4-24.3 0-26-19.7-25.7-19.7-25.7z">
-                                        </path>
-                                        <path
-                                            d="M256 32C132.3 32 32 132.3 32 256s100.3 224 224 224 224-100.3 224-224S379.7 32 256 32zm47.2 137.6h77.1v23h-77.1v-23zm-39 120.8c0 57-59.4 55.2-59.4 55.2h-97.2v-187h97.2c29.6 0 52.9 16.3 52.9 49.8S229.2 244 229.2 244c37.6 0 35 46.4 35 46.4zm144.2-3.1h-96.9c0 34.7 32.9 32.5 32.9 32.5 31.1 0 30-20.1 30-20.1h32.9c0 53.4-64 49.7-64 49.7-76.7 0-71.8-71.5-71.8-71.5s-.1-71.8 71.8-71.8c75.7.1 65.1 81.2 65.1 81.2z">
-                                        </path>
-                                        <path
-                                            d="M218 211.3c0-19.4-13.2-19.4-13.2-19.4h-54.4v41.7h51c8.8 0 16.6-2.9 16.6-22.3z">
-                                        </path>
-                                    </svg>
-                                </a>
-                            </li>
                         </ul>
                     </div>
                 </div>
             </div>
             <!--Footer col-->
             <div class="col-lg-3 col-xl-2 col-md-4 col-sm-6 ms-lg-auto mb-5 mb-md-0">
-                <h5 class="mb-4">Services</h5>
+                <h5 class="mb-4">서비스</h5>
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            Design
+                        <a href="/travel" class="nav-link">
+                            여행지
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            Development
+                        <a href="/review" class="nav-link">
+                            후기
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            E-commerce
+                        <a href="/board" class="nav-link">
+                            게시판
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            Mobile app
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            Help center
+                        <a href="/mypage" class="nav-link">
+                            마이페이지
                         </a>
                     </li>
                 </ul>
             </div>
             <!--Footer col-->
             <div class="col-lg-3 col-xl-2 col-md-4 col-sm-6 ms-lg-auto mb-5 mb-md-0">
-                <h5 class="mb-4">About</h5>
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            Company
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            Our blog
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            Contact us
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            Career
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            Customers
-                        </a>
-                    </li>
-                </ul>
+                <br>
+                    <div>
+                        <ul class="list-unstyled">
+					<li><a href="https://www.data.go.kr/" target="_blank"><img src="https://api.visitkorea.or.kr/static/images/common/footer/footer_public_data.gif" alt="공공데이터포털 DATA.GO.KR" /></a></li>
+                    </ul>
+                        <ul class="list-unstyled">
+					<li><a href="https://api.visitkorea.or.kr/" target="_blank"><img src="/assets/img/bitravel/sigkor_log.jpg" style="width:132px;height:45px;" alt="한국관광공사 Tour API" /></a></li>
+                    </ul>
+                        <ul class="list-unstyled">
+					<li><a href="https://apis.map.kakao.com/" target="_blank"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSAM91kOi-uJOHL1AzppwaxpxrM7ZFhRS-8TLZT8EKLA2HylWVSheBtD2WITNAuF20EKA&usqp=CAU" style="width:132px;height:45px;" alt="Kakao Map API" /></a></li>
+					</ul>
+                    </div>
             </div>
             <!--Footer col-->
             <div class="col-md-4 col-sm-8 col-lg-3">
                 <div class="d-flex flex-column justify-content-md-between h-100">
                     <div class="text-muted">
                         <p class="mb-2">
-                            <strong>Company, Inc.</strong>
+                            <strong>BITravel Project</strong>
                         </p>
                         <p class="mb-3">
-                            1355 Market St, Suite 900<br> San Francisco<br> CA 94103
+                            서울 서초구 서초대로74길 33
+                            <br>
+                            비트교육센터
                         </p>
                     </div>
-
                     <div class="mt-auto mb-0">
-                        <a href="mailto:mail@domain.com">
-                            <strong>support@domain.com</strong>
+                        <a href="mailto:support@bitravel.com">
+                            <strong>support@bitravel.com</strong>
                         </a>
                         <hr class="my-3">
                         <a href="tel:+011234567890">
-                            <strong>+01 123 456 7890</strong>
+                            <strong>+82 123 456 7890</strong>
                         </a>
                     </div>
                 </div>
@@ -307,19 +275,14 @@
         <div class="d-sm-flex flex-sm-row justify-content-center justify-content-sm-between">
             <ul class="list-inline">
                 <li class="list-inline-item">
-                    <a href="#" class="text-muted small">
-                        Privacy policy
-                    </a>
-                </li>
-                <li class="list-inline-item">
-                    <a href="#" class="text-muted small">
-                        Terms & conditions
+                    <a href="javascript:alert('BITravel에서는 보다 향상된 여행지 추천 서비스를 위하여,\n고객의 일부 개인정보 및 활동 기록을 사용합니다.\n해당 사항에 동의하지 않을 시 가입이 불가합니다.\n수집한 개인정보는 자체 서비스 향상에만 사용합니다.');" class="text-muted small">
+                        이용약관
                     </a>
                 </li>
             </ul>
 
             <small class="text-sm-end text-muted">
-                © Copyright. All Right Reserved.<br> Made by Creative DM
+                © Copyright. All Right Reserved.<br> Made by BITravel Project
             </small>
         </div>
     </div>

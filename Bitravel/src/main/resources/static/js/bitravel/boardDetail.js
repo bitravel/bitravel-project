@@ -17,7 +17,7 @@ function findBoard() {
 			if (elem) {
 				elem.innerHTML = json[key];
 			}
-
+			board = json;
 		});
 
 	}).catch(error => {
@@ -29,14 +29,28 @@ function findBoard() {
 /**
  * 댓글 수정 창
  */
-function openModal(commentId, nickname, content) {
+function openModal(commentId, content, email) {
 
-	$("#commentModal").modal("toggle");
+	fetch(`/api/user`).then(response => {
+		if (!response.ok) {
+			throw new Error('Request failed...');
+		}
+		return response.json();
+	}).then(json => {
+		console.log(json.email);
 
-	document.getElementById("modalContent").value = content;
+		if (json.email != email && json.email != 'admin') {
+			alert("해당 댓글을 수정할 권한이 없습니다.");
+			return false;
+		}
 
-	document.getElementById("btnCommentUpdate").setAttribute("onclick", "updateComment(" + commentId + ")");
-	document.getElementById("btnCommentDelete").setAttribute("onclick", "deleteComment(" + commentId + ")");
+		$("#commentModal").modal("toggle");
+
+		document.getElementById("modalContent").value = content;
+
+		document.getElementById("btnCommentUpdate").setAttribute("onclick", "updateComment(" + commentId + ")");
+		document.getElementById("btnCommentDelete").setAttribute("onclick", "deleteComment(" + commentId + ")");
+	});
 }
 
 /**
@@ -60,9 +74,9 @@ function isValid() {
 		content.focus();
 		return false;
 	}
-	if(content.value.length>1000) {
+	if (content.value.length > 1000) {
 		alert('댓글은 최대 1000자까지 입력 가능합니다.');
-		content.value = content.value.slice(0,999);
+		content.value = content.value.slice(0, 999);
 		content.focus();
 		return false;
 	}
@@ -83,15 +97,16 @@ function insertComment() {
 
 	var uri = `/api/boards/comments/${id}`;
 	var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "POST" };
-	var params = { "boardId": id, "commentContent": content.value };
+	var params = { "boardId": id, "commentContent": content.value, };
 	$.ajax({
 		url: uri,
 		type: "POST",
 		headers: headers,
 		dataType: 'json',
+		contentType: "application/json",
 		data: JSON.stringify(params),
 		success: function (response) {
-			if (response.result==false) {
+			if (response.result == false) {
 				alert("댓글 등록에 실패하였습니다.");
 				return false;
 			}
@@ -99,7 +114,7 @@ function insertComment() {
 			content.value = "";
 		},
 		error: function (xhr, status, error) {
-			alert("일시적인 오류가 발생하였습니다.");
+			alert("일시적인 오류가 발생하였습니다."+error);
 			return false;
 		}
 	});
@@ -118,9 +133,9 @@ function updateComment(commentId) {
 		content.focus();
 		return false;
 	}
-	if(content.value.length>1000) {
+	if (content.value.length > 1000) {
 		alert('댓글은 최대 1000자까지 입력 가능합니다.');
-		content.value = content.value.slice(0,999);
+		content.value = content.value.slice(0, 999);
 		content.focus();
 		return false;
 	}
@@ -134,6 +149,7 @@ function updateComment(commentId) {
 		type: "PATCH",
 		headers: headers,
 		dataType: "json",
+		contentType: "application/json",
 		data: JSON.stringify(params),
 		success: function (response) {
 			if (response.result == false) {
@@ -203,12 +219,12 @@ function printCommentList() {
 		} else {
 			json.forEach((obj) => {
 				html += `
-									<tr class="form-control mb-2">
-										<td style="width:20%;"><span class="fw-bold">${obj.nickname}</span></td>
-										<td style="width:78%;"><span class="desc">${obj.commentContent}</span></td>			
-										<td style="width:2%;"><button type="button" onclick="openModal(${obj.bcommentId}, '${obj.nickname}', '${obj.commentContent}' )" class="btn btn-sm btn-outline-default btn-circle"><i class="bi bi-pencil-fill" aria-hidden="true"></i></button></td>
-									</tr>
-								`;
+										<tr class="form-control mb-2">
+											<td style="width:20%;"><span class="fw-bold">${obj.nickname}</span></td>
+											<td style="width:78%;"><span class="desc">${obj.commentContent}</span></td>			
+											<td style="width:2%;"><button type="button" onclick="openModal(${obj.bcommentId}, '${obj.commentContent}', '${obj.userEmail}' )" class="btn btn-sm btn-outline-default btn-circle"><i class="bi bi-pencil-fill" aria-hidden="true"></i></button></td>
+										</tr>
+									`;
 			});
 		}
 		$(".notice-list").html(html);
@@ -222,16 +238,25 @@ function printCommentList() {
  * 뒤로가기
  */
 function goList() {
-	const url = window.location.search;
-	location.href = `/board/list` + url;
-	/* location.href = "javascript:history.back(-1)";*/
+	const url = window.location.href;
+	location.href = url.slice(0, url.indexOf(id)) + 'list' + window.location.search;
 }
 
 /**
  * 수정하기
  */
 function goWrite() {
-	location.href = `/board/write?id=${id}`;
+
+
+	fetch(`/api/boards/writer/${id}`).then(response => {
+		if (response.status == 401) {
+			alert("해당 글을 수정할 권한이 없습니다.");
+			return false;
+		} else if (!response.ok) {
+			throw new Error('Request failed...');
+		}
+		location.href = `/board/write?id=${id}`;
+	});
 }
 
 /**
@@ -239,23 +264,33 @@ function goWrite() {
  */
 function deleteBoard() {
 
-	if (!confirm(`${id}번 게시글을 삭제할까요?`)) {
-		return false;
-	}
-
-	fetch(`/api/boards/${id}`, {
-		method: 'DELETE',
-		headers: { 'Content-Type': 'application/json' },
-
-	}).then(response => {
-		if (!response.ok) {
+	fetch(`/api/boards/writer/${id}`).then(response => {
+		if (response.status == 401) {
+			alert("해당 글을 수정할 권한이 없습니다.");
+			return false;
+		} else if (!response.ok) {
 			throw new Error('Request failed...');
 		}
 
-		alert('삭제되었습니다.');
-		goList();
+		if (!confirm(`${id}번 게시글을 삭제할까요?`)) {
+			return false;
+		}
 
-	}).catch(error => {
-		alert('오류가 발생하였습니다.');
+		fetch(`/api/boards/${id}`, {
+			method: 'DELETE',
+			headers: { 'Content-Type': 'application/json' },
+
+		}).then(response => {
+			if (!response.ok) {
+				throw new Error('Request failed...');
+			}
+
+			alert('삭제되었습니다.');
+			goList();
+
+		}).catch(error => {
+			alert('오류가 발생하였습니다.');
+		});
+
 	});
 }

@@ -1,4 +1,6 @@
 package com.bitravel.service;
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bitravel.data.dto.BoardRequestDto;
 import com.bitravel.data.dto.BoardResponseDto;
 import com.bitravel.data.entity.Board;
+import com.bitravel.data.entity.User;
 import com.bitravel.data.repository.BoardCommentRepository;
 import com.bitravel.data.repository.BoardRepository;
 import com.bitravel.data.repository.UserRepository;
@@ -38,8 +41,12 @@ public class BoardService {
     	params.setUserEmail(nowUserEmail);
     	if (SecurityUtil.getCurrentEmail().get().equals("anonymousUser")) {
     		params.setNickname("비회원");
-    	} else {
+    	} else if(nowUserEmail.equals("admin")) {
     		params.setNickname(userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get().getNickname());
+    	} else {
+    		User entity = userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get();
+    		entity.changePoint(20);
+    		params.setNickname(entity.getNickname());
     	}
         Board entity = boardRepository.save(params.toEntity());
         return entity.getBoardId();
@@ -48,6 +55,7 @@ public class BoardService {
     /**
      * 게시글 리스트 조회
      */
+    @Transactional(readOnly = true)
     public Page<Board> findAll(Pageable pageable) {
     	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
     	pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardId"));
@@ -64,6 +72,15 @@ public class BoardService {
     	pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardId"));
     	
         return boardRepository.findByNicknameContainingOrBoardTitleContainingOrBoardContentContaining(keyword, keyword, keyword, pageable);
+    }
+    
+    /**
+     * 게시글 통합 검색 결과 조회 (Pageable X)
+     */
+    @Transactional
+    public List<Board> findBoards(String keyword) { 	
+    	Sort sort = Sort.by(Sort.Direction.DESC, "boardView");
+        return boardRepository.findByNicknameContainingOrBoardTitleContainingOrBoardContentContaining(keyword, keyword, keyword, sort);
     }
     
     /**
@@ -106,7 +123,7 @@ public class BoardService {
      * 게시글 상세 정보 조회
      */
     @Transactional
-    public BoardResponseDto detail(Long id) {
+    public BoardResponseDto findById(Long id) {
     	Board entity = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
     	entity.increaseView();
     	return new BoardResponseDto(entity);
@@ -136,12 +153,16 @@ public class BoardService {
     public Boolean deleteById(Long id) {
         Board entity = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
         // 글쓴이 또는 admin만 수정할 수 있게 함
-        if(SecurityUtil.getCurrentEmail().get().equals("admin")) {
+        String myEmail = SecurityUtil.getCurrentEmail().get();
+        if(myEmail.equals("admin")) {
         	log.info("관리자 권한으로 글을 삭제합니다. 글 번호 : "+id);
-        } else if(!entity.getUserEmail().equals(SecurityUtil.getCurrentEmail().get())) {
+        } else if(!entity.getUserEmail().equals(myEmail)) {
         	log.info("유효하지 않은 삭제 요청입니다.");
         	return false;
-        }
+        } else {
+        	User user = userRepository.findOneWithAuthoritiesByEmail(myEmail).get();
+            user.changePoint(-20);
+        }    
         // 해당 글의 댓글도 같이 삭제해야 함
         bCommentRepository.deleteAllByBoard(entity);
     	boardRepository.deleteById(id);

@@ -1,0 +1,30 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>BITravel Error Page</title>
+</head>
+
+<th:block layout:fragment="content">
+<br>
+    <!--메인 --> 
+    <main class="main-content position-relative z-index-2 bg-white" id="main-content">
+        <section class="position-relative bg-light">
+            <div class="container  pt-11 pb-7 pb-lg-9">
+                <div class="row pt-lg-5">
+                    <div class="col-lg-10">
+                        <h2 class="display-4">올바르지 않은 요청입니다.</h2>
+                        <br>
+                        정확한 URL을 입력하였는지 확인해 주세요.<br>
+                        이전 페이지로 돌아가시려면 아래의 링크를 클릭하세요. <br><br>
+                        <a href="javascript:history.back();" class="text-dark fs-4 fw-bold">이전 페이지로 돌아가기 ←</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</th:block>
+
+</html>

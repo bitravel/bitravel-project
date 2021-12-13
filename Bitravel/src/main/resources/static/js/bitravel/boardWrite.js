@@ -23,14 +23,14 @@ function findBoard() {
 
 	}).catch(error => {
 		alert('게시글 정보를 찾을 수 없습니다.');
-		location.href = '/board/list';
+		location.href = '/board';
 	});
 }
 
 function goBack() {
 
 	if (!id)
-		location.href = '/board/list';
+		location.href = '/board';
 	else
 		location.href = "javascript:history.back(-1)";
 
@@ -115,7 +115,7 @@ function save() {
 		}
 		if (!id) {
 			alert('저장되었습니다.');
-			location.href = '/board/list';
+			location.href = '/board';
 		} else {
 			alert('저장되었습니다.');
 			location.href = "javascript:history.back(-1)";

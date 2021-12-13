@@ -66,6 +66,7 @@ public class TravelService {
 	@Transactional
 	public Travel detailById(Long id) {
 		Travel entity = travelRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+		entity.increaseView();
 		addImage(entity);
 		return entity;
 	}
@@ -75,10 +76,8 @@ public class TravelService {
 	 */
 	@Transactional
 	public List<TravelSimpleDto> detailsByName(String name) {
-		List<Travel> list = travelRepository.findByTravelNameContaining(name);
-		if(list.size() == 0) {
-			throw new CustomException(ErrorCode.POSTS_NOT_FOUND);
-		}
+		Sort sort = Sort.by(Direction.DESC, "travelView").and(Sort.by(Direction.ASC, "travelName"));
+		List<Travel> list = travelRepository.findByTravelNameContaining(name, sort);
 		
 		for(int i=0;i<list.size();i++) {
 			addImage(list.get(i));

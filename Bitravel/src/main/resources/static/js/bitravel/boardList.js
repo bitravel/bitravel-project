@@ -4,7 +4,11 @@
 * 게시글 조회
 */
 function goView(id) {
-	location.href = `/board/detail/${id}`;
+	
+	console.log(window.location.search);
+	
+	//location.href = `/board/${id}`;
+
 }
 /**
 * 검색 옵션 변경

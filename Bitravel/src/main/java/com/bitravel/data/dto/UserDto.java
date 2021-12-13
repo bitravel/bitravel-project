@@ -40,6 +40,9 @@ public class UserDto {
 	
 	private Integer point;
 	
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	private Integer level;
+	
 	private String userImage;
 	
 	@NotNull
@@ -71,6 +74,7 @@ public class UserDto {
 		this.nickname = entity.getNickname();
 		this.realname = entity.getRealName();
 		this.point = entity.getPoint();
+		this.level = (this.point/200)+1;
 		this.gender = entity.getGender();
 		this.age = entity.getAge();
 		this.ageString = Integer.toString(this.age);
@@ -83,7 +87,7 @@ public class UserDto {
 			this.userAuthority = iterator.next().getRoleName();
 			if(this.userAuthority.equals("ROLE_ADMIN"))
 				break;
-		}		
+		}
 	}
 	
 }

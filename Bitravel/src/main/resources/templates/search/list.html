@@ -1,0 +1,139 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>통합 검색 결과 :: BITravel</title>
+</head>
+
+<th:block layout:fragment="content">
+    <!--메인 -->
+    <main class="main-content position-relative z-index-2 bg-white" id="main-content">
+        <section class="position-relative bg-light">
+            <div class="container  pt-11 pb-7 pb-lg-9">
+                <div class="row pt-lg-5">
+                    <div class="col-lg-8">
+                        <h2 class="display-5" th:if="${keyword!=''}" th:text="'&ldquo;'+${keyword}+'&rdquo; 키워드 검색 결과'">
+                        </h2>
+                        <h2 class="display-5" th:unless="${keyword!=''}">키워드를 검색할 수 없습니다.</h2>
+                        <br>
+                        <p class="fs-4" th:unless="${keyword!=''}">올바른 키워드를 입력해 주세요.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <br>
+
+    <!--Swiper-slide 3 items per-view (minimum - 1024px width)-->
+    <section class="overflow-hidden" th:if="${keyword!=''}">
+        <div class="container mt-3">
+            <h3 class="fw-bold" th:text="'전체 검색 결과 &nbsp;-&nbsp;총 '+${count}+'건'"></h3>
+        </div>
+        <br>
+        <div class="container pb-5 mb-2 mt-4">
+            <h4 class="mb-5 fw-bold">여행지 검색 결과 (총 <span th:text="${tcount}"></span>개)</h4>
+            <!-- Swiper -->
+            <div class="swiper-container swiper-3">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" th:each="list, index: ${travelList}">
+                        <div class="vh-auto bg-white">
+                            <article class="card-hover border-0 me-4 d-flex" style="min-height:350px;">
+                                <a th:href="@{'/travel/'+${list.travelId}}" class="stretched-link"></a>
+                                <div class="card-body position-relative p-0">
+                                    <div class="d-block position-relative mb-4">
+                                        <img style="min-height:200px;max-width:300px;" th:src="${list.travelImage}"
+                                            onerror="this.src='/assets/img/800x600/2.jpg'" class="img-fluid img-zoom"
+                                            alt="프로필">
+                                    </div>
+                                    <h5 class="mb-3">[[${list.travelName}]]</h5>
+                                    <div class="blog-content">
+                                        <div class="text-primary fw-semibold small pb-2"
+                                            th:text="'조회수 '+${list.travelView}">
+                                        </div>
+                                        <p th:text="${list.largeGov}+' '+${list.smallGov}" class="mb-4"></p>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+                <p th:if="${tcount==0}">검색 결과가 없습니다.</p>
+                <a th:if="${tcount>10}" class="fw-bold text-dark fs-5"
+                    th:href="@{'./search/travel'(keyword=${param.keyword}, page=1)}"> → 여행지 검색결과 더 보기</a>
+                <br><br><br>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination swiper3-pagination"></div>
+                <!-- Add Arrows -->
+                <!--<div th:if="${bcount>3}" class="swiper-scrollbar"></div>-->
+            </div>
+        </div>
+
+        <div class="container pb-4 mb-2 mt-4">
+            <h4 class="mb-5 fw-bold">게시판 검색 결과 (총 <span th:text="${bcount}"></span>개)</h4>
+            <!-- Swiper -->
+            <div class="swiper-container swiper-3">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" th:each="list, index: ${boardList}">
+                        <div class="vh-auto bg-white">
+                            <article class="card-hover border-0 me-3 d-flex" style="min-height:250px;">
+                                <a th:href="@{'/board/'+${list.boardId}}" class="stretched-link"></a>
+                                <div class="card-body position-relative p-0">
+                                    <h5 class="mb-3">[[${list.boardTitle}]]</h5>
+                                    <div class="blog-content">
+                                        <div class="text-primary fw-semibold small pb-2" th:text="${#dates.format(list.boardDate, 'yyyy-MM-dd')}+'&nbsp;&nbsp;&nbsp;조회수 '+${list.boardView}"></div>
+                                        <p th:text="${#strings.abbreviate(list.boardContent, 105)}" class="mb-4" style="word-break:break-word;"></p>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+                <p th:if="${bcount==0}">검색 결과가 없습니다.</p>
+                <a th:if="${bcount>10}" class="fw-bold text-dark fs-5" th:href="@{'./search/board'(keyword=${param.keyword}, page=1)}"> → 게시판 검색결과 더 보기</a> 
+                <br><br><br>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination swiper3-pagination"></div>
+                <!-- Add Arrows -->
+                <!--<div th:if="${bcount>3}" class="swiper-scrollbar"></div>-->
+            </div>
+        </div>
+
+          <div class="container pb-7 mb-2 mt-5">
+            <h4 class="mb-5 fw-bold">회원 검색 결과 (총 <span th:text="${ucount}"></span>명)</h4>
+            <!-- Swiper -->
+            <div class="swiper-container swiper-3">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" th:each="list, index: ${userList}">
+                        <div class="vh-auto bg-white">
+                            <article class="card-hover border-0 d-flex" style="min-height:250px;">
+                                <a th:href="@{'/user/'+${list.userId}}" class="stretched-link"></a>
+                                <div class="card-body position-relative p-0">
+                                    <div class="d-block position-relative mb-4">
+                                        <img style="height:250px;width:250px;" th:src="${list.userImage}" onerror="this.src='/assets/img/avatar/2.jpg'" class="img-fluid img-zoom" alt="프로필">
+                                    </div>
+                                    <h5 class="mb-3" th:text="${list.nickname}"></h5>
+                                    <div class="text-primary fw-semibold pb-2">
+                                    <span th:text="'레벨 '+${list.level}+' &nbsp;&nbsp;&nbsp;&nbsp;――― &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+${#dates.format(list.userDate, 'yyyy')}+'년 '+${#dates.format(list.userDate, 'MM')}+'월 가입'">
+                                            </span></div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+                <p th:if="${ucount==0}">검색 결과가 없습니다.</p>
+                <br>
+                <a th:if="${ucount>10}" class="fw-bold text-dark fs-5" th:href="@{'./search/user'(keyword=${param.keyword}, page=1)}"> → 회원 검색결과 더 보기</a> 
+                <br><br><br>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination swiper3-pagination"></div>
+                <!-- Add Arrows -->
+                <!--<div th:if="${bcount>3}" class="swiper-scrollbar"></div>
+                <div class="swiper-button-next swiper3-button-next"></div>
+                <div class="swiper-button-prev swiper3-button-prev"></div>-->
+            </div>
+        </div>
+    </section>
+    </th:block>
+</html>

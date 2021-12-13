@@ -35,17 +35,19 @@
 
 <th:block layout:fragment="content">
 	<main class="main-content position-relative z-index-2 mb-4 bg-white" id="main-content">
-        <section class="position-relative bg-light">
-            <div class="container  pt-11 pb-7 pb-lg-9">
-                <div class="row pt-lg-5">
-                    <div class="col-lg-9">
-                        <h2 class="display-4">여행 게시판</h2>
-                        <br>
-                        <p>자유롭게 여행에 관련한 이야기를 나눠 보세요.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
+		<section class="position-relative bg-light">
+			<div class="container  pt-11 pb-7 pb-lg-9">
+				<div class="row pt-lg-5">
+					<div class="col-lg-9">
+						<a href="/board" class="text-dark decorator-none">
+							<h2 class="display-4">여행 게시판</h2>
+						</a>
+						<br>
+						<p>자유롭게 여행에 관련한 이야기를 나눠 보세요.</p>
+					</div>
+				</div>
+			</div>
+		</section>
 	</main>
 	<div class="container col-lg-8 col-10 col-sm-9 py-2 pb-0">
 		<div class="form-control p-4">
@@ -77,14 +79,14 @@
 
 				<div class="form-group">
 					<div class="col-sm mb-5">
-						<p id="boardContent" style="word-break:normal;"></p>
+						<p id="boardContent" style="word-break:break-word;"></p>
 					</div>
 				</div>
 
 			</form>
 			<div class="btn_wrap text-center">
 				<a href="javascript: void(0);" onclick="goList();"
-					class="btn btn-outline-secondary waves-effect waves-light me-2">뒤로가기</a>
+					class="btn btn-outline-secondary waves-effect waves-light me-2">목록보기</a>
 				<a href="javascript: void(0);" onclick="goWrite();"
 					class="btn btn-outline-primary waves-effect waves-light me-2">수정하기</a>
 				<button type="button" onclick="deleteBoard();"
@@ -93,7 +95,7 @@
 		</div>
 		<!-- /.card-content -->
 	</div>
-<!--  댓글  -->
+	<!--  댓글  -->
 	<div class="container col-lg-8 col-10 col-sm-9 py-2 pb-0 mt-5 mb-5">
 		<div class="box-content">
 			<div class="card-content">

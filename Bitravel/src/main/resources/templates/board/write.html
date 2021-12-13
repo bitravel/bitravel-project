@@ -4,9 +4,9 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <!-- include summernote css/js-->
+    <!-- include summernote css/js-->
     <link href="/css/summernote-lite.css" rel="stylesheet">
-        <!--File uploader-->
+    <!--File uploader-->
     <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
     <link href="https://unpkg.com/filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css" rel="stylesheet">
     <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
@@ -22,7 +22,9 @@
             <div class="container  pt-11 pb-7 pb-lg-9">
                 <div class="row pt-lg-5">
                     <div class="col-lg-8">
-                        <h2 class="display-4">여행 게시판</h2>
+                        <a href="/board" class="text-dark decorator-none">
+                            <h2 class="display-4">여행 게시판</h2>
+                        </a>
                         <br>
                         <p>자유롭게 여행에 관련한 이야기를 나눠 보세요.</p>
                     </div>
@@ -52,7 +54,7 @@
                             <button type="button" onclick="goBack();"
                                 class="btn btn-outline-secondary waves-effect waves-light">뒤로가기</button>
                             &nbsp;&nbsp;
-                                <button type="button" onclick="save();"
+                            <button type="button" onclick="save();"
                                 class="btn btn-secondary waves-effect waves-light">저장하기</button>
                         </div>
                     </form>
