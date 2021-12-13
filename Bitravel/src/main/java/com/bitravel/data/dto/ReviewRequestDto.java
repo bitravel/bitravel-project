@@ -1,10 +1,9 @@
 package com.bitravel.data.dto;
 
 import java.util.List;
-import java.util.Set;
 
 import com.bitravel.data.entity.Review;
-import com.bitravel.data.entity.Travel;
+import com.bitravel.data.entity.ReviewTravels;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AccessLevel;
@@ -25,11 +24,11 @@ public class ReviewRequestDto {
     private String thumbNail; // 썸네일 경로
     
     @JsonIgnore
-    private Set<Travel> travel;
+    private List<ReviewTravels> reviewTravels;
     
     public Review toEntity() {
         return Review.builder()
-        		.travelSet(travel)
+        		//.travelSet(travel)
                 .reviewTitle(reviewTitle)
                 .reviewContent(reviewContent)
                 .userEmail(userEmail)
@@ -43,8 +42,8 @@ public class ReviewRequestDto {
 		this.userEmail = email;
 	}
 	
-	public void setTravel(Set<Travel> travel) {
-		this.travel =travel;
+	public void setTravel(List<ReviewTravels> reviewTravels) {
+		this.reviewTravels =reviewTravels;
 	}
 
 	public void setNickname(String nickname) {

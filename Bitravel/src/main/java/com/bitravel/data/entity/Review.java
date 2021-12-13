@@ -1,16 +1,15 @@
 package com.bitravel.data.entity;
 
 import java.sql.Timestamp;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -65,7 +64,7 @@ public class Review {
     private String thumbNail;
     
     @Builder
-    public Review(String reviewTitle, String reviewContent, String userEmail,Long reviewId, int reviewView, int reviewRecom, int reviewLevel, Timestamp reviewDate, Set<Travel> travelSet, String nickname, String thumbNail) {
+    public Review(String reviewTitle, String reviewContent, String userEmail,Long reviewId, int reviewView, int reviewRecom, int reviewLevel, Timestamp reviewDate, String nickname, String thumbNail) {
     	this.reviewTitle = reviewTitle;
     	this.reviewContent = reviewContent;
     	this.reviewId = reviewId;
@@ -75,24 +74,19 @@ public class Review {
     	this.reviewDate = reviewDate;
     	this.userEmail = userEmail;
     	this.nickname = nickname;
-    	this.travelSet = travelSet;
+    	//this.travelSet = travelSet;
     	this.thumbNail = thumbNail;
     }
     
-    public void update(String reviewTitle, String reviewContent, Set<Travel> travelSet) {
+    public void update(String reviewTitle, String reviewContent) {
     	this.reviewTitle = reviewTitle;
     	this.reviewContent = reviewContent;
-    	this.travelSet = travelSet;
+    	//this.travelSet = travelSet;
     }
     
-    // 테이블 간 다대다 연결
-    @ManyToMany
-    @JoinTable(
-            name = "review_travel",
-            joinColumns = {@JoinColumn(name = "reviewId", referencedColumnName = "reviewId")},
-            inverseJoinColumns = {@JoinColumn(name = "travelId", referencedColumnName = "travelId")})
-    private Set<Travel> travelSet;
-    
+    @OneToMany(mappedBy ="review") //ReviewTravels 테이블의 review필드에 맵핑
+    private List<ReviewTravels> reviewTravels = new ArrayList<>();
+   
     //조회수 증가
     public void increaseView()
     {

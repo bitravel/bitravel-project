@@ -79,8 +79,8 @@ public class Travel {
 	private Integer travelView;
 
 	@JsonIgnore // 임시
-	@ManyToMany(mappedBy = "travelSet") 
-	private Set<Review> reviewSet;
+	//@OneToMany(mappedBy ="travel") //ReviewTravels 테이블의 travel필드에 맵핑
+    //private List<ReviewTravels> reviewTravels = new ArrayList<>();
 	
 	public void update(Travel travel) {
 		this.address = travel.address;

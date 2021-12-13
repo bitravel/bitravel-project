@@ -1,5 +1,6 @@
 package com.bitravel.data.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,6 +25,7 @@ public class ReviewTravels {
 	// 후기와 여행지 관계 Entity
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "review_travel_id")
 	private Long reviewTravelId;
 	
 	@ManyToOne
@@ -33,10 +35,16 @@ public class ReviewTravels {
 	@ManyToOne
     @JoinColumn(name="review_id")
     private Review review;
-//	
-//	@Builder
-//	public ReviewTravels(Travel travel, Review review) {
-//		this.travel = travel;
-//		this.review = review;
-//	}
+	
+	@Builder
+	public ReviewTravels(Travel travel, Review review) {
+		this.travel = travel;
+		this.review = review;
+	}
+	
+	public void update(Travel travel, Review review) {
+    	this.travel = travel;
+    	this.review = review;
+    }
+
 }
