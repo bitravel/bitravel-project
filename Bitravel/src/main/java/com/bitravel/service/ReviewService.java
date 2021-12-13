@@ -1,4 +1,5 @@
 package com.bitravel.service;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -44,41 +45,7 @@ public class ReviewService {
     @Transactional
     public Long save(ReviewRequestDto params) {
     	
-    	
-    	// 생성된 리뷰 번호
-    	//log.info("review sequence : ", review.getReviewId());
-    	
     	// 1. 리뷰 저장
-    	// 리뷰 SAVE
-//    	Review review = reviewRepository.save(params.toEntity());
-    	
-    	// 2. 여행지 정보 저장
-    	//...
-//    	Review review = reviewRepository.save(params.toEntity());
-//    	Long id = review.getReviewId();
-//    	
-//    	List<Long> travelIds = params.getTravelId();
-//    	int arr = travelIds.size();
-//    	for (int i=0; i<arr; i++) {
-//    		ReviewTravels entity = ReviewTravels.builder()
-//    				.reviewId(id)
-//    				.travelId(travelIds.get(i))
-//    				.build();
-//    		reviewTravelRepository.save(entity);
-//    	}
-//        return id;
-//    	for (Long travelId : params.getTravelId()) {
-//    		// 3. 리뷰-여행지 매핑 정보 저장
-//    		ReviewTravels entity = ReviewTravels.builder()
-//    				.reviewId(review.getReviewId())
-//    				.travelId(travelId)
-//    				.build();
-//    		
-//    		//reviewTravelRepository.save(entity);
-//    	}
-    	
-    	
-    	// JWT 구현 전에는 anonymousUser로 기록됨
     	String nowUserEmail = SecurityUtil.getCurrentEmail().get();
     	params.setUserEmail(nowUserEmail);
     	if (SecurityUtil.getCurrentEmail().get().equals("anonymousUser")) {
@@ -86,15 +53,27 @@ public class ReviewService {
     	} else {
     		params.setNickname(userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get().getNickname());
     	}
-    	Set<Travel> travelSet = new HashSet<>();
+    	Review review = reviewRepository.save(params.toEntity());
+    	review.getReviewId();
+    	
+    	// 2. 여행지 정보 저장
+    	
+		// 3. 리뷰-여행지 매핑 정보 저장
+    	List<ReviewTravels> rt = new ArrayList<>();
     	List<Long> travelIds = params.getTravelId();
-    	int L = travelIds.size();
-    	for(int i=0; i<L; i++) {
-    		travelSet.add(travelRepository.getById(travelIds.get(i)));
+    	int arr = travelIds.size();
+    	for (int i=0; i<arr; i++) {
+    		Travel travel = travelRepository.getById(travelIds.get(i));
+    		Review reviewId = reviewRepository.getById(review.getReviewId());
+			ReviewTravels entity = ReviewTravels.builder()
+					.travel(travel)
+					.review(reviewId)
+					.build();
+			rt.add(entity);
     	}
-    	params.setTravel(travelSet);
-        Review entity = reviewRepository.save(params.toEntity());
-        return entity.getReviewId();
+    	reviewTravelRepository.saveAll(rt);
+    	
+    	return review.getReviewId();
     }
 
     /**
@@ -164,13 +143,9 @@ public class ReviewService {
         	log.info("유효하지 않은 수정 요청입니다.");
         	return false;
         }
-    	Set<Travel> travelSet = new HashSet<>();
-    	List<Long> travelIds = params.getTravelId();
-    	int L = travelIds.size();
-    	for(int i=0; i<L; i++) {
-    		travelSet.add(travelRepository.getById(travelIds.get(i)));
-    	}
-        entity.update(params.getReviewTitle(), params.getReviewContent(), travelSet);
+    	//여행지 수정은 보류..
+        
+        entity.update(params.getReviewTitle(), params.getReviewContent());
         return true;
     }
     
