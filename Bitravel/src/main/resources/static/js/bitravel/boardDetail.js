@@ -222,9 +222,8 @@ function printCommentList() {
  * 뒤로가기
  */
 function goList() {
-	const url = window.location.search;
-	location.href = `/board/list` + url;
-	/* location.href = "javascript:history.back(-1)";*/
+	const url = window.location.href;
+	location.href = url.slice(0, url.indexOf(id)) + 'list' + window.location.search;
 }
 
 /**
