@@ -26,7 +26,7 @@ public class BoardPageController {
     /**
      * 게시글 리스트 페이지
      */
-    @GetMapping("/list")
+    @GetMapping("")
     public String board(Model model, @PageableDefault(size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
         
     	model.addAttribute("boardList", boardService.findAll(pageable));
@@ -46,7 +46,7 @@ public class BoardPageController {
     /**
      * 게시글 상세 페이지
      */
-    @GetMapping("/detail/{id}")
+    @GetMapping("/{id}")
     public String openDetailWriting(@PathVariable final Long id, Model model, @RequestParam(value = "page") @Nullable final Long page) {
         model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
         
@@ -56,7 +56,7 @@ public class BoardPageController {
     /**
      * 게시글 통합 검색
      */
-    @GetMapping("/search/all/list")
+    @GetMapping("/search/all")
 	@ApiOperation(value = "게시글 통합 검색 목록", notes = "게시글을 닉네임 또는 제목 또는 내용으로 조회하는 API.")
 	public String findBoards(@RequestParam(value = "keyword") String keyword, Model model, @PageableDefault(size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
     	model.addAttribute("boardList", boardService.findBoards(keyword, pageable));
@@ -65,7 +65,7 @@ public class BoardPageController {
     /**
 	 * 게시글 닉네임 검색
 	 */
-	@GetMapping("/search/nickname/list")
+	@GetMapping("/search/nickname")
 	@ApiOperation(value = "게시글 닉네임 검색 목록", notes = "게시글을 닉네임으로 조회하는 API.")
 	public String findBoardsByNickname(@RequestParam(value = "keyword") String keyword, Model model, @PageableDefault(size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
     	model.addAttribute("boardList", boardService.findBoardsByNickname(keyword, pageable));
@@ -75,7 +75,7 @@ public class BoardPageController {
 	/**
 	 * 게시글 제목 검색 
 	 */
-	@GetMapping("/search/title/list")
+	@GetMapping("/search/title")
 	@ApiOperation(value = "게시글 제목 검색 목록", notes = "게시글을 제목으로 조회하는 API.")
 	public String findBoardsByTitle(@RequestParam(value = "keyword") String keyword, Model model, @PageableDefault(size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
     	model.addAttribute("boardList", boardService.findBoardsByTitle(keyword, pageable));
@@ -85,7 +85,7 @@ public class BoardPageController {
 	/**
 	 * 게시글 제목+내용 검색 findBoardsByTitleAndContent
 	 */
-	@GetMapping("/search/titleandcontent/list")
+	@GetMapping("/search/titleandcontent")
 	@ApiOperation(value = "게시글 제목+내용 검색 목록", notes = "게시글을 제목 또는 내용으로 조회하는 API.")
 	public String findBoardsByTitleAndContent(@RequestParam(value = "keyword") String keyword, Model model, @PageableDefault(size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
     	model.addAttribute("boardList", boardService.findBoardsByTitleAndContent(keyword, pageable));
