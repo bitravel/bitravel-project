@@ -97,12 +97,13 @@ function insertComment() {
 
 	var uri = `/api/boards/comments/${id}`;
 	var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "POST" };
-	var params = { "boardId": id, "commentContent": content.value };
+	var params = { "boardId": id, "commentContent": content.value, };
 	$.ajax({
 		url: uri,
 		type: "POST",
 		headers: headers,
 		dataType: 'json',
+		contentType: "application/json",
 		data: JSON.stringify(params),
 		success: function (response) {
 			if (response.result == false) {
@@ -113,7 +114,7 @@ function insertComment() {
 			content.value = "";
 		},
 		error: function (xhr, status, error) {
-			alert("일시적인 오류가 발생하였습니다.");
+			alert("일시적인 오류가 발생하였습니다."+error);
 			return false;
 		}
 	});
@@ -148,6 +149,7 @@ function updateComment(commentId) {
 		type: "PATCH",
 		headers: headers,
 		dataType: "json",
+		contentType: "application/json",
 		data: JSON.stringify(params),
 		success: function (response) {
 			if (response.result == false) {
