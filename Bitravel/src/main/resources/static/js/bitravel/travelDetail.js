@@ -13,7 +13,7 @@ function findTravel(id) {
 
 	}).then(json => {
 		console.table(json);
-		travel = json;
+		var travel = json;
 		Object.keys(json).forEach(key => {
 			const elem = document.getElementById(key);
 			if (elem && json[key] != "") {
