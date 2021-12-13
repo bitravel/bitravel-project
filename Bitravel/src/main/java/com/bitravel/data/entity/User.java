@@ -122,6 +122,12 @@ public class User implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
+	
+    // 포인트 관리
+    public void changePoint(int diff)
+    {
+    	this.point += diff;
+    }
 
 }
 
