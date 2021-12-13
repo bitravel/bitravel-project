@@ -67,6 +67,8 @@ public class BoardController {
     public ResponseEntity<?> checkWriter(@PathVariable final Long id) {    	
     	if(boardService.findById(id).getUserEmail().equals(SecurityUtil.getCurrentEmail().get())) {
     		return ResponseEntity.ok(null);
+    	} else if(SecurityUtil.getCurrentEmail().get().equals("admin")) {
+    		return ResponseEntity.ok(null);
     	} else {
     		return ResponseEntity.status(401).body(null);
     	}

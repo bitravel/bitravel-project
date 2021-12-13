@@ -37,8 +37,9 @@ function openModal(commentId, content, email) {
 		}
 		return response.json();
 	}).then(json => {
+		console.log(json.email);
 
-		if (json.email != email) {
+		if (json.email != email && json.email != 'admin') {
 			alert("해당 댓글을 수정할 권한이 없습니다.");
 			return false;
 		}
@@ -243,6 +244,7 @@ function goList() {
  * 수정하기
  */
 function goWrite() {
+
 
 	fetch(`/api/boards/writer/${id}`).then(response => {
 		if (response.status == 401) {
