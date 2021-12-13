@@ -1,13 +1,10 @@
 package com.bitravel.data.dto;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import com.bitravel.data.entity.Review;
-import com.bitravel.data.entity.Travel;
+import com.bitravel.data.entity.ReviewTravels;
 
 import lombok.Getter;
 
@@ -25,7 +22,8 @@ public class ReviewResponseDto {
     private int reviewRecom; // 추천수
     private String thumbNail; //썸네일
     //private List<TravelSimpleDto> travelList;
-
+    //private String travelName;
+    
     public ReviewResponseDto(Review entity) {
     	this.reviewTitle = entity.getReviewTitle();
     	this.reviewContent = entity.getReviewContent();
@@ -37,6 +35,7 @@ public class ReviewResponseDto {
     	this.userEmail = entity.getUserEmail();
     	this.nickname = entity.getNickname();
     	this.thumbNail = entity.getThumbNail();
+    	//this.travelName = rtEntity.getTravelName();
     	//this.travelList = this.extractId(entity.getTravelSet());
     }
     

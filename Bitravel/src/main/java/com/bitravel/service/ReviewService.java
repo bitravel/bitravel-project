@@ -61,13 +61,23 @@ public class ReviewService {
 		// 3. 리뷰-여행지 매핑 정보 저장
     	List<ReviewTravels> rt = new ArrayList<>();
     	List<Long> travelIds = params.getTravelId();
+    	List<String> travelNames = params.getTravelName();
+    	List<String> latitudes = params.getLatitude();
+    	List<String> longitudes = params.getLongitude();
+    	
     	int arr = travelIds.size();
     	for (int i=0; i<arr; i++) {
-    		Travel travel = travelRepository.getById(travelIds.get(i));
+    		Travel travelId = travelRepository.getById(travelIds.get(i));
     		Review reviewId = reviewRepository.getById(review.getReviewId());
+    		String travelName = travelNames.get(i);
+    		String latitude = latitudes.get(i);
+    		String longitude = longitudes.get(i);
 			ReviewTravels entity = ReviewTravels.builder()
-					.travel(travel)
+					.travel(travelId)
 					.review(reviewId)
+					.travelName(travelName)
+					.latitude(latitude)
+					.longitude(longitude)
 					.build();
 			rt.add(entity);
     	}
@@ -75,10 +85,15 @@ public class ReviewService {
     	
     	return review.getReviewId();
     }
+    @Transactional
+    public List<ReviewTravels> findByReview(Review id) {
+    	return reviewTravelRepository.findByReview(id);
+    }
 
     /**
      * 후기 리스트 조회
      */
+    @Transactional
     public Page<Review> findAll(Pageable pageable) {
     	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
 		pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "reviewId"));
@@ -126,6 +141,7 @@ public class ReviewService {
     @Transactional(readOnly = true)
     public ReviewResponseDto detail(Long id) {
     	Review entity = reviewRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+    	//List<ReviewTravels> rtEntity = reviewTravelRepository.findByReviewId(id);
     	entity.increaseView();
     	return new ReviewResponseDto(entity);
     }
