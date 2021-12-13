@@ -153,7 +153,7 @@
                                         [[${reviewList.totalElements-(((reviewList.number)*reviewList.size) +
                                         index.index)}]]</td>
                                     <td>
-                                        <a th:href="@{'/review/'+${list.reviewId}(keyword=${param.keyword}, page=${reviewList.number+1})}"
+                                        <a th:href="@{'./'+${list.reviewId}(keyword=${param.keyword}, page=${reviewList.number+1})}"
                                             class="text-dark">
                                             [[${list.reviewTitle}]]
                                         </a>
