@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bitravel.data.entity.Review;
+import com.bitravel.data.repository.ReviewRepository;
 import com.bitravel.service.ReviewService;
 
 import io.swagger.annotations.ApiOperation;
@@ -22,7 +24,8 @@ import lombok.RequiredArgsConstructor;
 public class ReviewPageController {
 	
 	private final ReviewService reviewService;
-
+	private final ReviewRepository reviewRepository;
+	
     /**
      * 후기 리스트 페이지
      */
@@ -56,7 +59,48 @@ public class ReviewPageController {
     @GetMapping("/{id}")
     public String openDetailWriting(@PathVariable final Long id, Model model, @RequestParam(value = "page") @Nullable final Long page) {
         model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
-        
+        Review review = reviewRepository.getById(id);
+        model.addAttribute("rtList", reviewService.findByReview(review));
+        return "review/reviewDetail";
+    }
+    /**
+     * 후기 상세 페이지
+     */
+    @GetMapping("/search/all/{id}")
+    public String openDetailWritingOfAll(@PathVariable final Long id, Model model, @RequestParam(value = "page") @Nullable final Long page) {
+        model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
+        Review review = reviewRepository.getById(id);
+        model.addAttribute("rtList", reviewService.findByReview(review));
+        return "review/reviewDetail";
+    }
+    /**
+     * 후기 상세 페이지
+     */
+    @GetMapping("/search/nickname/{id}")
+    public String openDetailWritingOfN(@PathVariable final Long id, Model model, @RequestParam(value = "page") @Nullable final Long page) {
+        model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
+        Review review = reviewRepository.getById(id);
+        model.addAttribute("rtList", reviewService.findByReview(review));
+        return "review/reviewDetail";
+    }
+    /**
+     * 후기 상세 페이지
+     */
+    @GetMapping("/search/title/{id}")
+    public String openDetailWritingOfT(@PathVariable final Long id, Model model, @RequestParam(value = "page") @Nullable final Long page) {
+        model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
+        Review review = reviewRepository.getById(id);
+        model.addAttribute("rtList", reviewService.findByReview(review));
+        return "review/reviewDetail";
+    }
+    /**
+     * 후기 상세 페이지
+     */
+    @GetMapping("/search/titleandcontent/{id}")
+    public String openDetailWritingOfTC(@PathVariable final Long id, Model model, @RequestParam(value = "page") @Nullable final Long page) {
+        model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
+        Review review = reviewRepository.getById(id);
+        model.addAttribute("rtList", reviewService.findByReview(review));
         return "review/reviewDetail";
     }
     /**
