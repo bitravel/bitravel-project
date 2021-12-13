@@ -602,10 +602,10 @@
         		}
         		if (!id) {
         			alert('저장되었습니다.');
-        			location.href = '/review/list';
+        			location.href = '/review';
         		} else {
         			alert('저장되었습니다.');
-					location.href = '/review/detail/'+id;
+					location.href = '/review/'+id;
         		}
         		
         	}).catch(error => {
@@ -639,7 +639,7 @@
 
 		   	}).catch(error => {
 		    	alert('게시글 정보를 찾을 수 없습니다.');
-		    	location.href = '/review/list';
+		    	location.href = '/review';
 		   	});
 		}
 		
@@ -652,9 +652,9 @@
 			const id = /*[[ ${id} ]]*/;
 			
 			if(!id)
-				location.href = '/review/list';
+				location.href = '/review';
 			else
-				location.href = '/review/detail/'+id;
+				location.href = '/review/'+id;
 			
 		}
 		/**
