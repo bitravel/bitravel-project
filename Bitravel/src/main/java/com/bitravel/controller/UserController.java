@@ -200,6 +200,7 @@ public class UserController {
 //		userService.getUserListByEmail(user.get().getEmail());
 //		model.addAttribute("user", userService.getUserListByEmail(user.get().getEmail()));
 //		return "user/mypage";
+		// TODO getCurrentUserInfo 만들기
 		return ResponseEntity.ok(userService.getUserListByEmail(user.get().getEmail()));
 
 	}
