@@ -38,7 +38,7 @@ public class ReviewPageController {
     /**
      * 후기 전체 리스트 페이지
      */
-    @GetMapping("/total")
+    @GetMapping("/")
     public String totalReview (Model model, @PageableDefault(size = 10, sort = "reviewId", direction = Sort.Direction.DESC) Pageable pageable) {
         model.addAttribute("reviewList", reviewService.findAll(pageable));
     	return "review/reviewTotalList";
