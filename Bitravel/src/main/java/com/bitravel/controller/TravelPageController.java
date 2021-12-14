@@ -38,7 +38,7 @@ public class TravelPageController {
     @GetMapping("/list/{large}")
     public String travelLargeGov(@PathVariable String large, Model model, @PageableDefault(size = 9, sort = "travelView", direction = Sort.Direction.DESC) Pageable pageable) {
     	
-    	model.addAttribute("travelList", travelService.detailsByLargeGov(large, pageable));
+    	model.addAttribute("travelList", travelService.findByLargeGov(large, pageable));
     	model.addAttribute("largeGov", large);
     	return "travel/listLarge";
     }
@@ -49,7 +49,7 @@ public class TravelPageController {
     @GetMapping("/list/{large}/{small}")
     public String travelSmallGov(@PathVariable String large, @PathVariable String small, Model model, @PageableDefault(size = 9, sort = "travelView", direction = Sort.Direction.DESC) Pageable pageable) {
     	
-    	model.addAttribute("travelList", travelService.detailsBySmallGov(large, small, pageable));
+    	model.addAttribute("travelList", travelService.findBySmallGov(large, small, pageable));
     	model.addAttribute("largeGov", large);
     	model.addAttribute("smallGov", small);
     	return "travel/listSmall";
