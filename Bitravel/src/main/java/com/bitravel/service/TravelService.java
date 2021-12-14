@@ -128,10 +128,6 @@ public class TravelService {
 			throw new CustomException(ErrorCode.POSTS_NOT_FOUND);
 		}
 		
-		for(int i=0;i<list.size();i++) {
-			addImage(list.get(i));
-		}
-		
 		return list;
 	}
 	
@@ -155,10 +151,6 @@ public class TravelService {
 		List<Travel> list = travelRepository.findByLargeGovAndSmallGov(largeGov, smallGov);
 		if(list.size() == 0) {
 			throw new CustomException(ErrorCode.POSTS_NOT_FOUND);
-		}
-		
-		for(int i=0;i<list.size();i++) {
-			addImage(list.get(i));
 		}
 		
 		return list;
@@ -287,12 +279,11 @@ public class TravelService {
 	public List<TravelSimpleDto> findNotVisitedTravelByLargeGov(String largeGov, Long id) {
 		String myEmail = SecurityUtil.getCurrentEmail().get();
 		List<UserTravel> list = userTravelRepository.findByUserEmailAndIsVisited(myEmail, false);
-		log.info("1");
 		Sort sort = Sort.by(Direction.DESC, "travelView").and(Sort.by(Direction.ASC, "travelName"));
 		List<Travel> all = travelRepository.findByLargeGov(largeGov, sort);
 		HashSet<Long> visitedSet = new HashSet<>();
 		visitedSet.add(id);
-		log.info("2");
+		
 		for(int i=0;i<list.size();i++) {
 			Travel now = travelRepository.findById(list.get(i).getTravelId()).get();
 			if(now==null) {
@@ -301,13 +292,13 @@ public class TravelService {
 				visitedSet.add(now.getTravelId());
 			}	
 		}
-		log.info("3");
+		
 		for(int i=0;i<all.size();i++) {
 			if(visitedSet.contains(all.get(i).getTravelId())) {
 				all.remove(i);
 			}
 		}
-		log.info("4");
+		
 		if(all.size()>15)
 			return all.subList(0, 15).stream().map(TravelSimpleDto::new).collect(Collectors.toList());
 		else
