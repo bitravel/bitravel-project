@@ -20,6 +20,7 @@ public interface TravelRepository extends JpaRepository<Travel, Long>{
 	List<Travel> findByTravelName(String name);
 	// 광역자치단체로 여행지 검색 (정렬 가능)
 	Page<Travel> findByLargeGov(String keyword, Pageable pageable);
+	List<Travel> findByLargeGov(String keyword, Sort sort);
 	// 광역자치단체로 여행지 검색
 	List<Travel> findByLargeGov(String keyword);
 	// 기초자치단체로 여행지 검색 (정렬 가능)

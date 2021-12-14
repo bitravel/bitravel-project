@@ -1,5 +1,7 @@
 package com.bitravel.controller;
 
+import java.util.List;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bitravel.data.dto.TravelSimpleDto;
+import com.bitravel.data.entity.Travel;
 import com.bitravel.service.TravelService;
 
 import lombok.RequiredArgsConstructor;
@@ -70,9 +74,23 @@ public class TravelPageController {
      */
     @GetMapping("/{id}")
     public String openDetailWriting(@PathVariable final Long id, Model model) {
-    	String weatherKey = "k9ex5ipQp8k%2Baiet3GfC015PcRbjkuEv%2Bq8XD2ScEoT0CMfyyZgG5%2BjRCpsuFqQ2LFtwGcZdiDuigKZLvnn7yg%3D%3D";
-        model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
-        model.addAttribute("weather", weatherKey);
+    	
+    	Travel now = travelService.findByIdNoViewCount(id);
+    	String largeGov = now.getLargeGov();
+    	String smallGov = now.getSmallGov();
+    	List<TravelSimpleDto> tlist = null;
+    	if(largeGov.equals("서울")||largeGov.equals("부산")||largeGov.equals("대구")
+    		||largeGov.equals("인천")&&!smallGov.equals("강화군")||largeGov.equals("대전")||largeGov.equals("광주")
+    		||largeGov.equals("울산")) {
+    		tlist = travelService.findNotVisitedTravelByLargeGov(largeGov, id);
+    		} else {
+    			tlist = travelService.findNotVisitedTravelBySmallGov(largeGov, smallGov, id);
+    		}
+    	
+    	model.addAttribute("travelList", tlist);
+    	model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
+    	model.addAttribute("name", now.getTravelName());
+        
         return "travel/detail";
     }
 
