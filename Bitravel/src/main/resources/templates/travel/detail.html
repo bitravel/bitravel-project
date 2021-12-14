@@ -108,7 +108,7 @@ layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layo
 		  </div></div>
     </div>
 
-    <div th:if="${not #lists.isEmpty(travelList)}" class="container pb-7 mb-3">
+    <div th:if="${not #lists.isEmpty(travelList)}" class="container pb-5 mb-3">
         <h2 class="mb-5">가볼 만한 <span id="largeGov"></span> 여행지</h2>
         <!-- Swiper -->
         <div class="swiper-container swiper-3">
@@ -131,7 +131,6 @@ layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layo
                     </div>
                 </div>
             </div>
-            <br><br>
             <!-- Add Pagination -->
             <div th:if="${not #lists.isEmpty(travelList)}"  class="swiper-pagination swiper3-pagination"></div>
             <!-- Add Arrows -->
@@ -145,7 +144,7 @@ layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layo
         <!-- Swiper -->
         <div class="swiper-container swiper-3">
             <div class="swiper-wrapper">
-                <div th:if="${not #lists.isEmpty(travelList2)}" class="swiper-slide">
+                <div th:if="${not #lists.isEmpty(reviewList)}" class="swiper-slide">
                     <div class="vh-20 bg-white">
                         <article class="card-hover border-0 d-flex">
                             <a href="#" class="stretched-link"></a>
@@ -164,14 +163,14 @@ layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layo
                         </article>
                     </div>
                 </div>
-                <p th:unless="${not #lists.isEmpty(travelList2)}">해당 여행지 관련 등록된 후기가 없습니다.</p>
+                <p th:unless="${not #lists.isEmpty(reviewList)}">해당 여행지 관련 등록된 후기가 없습니다.</p>
             </div>
             <br><br>
             <!-- Add Pagination -->
-            <div th:if="${not #lists.isEmpty(travelList2)}" class="swiper-pagination swiper3-pagination"></div>
+            <div th:if="${not #lists.isEmpty(reviewList)}" class="swiper-pagination swiper3-pagination"></div>
             <!-- Add Arrows -->
-            <div th:if="${not #lists.isEmpty(travelList2)}" class="swiper-button-next swiper3-button-next"></div>
-            <div th:if="${not #lists.isEmpty(travelList2)}" class="swiper-button-prev swiper3-button-prev"></div>
+            <div th:if="${not #lists.isEmpty(reviewList)}" class="swiper-button-next swiper3-button-next"></div>
+            <div th:if="${not #lists.isEmpty(reviewList)}" class="swiper-button-prev swiper3-button-prev"></div>
         </div>
     </div>
 </th:block>
