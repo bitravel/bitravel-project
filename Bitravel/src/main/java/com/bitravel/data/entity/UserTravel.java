@@ -27,7 +27,7 @@ public class UserTravel {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "userRegionId")
+	@Column(name = "userTravelId")
 	private Long userTravelId;
 	
 	@Column(name = "userEmail")
