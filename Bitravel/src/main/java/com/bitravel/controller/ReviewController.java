@@ -2,6 +2,7 @@ package com.bitravel.controller;
 
 import javax.transaction.Transactional;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bitravel.data.dto.ReviewRequestDto;
 import com.bitravel.data.dto.ReviewResponseDto;
 import com.bitravel.service.ReviewService;
+import com.bitravel.util.SecurityUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,51 +40,6 @@ public class ReviewController {
 	}
 
 	/**
-	 * 후기 리스트 조회
-	 */
-//	@GetMapping("/reviews")
-//	@ApiOperation(value = "후기 목록 조회", notes = "후기 목록을 조회하는 API.")
-//	public List<ReviewResponseDto> findAll() {
-//		return reviewService.findAll();
-//	}
-	
-//	/**
-//	 * 후기 통합 검색
-//	 */
-//	@GetMapping("/reviews/search/all")
-//	@ApiOperation(value = "후기 통합 검색 목록", notes = "후기를 닉네임 또는 제목 또는 내용으로 조회하는 API.")
-//	public List<ReviewResponseDto> findReviews(String keyword) {
-//		return reviewService.findReviews(keyword);
-//	}
-
-//	/**
-//	 * 후기 닉네임 검색
-//	 */
-//	@GetMapping("/reviews/search/nickname")
-//	@ApiOperation(value = "후기 닉네임 검색 목록", notes = "후기를 닉네임으로 조회하는 API.")
-//	public List<ReviewResponseDto> findReviewsByNickname(String keyword) {
-//		return reviewService.findReviewsByNickname(keyword);
-//	}
-//	
-//	/**
-//	 * 후기 제목 검색
-//	 */
-//	@GetMapping("/reviews/search/title")
-//	@ApiOperation(value = "후기 제목 검색 목록", notes = "후기를 제목으로 조회하는 API.")
-//	public List<ReviewResponseDto> findReviewsByTitle(String keyword) {
-//		return reviewService.findReviewsByTitle(keyword);
-//	}
-//	
-//	/**
-//	 * 후기 제목+내용 검색
-//	 */
-//	@GetMapping("/reviews/search/titleandcontent")
-//	@ApiOperation(value = "후기 제목+내용 검색 목록", notes = "후기를 제목 또는 내용으로 조회하는 API.")
-//	public List<ReviewResponseDto> findReviewsByTitleAndContent(String keyword) {
-//		return reviewService.findReviewsByTitleAndContent(keyword);
-//	}
-	
-	/**
 	 * 후기 수정
 	 */
 	@PatchMapping("/reviews/{id}")
@@ -106,5 +63,20 @@ public class ReviewController {
 	public Boolean deleteById(@PathVariable Long id) {	
 		return reviewService.deleteById(id);
 	}
+	
+	/**
+     * 후기 수정/삭제 가능 여부 조회
+     */
+    @GetMapping("/reviews/writer/{id}")
+    @ApiOperation(value = "글 내용 조회", notes = "개별 글의 정보를 조회하는 API. Board entity 클래스의 bid값을 기준으로 데이터를 가져온다.")
+    public ResponseEntity<?> checkWriter(@PathVariable final Long id) {    	
+    	if(reviewService.detail(id).getUserEmail().equals(SecurityUtil.getCurrentEmail().get())) {
+    		return ResponseEntity.ok(null);
+    	} else if(SecurityUtil.getCurrentEmail().get().equals("admin")) {
+    		return ResponseEntity.ok(null);
+    	} else {
+    		return ResponseEntity.status(401).body(null);
+    	}
+    }
 
 }
