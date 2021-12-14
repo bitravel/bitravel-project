@@ -73,7 +73,7 @@
                 <div class="nav-item me-3 me-lg-0 dropdown" sec:authorize="isAuthenticated()">
                     <a href="#" class="btn btn-secondary rounded-pill py-0 ps-0 pe-3" data-bs-auto-close="outside"
                         data-bs-toggle="dropdown">
-                        <img th:src="${#authentication.principal.userImage}" alt="" class="avatar sm rounded-circle me-1">
+                        <img th:src="${#authentication.principal.userImage}" onerror="this.src='/assets/img/avatar/2.jpg'" alt="" class="avatar sm rounded-circle me-1">
                             <small sec:authentication="principal.nickname"></small>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs p-0">
