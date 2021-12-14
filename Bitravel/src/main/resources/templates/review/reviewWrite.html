@@ -417,12 +417,37 @@
             	$("#longitude2").val(longitude);
        		}	
         }
+		
+		/*여행지 추가전에 유효성 검사*/
+		function addValid() {
+			const form = document.getElementById('form');
+			var allSelect = (document.getElementsByName('form-line').length);
+		
+		if (allSelect == 1) {
+			if (!form.travelName0.value) {
+				alert('여행지를 먼저 선택해 주세요.');
+				return false;
+				}
+			
+			}else if(allSelect == 2) {
+				if (!form.travelName1.value) {
+					alert('여행지를 먼저 선택해 주세요.');
+					return false;
+					}
+				}
+		return true;
+		}
+		
 		/**
 		*여행지 하나 추가하기
  		**/
  		
  		function addTravel() {
- 			var allSelect = (document.getElementsByName('form-line').length);
+ 			
+			if(!addValid()) {
+				return false;
+			}
+			var allSelect = (document.getElementsByName('form-line').length);
 			var allSelect1 = allSelect + 1;
 			
  			if (allSelect == 3) {
@@ -438,7 +463,7 @@
  			tag += "<input type='hidden' id='longitude" + allSelect + "'class='form-control'placeholder='경도'/>\n";
  			tag += "<input type='hidden' id='travelId" + allSelect + "'class='form-control'placeholder='여행지 Id'/>\n";
  			tag += "<input type='text' id='travelName" + allSelect + "' class='form-control mb-2' placeholder='여행지를 선택해 주세요.' readonly/>\n ";
- 			tag += "<button type='button' class='btn btn-outline-danger mb-2' id='removeBt" + allSelect + "'onclick='removeTravel(this.id)' style='margin-left: 10px;'>삭제</button>\n </div>"
+ 			tag += "<button type='button' class='btn btn-outline-danger mb-2' id='removeBt" + allSelect + "'onclick='removeTravel(this.id)' style='width: 200px; margin-left: 10px;'>삭제</button>\n </div>"
  			var div = document.getElementsByName('only-form')[0];
  			var newElement = document.createElement('div');
  			var firstChild = div.firstChild;
@@ -448,9 +473,6 @@
  			newElement.innerHTML = tag;
  			div.insertBefore(newElement, firstChild);
  		}
-		
- 		
- 		
 		
  		/**
  		* 여행지 삭제
