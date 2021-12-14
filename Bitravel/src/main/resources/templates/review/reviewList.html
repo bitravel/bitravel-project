@@ -196,7 +196,7 @@
         <div class="container pb-7 pb-lg-12 mb-2">
             <h2 class="mb-5">최신 후기</h2>
             <div class="mb-2 t-right">
-            	<a href="/review/total/" >후기 전체 보기</a>
+            	<a href="/review/" >후기 전체 보기</a>
             </div>
             <!-- Swiper -->
             <div class="swiper-container swiper-3">
@@ -545,21 +545,14 @@
 </th:block>
 
 <th:block layout:fragment="script">
-<script th:inline="javascript">
+	<script th:inline="javascript" src="/js/bitravel/reviewList.js"></script>
+	<script th:inline="javascript">
 	/*<![CDATA[*/
-		/**
-		 * 썸네일 만들기
-		 */
+		
 		window.onload = function() {
 					date();
 		}
-		function date() {
-			var date = document.getElementById("date")
-			var now = new Date();
-			var nowDate = (now.getMonth()+1) + "월 " + now.getDate() + "일의 인기 후기";
-			date.innerHTML = nowDate;
-		}
-		
+
 		/*]]>*/
     </script>
 </th:block>
