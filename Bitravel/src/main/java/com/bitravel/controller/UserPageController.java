@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bitravel.data.entity.User;
+
 @Controller
 public class UserPageController {
 	
@@ -46,11 +48,11 @@ public class UserPageController {
     	return "user/admin";
     }
     
-    @GetMapping("/mypage")
-    //@PreAuthorize("isAnonymous()")
-    public String openMyPage() {
-        return "user/mypage";
-    }
+//    @GetMapping("/mypage")
+//    //@PreAuthorize("isAnonymous()")
+//    public String openMyPage() {
+//        return "user/mypage";
+//    }
     
     @GetMapping("/mypageSetting")
     //@PreAuthorize("isAnonymous()")
