@@ -4,7 +4,7 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title id="pageTitle">여행 게시판 :: Bitravel</title>
+	<title th:text="${#strings.abbreviate(title, 20)}+' :: Bitravel'">여행 게시판 :: Bitravel</title>
 </head>
 
 <th:block layout:fragment="modal-board">

@@ -129,6 +129,15 @@ public class BoardService {
     	entity.increaseView();
     	return new BoardResponseDto(entity);
     }
+    
+    /**
+     * 게시글 상세 정보 조회 (조회수 증가 X)
+     */
+    @Transactional
+    public BoardResponseDto findByIdNoViewCount(Long id) {
+    	Board entity = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+    	return new BoardResponseDto(entity);
+    }
 
     /**
      * 게시글 수정
