@@ -161,10 +161,6 @@ public class TravelService {
 			throw new CustomException(ErrorCode.POSTS_NOT_FOUND);
 		}
 		
-		for(int i=0;i<list.size();i++) {
-			addImage(list.get(i));
-		}
-		
 		return list;
 	}
 
