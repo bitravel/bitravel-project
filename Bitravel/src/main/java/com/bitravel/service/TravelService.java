@@ -59,12 +59,22 @@ public class TravelService {
 		pageable = PageRequest.of(page, 9, Sort.by(Sort.Direction.ASC, "travelId"));
 		return travelRepository.findAll(pageable);
 	}
+	
+	/**
+	 * 여행지 이름 검색 결과 조회
+	 */
+	public Page<Travel> findByName(String keyword, Pageable pageable) {
+		Sort sort = Sort.by(Direction.DESC, "travelView").and(Sort.by(Direction.ASC, "travelName"));
+		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+		pageable = PageRequest.of(page, 9, sort);
+		return travelRepository.findByTravelNameContaining(keyword, pageable);
+	}
 
 	/**
 	 * 여행지 상세 정보 조회 (여행지 ID)
 	 */
 	@Transactional
-	public Travel detailById(Long id) {
+	public Travel findById(Long id) {
 		Travel entity = travelRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
 		entity.increaseView();
 		addImage(entity);
@@ -75,7 +85,7 @@ public class TravelService {
 	 * 여행지 목록 조회 (여행지 이름)
 	 */
 	@Transactional
-	public List<TravelSimpleDto> detailsByName(String name) {
+	public List<TravelSimpleDto> findByName(String name) {
 		Sort sort = Sort.by(Direction.DESC, "travelView").and(Sort.by(Direction.ASC, "travelName"));
 		List<Travel> list = travelRepository.findByTravelNameContaining(name, sort);
 		
@@ -90,7 +100,7 @@ public class TravelService {
 	 * 여행지 목록 조회 (광역자치단체)
 	 */
 	@Transactional
-	public Page<Travel> detailsByLargeGov(String largeGov, Pageable pageable) {
+	public Page<Travel> findByLargeGov(String largeGov, Pageable pageable) {
 		
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
 		pageable = PageRequest.of(page, 9, Sort.by(Sort.Direction.ASC, "travelId"));
@@ -102,7 +112,7 @@ public class TravelService {
 	 * 여행지 목록 조회 (광역자치단체) non-pageable
 	 */
 	@Transactional
-	public List<Travel> detailsByLargeGov(String largeGov) {
+	public List<Travel> findByLargeGov(String largeGov) {
 		List<Travel> list = travelRepository.findByLargeGov(largeGov);
 		if(list.size() == 0) {
 			throw new CustomException(ErrorCode.POSTS_NOT_FOUND);
@@ -119,7 +129,7 @@ public class TravelService {
 	 * 여행지 목록 조회 (기초자치단체)
 	 */
 	@Transactional
-	public Page<Travel> detailsBySmallGov(String largeGov, String smallGov, Pageable pageable) {
+	public Page<Travel> findBySmallGov(String largeGov, String smallGov, Pageable pageable) {
 		
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
 		pageable = PageRequest.of(page, 9, Sort.by(Sort.Direction.ASC, "travelId"));
@@ -131,7 +141,7 @@ public class TravelService {
 	 * 여행지 목록 조회 (기초자치단체)
 	 */
 	@Transactional
-	public List<Travel> detailsBySmallGov(String largeGov, String smallGov) {
+	public List<Travel> findBySmallGov(String largeGov, String smallGov) {
 		List<Travel> list = travelRepository.findByLargeGovAndSmallGov(largeGov, smallGov);
 		if(list.size() == 0) {
 			throw new CustomException(ErrorCode.POSTS_NOT_FOUND);
