@@ -57,7 +57,7 @@ public class BoardPageController {
     @GetMapping("/{id}")
     public String openWriting(@PathVariable final Long id, Model model, @RequestParam(value = "page") @Nullable final Long page) {
         model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
-        
+        model.addAttribute("title", boardService.findByIdNoViewCount(id).getBoardTitle());
         return "board/detail";
     }
    
@@ -68,7 +68,7 @@ public class BoardPageController {
     @GetMapping("/search/all/{id}")
     public String openDetailWritingOfAll(@PathVariable final Long id, Model model, @RequestParam(value = "page") @Nullable final Long page) {
         model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
-        
+        model.addAttribute("title", boardService.findByIdNoViewCount(id).getBoardTitle());
         return "board/detail";
     }
     
@@ -78,7 +78,7 @@ public class BoardPageController {
     @GetMapping("/search/nickname/{id}")
     public String openDetailWritingOfN(@PathVariable final Long id, Model model, @RequestParam(value = "page") @Nullable final Long page) {
         model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
-        
+        model.addAttribute("title", boardService.findByIdNoViewCount(id).getBoardTitle());
         return "board/detail";
     }
     
@@ -98,7 +98,7 @@ public class BoardPageController {
     @GetMapping("/search/titleandcontent/{id}")
     public String openDetailWritingOfTC(@PathVariable final Long id, Model model, @RequestParam(value = "page") @Nullable final Long page) {
         model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
-        
+        model.addAttribute("title", boardService.findByIdNoViewCount(id).getBoardTitle());
         return "board/detail";
     }
     

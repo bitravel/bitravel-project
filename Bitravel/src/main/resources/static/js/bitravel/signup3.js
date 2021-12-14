@@ -205,7 +205,7 @@ function save() {
 			throw new Error('일시적인 오류입니다. 다시 시도해 보세요.');
 		}
 
-		alert('BITravel 회원 가입을 완료하였습니다.');
+		alert('Bitravel 회원 가입을 완료하였습니다.');
 		location.href = '/';
 
 	}).catch(error => {

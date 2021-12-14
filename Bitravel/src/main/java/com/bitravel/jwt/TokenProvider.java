@@ -102,6 +102,7 @@ public class TokenProvider implements InitializingBean {
 		// 메일, 본명, 닉네임, 포인트, 성별, 나이, 가입일자, 권한 정보 등 회원 객체를 임시로 생성
 		User principal = new User(claims.getSubject(), authorities);
 		User user = userRepository.findOneWithAuthoritiesByEmail(principal.getEmail()).get();
+		principal.setUserId(user.getUserId());
 		principal.setNickname(user.getNickname());
 		principal.setPoint(user.getPoint());
 		principal.setAge(user.getAge());

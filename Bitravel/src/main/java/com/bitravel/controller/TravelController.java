@@ -54,8 +54,8 @@ public class TravelController {
      */
     @GetMapping("/travels/{id}")
     @ApiOperation(value = "여행지 내용 조회", notes = "개별 여행지의 정보를 조회하는 API. Travel entity 클래스의 id값을 기준으로 데이터를 가져온다.")
-    public Travel detailById(@PathVariable final Long id) {
-    	return travelService.detailById(id);
+    public Travel findById(@PathVariable final Long id) {
+    	return travelService.findById(id);
     }
     
     /**
@@ -63,8 +63,8 @@ public class TravelController {
      */
     @GetMapping("/travels/name/{name}")
     @ApiOperation(value = "여행지 이름 검색", notes = "여행지 이름으로 검색한 결과를 목록으로 출력하는 API. Travel entity 클래스의 travelName값을 기준으로 데이터를 가져온다.")
-    public ResponseEntity <List<TravelSimpleDto>> detailsByName(@PathVariable final String name) {
-    	List<TravelSimpleDto> list = travelService.detailsByName(name);
+    public ResponseEntity <List<TravelSimpleDto>> findByName(@PathVariable final String name) {
+    	List<TravelSimpleDto> list = travelService.findByName(name);
     	if(list.size()<20)
     		return ResponseEntity.ok(list);
     	else
@@ -76,8 +76,8 @@ public class TravelController {
      */
     @GetMapping("/travels/region/{name}")
     @ApiOperation(value = "광역자치단체별 여행지 검색", notes = "광역자치단체별로 검색한 결과를 목록으로 출력하는 API. Travel entity 클래스의 LargeGov값을 기준으로 데이터를 가져온다.")
-    public List<Travel> detailsByLargeGov(@PathVariable final String name) {
-    	return travelService.detailsByLargeGov(name);
+    public List<Travel> findByLargeGov(@PathVariable final String name) {
+    	return travelService.findByLargeGov(name);
     }
     
     /**
@@ -85,8 +85,8 @@ public class TravelController {
      */
     @GetMapping("/travels/region/{large}/{small}")
     @ApiOperation(value = "기초자치단체별 여행지 검색", notes = "기초자치단체별로 검색한 결과를 목록으로 출력하는 API. Travel entity 클래스의 LargeGov 값과 SmallGov 값 기준으로 데이터를 가져온다.")
-    public List<Travel> detailsBySmallGov(@PathVariable("large") final String largeGov, @PathVariable("small") final String smallGov) {
-    	return travelService.detailsBySmallGov(largeGov, smallGov);
+    public List<Travel> findBySmallGov(@PathVariable("large") final String largeGov, @PathVariable("small") final String smallGov) {
+    	return travelService.findBySmallGov(largeGov, smallGov);
     }
     
     /**
