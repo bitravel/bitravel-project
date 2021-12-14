@@ -51,5 +51,11 @@ public class UserPageController {
     public String openMyPage() {
         return "user/mypage";
     }
+    
+    @GetMapping("/mypageSetting")
+    //@PreAuthorize("isAnonymous()")
+    public String openMyPageSetting() {
+        return "user/mypageSetting";
+    }
 	
 }
