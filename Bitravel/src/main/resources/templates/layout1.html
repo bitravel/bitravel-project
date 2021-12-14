@@ -80,7 +80,7 @@
                             <a href="/mypage" class="dropdown-header border-bottom p-4">
                                 <div class="d-flex align-items-center">
                                     <div>
-                                        <img th:src="${#authentication.principal.userImage}" alt="" class="avatar xl rounded-pill me-3">
+                                        <img th:src="${#authentication.principal.userImage}" onerror="this.src='/assets/img/avatar/2.jpg'" alt="" class="avatar xl rounded-pill me-3">
                                     </div>
                                     <div>
                                         <h5 class="mb-0" sec:authentication="principal.nickname"></h5>
