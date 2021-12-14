@@ -102,10 +102,6 @@ public class TravelService {
 	public List<TravelSimpleDto> findByName(String name) {
 		Sort sort = Sort.by(Direction.DESC, "travelView").and(Sort.by(Direction.ASC, "travelName"));
 		List<Travel> list = travelRepository.findByTravelNameContaining(name, sort);
-		
-		for(int i=0;i<list.size();i++) {
-			addImage(list.get(i));
-		}
 
 		return list.stream().map(TravelSimpleDto::new).collect(Collectors.toList());
 	}
@@ -159,6 +155,10 @@ public class TravelService {
 		List<Travel> list = travelRepository.findByLargeGovAndSmallGov(largeGov, smallGov);
 		if(list.size() == 0) {
 			throw new CustomException(ErrorCode.POSTS_NOT_FOUND);
+		}
+		
+		for(int i=0;i<list.size();i++) {
+			addImage(list.get(i));
 		}
 		
 		return list;
