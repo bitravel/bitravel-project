@@ -1,408 +1,82 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 
 <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="assets/img/favicon.ico" type="image/ico">
-    <!--Icons-->
-    <link href="assets/fonts/iconsmind/iconsmind.css" rel="stylesheet">
-    <link href="assets/fonts/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <!--Google fonts-->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Poppins:wght@200;300;400;500;600;700&display=swap"
-        rel="stylesheet">
-    <!--Master slider-->
-    <link rel="stylesheet" href="assets/vendor/masterslider/style/masterslider.css">
-    <link rel="stylesheet" href="assets/vendor/masterslider/skins/black-1/style.css">
-    <!-- Main CSS -->
-    <link href="assets/css/theme.min.css" rel="stylesheet">
-
-    <title>메인페이지</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 </head>
 
-<body>
+<th:block layout:fragment="content">
     <!--Preloader Spinner-->
     <div class="spinner-loader bg-gradient-secondary text-white">
         <div class="spinner-border text-primary" role="status">
         </div>
         <span class="small d-block ms-2">Loading...</span>
     </div>
-    <!--Header Start-->
-    <header class="z-index-fixed header-transparent header-absolute-top sticky-reverse">
-        <nav class="navbar navbar-expand-lg navbar-light navbar-link-white">
-            <div class="container position-relative">
-                <a class="navbar-brand" href="index.html">
-                    <img src="assets/img/logo/logo.svg" alt="" class="img-fluid navbar-brand-sticky">
-                    <img src="assets/img/logo/Bitravel.png" alt="" class="img-fluid navbar-brand-transparent">
-                </a>
-                <div class="d-flex align-items-center navbar-no-collapse-items order-lg-last">
-                    <button class="navbar-toggler order-last" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#mainNavbarTheme" aria-controls="mainNavbarTheme" aria-expanded="false"
-                        aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon">
-                            <i></i>
-                        </span>
-                    </button>
+    <br>
 
-
-                    <div class="nav-item me-3 me-lg-0">
-                        <a href="/login" class="btn btn-success btn-sm">로그인</a>
-                        <a href="/signup" class="btn btn-success btn-sm">회원가입</a>
-                    </div>
-
-                    <!--검색 모달 시작-->
-                    <!--
-                    <div class="nav-item me-3 me-lg-0">
-                        <a href="#" data-bs-target="#modal-search-bar-2" data-bs-toggle="modal" class="nav-link lh-1">
-                            <i class="bi bi-search fs-6 lh-1"></i>
-                        </a>
-                        Search-bar-2-collapse 
-                    -->
-                    <!--검색 모달 끝-->
-                </div>
-                <div class="collapse navbar-collapse" id="mainNavbarTheme">
-                    <ul class="navbar-nav ms-auto">
-                        <!-- 헤더 검색창 시작 -->
-                        <!--
-                        <div class="d-flex w-auto mx-auto flex-column flex-sm-row mb-2 justify-content-center ">
-                            <input type="email" name="email"
-                                class="me-sm-1 mb-2 mb-sm-0 form-control form-control-lg rounded-pill px-4 border-0 shadow "
-                                placeholder="여행지를 검색하세요." required="">
-                            <button type="submit" class="ms-sm-1 rounded-pill btn btn-primary btn-lg ">
-                                <span class="d-flex align-items-center">
-                                    <i class="far fa-paper-plane me-2 small d-inline-block"></i>
-                                    <span>검색</span>
-                                </span>
-                            </button>
-                        </div>
-                        -->
-                        <!-- 헤더 검색창 종료 -->
-                        <!-- 네브바 1번 메뉴들 -->
-                        <li class="nav-item dropdown ">
-                            <a class="nav-link dropdown-toggle active" href="/board/list" role="button">여행지                        
-                            </a>
-                        </li>
-                        <!-- 네브바 1번 메뉴 종료 -->
-
-                        <!-- 네브바 2번 메뉴 -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle active" href="/review/list" role="button">여행후기
-                            </a>
-                        </li>
-                        <!-- 네브바 2번메뉴 끝 -->
-
-                        <!-- 네브바 3번메뉴 -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle active" href="/board/list" role="button">게시판
-                            </a>
-                        </li>
-                        <!-- 네브바 3번메뉴 종료 -->
-
-
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <!-- 헤더 검색창 시작 -->
-        <div class="row ">
-            <div class="col-xl-6 col-sm-8 col-auto mx-auto d-flex">
-                <label for="formGroupExampleInput" class="form-label"></label>
-                <input type="text" class="form-control" id="formGroupExampleInput" placeholder="여행지를 검색하세요.">
-                <button type="submit" class="ms-sm-1 rounded-pill btn btn-primary btn-sm ">
-                    <span class="d-flex align-items-center">
-                        <i class="far fa-paper-plane me-2 small d-inline-block"></i>
-                        <span>검색</span>
-                    </span>
-                </button>
-            </div>
-        </div>
-        <!-- 헤더 검색창 종료 -->
-    </header>
-    <!-- 네브바 종료 -->
-
-    <!--Search bar 검색창 모달-->
-    <div id="modal-search-bar-2" class="modal fade" tabindex="-1" aria-labelledby="modal-search-bar-2"
-        aria-hidden="true">
-        <div class="modal-dialog modal-dialog-top modal-md">
-            <div class="modal-content position-relative border-0">
-                <div class="position-relative px-4">
-                    <div
-                        class="position-absolute end-0 width-60 top-0 d-flex me-4 align-items-center h-100 justify-content-center">
-                        <button type="button" class="btn-close w-auto small" data-bs-dismiss="modal"
-                            aria-label="Close">Cancel</button>
-                    </div>
-                    <form class="mb-0">
-                        <div class="d-flex align-items-center">
-                            <div class="d-flex flex-grow-1 align-items-center">
-                                <i class="bi bi-search opacity-20"></i>
-                                <input type="text" placeholder="Search...."
-                                    class="form-control shadow-none border-0 flex-grow-1 form-control-lg">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-
-
-                <div class="p-4 border-top">
-                    <h6 class="mb-4">
-                        <i class="bi bi-lightning me-2 text-muted"></i>Top searches
-                    </h6>
-                    <div class="d-flex flex-wrap align-items-center">
-                        <span><a href="#!"
-                                class="badge badge-pill border border-secondary text-body me-1 mb-1 px-3 py-1">Jeans</a></span>
-                        <span><a href="#!"
-                                class="badge badge-pill border border-secondary text-body me-1 mb-1 px-3 py-1">Shoes</a></span>
-                        <span><a href="#!"
-                                class="badge badge-pill border border-secondary text-body me-1 mb-1 px-3 py-1">Watches</a></span>
-                        <span><a href="#!"
-                                class="badge badge-pill border border-secondary text-body me-1 mb-1 px-3 py-1">Men's</a></span>
-                        <span><a href="#!"
-                                class="badge badge-pill border border-secondary text-body me-1 mb-1 px-3 py-1">Sneakers</a></span>
-                        <span><a href="#!"
-                                class="badge badge-pill border border-secondary text-body me-1 mb-1 px-3 py-1">Casual</a></span>
-                        <span><a href="#!"
-                                class="badge badge-pill border border-secondary text-body me-1 mb-1 px-3 py-1">Shirts</a></span>
-                        <span><a href="#!"
-                                class="badge badge-pill border border-secondary text-body me-1 mb-1 px-3 py-1">T-shirts</a></span>
-                        <span><a href="#!"
-                                class="badge badge-pill border border-secondary text-body me-1 mb-1 px-3 py-1">Lowers</a></span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!--Search bar 모달 종료 -->
-
-
-    <!--상단 카로셀 시작-->
+ <!--상단 카로셀 시작-->
     <main>
         <!--page-hero-master-slider-->
         <section class="position-relative overflow-hidden">
-
-            <!--Slider divider-->
-            <svg class="position-absolute start-0 bottom-0 z-index-1 text-white" preserveAspectRatio="none" width="100%"
-                height="80" viewBox="0 0 1529 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                    d="M1529 -3.57628e-06L1401.58 31.924C1274.17 63.8481 1019.33 140.293 764.5 140.293C509.667 140.293 187.833 47.9916 127.417 31.924C67 15.8564 0 -3.57628e-06 0 -3.57628e-06V180H1529V-3.57628e-06Z"
-                    fill="currentColor"></path>
-            </svg>
-            <div class="ms-skin-black-1 master-slider" id="masterslider">
-                <!--slide-1-->
-                <div class="ms-slide bg-dark" data-delay="3" data-fill-mode="fill">
-                    <img class="opacity-30" src="assets/vendor/masterslider/style/blank.gif" alt="" title=""
-                        data-src="assets/img/backgrounds/bg7.jpg" />
-
-                    <!--Layer-->
-                    <div class="ms-layer position-absolute start-0 top-0 end-0 bottom-0 w-100 h-100" data-effect="fade"
-                        data-duration="1200" data-delay="200" data-hide-effect="fade" data-offset-x="0"
-                        data-height="100%" data-width="100%" data-offset-y="0" data-position="left">
-                        <svg class="w-100 h-100 position-absolute start-0 top-0" preserveAspectRatio="xMidYMid meet"
-                            width="565" height="565" viewBox="0 0 565 565" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <g filter="url(#filter0_layer01)">
-                                <circle cx="282.5" cy="282.5" r="132.5" fill="#0F1321" />
-                            </g>
-                            <defs>
-                                <filter id="filter0_layer01" x="0" y="0" width="565" height="565"
-                                    filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                                    <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-                                    <feGaussianBlur stdDeviation="75" result="effect1_foregroundBlur" />
-                                </filter>
-                            </defs>
-                        </svg>
-                    </div>
-
-                    <!--Layer-->
-                    <div class="ms-layer ms-title fw-semibold text-white" data-effect="front(800)" data-duration="1200"
-                        data-delay="600" data-ease="easeInOutCubic" data-hide-effect="top(long,false)" data-offset-x="0"
-                        data-offset-y="-60" data-origin="mc" data-position="center" data-masked="false">
-                        <div class="text-center">여행여행여행<br>가자가자가자</div>
-                    </div>
-
-
-
-                    <!--Layer-->
-                    <a href="#" class="ms-layer ms-btn" data-effect="front(800)" data-duration="1200" data-delay="800"
-                        data-ease="easeInOutCubic" data-hide-effect="top(long,false)" data-offset-x="0"
-                        data-offset-y="130" data-origin="mc" data-position="center" data-masked="false"><span
-                            class="btn btn-lg btn-primary btn-sm">여행게시판 바로가기</span>
-                    </a>
-                </div>
-                <!--slide-2-->
-                <div class="ms-slide bg-dark" data-delay="3" data-fill-mode="fill">
-                    <!--bg-->
-                    <img class="opacity-30" src="assets/vendor/masterslider/style/blank.gif" alt="" title=""
-                        data-src="assets/img/backgrounds/bg3.jpg" />
-
-                    <!--Layer-->
-                    <div class="ms-layer position-absolute w-100 h-100" data-effect="fade" data-duration="1200"
-                        data-delay="200" data-hide-effect="fade" data-offset-x="0" data-height="auto" data-width="auto"
-                        data-offset-y="0" data-position="center">
-                        <svg class="w-100 h-100 position-absolute start-0 top-0" preserveAspectRatio="xMidYMid meet"
-                            width="565" height="565" viewBox="0 0 565 565" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <g filter="url(#filter0_layer02)">
-                                <circle cx="282.5" cy="282.5" r="132.5" fill="#0F1321" />
-                            </g>
-                            <defs>
-                                <filter id="filter0_layer02" x="0" y="0" width="565" height="565"
-                                    filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                                    <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-                                    <feGaussianBlur stdDeviation="75" result="effect1_foregroundBlur" />
-                                </filter>
-                            </defs>
-                        </svg>
-
-                    </div>
-
-                    <!--Layer-->
-                    <div class="ms-layer ms-title fw-semibold text-center text-white" data-effect="skewbottom(-10,150)"
-                        data-duration="1000" data-delay="600" data-ease="easeInOutCubic"
-                        data-hide-effect="top(long,false)" data-offset-x="0" data-offset-y="-60" data-origin="mc"
-                        data-position="center" data-masked="false">
-                        <div>요기조기<br>조기요기</div>
-                    </div>
-                    <!--Layer-->
-                    <a href="#" class="ms-layer ms-btn" data-effect="skewbottom(-10,150)" data-duration="1000"
-                        data-delay="900" data-ease="easeInOutCubic" data-hide-effect="top(long,false)" data-offset-x="0"
-                        data-offset-y="130" data-origin="mc" data-position="center" data-masked="false">
-                        <span class="btn btn-lg btn-primary btn-sm">베스트게시물 바로가기</span>
-                    </a>
-                </div>
-                <!--slide-3-->
-                <div class="ms-slide bg-dark" data-delay="3" data-fill-mode="fill">
-                    <!--bg-->
-                    <img class="opacity-30" src="assets/vendor/masterslider/style/blank.gif" alt="" title=""
-                        data-src="assets/img/backgrounds/bg5.jpg" />
-
-                    <!--Layer-->
-                    <div class="ms-layer position-absolute w-100 h-100" data-effect="fade" data-duration="1200"
-                        data-delay="200" data-hide-effect="fade" data-offset-x="0" data-height="auto" data-width="auto"
-                        data-offset-y="0" data-position="center">
-                        <svg class="w-100 h-100 position-absolute start-0 top-0" preserveAspectRatio="xMidYMid meet"
-                            width="565" height="565" viewBox="0 0 565 565" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <g filter="url(#filter0_layer03)">
-                                <circle cx="282.5" cy="282.5" r="132.5" fill="#0F1321" />
-                            </g>
-                            <defs>
-                                <filter id="filter0_layer03" x="0" y="0" width="565" height="565"
-                                    filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                                    <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-                                    <feGaussianBlur stdDeviation="75" result="effect1_foregroundBlur" />
-                                </filter>
-                            </defs>
-                        </svg>
-
-                    </div>
-
-                    <!--Layer-->
-                    <!--Layer-->
-                    <div class="ms-layer text-center ms-title fw-semibold text-white" data-effect="skewleft(23,500)"
-                        data-duration="1000" data-delay="900" data-ease="easeInOutSine"
-                        data-hide-effect="top(long,false)" data-offset-x="0" data-offset-y="-60" data-origin="mc"
-                        data-position="center" data-masked="false">
-                        <div>숨은명소<br>찾기</div>
-                    </div>
-
-                    <!--Layer-->
-                    <a href="#" class="ms-layer ms-btn" data-effect="skewleft(23,500)" data-duration="1000"
-                        data-delay="1200" data-ease="easeInOutSine" data-hide-effect="top(long,false)" data-offset-x="0"
-                        data-offset-y="130" data-origin="mc" data-position="center" data-masked="false"><span
-                            class="btn btn-lg btn-primary btn-sm">바로가기</span>
-                    </a>
-                </div>
-            </div>
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active" data-bs-interval="3000">
+        <a href="/travel" class="stretched-link"></a>
+      <img src="/assets/img/backgrounds/bg7.jpg" class="d-block w-100" alt="첫번째 내용">
+      <div class="carousel-caption d-none d-md-block">
+        <h3 class="display-4 mb-5">최고 인기 여행지 탐색하기</h3>
+        <p>Bitravel에서 가장 인기있는 여행지는 어디일까요?</p>
+        <br>
+      </div>
+    </div>
+    <div class="carousel-item" data-bs-interval="3000">
+        <a href="/review/famous" class="stretched-link"></a>
+      <img src="/assets/img/backgrounds/bg7.jpg" class="d-block w-100" alt="두번째 내용">
+      <div class="carousel-caption d-none d-md-block">
+        <h3 class="display-4 mb-5">오늘의 인기 후기 읽어보기</h3>
+        <p>Bitravel 회원들이 가장 많이 감상한 후기를 찾아보세요.</p>
+        <br>
+      </div>
+    </div>
+    <div class="carousel-item" data-bs-interval="3000">
+        <a href="/board/famous" class="stretched-link"></a>
+      <img src="/assets/img/backgrounds/bg7.jpg" class="d-block w-100" alt="세번째 내용">
+      <div class="carousel-caption d-none d-md-block">
+        <h3 class="display-4 mb-5">오늘의 인기 게시물 읽어보기</h3>
+        <p>Bitravel 회원들 사이 지금 화제가 된 주제는 무엇일까요?</p>
+        <br>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
         </section>
         <!-- 최상단 카로셀 종료 -->
 
 
+
         <!-- 메인 1번 세트 -->
         <section class="position-relative" id="next">
-            <div class="container py-7 py-lg-12">
-                <div class="row mb-5 mb-lg-9 justify-content-between align-items-end">
+            <div class="container py-5 py-lg-12">
+                <div class="row mb-3 justify-content-between align-items-end">
                     <div class="col-lg-7 mx-auto text-center">
-                        <h2 class="display-4 mb-0" data-aos="fade-up">We're web design & development specialists
+                        <h2 class="display-4 mb-2" data-aos="fade-up">데이터 기반
                         </h2>
-                    </div>
-                </div>
-                <div class="row pb-lg-7 justify-content-around">
-                    <!--Feature column-->
-                    <div class="col-12 col-md-6 col-xl-3 mb-5 mb-xl-0" data-aos="fade-up" data-aos-delay="150">
-                        <div class="text-center">
-                            <div
-                                class="mb-4 position-relative size-70 bg-primary text-white rounded-circle center-both overflow-hidden">
-                                <i class="bi bi-puzzle-fill fs-3 position-relative"></i>
-                            </div>
-                            <h5 class="mb-3">Strategy and Data</h5>
-                            <p class="mb-4">
-                                Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing
-                                industries for layouts and visual mockups.
-                            </p>
-                            <a href="#!" class="link-hover-underline text-muted fw-semibold">
-                                Learn More<i class="bi bi-arrow-right-short align-middle ms-1 lh-1 fs-5"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!--Feature column-->
-                    <div class="col-12 col-md-6 col-xl-3 mb-5 mb-xl-0" data-aos="fade-up" data-aos-delay="200">
-                        <div class="text-center">
-                            <div
-                                class="mb-4 position-relative size-70 bg-primary text-white rounded-circle center-both overflow-hidden">
-                                <i class="bi bi-bullseye fs-3 position-relative"></i>
-                            </div>
-                            <h5 class="mb-3">Design & Innovation</h5>
-                            <p class="mb-4">
-                                Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing
-                                industries for layouts and visual mockups.
-                            </p>
-                            <a href="#!" class="link-hover-underline text-muted fw-semibold">
-                                Learn More<i class="bi bi-arrow-right-short align-middle ms-1 lh-1 fs-5"></i>
-                            </a>
-                        </div>
-                    </div>
-
-                    <!--Feature column-->
-                    <div class="col-12 col-md-6 col-xl-3 mb-5 mb-md-0" data-aos="fade-up" data-aos-delay="250">
-                        <div class="text-center">
-                            <div
-                                class="mb-4 position-relative size-70 bg-primary text-white rounded-circle center-both overflow-hidden">
-                                <i class="bi bi-broadcast fs-3 position-relative"></i>
-                            </div>
-                            <h5 class="mb-3">Engineering</h5>
-                            <p class="mb-4">
-                                Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing
-                                industries for layouts and visual mockups.
-                            </p>
-                            <a href="#!" class="link-hover-underline text-muted fw-semibold">
-                                Learn More<i class="bi bi-arrow-right-short align-middle ms-1 lh-1 fs-5"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <!--Feature column-->
-                    <div class="col-12 col-md-6 col-xl-3" data-aos="fade-up" data-aos-delay="250">
-                        <div class="text-center">
-                            <div
-                                class="mb-4 position-relative size-70 bg-primary text-white rounded-circle center-both overflow-hidden">
-                                <i class="bi bi-briefcase-fill fs-3 position-relative"></i>
-                            </div>
-                            <h5 class="mb-3">Campaign</h5>
-                            <p class="mb-4">
-                                Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing
-                                industries for layouts and visual mockups.
-                            </p>
-                            <a href="#!" class="link-hover-underline text-muted fw-semibold">
-                                Learn More<i class="bi bi-arrow-right-short align-middle ms-1 lh-1 fs-5"></i>
-                            </a>
-                        </div>
+                        <h2 class="display-4 mb-0" data-aos="fade-up">여행지 추천 서비스
+                        </h2>
                     </div>
                 </div>
             </div>
@@ -411,19 +85,19 @@
 
 
         <!-- 메인 2번세트 시작 -->
-        <section class="position-relative text-white overflow-hidden">
+                <section class="position-relative text-white overflow-hidden">
             <div class="position-absolute start-0 top-0 w-100 h-100 h-lg-60 bg-secondary"></div>
             <div class="container position-relative z-index-1 pt-7 pt-lg-12">
-                <div class="row mb-7 align-items-end">
+                <div class="row mb-5 align-items-end">
                     <div class="col-lg-9 mb-5 mb-lg-0">
-                        <h2 class="mb-3 display-4" data-aos="fade-right">Latest projects</h2>
+                        <h2 class="mb-3 display-4" data-aos="fade-right">최근 인기 여행지</h2>
                         <p class="mb-0 w-lg-75 lead" data-aos="fade-right" data-aos-delay="150">
-                            Our work speaks for itself
+                            전국에서 가장 많은 사람들이 찾은 여행지입니다.
                         </p>
                     </div>
                     <div class="col-12 col-lg-auto text-lg-end ms-auto" data-aos="fade-left" data-aos-delay="150">
                         <a href="#!" class="link-hover-underline h6">
-                            View all case studies <i class="bi bi-arrow-right fs-5 align-middle lh-1 ms-1"></i>
+                            여행지 더 찾아보기 <i class="bi bi-arrow-right fs-5 align-middle lh-1 ms-1"></i>
                         </a>
                     </div>
                 </div>
@@ -449,91 +123,6 @@
                                             </ul>
                                         </div>
                                     </a>
-                                </div>
-
-                                <!--Swiper-slide-->
-                                <div class="swiper-slide">
-                                    <a href="#!" class="card-over d-block card-hover overflow-hidden">
-                                        <img src="assets/img/projects/2.jpg" alt="" class="img-fluid img-zoom">
-                                        <div class="card-overlay p-4 d-flex align-items-end text-white">
-                                            <ul class="list-unstyled overlay-items">
-                                                <li>
-                                                    <h5 class="mb-2">Awesome title</h5>
-                                                </li>
-                                                <li><span>Awesome Subtitle</span></li>
-                                            </ul>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!--Swiper-slide-->
-                                <div class="swiper-slide">
-                                    <a href="#!" class="card-over d-block card-hover overflow-hidden">
-                                        <img src="assets/img/projects/3.jpg" alt="" class="img-fluid img-zoom">
-                                        <div class="card-overlay p-4 d-flex align-items-end text-white">
-                                            <ul class="list-unstyled overlay-items">
-                                                <li>
-                                                    <h5 class="mb-2">Awesome title</h5>
-                                                </li>
-                                                <li><span>Awesome Subtitle</span></li>
-                                            </ul>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!--Swiper-slide-->
-                                <div class="swiper-slide">
-                                    <a href="#!" class="card-over d-block card-hover overflow-hidden">
-                                        <img src="assets/img/projects/4.jpg" alt="" class="img-fluid img-zoom">
-                                        <div class="card-overlay p-4 d-flex align-items-end text-white">
-                                            <ul class="list-unstyled overlay-items">
-                                                <li>
-                                                    <h5 class="mb-2">Awesome title</h5>
-                                                </li>
-                                                <li><span>Awesome Subtitle</span></li>
-                                            </ul>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!--Swiper-slide-->
-                                <div class="swiper-slide">
-                                    <a href="#!" class="card-over d-block card-hover overflow-hidden">
-                                        <img src="assets/img/projects/5.jpg" alt="" class="img-fluid img-zoom">
-                                        <div class="card-overlay p-4 d-flex align-items-end text-white">
-                                            <ul class="list-unstyled overlay-items">
-                                                <li>
-                                                    <h5 class="mb-2">Awesome title</h5>
-                                                </li>
-                                                <li><span>Awesome Subtitle</span></li>
-                                            </ul>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!--Swiper-slide-->
-                                <div class="swiper-slide">
-                                    <a href="#!" class="card-over d-block card-hover overflow-hidden">
-                                        <img src="assets/img/projects/7.jpg" alt="" class="img-fluid img-zoom">
-                                        <div class="card-overlay p-4 d-flex align-items-end text-white">
-                                            <ul class="list-unstyled overlay-items">
-                                                <li>
-                                                    <h5 class="mb-2">Awesome title</h5>
-                                                </li>
-                                                <li><span>Awesome Subtitle</span></li>
-                                            </ul>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                            <!-- Swiper Navigation buttons (Remove it or Keep it) -->
-                            <div class="position-relative d-flex justify-content-end pt-5 align-items-center">
-                                <!--Buttons navigation-->
-                                <div
-                                    class="swiper3-button-prev swiper-button-prev mt-0 position-static rounded-3 me-2 bg-primary text-white">
-                                </div>
-                                <div
-                                    class="swiper3-button-next swiper-button-next mt-0 position-static rounded-3 bg-primary text-white">
                                 </div>
                             </div>
                         </div>
@@ -541,22 +130,29 @@
                 </div>
             </div>
         </section>
-        <!-- 메인2번 세트 종료 -->
-
-        <!-- 메인 3번세트 시작 -->
-        <section class="position-relative text-white overflow-hidden">
+        <section class="position-relative text-white overflow-hidden" sec:authorize="isAuthenticated()">
             <div class="position-absolute start-0 top-0 w-100 h-100 h-lg-60 bg-secondary"></div>
             <div class="container position-relative z-index-1 pt-7 pt-lg-12">
-                <div class="row mb-7 align-items-end">
+                <div class="row mb-5 align-items-end">
                     <div class="col-lg-9 mb-5 mb-lg-0">
-                        <h2 class="mb-3 display-4" data-aos="fade-right">Latest projects</h2>
-                        <p class="mb-0 w-lg-75 lead" data-aos="fade-right" data-aos-delay="150">
-                            Our work speaks for itself
+                        <h2 class="mb-3 display-4" data-aos="fade-right">
+                            <span th:if="${#authentication.principal.age>=0 && #authentication.principal.age<10}" th:text="어린이 "></span>
+                            <span th:if="${#authentication.principal.age>=10 && #authentication.principal.age<20}" th:text="어린이 "></span>
+                            <span th:if="${#authentication.principal.age>=20 && #authentication.principal.age<30}" th:text="20대 "></span>
+                            <span th:if="${#authentication.principal.age>=30 && #authentication.principal.age<40}" th:text="30대 "></span>
+                            <span th:if="${#authentication.principal.age>=40 && #authentication.principal.age<50}" th:text="40대 "></span>
+                            <span th:if="${#authentication.principal.age>=50 && #authentication.principal.age<60}" th:text="50대 "></span>
+                            <span th:if="${#authentication.principal.age>=60 && #authentication.principal.age<70}" th:text="60대 "></span>
+                            <span th:if="${#authentication.principal.age>=70}" th:text="70대 이상 "></span>
+                            <span th:if="${#authentication.principal.gender != 'Private' }" th:text="${#authentication.principal.gender}"></span> 선호 지역 여행지</h2>
+                            
+                            <p class="mb-0 w-lg-75 lead" data-aos="fade-right" data-aos-delay="150">
+                            최근 또래들은 어떤 지역을 자주 찾을까요?
                         </p>
                     </div>
                     <div class="col-12 col-lg-auto text-lg-end ms-auto" data-aos="fade-left" data-aos-delay="150">
                         <a href="#!" class="link-hover-underline h6">
-                            View all case studies <i class="bi bi-arrow-right fs-5 align-middle lh-1 ms-1"></i>
+                            추천 여행지 더 보기 <i class="bi bi-arrow-right fs-5 align-middle lh-1 ms-1"></i>
                         </a>
                     </div>
                 </div>
@@ -583,71 +179,45 @@
                                         </div>
                                     </a>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 메인2번 세트 종료 -->
+
+        <!-- 메인 3번세트 시작 -->
+        <section class="position-relative text-white overflow-hidden" sec:authorize="isAuthenticated()">
+            <div class="position-absolute start-0 top-0 w-100 h-100 h-lg-60 bg-secondary"></div>
+            <div class="container position-relative z-index-1 pt-7 pt-lg-12">
+                <div class="row mb-7 align-items-end">
+                    <div class="col-lg-9 mb-5 mb-lg-0">
+                        <h2 class="mb-3 display-4" data-aos="fade-right">최근 인기 자연관광지</h2>
+                        <p class="mb-0 w-lg-75 lead" data-aos="fade-right" data-aos-delay="150">
+                           <span sec:authentication="principal.nickname"></span>님의 취향에 맞는 최근 인기 관광지를 안내합니다.
+                        </p>
+                    </div>
+                    <div class="col-12 col-lg-auto text-lg-end ms-auto" data-aos="fade-left" data-aos-delay="150">
+                        <a href="#!" class="link-hover-underline h6">
+                            추천 여행지 더 보기 <i class="bi bi-arrow-right fs-5 align-middle lh-1 ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="container pb-7 pb-lg-12">
+                <div class="row">
+                    <div class="col-12 position-relative">
+
+                        <!--Projects swiper slider-->
+                        <div class="swiper-container swiper-3 overflow-visible">
+                            <div class="swiper-wrapper">
 
                                 <!--Swiper-slide-->
                                 <div class="swiper-slide">
                                     <a href="#!" class="card-over d-block card-hover overflow-hidden">
-                                        <img src="assets/img/projects/2.jpg" alt="" class="img-fluid img-zoom">
-                                        <div class="card-overlay p-4 d-flex align-items-end text-white">
-                                            <ul class="list-unstyled overlay-items">
-                                                <li>
-                                                    <h5 class="mb-2">Awesome title</h5>
-                                                </li>
-                                                <li><span>Awesome Subtitle</span></li>
-                                            </ul>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!--Swiper-slide-->
-                                <div class="swiper-slide">
-                                    <a href="#!" class="card-over d-block card-hover overflow-hidden">
-                                        <img src="assets/img/projects/3.jpg" alt="" class="img-fluid img-zoom">
-                                        <div class="card-overlay p-4 d-flex align-items-end text-white">
-                                            <ul class="list-unstyled overlay-items">
-                                                <li>
-                                                    <h5 class="mb-2">Awesome title</h5>
-                                                </li>
-                                                <li><span>Awesome Subtitle</span></li>
-                                            </ul>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!--Swiper-slide-->
-                                <div class="swiper-slide">
-                                    <a href="#!" class="card-over d-block card-hover overflow-hidden">
-                                        <img src="assets/img/projects/4.jpg" alt="" class="img-fluid img-zoom">
-                                        <div class="card-overlay p-4 d-flex align-items-end text-white">
-                                            <ul class="list-unstyled overlay-items">
-                                                <li>
-                                                    <h5 class="mb-2">Awesome title</h5>
-                                                </li>
-                                                <li><span>Awesome Subtitle</span></li>
-                                            </ul>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!--Swiper-slide-->
-                                <div class="swiper-slide">
-                                    <a href="#!" class="card-over d-block card-hover overflow-hidden">
-                                        <img src="assets/img/projects/5.jpg" alt="" class="img-fluid img-zoom">
-                                        <div class="card-overlay p-4 d-flex align-items-end text-white">
-                                            <ul class="list-unstyled overlay-items">
-                                                <li>
-                                                    <h5 class="mb-2">Awesome title</h5>
-                                                </li>
-                                                <li><span>Awesome Subtitle</span></li>
-                                            </ul>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <!--Swiper-slide-->
-                                <div class="swiper-slide">
-                                    <a href="#!" class="card-over d-block card-hover overflow-hidden">
-                                        <img src="assets/img/projects/7.jpg" alt="" class="img-fluid img-zoom">
+                                        <img src="assets/img/projects/1.jpg" alt="" class="img-fluid img-zoom">
                                         <div class="card-overlay p-4 d-flex align-items-end text-white">
                                             <ul class="list-unstyled overlay-items">
                                                 <li>
@@ -659,14 +229,49 @@
                                     </a>
                                 </div>
                             </div>
-                            <!-- Swiper Navigation buttons (Remove it or Keep it) -->
-                            <div class="position-relative d-flex justify-content-end pt-5 align-items-center">
-                                <!--Buttons navigation-->
-                                <div
-                                    class="swiper3-button-prev swiper-button-prev mt-0 position-static rounded-3 me-2 bg-primary text-white">
-                                </div>
-                                <div
-                                    class="swiper3-button-next swiper-button-next mt-0 position-static rounded-3 bg-primary text-white">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="position-relative text-white overflow-hidden">
+            <div class="position-absolute start-0 top-0 w-100 h-100 h-lg-60 bg-secondary"></div>
+            <div class="container position-relative z-index-1 pt-7 pt-lg-12">
+                <div class="row mb-7 align-items-end">
+                    <div class="col-lg-9 mb-5 mb-lg-0">
+                        <h2 class="mb-3 display-4" data-aos="fade-right">Bitravel 회원 선호 여행지</h2>
+                        <p class="mb-0 w-lg-75 lead" data-aos="fade-right" data-aos-delay="150">
+                            Bitravel 회원들의 선호도가 높은 여행지를 선별했습니다.
+                        </p>
+                    </div>
+                    <div class="col-12 col-lg-auto text-lg-end ms-auto" data-aos="fade-left" data-aos-delay="150">
+                        <a href="#!" class="link-hover-underline h6">
+                            추천 여행지 더 보기 <i class="bi bi-arrow-right fs-5 align-middle lh-1 ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="container pb-7 pb-lg-12">
+                <div class="row">
+                    <div class="col-12 position-relative">
+
+                        <!--Projects swiper slider-->
+                        <div class="swiper-container swiper-3 overflow-visible">
+                            <div class="swiper-wrapper">
+
+                                <!--Swiper-slide-->
+                                <div class="swiper-slide">
+                                    <a href="#!" class="card-over d-block card-hover overflow-hidden">
+                                        <img src="assets/img/projects/1.jpg" alt="" class="img-fluid img-zoom">
+                                        <div class="card-overlay p-4 d-flex align-items-end text-white">
+                                            <ul class="list-unstyled overlay-items">
+                                                <li>
+                                                    <h5 class="mb-2">Awesome title</h5>
+                                                </li>
+                                                <li><span>Awesome Subtitle</span></li>
+                                            </ul>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -677,7 +282,7 @@
         <!-- 메인3번 세트 종료 -->
 
         <!-- 메인4번 세트 시작 -->
-        <section class="position-relative overflow-hidden bg-light">
+        <section class="position-relative overflow-hidden bg-light" sec:authorize="isAuthenticated()">
             <!--Divider wave shape-->
             <svg class="position-absolute start-0 bottom-0 w-100 text-white" preserveAspectRatio="none" width="100%"
                 height="288" viewBox="0 0 1200 288" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -689,14 +294,14 @@
             <div class="container position-relative z-index-1 py-7 py-lg-12">
                 <div class="row mb-7 align-items-end justify-content-between">
                     <div class="col-lg-7 mb-4 mb-lg-0">
-                        <h2 class="mb-2 display-4" data-aos="fade-right">What our clients say</h2>
+                        <h2 class="mb-2 display-4" data-aos="fade-right">관심 여행지 최신 후기</h2>
                         <p class="mb-0 lead w-lg-80" data-aos="fade-right" data-aos-delay="150">
-                            Don't just take our words for it
+                            관심 여행지 정보 미리 접하기
                         </p>
                     </div>
                     <div class="col-12 col-lg-3 text-lg-end" data-aos="fade-left" data-aos-delay="150">
-                        <a href="#!" class="link-hover-underline h6 mb-0 text-dark">
-                            Customer stories
+                        <a href="/review" class="link-hover-underline h6 mb-0 text-dark">
+                            더 많은 후기 보러가기
                             <i class="bi bi-arrow-right align-middle ms-2 fs-5 lh-1"></i>
                         </a>
                     </div>
@@ -757,6 +362,50 @@
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!--Swiper buttons-->
+
+                        <div
+                            class="swiperAuto-button-next swiper-button-next me-1 me-sm-0 end-0 size-40 z-index-3 bg-primary text-white">
+                        </div>
+                        <div
+                            class="swiperAuto-button-prev swiper-button-prev ms-1 ms-sm-0 start-0 size-40 bg-primary text-white">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="position-relative overflow-hidden bg-light" sec:authorize="isAnonymous()">
+            <!--Divider wave shape-->
+            <svg class="position-absolute start-0 bottom-0 w-100 text-white" preserveAspectRatio="none" width="100%"
+                height="288" viewBox="0 0 1200 288" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M0 0L67 30C133 60 267 120 400 138C533 156 667 132 800 126C933 120 1067 132 1133 138L1200 144V288H1133C1067 288 933 288 800 288C667 288 533 288 400 288C267 288 133 288 67 288H0V0Z"
+                    fill="currentColor" />
+            </svg>
+
+            <div class="container position-relative z-index-1 py-7 py-lg-12">
+                <div class="row mb-7 align-items-end justify-content-between">
+                    <div class="col-lg-7 mb-4 mb-lg-0">
+                        <h2 class="mb-2 display-4" data-aos="fade-right">여행지 최신 후기</h2>
+                        <p class="mb-0 lead w-lg-80" data-aos="fade-right" data-aos-delay="150">
+                            실제 여행지에 대한 최신 후기를 확인해 보세요.
+                        </p>
+                    </div>
+                    <div class="col-12 col-lg-3 text-lg-end" data-aos="fade-left" data-aos-delay="150">
+                        <a href="/review" class="link-hover-underline h6 mb-0 text-dark">
+                            더 많은 후기 보러가기
+                            <i class="bi bi-arrow-right align-middle ms-2 fs-5 lh-1"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-12 position-relative">
+                        <div class="swiper-container swiper-auto shadow-lg">
+                            <div class="swiper-wrapper">
                                 <!--Testimonial slide-->
                                 <div class="swiper-slide">
                                     <div
@@ -764,7 +413,7 @@
                                         <div class="col-lg-6 px-0 mb-4 mb-md-0">
                                             <div class="position-relative">
                                                 <!--testimonial Image-->
-                                                <img src="assets/img/800x600/3.jpg" class="img-fluid" alt="">
+                                                <img src="assets/img/800x600/2.jpg" class="img-fluid" alt="">
 
                                                 <!--Testimonial image divider-->
                                                 <svg class="position-absolute d-none d-lg-block end-0 top-0 h-100 me-n1"
@@ -791,59 +440,7 @@
                                             <blockquote class="blockquote text-center mb-0 px-4 py-5">
                                                 <!--Testimonial Comapny Logo -->
                                                 <div class="width-100 mb-3 h-auto mx-auto" style="color: #FF5A5F;">
-                                                    <img src="assets/img/partners/dark/expedia.svg" alt="">
-                                                </div>
-                                                <!-- Text -->
-                                                <p class="mb-5 fs-5 w-lg-80 mx-auto">
-                                                    “ It is really refreshing to work with this bootstrap theme
-                                                    which is truly helpful in the development of one of my client’s
-                                                    website.”
-                                                </p>
-
-                                                <!-- Footer -->
-                                                <footer class="blockquote-footer pb-4 pb-lg-0">
-                                                    <span class="h6 text-uppercase">Adam Milne</span>
-                                                </footer>
-
-                                            </blockquote>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!--Testimonial slide-->
-                                <div class="swiper-slide">
-                                    <div
-                                        class="d-flex align-items-center flex-column bg-white overflow-hidden flex-lg-row">
-                                        <div class="col-lg-6 px-0 mb-4 mb-md-0">
-                                            <div class="position-relative">
-                                                <!--testimonial Image-->
-                                                <img src="assets/img/800x600/4.jpg" class="img-fluid" alt="">
-
-                                                <!--Testimonial image divider-->
-                                                <svg class="position-absolute d-none d-lg-block end-0 top-0 h-100 me-n1"
-                                                    preserveAspectRatio="none" width="58" height="583"
-                                                    viewBox="0 0 58 583" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                                        d="M0 583L9.66667 534.417C19.3333 485.833 38.6667 388.667 39.7407 291.5C40.8148 194.333 23.6296 97.1667 15.037 48.5833L6.44444 -1.62125e-05H58V48.5833C58 97.1667 58 194.333 58 291.5C58 388.667 58 485.833 58 534.417V583H0Z"
-                                                        fill="white" />
-                                                </svg>
-
-                                                <!--Testimonial image small device divider-->
-                                                <svg class="position-absolute bottom-0 start-0 mb-n1 d-lg-none"
-                                                    width="100%" height="48" preserveAspectRatio="none"
-                                                    viewBox="0 0 1200 64" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg">
-                                                    <path fill-rule="evenodd" clip-rule="evenodd"
-                                                        d="M0 0L100 10.6667C200 21.3333 400 42.6667 600 43.8519C800 45.037 1000 26.0741 1100 16.5926L1200 7.11111V64H1100C1000 64 800 64 600 64C400 64 200 64 100 64H0L0 0Z"
-                                                        fill="white" />
-                                                </svg>
-
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6 mx-auto px-0">
-                                            <blockquote class="blockquote text-center mb-0 px-4 py-5">
-                                                <!--Testimonial Comapny Logo -->
-                                                <div class="width-100 mb-3 h-auto mx-auto" style="color: #FF5A5F;">
-                                                    <img src="assets/img/partners/dark/deliveroo.svg" alt="">
+                                                    <img src="assets/img/partners/dark/booking.com.svg" alt="">
                                                 </div>
                                                 <!-- Text -->
                                                 <p class="mb-5 fs-5 w-lg-80 mx-auto">
@@ -878,61 +475,8 @@
         </section>
         <!-- 메인4번 세트 종료 -->
 
-
-
-        <section class="position-relative bg-light">
-            <div class="container px-lg-12 pt-9 pb-5 position-relative z-index-1">
-                <div class="mb-5 px-lg-12 text-center" data-aos="fade-up" data-aos-delay="100">
-                    <h5 class="mb-0">More than clients, Great partners</h5>
-                </div>
-                <div class="d-flex flex-wrap justify-content-center">
-                    <div class="d-flex align-items-center justify-content-center my-4 width-140 px-3" data-aos="fade-up"
-                        data-aos-delay="150">
-                        <img src="assets/img/partners/dark/amazon.svg" alt="partner" class="img-fluid">
-                    </div>
-                    <div class="d-flex align-items-center justify-content-center my-4 width-140 px-3" data-aos="fade-up"
-                        data-aos-delay="150">
-                        <img src="assets/img/partners/dark/microsoft.svg" alt="partner" class="img-fluid">
-                    </div>
-                    <div class="d-flex align-items-center justify-content-center my-4 width-140 px-3" data-aos="fade-up"
-                        data-aos-delay="200">
-                        <img src="assets/img/partners/dark/google.svg" alt="partner" class="img-fluid">
-                    </div>
-                    <div class="d-flex align-items-center justify-content-center my-4 width-140 px-3" data-aos="fade-up"
-                        data-aos-delay="250">
-                        <img src="assets/img/partners/dark/booking.com.svg" alt="partner" class="img-fluid">
-                    </div>
-                    <div class="d-flex align-items-center justify-content-center my-4 width-140 px-3" data-aos="fade-up"
-                        data-aos-delay="300">
-                        <img src="assets/img/partners/dark/grab.svg" alt="partner" class="img-fluid">
-                    </div>
-                    <div class="d-flex align-items-center justify-content-center my-4 width-140 px-3" data-aos="fade-up"
-                        data-aos-delay="350">
-                        <img src="assets/img/partners/dark/slack.svg" alt="partner" class="img-fluid">
-                    </div>
-                    <div class="d-flex align-items-center justify-content-center my-4 width-140 px-3" data-aos="fade-up"
-                        data-aos-delay="400">
-                        <img src="assets/img/partners/dark/uber.svg" alt="partner" class="img-fluid">
-                    </div>
-                    <div class="d-flex align-items-center justify-content-center my-4 width-140 px-3" data-aos="fade-up"
-                        data-aos-delay="450">
-                        <img src="assets/img/partners/dark/didi.svg" alt="partner" class="img-fluid">
-                    </div>
-                    <div class="d-flex align-items-center justify-content-center my-4 width-140 px-3" data-aos="fade-up"
-                        data-aos-delay="500">
-                        <img src="assets/img/partners/dark/lyft.svg" alt="partner" class="img-fluid">
-                    </div>
-                    <div class="d-flex align-items-center justify-content-center my-4 width-140 px-3" data-aos="fade-up"
-                        data-aos-delay="550">
-                        <img src="assets/img/partners/dark/salesforce.svg" alt="partner" class="img-fluid">
-                    </div>
-                </div>
-                <!--Col-->
-            </div>
-        </section>
-
         <!-- 글쓰기 창 -->
-        <section class="position-relative">
+        <section class="position-relative mb-9">
             <div class="position-absolute start-0 top-0 w-100 h-50 h-lg-60 bg-light"></div>
             <div class="container position-relative">
                 <div
@@ -955,10 +499,26 @@
 
 
 
-                    <div class="row position-relative">
+                    <div class="row position-relative" sec:authorize="isAnonymous()">
+                        <div class="col-12 col-md-10 col-lg-9 offset-lg-1">
+                            <h3 class="mb-5 display-4" data-aos="fade-down">
+                                전체 서비스 이용하기
+                            </h3>
+                            <p class="mb-5 w-lg-75 lead" data-aos="zoom-in" data-aos-delay="100">
+                                회원 맞춤 여행지 추천,<br>방문 여행지 후기 기록,<br>여행 주제 커뮤니티 등<br>다양한 즐거움을 경험해 보세요.
+                            </p>
+                            <div data-aos="fade-up" data-aos-delay="150">
+                                <a href="/signup" class="btn btn-success btn-hover-arrow btn-lg">
+                                    <span class="fw-bold">회원가입</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row position-relative" sec:authorize="isAuthenticated()">
                         <div class="col-12 col-md-10 col-lg-9 offset-lg-1">
                             <h3 class="mb-4 display-4" data-aos="fade-down">
-                                Design anything
+                                Bitravel
                             </h3>
                             <p class="mb-5 w-lg-75 lead" data-aos="zoom-in" data-aos-delay="100">
                                 There are combined alignment methods – when several types of alignment together are
@@ -967,7 +527,7 @@
                             </p>
                             <div data-aos="fade-up" data-aos-delay="150">
                                 <a href="/review/write" class="btn btn-success btn-hover-arrow btn-lg">
-                                    <span>글쓰기</span>
+                                    <span>새 후기 작성</span>
                                 </a>
                             </div>
                         </div>
@@ -978,144 +538,10 @@
         <!-- 글쓰기 창 종료 -->
     </main>
 
-    <!--Footer Start-->
-    <footer class="bg-white position-relative">
-        <div class="container pt-7 pt-lg-12">
-            <div class="row">
-                <div class="col-md-12 col-lg-5 mb-5 h-100 me-auto">
-                    <h2 class="display-6 mb-4 position-relative">
-                        Let's work together
-                    </h2>
-
-                    <!--Email-->
-                    <div class="mb-0">
-                        <small class="d-block text-muted">Email us:</small>
-                        <a class="link-hover-underline fw-normal fs-5" href="mailto:mail@doamin.com">mail@domain.com</a>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-lg-2 mb-5 mb-md-0 ms-auto h-100">
-                    <h6 class="mb-3 mb-lg-4">Learn</h6>
-                    <ul class="nav flex-column mb-0">
-                        <li class="nav-item"><a class="nav-link" href="#!">Design</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Digital</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Development</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Branding</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Graphics</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Process</a></li>
-                    </ul>
-                </div>
-                <!--/.Col-->
-                <div class="col-sm-4 col-lg-2 mb-5 h-100">
-
-                    <!--Nav-title-->
-                    <h6 class="mb-3 mb-lg-4">Resources</h6>
-                    <ul class="nav flex-column mb-0">
-                        <li class="nav-item"><a class="nav-link" href="#!">Elements</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Pricing</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Features</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Blog</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Help center</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Events</a></li>
-                    </ul>
-                </div>
-                <!--/.Col-->
-                <div class="col-sm-4 col-lg-3 col-xl-2 mb-5 mb-sm-0 h-100">
-                    <!--Nav-title-->
-                    <h6 class="mb-3 mb-lg-4">Company</h6>
-                    <ul class="nav flex-column mb-0">
-                        <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Careers <span
-                                    class="badge badge-pill ms-1 bg-primary">Hiring</span></a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Customers</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Contact us</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Terms of use</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#!">Privacy policy</a></li>
-                    </ul>
-                </div>
-                <!--/.Col-->
-            </div>
-
-            <hr class="mb-5 mt-0">
-        </div> <!-- / .container -->
-        <div class="pb-7">
-            <div class="container">
-                <div class="row justify-content-between align-items-center">
-                    <div class="d-flex mb-3 mb-md-0 col-sm-6 col-md-4">
-                        <a class="" href="#!">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-facebook" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd"
-                                    d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z">
-                                </path>
-                            </svg>
-                        </a>
-                        <a class="ms-3" href="#!">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-twitter" viewBox="0 0 16 16">
-                                <path
-                                    d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z">
-                                </path>
-                            </svg>
-                        </a>
-                        <a class="ms-3" href="#!">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-instagram" viewBox="0 0 16 16">
-                                <path
-                                    d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z">
-                                </path>
-                            </svg>
-                        </a>
-                        <a class="ms-3" href="#!">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-linkedin" viewBox="0 0 16 16">
-                                <path fill-rule="evenodd"
-                                    d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212h-2.4s.03-6.547 0-7.225h2.4v1.023a5.54 5.54 0 0 0-.016.025h.016v-.025c.32-.493.89-1.193 2.165-1.193 1.58 0 2.764 1.033 2.764 3.252v4.143h-2.4V9.529c0-.972-.348-1.634-1.217-1.634-.664 0-1.059.447-1.233.878-.063.154-.079.37-.079.586v4.035z">
-                                </path>
-                            </svg>
-                        </a>
-                    </div>
-                    <div class="col-sm-6 col-md-4 text-start text-sm-end">
-                        <p class="small text-muted mb-0">© Copyright. Assan 4</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <!-- begin Back to Top button -->
-    <a href="#" class="toTop">
-        <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 9' class="align-middle rotate-180" width="13"
-            height="9">
-            <path fill='currentColor'
-                d="M12.25 2.30062L10.8988 0.949371L6.5 5.33854L2.10125 0.949371L0.75 2.30062L6.5 8.05062L12.25 2.30062Z">
-            </path>
-        </svg>
-    </a>
+</th:block>
     <!-- scripts -->
-    <script src="assets/js/theme.bundle.js"></script>
-    <!--Mastert Slider start (Include jquery before master slider js)-->
-    <script src="assets/vendor/jquery/jquery.min.js"></script>
-    <script src="assets/vendor/jquery/jquery.easing.min.js"></script>
+    <th:block layout:fragment="script">
     <script src="assets/vendor/masterslider/masterslider.min.js"></script>
-    <script>
-        var slider = new MasterSlider();
-        slider.setup('masterslider', {
-            width: 1140,
-            height: 660,
-            minHeight: 400,
-            space: 0,
-            start: 1,
-            grabCursor: false,
-            layout: "fullwidth",
-            wheel: false,
-            autoplay: true,
-            instantStartLayers: true,
-            loop: true,
-            view: "basic",
-            instantStartLayers: true,
-        });
-        slider.control('arrows');
-    </script>
-</body>
+</th:block>
 
 </html>
