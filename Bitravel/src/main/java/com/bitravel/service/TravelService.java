@@ -5,10 +5,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
@@ -46,7 +49,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 public class TravelService {
-	
+
 	private final UserTravelRepository userTravelRepository;
 	private final TravelRepository travelRepository;
 	private final TravelImageRepository travelImageRepository;
@@ -72,15 +75,15 @@ public class TravelService {
 		pageable = PageRequest.of(page, 9, sort);
 		return travelRepository.findAll(pageable);
 	}
-	
+
 	/**
 	 * 내가 가장 선호하는 카테고리의 여행지 리스트
 	 */
 	public Page<Travel> findFavoriteCategoryList (Pageable pageable) {
 		String myEmail = SecurityUtil.getCurrentEmail().get();
-		List<UserTravel> utlist = userTravelRepository.findByUserEmail(myEmail);
+		List<UserTravel> utlist = userTravelRepository.findByUserEmailAndIsLiked(myEmail, true);
 		HashMap<String, Integer> userPref = new HashMap<>();
-		
+
 		for(int i=0;i<utlist.size();i++) {
 			Travel now = travelRepository.getById(utlist.get(i).getTravelId());
 			// 카테고리별 개수 세기
@@ -88,7 +91,7 @@ public class TravelService {
 				userPref.put(now.getSmallCategory(), userPref.getOrDefault(userPref.get(now.getSmallCategory()), 0)+1);
 			}
 		}
-		
+
 		Iterator<String> mapIter = userPref.keySet().iterator();
 		String result = "";
 		int max = 0;
@@ -102,10 +105,58 @@ public class TravelService {
 		}
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
 		Sort sort = Sort.by(Direction.DESC, "travelView").and(Sort.by(Direction.ASC, "travelName"));
-		pageable = PageRequest.of(page, 9, sort);
+		pageable = PageRequest.of(page, 30, sort);
 		return travelRepository.findBySmallCategory(result, pageable);
 	}
-	
+
+	/**
+	 * 회원들이 가장 선호하는 여행지들 찾기
+	 */
+	@Transactional(readOnly = true)
+	public List<Travel> findUsersLike() {
+		List<UserTravel> utlist = userTravelRepository.findByIsLiked(true);
+		HashMap<Long, Long> userPref = new HashMap<>();
+
+		for(int i=0;i<utlist.size();i++) {
+			Travel now = travelRepository.getById(utlist.get(i).getTravelId());
+			if(now!=null)
+				userPref.put(now.getTravelId(), userPref.getOrDefault(userPref.get(now.getTravelId()), (long) 0)+1);
+		}
+
+		List<Travel> travel = new ArrayList<>();
+		Iterator<Long> mapIter = userPref.keySet().iterator();
+		
+		Long[][] save = new Long[userPref.size()][2];
+		
+		int t = 0;
+		while(mapIter.hasNext()) {
+			Long key = mapIter.next();
+			Long value = userPref.get(key);
+			save[t][0] = value;
+			save[t][1] = key;
+			t++;
+		}
+		
+		Arrays.sort(save, new Comparator<Long[]>() {
+			@Override
+			public int compare(Long[] o1, Long[] o2) {
+				if(o1[0]==o2[0])
+					return (int) (o1[1]-o2[1]);
+				else
+					return (int) (o2[0]-o1[0]);
+			}	
+		});
+		
+		for(int i=0;i<save.length;i++) {
+			Optional<Travel> now = travelRepository.findById(save[i][1]);
+			if(now.isPresent())
+				travel.add(now.get());
+		}
+
+
+		return travel;
+	}
+
 	/**
 	 * 나와 비슷한 나이/성별의 사람들이 선호하는 지역 확인
 	 */
@@ -117,9 +168,11 @@ public class TravelService {
 		else if (age>7)
 			age=7;
 		String ageKey = age*10 + "대";
+		if (age>=7)
+			ageKey += " 이상";
 		TravelCountAge tca = travelCountAgeRepository.getById(ageKey);
 		TravelCountAge allAge = travelCountAgeRepository.getById("전체");
-		
+
 		if(gender.equals("Man")) {
 			gender = "남자";
 		} else if(gender.equals("Woman")) {
@@ -128,74 +181,37 @@ public class TravelService {
 			gender = "전체";
 		}
 		TravelCountGender tcg = travelCountGenderRepository.getById(gender);
-		
+
 		TreeMap<Double, String> rank = new TreeMap<>();
-		
-		if(Math.pow(tca.getSeoul()*tcg.getSeoul(),0.5)>allAge.getSeoul()) {
-			rank.put(tca.getSeoul()*tcg.getSeoul()/allAge.getSeoul(), "서울");
-		}
-		if(Math.pow(tca.getBusan()*tcg.getBusan(),0.5)>allAge.getBusan()) {
-			rank.put(tca.getBusan()*tcg.getBusan()/allAge.getBusan(), "부산");
-		}
-		if(Math.pow(tca.getDaegu()*tcg.getDaegu(),0.5)>allAge.getDaegu()) {
-			rank.put(tca.getDaegu()*tcg.getDaegu()/allAge.getDaegu(), "대구");
-		}
-		if(Math.pow(tca.getDaejeon()*tcg.getDaejeon(),0.5)>allAge.getDaejeon()) {
-			rank.put(tca.getDaejeon()*tcg.getDaejeon()/allAge.getDaejeon(), "대전");
-		}
-		if(Math.pow(tca.getGwangju()*tcg.getGwangju(),0.5)>allAge.getGwangju()) {
-			rank.put(tca.getGwangju()*tcg.getGwangju()/allAge.getGwangju(), "광주");
-		}
-		if(Math.pow(tca.getIncheon()*tcg.getIncheon(),0.5)>allAge.getIncheon()) {
-			rank.put(tca.getIncheon()*tcg.getIncheon()/allAge.getIncheon(), "인천");
-		}
-		if(Math.pow(tca.getUlsan()*tcg.getUlsan(),0.5)>allAge.getUlsan()) {
-			rank.put(tca.getUlsan()*tcg.getUlsan()/allAge.getUlsan(), "울산");
-		}
-		if(Math.pow(tca.getSejong()*tcg.getSejong(),0.5)>allAge.getSejong()) {
-			rank.put(tca.getSejong()*tcg.getSejong()/allAge.getSejong(), "세종");
-		}
-		if(Math.pow(tca.getGyeonggi()*tcg.getGyeonggi(),0.5)>allAge.getGyeonggi()) {
-			rank.put(tca.getGyeonggi()*tcg.getGyeonggi()/allAge.getGyeonggi(), "경기");
-		}
-		if(Math.pow(tca.getGangwon()*tcg.getGangwon(),0.5)>allAge.getGangwon()) {
-			rank.put(tca.getGangwon()*tcg.getGangwon()/allAge.getGangwon(), "강원");
-		}
-		if(Math.pow(tca.getChungbuk()*tcg.getChungbuk(),0.5)>allAge.getChungbuk()) {
-			rank.put(tca.getChungbuk()*tcg.getChungbuk()/allAge.getChungbuk(), "충북");
-		}
-		if(Math.pow(tca.getChungnam()*tcg.getChungnam(),0.5)>allAge.getChungnam()) {
-			rank.put(tca.getChungnam()*tcg.getChungnam()/allAge.getChungnam(),"충남");
-		}
-		if(Math.pow(tca.getJeonbuk()*tcg.getJeonbuk(),0.5)>allAge.getJeonbuk()) {
-			rank.put(tca.getJeonbuk()*tcg.getJeonbuk()/allAge.getJeonbuk(),"전북");
-		}
-		if(Math.pow(tca.getJeonnam()*tcg.getJeonnam(),0.5)>allAge.getJeonnam()) {
-			rank.put(tca.getJeonnam()*tcg.getJeonnam()/allAge.getJeonnam(), "전남");
-		}
-		if(Math.pow(tca.getGyeongbuk()*tcg.getGyeongbuk(),0.5)>allAge.getGyeongbuk()) {
-			rank.put(tca.getGyeongbuk()*tcg.getGyeongbuk()/allAge.getGyeongbuk(), "경북");
-		}
-		if(Math.pow(tca.getGyeongnam()*tcg.getGyeongnam(),0.5)>allAge.getGyeongnam()) {
-			rank.put(tca.getGyeongnam()*tcg.getGyeongnam()/allAge.getGyeongnam(), "경남");
-		}
-		if(Math.pow(tca.getJeju()*tcg.getJeju(),0.5)>allAge.getJeju()) {
-			rank.put(tca.getJeju()*tcg.getJeju()/allAge.getJeju(), "제주");
-		}
-		
+
+		rank.put(tca.getSeoul()*tcg.getSeoul()/Math.pow(allAge.getSeoul(), 2), "서울");
+		rank.put(tca.getBusan()*tcg.getBusan()/Math.pow(allAge.getBusan(), 2), "부산");
+		rank.put(tca.getDaegu()*tcg.getDaegu()/Math.pow(allAge.getDaegu(), 2), "대구");
+		rank.put(tca.getDaejeon()*tcg.getDaejeon()/Math.pow(allAge.getDaejeon(), 2), "대전");
+		rank.put(tca.getGwangju()*tcg.getGwangju()/Math.pow(allAge.getGwangju(), 2), "광주");
+		rank.put(tca.getIncheon()*tcg.getIncheon()/Math.pow(allAge.getIncheon(), 2), "인천");
+		rank.put(tca.getUlsan()*tcg.getUlsan()/Math.pow(allAge.getUlsan(), 2), "울산");
+		rank.put(tca.getSejong()*tcg.getSejong()/Math.pow(allAge.getSejong(), 2), "세종");
+		rank.put(tca.getGyeonggi()*tcg.getGyeonggi()/Math.pow(allAge.getGyeonggi(), 2), "경기");
+		rank.put(tca.getGangwon()*tcg.getGangwon()/Math.pow(allAge.getGangwon(), 2), "강원");
+		rank.put(tca.getChungbuk()*tcg.getChungbuk()/Math.pow(allAge.getChungbuk(), 2), "충북");
+		rank.put(tca.getChungnam()*tcg.getChungnam()/Math.pow(allAge.getChungnam(), 2),"충남");
+		rank.put(tca.getJeonbuk()*tcg.getJeonbuk()/Math.pow(allAge.getJeonbuk(), 2),"전북");
+		rank.put(tca.getJeonnam()*tcg.getJeonnam()/Math.pow(allAge.getJeonnam(), 2), "전남");
+		rank.put(tca.getGyeongbuk()*tcg.getGyeongbuk()/Math.pow(allAge.getGyeongbuk(), 2), "경북");
+		rank.put(tca.getGyeongnam()*tcg.getGyeongnam()/Math.pow(allAge.getGyeongnam(), 2), "경남");
+		rank.put(tca.getJeju()*tcg.getJeju()/Math.pow(allAge.getJeju(), 2), "제주");
+
 		List<Travel> travel = new ArrayList<>();		
-		Double prev = rank.firstKey();
-		for(int i=1;i<rank.size();i++) {
-			prev = rank.floorKey(prev);
-			travel.addAll(travelRepository.findByLargeGov(rank.get(prev)));
-			if(i>=2) {
-				break;
-			} 
+		Double prev = rank.lastKey();
+		for(int i=0;i<3;i++) {
+			travel.addAll(travelRepository.findByLargeGov(rank.get(prev)));		
+			prev = rank.lowerKey(prev);
 		}
 		return travel;
 	}
-	
-	
+
+
 	/**
 	 * 여행지 이름 검색 결과 조회
 	 */
@@ -216,16 +232,16 @@ public class TravelService {
 		addImage(entity);
 		return entity;
 	}
-	
+
 	/**
 	 * 전체 여행지 방문 순위
 	 */
-//	@Transactional
-//	public List<Travel> findRankingOfAll() {
-		//List<>
-		
-//	}
-	
+	//	@Transactional
+	//	public List<Travel> findRankingOfAll() {
+	//List<>
+
+	//	}
+
 	/**
 	 * 조회수 증가 없이 여행지 상세 정보 조회 (여행지 ID)
 	 */
@@ -251,13 +267,13 @@ public class TravelService {
 	 */
 	@Transactional
 	public Page<Travel> findByLargeGov(String largeGov, Pageable pageable) {
-		
+
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
 		pageable = PageRequest.of(page, 9, Sort.by(Sort.Direction.ASC, "travelId"));
-		
+
 		return travelRepository.findByLargeGov(largeGov, pageable);
 	}
-	
+
 	/**
 	 * 여행지 목록 조회 (광역자치단체) non-pageable
 	 */
@@ -267,22 +283,22 @@ public class TravelService {
 		if(list.size() == 0) {
 			throw new CustomException(ErrorCode.POSTS_NOT_FOUND);
 		}
-		
+
 		return list;
 	}
-	
+
 	/**
 	 * 여행지 목록 조회 (기초자치단체)
 	 */
 	@Transactional
 	public Page<Travel> findBySmallGov(String largeGov, String smallGov, Pageable pageable) {
-		
+
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
 		pageable = PageRequest.of(page, 9, Sort.by(Sort.Direction.ASC, "travelId"));
-		
+
 		return travelRepository.findByLargeGovAndSmallGov(largeGov, smallGov, pageable);
 	}
-	
+
 	/**
 	 * 여행지 목록 조회 (기초자치단체)
 	 */
@@ -292,7 +308,7 @@ public class TravelService {
 		if(list.size() == 0) {
 			throw new CustomException(ErrorCode.POSTS_NOT_FOUND);
 		}
-		
+
 		return list;
 	}
 
@@ -413,7 +429,7 @@ public class TravelService {
 		}
 		return resultMap;
 	}
-	
+
 	// 내가 아직 방문하지 않은 특정 광역자치단체의 여행지 검색
 	@Transactional(readOnly = true)
 	public List<TravelSimpleDto> findNotVisitedTravelByLargeGov(String largeGov, Long id) {
@@ -423,7 +439,7 @@ public class TravelService {
 		List<Travel> all = travelRepository.findByLargeGov(largeGov, sort);
 		HashSet<Long> visitedSet = new HashSet<>();
 		visitedSet.add(id);
-		
+
 		for(int i=0;i<list.size();i++) {
 			Travel now = travelRepository.findById(list.get(i).getTravelId()).get();
 			if(now==null) {
@@ -432,25 +448,25 @@ public class TravelService {
 				visitedSet.add(now.getTravelId());
 			}	
 		}
-		
+
 		for(int i=0;i<all.size();i++) {
 			if(visitedSet.contains(all.get(i).getTravelId())) {
 				all.remove(i);
 			}
 		}
-		
+
 		if(all.size()>15)
 			return all.subList(0, 15).stream().map(TravelSimpleDto::new).collect(Collectors.toList());
 		else
 			return all.stream().map(TravelSimpleDto::new).collect(Collectors.toList());
 	}
-	
+
 	// 내가 아직 방문하지 않은 특정 기초자치단체의 여행지 검색
 	@Transactional(readOnly = true)
 	public List<TravelSimpleDto> findNotVisitedTravelBySmallGov(String largeGov, String smallGov, Long id) {
 		String myEmail = SecurityUtil.getCurrentEmail().get();
 		List<UserTravel> list = userTravelRepository.findByUserEmailAndIsVisited(myEmail, false);
-		
+
 		Sort sort = Sort.by(Direction.DESC, "travelView").and(Sort.by(Direction.ASC, "travelName"));
 		List<Travel> all = travelRepository.findByLargeGovAndSmallGov(largeGov, smallGov, sort);
 		HashSet<Long> visitedSet = new HashSet<>();
@@ -463,19 +479,19 @@ public class TravelService {
 				visitedSet.add(now.getTravelId());
 			}	
 		}
-		
+
 		for(int i=0;i<all.size();i++) {
 			if(visitedSet.contains(all.get(i).getTravelId())) {
 				all.remove(i);
 			}
 		}
-		
+
 		if(all.size()>15)
 			return all.subList(0, 15).stream().map(TravelSimpleDto::new).collect(Collectors.toList());
 		else
 			return all.stream().map(TravelSimpleDto::new).collect(Collectors.toList());
 	}
-	
+
 	private void addImage (Travel entity) {
 		if(entity.getTravelImage()==null) {
 			List<TravelImage> ti = travelImageRepository.findByIsUpdatedAndTravelName(false, entity.getTravelName());
@@ -487,5 +503,5 @@ public class TravelService {
 			}
 		}
 	}
-	
+
 }
