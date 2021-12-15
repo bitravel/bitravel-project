@@ -74,7 +74,13 @@ public class Travel {
 	
 	@Column(name = "travelView") // 여행지 조회수
 	private Integer travelView;
-
+	
+	@Column(name = "middleCategory") // 여행지 중분류
+	private String middleCategory;
+	
+	@Column(name = "smallCategory") // 여행지 소분류
+	private String smallCategory;
+	
 	@JsonIgnore // 임시
 	//@OneToMany(mappedBy ="travel") //ReviewTravels 테이블의 travel필드에 맵핑
     //private List<ReviewTravels> reviewTravels = new ArrayList<>();

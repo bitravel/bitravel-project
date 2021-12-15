@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,9 +68,9 @@ public class BoardService {
      */
     @Transactional
     public Page<Board> findBoards(String keyword, Pageable pageable) {
-
+    	Sort sort = Sort.by(Sort.Direction.DESC, "boardView").and(Sort.by(Direction.DESC, "boardDate"));
     	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
-    	pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardId"));
+    	pageable = PageRequest.of(page, 10, sort);
     	
         return boardRepository.findByNicknameContainingOrBoardTitleContainingOrBoardContentContaining(keyword, keyword, keyword, pageable);
     }
@@ -126,6 +127,15 @@ public class BoardService {
     public BoardResponseDto findById(Long id) {
     	Board entity = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
     	entity.increaseView();
+    	return new BoardResponseDto(entity);
+    }
+    
+    /**
+     * 게시글 상세 정보 조회 (조회수 증가 X)
+     */
+    @Transactional
+    public BoardResponseDto findByIdNoViewCount(Long id) {
+    	Board entity = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
     	return new BoardResponseDto(entity);
     }
 

@@ -36,7 +36,6 @@ function findTravel(id) {
 
 
 		document.getElementById('travelName1').innerText = travel['travelName'];
-		document.getElementById('travelName2').innerText = travel['travelName'];
 
 		findWeather(json);
 		initMap(json);

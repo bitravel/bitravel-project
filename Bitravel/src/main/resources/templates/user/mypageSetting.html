@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	layout:decorator="layout1"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>마이 페이지 :: BITravel</title>
+    </head>
+    
+    <th:block layout:fragment="content">
+	<!--메인 -->
+        <main class="main-content" id="main-content">
+            <section class="position-relative bg-white">
+                <div class="container position-relative pt-3 pb-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <nav class="d-md-flex" aria-label="breadcrumb">
+                                <ol class="breadcrumb mb-0">
+                                    <li class="breadcrumb-item">
+                                        <a href="#!">Home</a>
+                                    </li>
+                                    <li class="breadcrumb-item active">
+                                        Profile
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                    <!--/.row-->
+
+                </div>
+            </section>
+            <section class="position-relative">
+                <div class="container position-relative">
+                    <div class="overflow-hidden">
+                        <!--Profile info header-->
+                        <div class="position-relative pb-7 pb-lg-12">
+                            <div class="row">
+                                <div class="col-lg-9 mx-auto">
+                                    <div class="pt-5 d-flex flex-column h-100">
+                                        <nav class="nav mb-5 nav-pills">
+                                            <a href="/mypage" class="nav-link"> <i class="bi bi-person-circle me-2 align-middle"></i>My profile</a>
+                                            <a href="/mypageSetting" class="nav-link active"><i class="bi bi-gear me-2 align-middle"></i>Settings</a>
+                                        </nav>
+
+                                        <div class="card border-light p-3 mb-3">
+                                            <h5 class="mb-4">Edit profile</h5>
+
+                                           <form>
+                                            <div class="row align-items-center">
+                                                <div class="col-md-12">
+                                                    <div class="row">
+                                                        <div class="col-md-6 mb-4">
+                                                            <input type="file" class="size-190" id="update_profile" accept="image/png, image/jpeg, image/gif">
+                                                         </div>
+                                                    </div>
+                                                </div>
+                                                   <div class="col-md-6 mb-3">
+                                                    <label class="form-label" for="profile_name">Name</label>
+                                                    <input class="form-control" id="profile_name" type="text"
+                                                        value="Emily doe">
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label" for="profile_email">Email address</label>
+                                                    <input class="form-control" type="email" id="profile_email"
+                                                        value="info@emilydoe.com">
+
+                                                </div>
+                                                
+                                                
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label" for="profile_country">City</label>
+                                                    <select name="billing_different_country_name"
+                                                        id="billing__different_country_name" class="form-control"
+                                                        data-choices>
+                                                        <option value="Afghanistan">서울</option>
+                                                        <option value="Åland Islands">부산</option>
+                                                        <option value="Albania">대구</option>
+                                                        <option value="Algeria">인천</option>
+                                                        <option value="American Samoa">광주</option>
+                                                        <option value="Andorra">대전</option>
+                                                        <option value="Angola">대구</option>
+                                                        <option value="Anguilla">인천</option>
+                                                        <option value="Antarctica">광주</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label" for="profile_country">State</label>
+                                                    <select name="billing_different_country_name"
+                                                        id="billing__different_country_name" class="form-control"
+                                                        data-choices>
+                                                        <option value="Afghanistan">구로구</option>
+                                                        <option value="Åland Islands">강남구</option>
+                                                        <option value="Albania">서초구</option>
+                                                        <option value="Algeria">금천구</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-6 mb-3">
+                                                    <label class="form-label" for="profile_gender">Gender</label>
+                                                    <select data-choices='{"searchEnabled":false}' class="form-control">
+                                                        <Option>Male</Option>
+                                                        <Option selected>Female</Option>
+                                                        <Option>Preffer not to say</Option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <hr class="mt-5 mb-3">
+                                            <div class="text-end">
+                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                           </form>
+                                        </div>
+
+                                        <!--Password card-->
+                                        <div class="card border-light p-3 mb-3">
+                                            <h5 class="mb-4">Update password</h5>
+
+                                           <form>
+                                               <div class="row">
+                                                   <div class="col-md-4 mb-3">
+                                                       <label for="update_pass_current" class="form-label">Current password</label>
+                                                       <input type="password" class="form-control">
+                                                   </div>
+                                                   <div class="col-md-4 mb-3">
+                                                    <label for="update_pass_new" class="form-label">New password</label>
+                                                    <input type="password" class="form-control" id="update_pass_new">
+                                                </div>
+                                                <div class="col-md-4 mb-3">
+                                                    <label for="update_pass_new_confirm" class="form-label">Confirm new password</label>
+                                                    <input type="password" class="form-control" id="update_pass_new_confirm">
+                                                </div>
+                                               </div>
+                                               <small class="form-helper">Password must be at least 8 character and contain symbols</small>
+                                            <div class="text-end">
+                                                <button type="button" class="btn btn-primary">Save updated password</button>
+                                            </div>
+                                            </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </th:block>
+
+        
+        <!-- begin Back to Top button -->
+        <a href="#" class="toTop">
+            <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 9' class="align-middle rotate-180" width="13"
+                height="9">
+                <path fill='currentColor'
+                    d="M12.25 2.30062L10.8988 0.949371L6.5 5.33854L2.10125 0.949371L0.75 2.30062L6.5 8.05062L12.25 2.30062Z">
+                </path>
+            </svg>
+        </a>
+        <!-- scripts -->
+        <script src="assets/js/theme.bundle.js"></script>
+
+        <!--Flatpickr-->
+        <script src="assets/vendor/flatpickr/flatpickr.js"></script>
+        <script src="assets/js/custom/flatpickr.js"></script>
+        <!--Profile upload-->
+        <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.js"></script>
+        <script src="https://unpkg.com/filepond-plugin-file-poster/dist/filepond-plugin-file-poster.js"></script>
+        <script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+        <script>
+            FilePond.registerPlugin(
+            FilePondPluginImagePreview,
+            FilePondPluginFilePoster
+);
+
+// Select the file input and use 
+// create() to turn it into a pond
+FilePond.create(
+  document.querySelector('#update_profile'),
+  {
+    labelIdle: `Drag & Drop picture or Browse`,
+    imagePreviewHeight: 160,
+    allowMultiple:false,
+    allowFilePoster:true,
+    filePosterHeight:160,
+    stylePanelLayout: 'compact circle',
+    styleLoadIndicatorPosition: 'center bottom',
+    styleProgressIndicatorPosition: 'right bottom',
+    styleButtonRemoveItemPosition: 'left bottom',
+    styleButtonProcessItemPosition: 'right bottom',
+    files: [
+        {
+            source: '12345',
+            options: {
+                type: 'local',
+                file: {
+                    name: 'Profile',
+                    size: false,
+                    type: 'image/jpg'
+                },
+
+                // pass poster property
+                metadata: {
+                    poster: './assets/img/avatar/4.jpg'
+                }
+            }
+        }
+    ]
+  }
+);
+
+            </script>
+
+</html>

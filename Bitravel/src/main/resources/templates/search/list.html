@@ -4,7 +4,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>통합 검색 결과 :: BITravel</title>
+    <title th:text="'&ldquo;'+${keyword}+'&rdquo; 통합 검색 결과 :: Bitravel'">통합 검색 결과 :: Bitravel</title>
 </head>
 
 <th:block layout:fragment="content">
@@ -100,7 +100,7 @@
             </div>
         </div>
 
-          <div class="container pb-7 mb-2 mt-5">
+          <div class="container pb-7 mb-2 mt-4">
             <h4 class="mb-5 fw-bold">회원 검색 결과 (총 <span th:text="${ucount}"></span>명)</h4>
             <!-- Swiper -->
             <div class="swiper-container swiper-3">

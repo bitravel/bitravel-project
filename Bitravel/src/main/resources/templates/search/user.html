@@ -1,0 +1,93 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title th:text="'&ldquo;'+${keyword}+'&rdquo; 회원 검색 결과 :: Bitravel'">회원 검색 결과 :: Bitravel</title>
+</head>
+
+<body>
+    <br>
+    <th:block layout:fragment="content">
+        <!--메인 -->
+        <main class="main-content position-relative z-index-2 bg-white" id="main-content">
+            <section class="position-relative bg-light">
+                <div class="container pt-11 pb-7 pb-lg-9">
+                    <div class="row pt-lg-5">
+                        <div class="col-lg-8">
+                            <h2 class="display-4" th:text="'&ldquo;'+${keyword}+'&rdquo; 키워드 회원 검색 결과'"></h2>
+                            <br>
+                            <h5 th:text="'닉네임 기준 검색 회원 총 '+${count}+'명'"></h5>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <br>
+        <section class="position-relative overflow-hidden">
+            <div class="container mt-5">
+                <div class="row me-2" id="list">
+                    <div th:each="list, index: ${userList}" class="bg-white col-sm-4 mb-5">
+                                                   <article class="card-hover border-0 d-flex" style="min-height:250px;">
+                                <a th:href="@{'/user/'+${list.userId}}" class="stretched-link"></a>
+                                <div class="card-body position-relative p-0">
+                                    <div class="d-block position-relative mb-4">
+                                        <img style="height:250px;width:250px;" th:src="${list.userImage}" onerror="this.src='/assets/img/avatar/2.jpg'" class="img-fluid img-zoom" alt="프로필">
+                                    </div>
+                                    <h5 class="mb-3" th:text="${list.nickname}"></h5>
+                                    <div class="text-primary fw-semibold pb-2">
+                                    <span th:text="'레벨 '+${list.level}+' &nbsp;&nbsp;&nbsp;&nbsp;――― &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'+${#dates.format(list.userDate, 'yyyy')}+'년 '+${#dates.format(list.userDate, 'MM')}+'월 가입'">
+                                            </span></div>
+                                </div>
+                            </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <nav aria-label="Page navigation example">
+            <br>
+            <ul class="pagination justify-content-center" th:with="start=${T(Math).floor(userList.number/10) * 10 + 1},
+              						last=${start + 9 < userList.totalPages ? start + 9 : userList.totalPages}">
+
+                <!-- first page -->
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/search/user/(page=1, keyword=${param.keyword})}" aria-label="First">
+                        <span aria-hidden="true"> FIRST </span>
+                    </a>
+                </li>
+
+                <!-- previous page -->
+                <li class="page-item" th:class="${userList.first} ? 'disabled'">
+                    <a class="page-link" th:href="${userList.first} ? '#' : @{/search/user/(page=${userList.number}, keyword=${param.keyword})}"
+                        aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                <!-- present page -->
+                <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == userList.number + 1} ? 'active'">
+                            <a class="page-link" th:text="${page}" th:href="@{/search/user/(page=${page}, keyword=${param.keyword})}">&nbsp;</a>
+                            </li>
+							
+							<!-- next page -->
+                            <li class="page-item" th:class="${userList.last} ? 'disabled'">
+                                <a class="page-link" th:href="${userList.last} ? '#' : @{/search/user/(page=${userList.number + 2}, keyword=${param.keyword})}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            
+                            <!-- last page -->
+                            <li class="page-item">
+						      <a class="page-link" th:href="@{/search/user/(page=${userList.totalPages}, keyword=${param.keyword})}" aria-label="Last">
+						        <span aria-hidden="true">LAST</span>
+						      </a>
+						    </li>
+						    
+                        </ul>
+                    </nav>
+                    <br><br>
+    </th:block>
+</body>
+
+</html>

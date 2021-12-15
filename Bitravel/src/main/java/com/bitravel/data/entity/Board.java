@@ -47,10 +47,7 @@ public class Board {
     
     @Column(name = "boardLevel")
     private Integer boardLevel;
-    // 답글/대댓글용
     
-    @Column(name = "boardFile")
-    private String boardFile;
     
     @NotBlank(message = "글의 내용을 기입해주세요.")
     @Size(max=10000)
@@ -63,7 +60,7 @@ public class Board {
     private String nickname; // 작성자 닉네임
     
     @Builder
-    public Board(String boardTitle, String boardContent, String userEmail,Long boardId, int boardView, int boardRecom, int boardLevel, Timestamp boardDate, String nickname, String boardFile) {
+    public Board(String boardTitle, String boardContent, String userEmail,Long boardId, int boardView, int boardRecom, int boardLevel, Timestamp boardDate, String nickname) {
     	this.boardTitle = boardTitle;
     	this.boardContent = boardContent;
     	this.boardId = boardId;
@@ -73,7 +70,6 @@ public class Board {
     	this.boardDate = boardDate;
     	this.userEmail = userEmail;
     	this.nickname = nickname;
-    	this.boardFile = boardFile;
     }
     
     public void update(String boardTitle, String boardContent) {
