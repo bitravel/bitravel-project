@@ -106,6 +106,7 @@ public class TokenProvider implements InitializingBean {
 		principal.setNickname(user.getNickname());
 		principal.setPoint(user.getPoint());
 		principal.setAge(user.getAge());
+		principal.setGender(user.getGender());
 		principal.setUserImage(user.getUserImage());
 		principal.setUserLargeGov(user.getUserLargeGov());
 		principal.setUserSmallGov(user.getUserSmallGov());
