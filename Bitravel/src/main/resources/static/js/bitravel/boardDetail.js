@@ -33,7 +33,8 @@ function openModal(commentId, content, email) {
 
 	fetch(`/api/user`).then(response => {
 		if (!response.ok) {
-			throw new Error('Request failed...');
+			alert("로그인을 해주세요.");
+			return false;
 		}
 		return response.json();
 	}).then(json => {
