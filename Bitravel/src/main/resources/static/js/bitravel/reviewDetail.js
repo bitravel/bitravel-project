@@ -3,6 +3,22 @@
 /**
  * 후기 상세 조회
  */
+function reviewTravelImage() {
+	fetch(`/api/reviews/travels/${id}`).then(response => {
+		if (!response.ok) {
+			throw new Error('Request failed...');
+		}
+		return response.json();
+	}).then(json => {
+		json = JSON.stringify(json);
+		json.replace('[', '{').replace(']', '}');
+		const newList = JSON.parse(json);
+		console.table(json.travelImage);
+		console.table(newList.travelImage);
+	}).catch(error => {
+		alert('불러오기에 실패했습니다.\n' + error);
+	})
+}
 function reviewList() {
 
 	fetch(`/api/reviews/${id}`).then(response => {
@@ -35,8 +51,7 @@ function reviewList() {
 function openModal(commentId, email, content) {
 	
 	fetch(`/api/user`).then(response => {
-		if (response.result == false) {
-			alert=("로그인을 먼저 해주세요");
+		if (!response.ok) {
 			return false;
 		}
 		return response.json();
@@ -50,7 +65,6 @@ function openModal(commentId, email, content) {
 	
 	$("#commentModal").modal("toggle");
 
-	//document.getElementById("modalWriter").value = writer;
 	document.getElementById("modalContent").value = content;
 
 	document.getElementById("btnCommentUpdate").setAttribute("onclick", "updateComment(" + commentId + ")");
@@ -290,14 +304,19 @@ function deleteBoard() {
 }
 
 /*지도 map*/
-function initMap(latitude, longitude, travelName) {
-	var container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-	var options = { //지도를 생성할 때 필요한 기본 옵션
-		center: new kakao.maps.LatLng(latitude, longitude), //지도의 중심좌표.
-		level: 3 //지도의 레벨(확대, 축소 정도)
-	};
-	var map = new kakao.maps.Map(container, options); //지도 생성 및 객체 리턴
 
+var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+    mapOption = { 
+        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+        level: 3 // 지도의 확대 레벨
+    };
+
+var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+function panTo(latitude, longitude, travelName) {
+    // 이동할 위도 경도 위치를 생성합니다 
+    var moveLatLon = new kakao.maps.LatLng(latitude, longitude);
+    
 	var markerPosition = new kakao.maps.LatLng(latitude, longitude);
 
 	// 마커를 생성합니다
@@ -323,19 +342,11 @@ function initMap(latitude, longitude, travelName) {
 		content: content,
 		yAnchor: 1
 	});
-	function relayout() {
-		map.relayout();
-	}
-}
+    // 지도 중심을 부드럽게 이동시킵니다
+    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+    map.panTo(moveLatLon);            
+}        
 
-var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-	mapOption = {
-		center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-		level: 3 // 지도의 확대 레벨
-	};
-
-// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-var map = new kakao.maps.Map(mapContainer, mapOption);
 
 
 

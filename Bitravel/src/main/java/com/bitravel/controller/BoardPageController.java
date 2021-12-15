@@ -41,6 +41,14 @@ public class BoardPageController {
     	
     	return "board/list";
     }
+    
+    @GetMapping("/best")
+    public String boardBestList(Model model, @PageableDefault(size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
+        
+    	model.addAttribute("boardList", boardService.findBestList(pageable));
+    	
+    	return "board/best";
+    }
 
     /**
      * 게시글 등록 페이지

@@ -1,5 +1,8 @@
 package com.bitravel.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -12,8 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bitravel.data.entity.Review;
+import com.bitravel.data.entity.ReviewTravels;
+import com.bitravel.data.entity.Travel;
 import com.bitravel.data.repository.ReviewRepository;
+import com.bitravel.data.repository.TravelRepository;
 import com.bitravel.service.ReviewService;
+import com.bitravel.service.TravelService;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +32,8 @@ public class ReviewPageController {
 	
 	private final ReviewService reviewService;
 	private final ReviewRepository reviewRepository;
-	
+	private final TravelService travelService;
+	private final TravelRepository travelRepository;
     /**
      * 후기 리스트 페이지
      */
@@ -60,7 +68,14 @@ public class ReviewPageController {
     public String openDetailWriting(@PathVariable final Long id, Model model, @RequestParam(value = "page") @Nullable final Long page) {
         model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
         Review review = reviewRepository.getById(id);
+        List<ReviewTravels> thisReview = reviewService.findByReview(review);
+        List<Travel> list = new ArrayList<>();
         model.addAttribute("rtList", reviewService.findByReview(review));
+        for(int i=0;i<thisReview.size();i++) {
+			ReviewTravels now = thisReview.get(i);
+			list.add(travelService.findByTravelId(now.getTravel().getTravelId()));
+			model.addAttribute("tList", list);
+        }
         return "review/reviewDetail";
     }
     /**

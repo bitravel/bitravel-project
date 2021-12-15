@@ -74,14 +74,12 @@ public class Review {
     	this.reviewDate = reviewDate;
     	this.userEmail = userEmail;
     	this.nickname = nickname;
-    	//this.travelSet = travelSet;
     	this.thumbNail = thumbNail;
     }
     
     public void update(String reviewTitle, String reviewContent) {
     	this.reviewTitle = reviewTitle;
     	this.reviewContent = reviewContent;
-    	//this.travelSet = travelSet;
     }
     
     @OneToMany(mappedBy ="review") //ReviewTravels 테이블의 review필드에 맵핑

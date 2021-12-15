@@ -21,8 +21,6 @@ public class ReviewResponseDto {
     private Timestamp reviewDate; // 작성날짜
     private int reviewRecom; // 추천수
     private String thumbNail; //썸네일
-    //private List<TravelSimpleDto> travelList;
-    //private String travelName;
     
     public ReviewResponseDto(Review entity) {
     	this.reviewTitle = entity.getReviewTitle();
@@ -35,18 +33,6 @@ public class ReviewResponseDto {
     	this.userEmail = entity.getUserEmail();
     	this.nickname = entity.getNickname();
     	this.thumbNail = entity.getThumbNail();
-    	//this.travelName = rtEntity.getTravelName();
-    	//this.travelList = this.extractId(entity.getTravelSet());
-    }
-    
-    // 리뷰에 필요한 정보만 가지고 있는 Dto로 travelSet을 만들어서 사용
-//    public List<TravelSimpleDto> extractId(Set<Travel> travelSet) {
-//    	List<TravelSimpleDto> list = new ArrayList<>();
-//    	Iterator<Travel> iterator = travelSet.iterator();
-//    	while(iterator.hasNext()) {
-//    		list.add(new TravelSimpleDto(iterator.next()));
-//    	}
-//    	return list;
-//    }
-  
+    	
+    }  
 }

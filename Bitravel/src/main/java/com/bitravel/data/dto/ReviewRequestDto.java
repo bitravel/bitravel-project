@@ -26,6 +26,7 @@ public class ReviewRequestDto {
     private List<String> latitude; // 위도
     private List<String> longitude; // 경도
     private List<String> isLiked; // 선호도
+    private List<String> travelImage; //여행지 사진
     
     @JsonIgnore
     private List<ReviewTravels> reviewTravels;
