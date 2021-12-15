@@ -28,4 +28,6 @@ public interface TravelRepository extends JpaRepository<Travel, Long>{
 	List<Travel> findByLargeGovAndSmallGov(String largeGov, String smallGov, Sort sort);
 	// 기초자치단체로 여행지 검색
 	List<Travel> findByLargeGovAndSmallGov(String largeGov, String smallGov);
+	
+	Page<Travel> findBySmallCategory(String keyword, Pageable pageable);
 }
