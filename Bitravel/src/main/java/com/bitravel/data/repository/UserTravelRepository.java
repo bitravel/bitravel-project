@@ -15,6 +15,7 @@ public interface UserTravelRepository extends JpaRepository<UserTravel, Long>{
 	List<UserTravel> findByUserEmailAndIsVisited(String userEmail, Boolean isVisited);
 	// 회원별 선호 여행지 관련 정보 검색
 	List<UserTravel> findByUserEmailAndIsLiked(String userEmail, Boolean isLiked);
+	List<UserTravel> findByIsLiked(Boolean isLiked);
 	// 회원별 찜 여행지 관련 정보 검색
 	List<UserTravel> findByUserEmailAndIsWishlisted(String userEmail, Boolean isWishlisted);
 	// 여행지별 방문/미방문 회원 관련 정보 검색
