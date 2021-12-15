@@ -1,5 +1,6 @@
 package com.bitravel.data.repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,4 +25,7 @@ public interface BoardRepository extends JpaRepository<Board, Long>{
 
 	List<Board> findByNicknameContainingOrBoardTitleContainingOrBoardContentContaining(String nickname, String boardTitle,
 			String boardContent, Sort sort);
+	
+	Page<Board> findByBoardDateBetweenAndBoardViewGreaterThan(Date start, Date end, Pageable pageable, int value);
+	
 }

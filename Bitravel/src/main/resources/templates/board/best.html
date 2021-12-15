@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" layout:decorator="layout1"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title id="pageTitle">인기 게시물 목록 :: Bitravel</title>
+</head>
+
+<th:block layout:fragment="content">
+    <!--메인 -->
+    <main class="main-content position-relative z-index-2 bg-white" id="main-content">
+        <section class="position-relative bg-light">
+            <div class="container  pt-11 pb-7 pb-lg-9">
+                <div class="row pt-lg-5">
+                    <div class="col-lg-8">
+                        <a href="/board/best" class="text-dark decorator-none">
+                        <h2 class="display-4">인기 게시물</h2>
+                        </a>
+                        <br>
+                        <p>최근 3일 동안 가장 인기있는 글들의 목록입니다.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 게시글 영역 -->
+        <div class="container py-6">
+            <div class="row mb-3 justify-content-left">
+             <p><i class="bi bi-arrow-right fs-5"></i>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/board" class="text-dark fw-bold fs-5">모든 게시물 보기</a></p>
+            </div>
+            <div class="row mb-3 justify-content-center">
+                <!-- 가로길이 조정  -->
+                <div class="col-xxl-12 mb-4">
+                    <!-- 테이블 시작 -->
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr class="text-muted">
+                                    <th scope="col" class="text-center" style="width:10%;">번호</th>
+                                    <th scope="col" style="width:45%;">제목</th>
+                                    <th scope="col" style="width:10%;">작성자</th>
+                                    <th scope="col" class="text-center" style="width:23%;">날짜</th>
+                                    <th scope="col" class="text-center" style="width:12%;">조회수</th>
+                                </tr>
+                            </thead>
+                            <tbody id="list">
+                                <tr th:each="list, index: ${boardList}">
+
+                                    <td class="text-muted text-center">
+                                        [[${boardList.totalElements-(((boardList.number)*boardList.size) +
+                                        index.index)}]]</td>
+                                    <td>
+                                        <a th:href="@{'./'+${list.boardId}(keyword=${param.keyword}, page=${boardList.number+1})}"
+                                            class="text-dark">
+                                            [[${list.boardTitle}]]
+                                        </a>
+                                    </td>
+                                    <td>[[${list.nickname}]]</td>
+                                    <td class="text-center small" th:text="${#dates.format(list.boardDate, 'yyyy-MM-dd HH:mm')}">
+                            		[[${list.boardDate}]]</td>
+                            	<td class="text-center">[[${list.boardView}]]</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+             	</div>
+        <!-- 테이블 종료 -->                   
+                    <nav aria-label="Page navigation example">
+                        <br>
+                        <ul class="pagination justify-content-center"
+                        	th:with="start=${T(Math).floor(boardList.number/10) * 10 + 1},
+              						last=${start + 9 < boardList.totalPages ? start + 9 : boardList.totalPages}">
+                            
+                            <!-- first page -->
+                            <li class="page-item" >
+						      <a class="page-link" th:href="@{./best(page=1)}" aria-label="First">
+						        <span aria-hidden="true"> FIRST </span>
+						      </a>
+						    </li>
+						    
+                            <!-- previous page -->
+                            <li class="page-item" th:class="${boardList.first} ? 'disabled'">
+                                <a class="page-link" th:href="${boardList.first} ? '#' : @{./best(page=${boardList.number})}" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            
+                            <!-- present page -->
+                            <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == boardList.number + 1} ? 'active'">
+                            <a class="page-link" th:text="${page}" th:href="@{./best(page=${page})}">&nbsp;</a>
+                            </li>
+							
+							<!-- next page -->
+                            <li class="page-item" th:class="${boardList.last} ? 'disabled'">
+                                <a class="page-link" th:href="${boardList.last} ? '#' : @{./best(page=${boardList.number + 2})}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            
+                            <!-- last page -->
+                            <li class="page-item">
+						      <a class="page-link" th:href="@{./best(page=${boardList.totalPages})}" aria-label="Last">
+						        <span aria-hidden="true">LAST</span>
+						      </a>
+						    </li>
+						    
+                        </ul>
+                    </nav>
+	           </div>
+	       </div>
+	   </main>
+</th:block>
+<th:block layout:fragment="script">
+<script th:inline="javascript" src="/js/bitravel/boardList.js"></script>
+</th:block>
+</html>
