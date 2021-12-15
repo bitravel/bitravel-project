@@ -100,38 +100,33 @@
         	const form = document.getElementById('form');
         	var allTravel = document.getElementsByName('form-line').length;
         	var tIdArray = [];
-        	var tNameArray = [];
-        	var latitudeArray = [];
-        	var longitudeArray = [];
+			var isLikedArray = [];
         	
         	for (var i = 0; i < allTravel; i++) {
         		var travelId = 'travelId' + i;
-        		var travelName = 'travelName' + i;
-        		var latitude = 'latitude' + i;
-        		var longitude = 'longitude' + i;
-       			var tid = document.getElementById(travelId).value
-        		var tname = document.getElementById(travelName).value
-        		var tlatitude = document.getElementById(latitude).value
-        		var tlongitude = document.getElementById(longitude).value
-        		
-       			if(tid !== "") {
+       			var like = 'like' + i;
+				var tid = document.getElementById(travelId).value
+        		var tLiked = document.getElementById(like).checked
+       			if(tid !== "" && tLiked) {
        				tIdArray.push(tid);
-       				tNameArray.push(tname);
-       				latitudeArray.push(tlatitude);
-       				longitudeArray.push(tlongitude);
-        		}
+					isLikedArray.push(1);
+        		} else if (tid !== "" && !tLiked) {
+					tIdArray.push(tid);
+					isLikedArray.push(0);
+				} else {
+					alert("여행지와 좋아요 선택을 해주세요.")
+					return false;
+				}
         	}
         	
         	const rimage = form.summernote.value;
         	const thumbNail = rimage.match("<img[^>]*src=[\"']?([^>\"']+)[\"']?[^>]*>");
-        	
+        	console.log(thumbNail);
 			const params = {
-            		travelName: tNameArray,
-            		latitude: latitudeArray,
-            		longitude: longitudeArray,
             		reviewTitle: form.reviewTitle.value,
             		reviewContent: form.summernote.value,
-            		travelId : tIdArray,
+            		travelId: tIdArray,
+					isLiked: isLikedArray,
             		thumbNail : null
             	};
 			
@@ -209,11 +204,9 @@
 		/**
          * 여행지 삽입
          **/
-		function put(travelId, travelName, latitude, longitude) {
+		function put(travelId, travelName) {
         	var travelId = travelId;
         	var travelName = travelName;
-        	var latitude = latitude;
-        	var longitude = longitude;
         	var allSelect = (document.getElementsByName('form-line').length);
 
         	//모달창 닫기
@@ -221,20 +214,14 @@
         		$("#myModal_1").modal("hide");
         		$("#travelId0").val(travelId);
             	$("#travelName0").val(travelName);
-            	$("#latitude0").val(latitude);
-            	$("#longitude0").val(longitude);
         	}else if(allSelect == 2){
         		$("#myModal_1").modal("hide");
         		$("#travelId1").val(travelId);
             	$("#travelName1").val(travelName);
-            	$("#latitude1").val(latitude);
-            	$("#longitude1").val(longitude);
         	}else {
         		$("#myModal_1").modal("hide");
         		$("#travelId2").val(travelId);
             	$("#travelName2").val(travelName);
-            	$("#latitude2").val(latitude);
-            	$("#longitude2").val(longitude);
        		}	
         }
 		
@@ -279,8 +266,6 @@
  			var travelName = 'travelName' + allSelect;
  			//tag = "<label for= reviewTravel' name='line'>여행지</label>\n";
  			tag = "<div style='display: flex;'>\n";
- 			tag += "<input type='hidden' id='latitude" + allSelect + "'class='form-control'placeholder='위도'/>\n";
- 			tag += "<input type='hidden' id='longitude" + allSelect + "'class='form-control'placeholder='경도'/>\n";
  			tag += "<input type='hidden' id='travelId" + allSelect + "'class='form-control'placeholder='여행지 Id'/>\n";
  			tag += "<input type='text' id='travelName" + allSelect + "' class='form-control mb-2' placeholder='여행지를 선택해 주세요.' readonly/>\n ";
  			tag += "<button type='button' class='btn btn-outline-danger mb-2' id='removeBt" + allSelect + "'onclick='removeTravel(this.id)' style='width: 200px; margin-left: 10px;'>삭제</button>\n </div>"
