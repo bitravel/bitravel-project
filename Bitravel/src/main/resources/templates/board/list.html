@@ -26,8 +26,10 @@
 
         <!-- 게시글 영역 -->
         <div class="container py-6">
+            <div class="row mb-3 justify-content-left">
+             <p><i class="bi bi-arrow-right fs-5"></i>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/board/best" class="text-dark fw-bold fs-5">최근 인기글 보기</a></p>
+            </div>
             <div class="row mb-3 justify-content-center">
-
                 <!-- 가로길이 조정  -->
                 <div class="col-xxl-12 mb-4">
                     <!-- 테이블 시작 -->
@@ -66,6 +68,7 @@
         <!-- 테이블 종료 -->
 		<!--/* 검색 영역 */-->
 				<div class="row col-8 ">
+                    
                     <div class="d-flex justify-content-center">
                         <form action="/board/search/all/list" name="edit" method="GET" class="input-group">
                             <label for="selectSizing" class="mb-2"></label>
