@@ -36,20 +36,14 @@ public class ReviewTravels {
     @JoinColumn(name="review_id")
     private Review review;
 	
-	private String travelName;
-	private String latitude;
-	private String longitude;
-	
     @Column(name = "isLiked", columnDefinition = "BIT(1) DEFAULT 0")
     private boolean isLiked; // 선호 여부
+    
 	
 	@Builder
-	public ReviewTravels(Travel travel, Review review, String travelName, String latitude, String longitude, boolean isLiked) {
+	public ReviewTravels(Travel travel, Review review, boolean isLiked) {
 		this.travel = travel;
 		this.review = review;
-		this.travelName = travelName;
-		this.latitude = latitude;
-		this.longitude = longitude;
 		this.isLiked = isLiked;
 	}
 	
