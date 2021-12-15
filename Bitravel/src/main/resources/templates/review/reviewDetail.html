@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" layout:decorator="layout1" 
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    
     <head>
         <title>여행 후기 게시판 :: BITravel</title>
     </head>
-
+   
      <th:block layout:fragment="modal-board">
 		<div id="commentModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-hidden="true">
 		    <div class="modal-dialog" role="document">
@@ -49,12 +50,11 @@
                                     </div>
                                 </div>
                             </div>
-
                         </div>
+                        <hr class="one" style="height:3px">
                     </article>
                     <!--/.article-->
                 </div>
-
 
                 <!--Divider-->
                 <svg class="position-absolute start-0 bottom-0 text-white" preserveAspectRatio="none" width="100%"
@@ -64,19 +64,14 @@
             </section>
             </main>
             <!--/.Article header-end-->
-
+			
             
-                <div class="container pb-7">
-                    <div class="swiper-container swiper-progress rounded-xl overflow-hidden shadow-lg mt-n15">
+                <div class="container pb-4">
+                    <div class="swiper-container swiper-progress rounded-xl overflow-hidden shadow-lg mt-n15 mb-4">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide rounded-xl overflow-hidden">
-                                <img src="/assets/img/1200x600/1.jpg" alt="" class="img-fluid rounded-xl position-relative">
-                            </div>
-                            <div class="swiper-slide rounded-xl overflow-hidden">
-                                <img src="/assets/img/1200x600/4.jpg" alt="" class="img-fluid rounded-xl position-relative">
-                            </div>
-                            <div class="swiper-slide rounded-xl overflow-hidden">
-                                <img src="/assets/img/1200x600/3.jpg" alt="" class="img-fluid rounded-xl position-relative">
+                            <div class="swiper-slide rounded-xl overflow-hidden" th:each="list: ${tList}" style="text-align:center; font-weight:bold; font-size:20px;">
+                                <span>[[${list.travelName}]]</span>
+                                <img th:src="${list.travelImage}" onerror="this.src='/assets/img/800x600/2.jpg'" alt="" class="img-fluid rounded-xl position-relative">
                             </div>
                         </div>
                         <div class="swiper-pagination swiperProgress-pagination swiper-pagination-progressbar"></div>
@@ -84,34 +79,32 @@
                         <div class="swiper-button-next swiperProgress-button-next bg-white size-60"></div>
                         <div class="swiper-button-prev swiperProgress-button-prev bg-white size-60"></div>
                     </div>
+                    
 					<!-- 메인 Content -->
                     <div class="form-group">
                         <div class="col-xl-9 mx-auto">
-                        	<table class="text-muted" style="width:100%; table-layout:fixed;" th:each="list: ${rtList}">
-                        	<tr>
-                        		<td style="width:30%;">
-                        			<span class="text-dark" >[[${list.travelName}]]</span>
-	                        	</td>
-							</tr>
-							</table>
+                        	
                         	<div class="form-group">
                         		<div class="col-sm-10 mb-5">
                         			<p id="reviewContent" style="word-break:break-word;"></p>
                         		</div>
 					    	</div>
 					    	
-                            <!--/.article-->
+                            <hr class="one" style="height:3px">
 							<!-- 지도 -->
-							
-<!-- 						    <div class="container py-2 pb-0 mt-1" th:each="list: ${rtList}"> -->
-<!-- 						    <button class="mb-4 py-3 border-bottom border-4 border-secondary" th:attr="onclick=|initMap('${list.latitude}, ${list.longitude}, ${list.travelName}')|">지도 보기</button> -->
-<!-- 						    <button onclick="relayout()"> 재호출 </button> -->
-<!-- 						    </div> -->
-<!-- 						    <div class="d-flex align-items-center justify-content-center mb-4 pt-2"> -->
-<!-- 						    <div id="map" style="width:800px;height:400px;"></div> -->
-<!-- 						    </div> -->
+							<div class="input-group align-items-center justify-content-center pt-1" style="display: flex;">
+							    <div class="py-2 pb-0 " th:each="list: ${tList}">
+							    	<button class="me-3 mb-4 py-3 btn btn-info waves-effect waves-light" th:attr="onclick=|panTo('${list.latitude}', '${list.longitude}', '${list.travelName}')|">[[${list.travelName}]]</button>
+							    </div>
+						    </div>
+						    <div class="d-flex align-items-center justify-content-center mb-4 pt-2">
+						    <div id="map" style="width:800px;height:400px;"></div>
+						    </div>
+						    
+						    <hr class="one" style="height:3px">
+                            
                             <!-- 댓글 -->
-                            <div class="container col-lg-8 col-10 col-sm-9 py-2 pb-0 mt-5 mb-5">
+                            <div class="container col-lg-12 col-10 col-sm-12 mt-3 mb-3">
                             <div class="box-content">
 								<div class="card-content">
 									<div class="clearfix">
@@ -119,7 +112,7 @@
 										<!-- /.box-title -->
 									</div>
 									<form class="form-horizontal form-view" >
-										<div class="input-group margin-bottom-20">
+										<div class="input-group mb-2">
 											<input type="text" id="content" class="form-control" 
 												onkeydown="javascript: if (event.keyCode == 13) {insertComment();}">
 											<input type="text" style="width:0px; visibility: hidden;">
@@ -141,8 +134,6 @@
 			<a href="javascript: void(0);" onclick="goWrite();"class="btn btn-primary waves-effect waves-light">수정하기</a>
 			<button type="button" onclick="deleteBoard();" class="btn btn-danger waves-effect waves-light">삭제하기</button>
 			</div>
-            
-        
     </th:block>
     
 <th:block layout:fragment="script">
