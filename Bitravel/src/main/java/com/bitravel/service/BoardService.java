@@ -1,4 +1,5 @@
 package com.bitravel.service;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -61,6 +62,19 @@ public class BoardService {
     	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
     	pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardId"));
     	return boardRepository.findAll(pageable);
+    }
+    
+    /**
+     * 인기 게시글 리스트 조회
+     */
+    @Transactional(readOnly = true)
+    public Page<Board> findBestList(Pageable pageable) {
+    	Date start = new Date(System.currentTimeMillis()-86400000L*3); // 현재 3일 기준
+    	Date end = new Date();
+    	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
+    	pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardView"));
+    	// 해당 기간 중 조회수 10 이상인 글 반환
+    	return boardRepository.findByBoardDateBetweenAndBoardViewGreaterThan(start, end, pageable, 10);
     }
     
     /**

@@ -4,7 +4,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title id="pageTitle">여행 게시판 :: Bitravel</title>
+    <title id="pageTitle">인기 게시물 목록 :: Bitravel</title>
 </head>
 
 <th:block layout:fragment="content">
@@ -14,11 +14,11 @@
             <div class="container  pt-11 pb-7 pb-lg-9">
                 <div class="row pt-lg-5">
                     <div class="col-lg-8">
-                        <a href="/board" class="text-dark decorator-none">
-                        <h2 class="display-4">여행 게시판</h2>
+                        <a href="/board/best" class="text-dark decorator-none">
+                        <h2 class="display-4">인기 게시물</h2>
                         </a>
                         <br>
-                        <p>자유롭게 여행에 관련한 이야기를 나눠 보세요.</p>
+                        <p>최근 3일 동안 가장 인기있는 글들의 목록입니다.</p>
                     </div>
                 </div>
             </div>
@@ -27,7 +27,7 @@
         <!-- 게시글 영역 -->
         <div class="container py-6">
             <div class="row mb-3 justify-content-left">
-             <p><i class="bi bi-arrow-right fs-5"></i>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/board/best" class="text-dark fw-bold fs-5">최근 인기글 보기</a></p>
+             <p><i class="bi bi-arrow-right fs-5"></i>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/board" class="text-dark fw-bold fs-5">모든 게시물 보기</a></p>
             </div>
             <div class="row mb-3 justify-content-center">
                 <!-- 가로길이 조정  -->
@@ -65,33 +65,7 @@
                         </table>
                     </div>
              	</div>
-        <!-- 테이블 종료 -->
-		<!--/* 검색 영역 */-->
-				<div class="row col-8 ">
-                    
-                    <div class="d-flex justify-content-center">
-                        <form action="/board/search/all/list" name="edit" method="GET" class="input-group">
-                            <label for="selectSizing" class="mb-2"></label>
-                            <div class="width-120">
-                                <select onchange="option_bt(this.value);" data-choices='{"searchEnabled":false}' class="form-control">
-                                    <option value="all">전체</option>
-                                    <option value="title">제목</option>
-                                    <option value="titleandcontent">제목+내용</option>
-                                    <option value="nickname">작성자</option>
-                                </select>
-                            </div>
-                            &nbsp;&nbsp;
-                            <input type="text" name="keyword" class="form-control" placeholder="키워드를 입력해 주세요." />
-                            <button type="submit" class="btn btn-secondary">
-                                <span aria-hidden="true" class="glyphicon glyphicon-search">검색</span>
-                            </button>
-                        </form>
-                    </div>
-                </div>
-          <!-- 글쓰기 버튼 -->
-                <div class="width-30">
-                    <a href="/board/write" class="btn btn-outline-secondary">글쓰기</a>
-                </div>
+        <!-- 테이블 종료 -->                   
                     <nav aria-label="Page navigation example">
                         <br>
                         <ul class="pagination justify-content-center"
@@ -100,33 +74,33 @@
                             
                             <!-- first page -->
                             <li class="page-item" >
-						      <a class="page-link" th:href="@{./list(keyword=${param.keyword}, page=1)}" aria-label="First">
+						      <a class="page-link" th:href="@{./best(page=1)}" aria-label="First">
 						        <span aria-hidden="true"> FIRST </span>
 						      </a>
 						    </li>
 						    
                             <!-- previous page -->
                             <li class="page-item" th:class="${boardList.first} ? 'disabled'">
-                                <a class="page-link" th:href="${boardList.first} ? '#' : @{./list(keyword=${param.keyword}, page=${boardList.number})}" aria-label="Previous">
+                                <a class="page-link" th:href="${boardList.first} ? '#' : @{./best(page=${boardList.number})}" aria-label="Previous">
                                     <span aria-hidden="true">&laquo;</span>
                                 </a>
                             </li>
                             
                             <!-- present page -->
                             <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == boardList.number + 1} ? 'active'">
-                            <a class="page-link" th:text="${page}" th:href="@{./list(keyword=${param.keyword}, page=${page})}">&nbsp;</a>
+                            <a class="page-link" th:text="${page}" th:href="@{./best(page=${page})}">&nbsp;</a>
                             </li>
 							
 							<!-- next page -->
                             <li class="page-item" th:class="${boardList.last} ? 'disabled'">
-                                <a class="page-link" th:href="${boardList.last} ? '#' : @{./list(keyword=${param.keyword}, page=${boardList.number + 2})}" aria-label="Next">
+                                <a class="page-link" th:href="${boardList.last} ? '#' : @{./best(page=${boardList.number + 2})}" aria-label="Next">
                                     <span aria-hidden="true">&raquo;</span>
                                 </a>
                             </li>
                             
                             <!-- last page -->
                             <li class="page-item">
-						      <a class="page-link" th:href="@{./list(keyword=${param.keyword}, page=${boardList.totalPages})}" aria-label="Last">
+						      <a class="page-link" th:href="@{./best(page=${boardList.totalPages})}" aria-label="Last">
 						        <span aria-hidden="true">LAST</span>
 						      </a>
 						    </li>
