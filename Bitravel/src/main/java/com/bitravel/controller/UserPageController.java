@@ -48,16 +48,17 @@ public class UserPageController {
     	return "user/admin";
     }
     
-    @GetMapping("/mypage")
-    //@PreAuthorize("isAnonymous()")
-    public String openMyPage() {
-        return "user/mypage";
-    }
+//    @GetMapping("/mypage")
+//    //@PreAuthorize("isAnonymous()")
+//    public String openMyPage() {
+//        return "user/mypage";
+//    }
     
     @GetMapping("/mypageSetting")
     //@PreAuthorize("isAnonymous()")
     public String openMyPageSetting() {
         return "user/mypageSetting";
     }
+    
 	
 }
