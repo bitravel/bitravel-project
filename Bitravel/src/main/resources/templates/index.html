@@ -8,17 +8,18 @@
 
 <th:block layout:fragment="content">
     <!--Preloader Spinner-->
-    <div class="spinner-loader bg-gradient-secondary text-white">
+ <!--   <div class="spinner-loader bg-gradient-secondary text-white">
         <div class="spinner-border text-primary" role="status">
         </div>
         <span class="small d-block ms-2">Loading...</span>
-    </div>
+    </div>-->
     <br>
 
  <!--상단 카로셀 시작-->
-    <main>
+    <main class="">
         <!--page-hero-master-slider-->
         <section class="position-relative overflow-hidden">
+            <div class="container">
 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
   <div class="carousel-indicators">
     <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
@@ -36,7 +37,7 @@
       </div>
     </div>
     <div class="carousel-item" data-bs-interval="3000">
-        <a href="/review/famous" class="stretched-link"></a>
+        <a href="/review/best" class="stretched-link"></a>
       <img src="/assets/img/backgrounds/bg7.jpg" class="d-block w-100" alt="두번째 내용">
       <div class="carousel-caption d-none d-md-block">
         <h3 class="display-4 mb-5">오늘의 인기 후기 읽어보기</h3>
@@ -45,7 +46,7 @@
       </div>
     </div>
     <div class="carousel-item" data-bs-interval="3000">
-        <a href="/board/famous" class="stretched-link"></a>
+        <a href="/board/best" class="stretched-link"></a>
       <img src="/assets/img/backgrounds/bg7.jpg" class="d-block w-100" alt="세번째 내용">
       <div class="carousel-caption d-none d-md-block">
         <h3 class="display-4 mb-5">오늘의 인기 게시물 읽어보기</h3>
@@ -62,6 +63,7 @@
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
+</div>
 </div>
         </section>
         <!-- 최상단 카로셀 종료 -->
@@ -96,7 +98,7 @@
                         </p>
                     </div>
                     <div class="col-12 col-lg-auto text-lg-end ms-auto" data-aos="fade-left" data-aos-delay="150">
-                        <a href="#!" class="link-hover-underline h6">
+                        <a href="/travel" class="link-hover-underline h6">
                             여행지 더 찾아보기 <i class="bi bi-arrow-right fs-5 align-middle lh-1 ms-1"></i>
                         </a>
                     </div>
@@ -109,17 +111,17 @@
                         <!--Projects swiper slider-->
                         <div class="swiper-container swiper-3 overflow-visible">
                             <div class="swiper-wrapper">
-
                                 <!--Swiper-slide-->
-                                <div class="swiper-slide">
-                                    <a href="#!" class="card-over d-block card-hover overflow-hidden">
-                                        <img src="assets/img/projects/1.jpg" alt="" class="img-fluid img-zoom">
+                                <div class="swiper-slide" th:each ="list, index: ${List1}">
+                                    <a th:href="@{'/travel/'+${list.travelId}}" class="card-over d-block card-hover overflow-hidden">
+                                        <img th:src="${list.travelImage}" alt="" onerror="this.src='/assets/img/800x600/2.jpg'" 
+                                        class="img-fluid img-zoom" style="max-height:300px;">
                                         <div class="card-overlay p-4 d-flex align-items-end text-white">
                                             <ul class="list-unstyled overlay-items">
                                                 <li>
-                                                    <h5 class="mb-2">Awesome title</h5>
+                                                    <h5 class="mb-2">[[${list.travelName}]]</h5>
                                                 </li>
-                                                <li><span>Awesome Subtitle</span></li>
+                                                <li><span th:text="${list.largeGov}+' '+${list.smallGov}"></span></li>
                                             </ul>
                                         </div>
                                     </a>
@@ -136,23 +138,23 @@
                 <div class="row mb-5 align-items-end">
                     <div class="col-lg-9 mb-5 mb-lg-0">
                         <h2 class="mb-3 display-4" data-aos="fade-right">
-                            <span th:if="${#authentication.principal.age>=0 && #authentication.principal.age<10}" th:text="어린이 "></span>
-                            <span th:if="${#authentication.principal.age>=10 && #authentication.principal.age<20}" th:text="어린이 "></span>
+                            <span th:if="${#authentication.principal.age<20}" th:text="10대 "></span>
                             <span th:if="${#authentication.principal.age>=20 && #authentication.principal.age<30}" th:text="20대 "></span>
                             <span th:if="${#authentication.principal.age>=30 && #authentication.principal.age<40}" th:text="30대 "></span>
                             <span th:if="${#authentication.principal.age>=40 && #authentication.principal.age<50}" th:text="40대 "></span>
                             <span th:if="${#authentication.principal.age>=50 && #authentication.principal.age<60}" th:text="50대 "></span>
                             <span th:if="${#authentication.principal.age>=60 && #authentication.principal.age<70}" th:text="60대 "></span>
                             <span th:if="${#authentication.principal.age>=70}" th:text="70대 이상 "></span>
-                            <span th:if="${#authentication.principal.gender != 'Private' }" th:text="${#authentication.principal.gender}"></span> 선호 지역 여행지</h2>
+                            <span th:if="${#authentication.principal.gender == 'Man' }" th:text="남성"></span>
+                            <span th:if="${#authentication.principal.gender == 'Woman' }" th:text="여성"></span> 선호 지역 여행지</h2>
                             
                             <p class="mb-0 w-lg-75 lead" data-aos="fade-right" data-aos-delay="150">
                             최근 또래들은 어떤 지역을 자주 찾을까요?
                         </p>
                     </div>
                     <div class="col-12 col-lg-auto text-lg-end ms-auto" data-aos="fade-left" data-aos-delay="150">
-                        <a href="#!" class="link-hover-underline h6">
-                            추천 여행지 더 보기 <i class="bi bi-arrow-right fs-5 align-middle lh-1 ms-1"></i>
+                        <a th:href="@{'/travel/list/'+${favR}}" class="link-hover-underline h6">
+                            여행지 더 찾아보기 <i class="bi bi-arrow-right fs-5 align-middle lh-1 ms-1"></i>
                         </a>
                     </div>
                 </div>
@@ -164,17 +166,17 @@
                         <!--Projects swiper slider-->
                         <div class="swiper-container swiper-3 overflow-visible">
                             <div class="swiper-wrapper">
-
-                                <!--Swiper-slide-->
-                                <div class="swiper-slide">
-                                    <a href="#!" class="card-over d-block card-hover overflow-hidden">
-                                        <img src="assets/img/projects/1.jpg" alt="" class="img-fluid img-zoom">
+                            <!--Swiper-slide-->
+                                <div class="swiper-slide" th:each ="list, index: ${List2}">
+                                    <a th:href="@{'/travel/'+${list.travelId}}" class="card-over d-block card-hover overflow-hidden">
+                                        <img th:src="${list.travelImage}" alt="" onerror="this.src='/assets/img/800x600/2.jpg'" 
+                                        class="img-fluid img-zoom" style="max-height:300px;">
                                         <div class="card-overlay p-4 d-flex align-items-end text-white">
                                             <ul class="list-unstyled overlay-items">
                                                 <li>
-                                                    <h5 class="mb-2">Awesome title</h5>
+                                                    <h5 class="mb-2">[[${list.travelName}]]</h5>
                                                 </li>
-                                                <li><span>Awesome Subtitle</span></li>
+                                                <li><span th:text="${list.largeGov}+' '+${list.smallGov}"></span></li>
                                             </ul>
                                         </div>
                                     </a>
@@ -189,19 +191,19 @@
         <!-- 메인2번 세트 종료 -->
 
         <!-- 메인 3번세트 시작 -->
-        <section class="position-relative text-white overflow-hidden" sec:authorize="isAuthenticated()">
+        <section class="position-relative text-white overflow-hidden" th:if="${middleC!=''}" sec:authorize="isAuthenticated()">
             <div class="position-absolute start-0 top-0 w-100 h-100 h-lg-60 bg-secondary"></div>
             <div class="container position-relative z-index-1 pt-7 pt-lg-12">
                 <div class="row mb-7 align-items-end">
                     <div class="col-lg-9 mb-5 mb-lg-0">
-                        <h2 class="mb-3 display-4" data-aos="fade-right">최근 인기 자연관광지</h2>
+                        <h2 class="mb-3 display-4" data-aos="fade-right">최근 인기 <span >[[${middleC}]] ([[${smallC}]])</span></h2>
                         <p class="mb-0 w-lg-75 lead" data-aos="fade-right" data-aos-delay="150">
                            <span sec:authentication="principal.nickname"></span>님의 취향에 맞는 최근 인기 관광지를 안내합니다.
                         </p>
                     </div>
                     <div class="col-12 col-lg-auto text-lg-end ms-auto" data-aos="fade-left" data-aos-delay="150">
-                        <a href="#!" class="link-hover-underline h6">
-                            추천 여행지 더 보기 <i class="bi bi-arrow-right fs-5 align-middle lh-1 ms-1"></i>
+                        <a href="/travel" class="link-hover-underline h6">
+                            여행지 더 찾아보기 <i class="bi bi-arrow-right fs-5 align-middle lh-1 ms-1"></i>
                         </a>
                     </div>
                 </div>
@@ -215,15 +217,16 @@
                             <div class="swiper-wrapper">
 
                                 <!--Swiper-slide-->
-                                <div class="swiper-slide">
-                                    <a href="#!" class="card-over d-block card-hover overflow-hidden">
-                                        <img src="assets/img/projects/1.jpg" alt="" class="img-fluid img-zoom">
+                                <div class="swiper-slide" th:each ="list, index: ${List3}">
+                                    <a th:href="@{'/travel/'+${list.travelId}}" class="card-over d-block card-hover overflow-hidden">
+                                        <img th:src="${list.travelImage}" alt="" onerror="this.src='/assets/img/800x600/2.jpg'" 
+                                        class="img-fluid img-zoom" style="max-height:300px;">
                                         <div class="card-overlay p-4 d-flex align-items-end text-white">
                                             <ul class="list-unstyled overlay-items">
                                                 <li>
-                                                    <h5 class="mb-2">Awesome title</h5>
+                                                    <h5 class="mb-2">[[${list.travelName}]]</h5>
                                                 </li>
-                                                <li><span>Awesome Subtitle</span></li>
+                                                <li><span th:text="${list.largeGov}+' '+${list.smallGov}"></span></li>
                                             </ul>
                                         </div>
                                     </a>
@@ -245,8 +248,8 @@
                         </p>
                     </div>
                     <div class="col-12 col-lg-auto text-lg-end ms-auto" data-aos="fade-left" data-aos-delay="150">
-                        <a href="#!" class="link-hover-underline h6">
-                            추천 여행지 더 보기 <i class="bi bi-arrow-right fs-5 align-middle lh-1 ms-1"></i>
+                        <a href="/travel" class="link-hover-underline h6">
+                            여행지 더 찾아보기 <i class="bi bi-arrow-right fs-5 align-middle lh-1 ms-1"></i>
                         </a>
                     </div>
                 </div>
@@ -260,15 +263,16 @@
                             <div class="swiper-wrapper">
 
                                 <!--Swiper-slide-->
-                                <div class="swiper-slide">
-                                    <a href="#!" class="card-over d-block card-hover overflow-hidden">
-                                        <img src="assets/img/projects/1.jpg" alt="" class="img-fluid img-zoom">
+                                <div class="swiper-slide" th:each ="list, index: ${List4}">
+                                    <a th:href="@{'/travel/'+${list.travelId}}" class="card-over d-block card-hover overflow-hidden">
+                                        <img th:src="${list.travelImage}" alt="" onerror="this.src='/assets/img/800x600/2.jpg'" 
+                                        class="img-fluid img-zoom" style="max-height:300px;">
                                         <div class="card-overlay p-4 d-flex align-items-end text-white">
                                             <ul class="list-unstyled overlay-items">
                                                 <li>
-                                                    <h5 class="mb-2">Awesome title</h5>
+                                                    <h5 class="mb-2">[[${list.travelName}]]</h5>
                                                 </li>
-                                                <li><span>Awesome Subtitle</span></li>
+                                                <li><span th:text="${list.largeGov}+' '+${list.smallGov}"></span></li>
                                             </ul>
                                         </div>
                                     </a>
@@ -518,16 +522,14 @@
                     <div class="row position-relative" sec:authorize="isAuthenticated()">
                         <div class="col-12 col-md-10 col-lg-9 offset-lg-1">
                             <h3 class="mb-4 display-4" data-aos="fade-down">
-                                Bitravel
+                                Bitravel에 여행 후기 남기기
                             </h3>
                             <p class="mb-5 w-lg-75 lead" data-aos="zoom-in" data-aos-delay="100">
-                                There are combined alignment methods – when several types of alignment together are
-                                used
-                                in one composition.
+                                각 회원이 후기 작성 시 누적되는 여행 기록을 기반으로<br>점점 더욱 정확한 여행지 추천이 가능합니다. 
                             </p>
                             <div data-aos="fade-up" data-aos-delay="150">
                                 <a href="/review/write" class="btn btn-success btn-hover-arrow btn-lg">
-                                    <span>새 후기 작성</span>
+                                    <span class="fw-bold">새 후기 작성</span>
                                 </a>
                             </div>
                         </div>
