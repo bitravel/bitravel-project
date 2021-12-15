@@ -63,27 +63,18 @@ public class ReviewService {
     	List<ReviewTravels> rt = new ArrayList<>();
     	List<UserTravel> ut = new ArrayList<>();
     	List<Long> travelIds = params.getTravelId();
-    	List<String> travelNames = params.getTravelName();
-    	List<String> latitudes = params.getLatitude();
-    	List<String> longitudes = params.getLongitude();
     	List<String> isLikeds = params.getIsLiked();
     	
     	int arr = travelIds.size();
     	for (int i=0; i<arr; i++) {
     		Travel travelId = travelRepository.getById(travelIds.get(i));
     		Review reviewId = reviewRepository.getById(review.getReviewId());
-    		String travelName = travelNames.get(i);
-    		String latitude = latitudes.get(i);
-    		String longitude = longitudes.get(i);
     		Boolean isLiked = true;
     		if(isLikeds.get(i).equals("0"))
     			isLiked = false;
 			ReviewTravels entity = ReviewTravels.builder()
 					.travel(travelId)
 					.review(reviewId)
-					.travelName(travelName)
-					.latitude(latitude)
-					.longitude(longitude)
 					.isLiked(isLiked)
 					.build();
 			rt.add(entity);
@@ -101,10 +92,14 @@ public class ReviewService {
     	
     	return review.getReviewId();
     }
+    /**
+     * 후기 여행지 정보 조회
+     */
     @Transactional
     public List<ReviewTravels> findByReview(Review id) {
     	return reviewTravelRepository.findByReview(id);
     }
+   
 
     /**
      * 후기 리스트 조회
