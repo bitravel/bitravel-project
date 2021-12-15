@@ -232,6 +232,16 @@ public class TravelService {
 		addImage(entity);
 		return entity;
 	}
+	
+
+	/**
+	 * 리뷰별 여행지 상세 정보 조회 (여행지 ID)
+	 */
+	@Transactional
+	public Travel findByTravelId(Long id) {
+		Travel entity = travelRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+		return entity;
+	}
 
 	/**
 	 * 전체 여행지 방문 순위
