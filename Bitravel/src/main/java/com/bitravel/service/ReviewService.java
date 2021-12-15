@@ -1,8 +1,6 @@
 package com.bitravel.service;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,11 +14,13 @@ import com.bitravel.data.dto.ReviewResponseDto;
 import com.bitravel.data.entity.Review;
 import com.bitravel.data.entity.ReviewTravels;
 import com.bitravel.data.entity.Travel;
+import com.bitravel.data.entity.UserTravel;
 import com.bitravel.data.repository.ReviewCommentRepository;
 import com.bitravel.data.repository.ReviewRepository;
 import com.bitravel.data.repository.ReviewTravelRepository;
 import com.bitravel.data.repository.TravelRepository;
 import com.bitravel.data.repository.UserRepository;
+import com.bitravel.data.repository.UserTravelRepository;
 import com.bitravel.exception.CustomException;
 import com.bitravel.exception.ErrorCode;
 import com.bitravel.util.SecurityUtil;
@@ -36,6 +36,7 @@ public class ReviewService {
 	private final ReviewRepository reviewRepository;
 	private final TravelRepository travelRepository;
     private final UserRepository userRepository;
+    private final UserTravelRepository userTravelRepository;
     private final ReviewCommentRepository rCommentRepository;
     private final ReviewTravelRepository reviewTravelRepository;
 	
@@ -60,10 +61,12 @@ public class ReviewService {
     	
 		// 3. 리뷰-여행지 매핑 정보 저장
     	List<ReviewTravels> rt = new ArrayList<>();
+    	List<UserTravel> ut = new ArrayList<>();
     	List<Long> travelIds = params.getTravelId();
     	List<String> travelNames = params.getTravelName();
     	List<String> latitudes = params.getLatitude();
     	List<String> longitudes = params.getLongitude();
+    	List<String> isLikeds = params.getIsLiked();
     	
     	int arr = travelIds.size();
     	for (int i=0; i<arr; i++) {
@@ -72,16 +75,29 @@ public class ReviewService {
     		String travelName = travelNames.get(i);
     		String latitude = latitudes.get(i);
     		String longitude = longitudes.get(i);
+    		Boolean isLiked = true;
+    		if(isLikeds.get(i).equals("0"))
+    			isLiked = false;
 			ReviewTravels entity = ReviewTravels.builder()
 					.travel(travelId)
 					.review(reviewId)
 					.travelName(travelName)
 					.latitude(latitude)
 					.longitude(longitude)
+					.isLiked(isLiked)
 					.build();
 			rt.add(entity);
+			
+			UserTravel ute = UserTravel.builder()
+					.userEmail(nowUserEmail)
+					.travelId(travelId.getTravelId())
+					.isVisited(true)
+					.isLiked(isLiked)
+					.build();
+			ut.add(ute);
     	}
     	reviewTravelRepository.saveAll(rt);
+    	userTravelRepository.saveAll(ut);
     	
     	return review.getReviewId();
     }
