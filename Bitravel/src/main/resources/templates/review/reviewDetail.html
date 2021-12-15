@@ -30,8 +30,8 @@
             <!--Main content start-->
     <th:block layout:fragment="content">
         <main>
-            <section id="article-header" class="position-relative bg-tint-primary">
-                <div class="container pt-11 pt-lg-14 pb-7 pb-lg-12 position-relative">
+            <section id="article-header" class="position-relative bg-tint-primary" >
+                <div class="container pt-11 pt-lg-14 pb-7 pb-lg-12 position-relative" style="max-width:1000px">
                     <article class="row pb-7">
                         <div class="col-lg-10 col-xl-8">
                             <div class="position-relative pb-3 pb-lg-0">
@@ -41,12 +41,12 @@
                                 </div>
 
                                 <div>
-                                    <h2 id="reviewTitle" class="my-3 display-3">
+                                    <h2 id="reviewTitle" class="my-3 display-2">
                                     </h2>
-                                    <div class="d-flex mb-0 small align-items-center">
-                                        <img src="/assets/img/avatar/6.jpg" alt="" class="size-40 rounded-circle me-2">
+                                    <div class="d-flex mb-0 small align-items-center" >
+                                        <img src="#" onerror="this.src='/assets/img/avatar/2.jpg'" alt="" class="size-60 rounded-circle me-2">
                                         <span class="text-muted d-inline-block"><a id="nickname" href="#!"
-                                                class="text-dark"></a></span>
+                                                class="text-dark" style="font-size:18px;"></a></span>
                                     </div>
                                 </div>
                             </div>
@@ -67,10 +67,10 @@
 			
             
                 <div class="container pb-4">
-                    <div class="swiper-container swiper-progress rounded-xl overflow-hidden shadow-lg mt-n15 mb-4">
+                    <div class="swiper-container swiper-progress rounded-xl overflow-hidden shadow-lg mt-n15 mb-4"  style="max-width:1000px">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide rounded-xl overflow-hidden" th:each="list: ${tList}" style="text-align:center; font-weight:bold; font-size:20px;">
-                                <span>[[${list.travelName}]]</span>
+                                <span>[[${list.travelName}]]</span><br>
                                 <img th:src="${list.travelImage}" onerror="this.src='/assets/img/800x600/2.jpg'" alt="" class="img-fluid rounded-xl position-relative">
                             </div>
                         </div>
@@ -83,13 +83,13 @@
 					<!-- 메인 Content -->
                     <div class="form-group">
                         <div class="col-xl-9 mx-auto">
-                        	
-                        	<div class="form-group">
+                        	<div class="form-control">
+                        	<div class="form-group" style="min-height: 300px">
                         		<div class="col-sm-10 mb-5">
                         			<p id="reviewContent" style="word-break:break-word;"></p>
                         		</div>
 					    	</div>
-					    	
+					    	</div>
                             <hr class="one" style="height:3px">
 							<!-- 지도 -->
 							<div class="input-group align-items-center justify-content-center pt-1" style="display: flex;">
