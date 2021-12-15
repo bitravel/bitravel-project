@@ -43,34 +43,25 @@
                                         <div>
                                             <!--profile image-->
                                             <div class="size-160 mb-5 rounded-circle shadow bg-no-repat overflow-hidden bg-contain"
-                                                style="background-image: url(assets/img/avatar/4.jpg);">
+                                                style="background-image: url(assets/img/avatar/4.jpg);" >
                                             </div>
-                                            <h4 class="mb-2">이름 ㅇㅇㅇ</h4>
-                                            <small class="d-block mb-3">회원등급 ㅇㅇㅇ</small>
+                                            <h4 class="d-flex justify-content-center mb-2" th:text="${user.nickname}"></h4>
+                                            <!-- <span class="small" th:text="등급"></span><span class="small" th:text="${user.level}"></span> -->
+                                            <!-- <p class="small" th:text="등급"></p><small class="d-flex mb-3" th:text="${user.level}"></small> -->
+                                            <!-- <p class="small">포인트</p><small class="d-flex mb-3" th:text="${user.point}"></small> -->
                                             <ul class="list-unstyled border-bottom pb-3 mb-3">
-                                                <li class="d-flex align-items-stretch mb-2">
-                                                    <i class="bi bi-geo-alt-fill me-2 align-middle text-muted"></i>
-                                                    <span class="small">서울시, 강남구</span>
+                                                <li class="d-flex align-items-stretch mb-1" style="height: 30px;">
+                                                    <p class="small">등급 :&nbsp;</p>
+                                                    <small class="d-flex mb-3" th:text="${user.level}"></small>
                                                 </li>
-                                                <li class="d-flex align-items-stretch mb-2">
+                                                <li class="d-flex align-items-stretch mb-1" style="height: 30px;">
+                                                    <p class="small">포인트 :&nbsp;</p>
+                                                    <small class="d-flex mb-3" th:text="${user.point}"></small>
+                                                </li>
+                                                <li class="d-flex align-items-stretch mb-2" style="height: 30px;">
                                                     <i class="bi bi-globe me-2 align-middle text-muted"></i>
-                                                    <a href="#!" class="small link-hover-decoration">이메일 주소</a>
-                                                </li>
-                                                <li class="d-flex align-items-stretch mb-2">
-                                                    <i class="bi bi-check fs-5 lh-1 text-success me-2 align-middle"></i>
-                                                    <span class="small">Available for hire</span>
-                                                </li>
-                                                <li class="d-flex align-items-stretch mb-2">
-                                                    <i class="bi bi-twitter me-2 align-middle text-muted"></i>
-                                                    <a href="#!" class="small link-hover-decoration">@emily.dev</a>
-                                                </li>
-                                                <li class="d-flex align-items-stretch mb-2">
-                                                    <i class="bi bi-linkedin me-2 align-middle text-muted"></i>
-                                                    <a href="#!" class="small link-hover-decoration">emilyatin</a>
-                                                </li>
-                                                <li class="d-flex align-items-stretch mb-2">
-                                                    <i class="bi bi-instagram me-2 align-middle text-muted"></i>
-                                                    <a href="#!" class="small link-hover-decoration">emily93</a>
+                                                    <a href="javascript:;" class="small link-hover-decoration" th:text="${user.email}">
+                                                    </a>
                                                 </li>
                                             </ul>
                                             <ul class="list-unstyled border-bottom pb-3 mb-3">
@@ -100,44 +91,46 @@
                                 <div class="d-flex flex-column h-100">
                                     <nav class="nav mb-5 nav-pills">
                                         <a href="/mypage" class="nav-link active"> <i
-                                                class="bi bi-person-circle me-2 align-middle"></i>My profile</a>
+                                                class="bi bi-person-circle me-2 align-middle"></i>나의 정보</a>
                                         <a href="/mypageSetting" class="nav-link"><i
-                                                class="bi bi-gear me-2 align-middle"></i>Settings</a>
+                                                class="bi bi-gear me-2 align-middle"></i>회원정보 수정</a>
                                     </nav>
 
                                     <div class="card shadow-sm p-3 h-100">
-                                        <h5 class="mb-4">Profile Details</h5>
+                                        <h5 class="mb-4">기본 정보</h5>
 
                                         <div class="row align-items-center">
                                             <div class="col-md-6 mb-3">
-                                                <label class="form-label">Name</label>
-                                                <div class="form-control">Emily Doe
+                                                <label class="form-label">이름</label>
+                                                <div class="form-control" th:text="${user.realname}">
                                                 </div>
                                             </div>
                                             <div class="col-md-6 mb-3">
-                                                <label class="form-label">Email address</label>
-                                                <div class="form-control">info@emilydoe.com
+                                                <label class="form-label">이메일</label>
+                                                <div class="form-control" th:text="${user.email}">
                                                 </div>
                                             </div>
 
 
                                             <div class="col-md-6 mb-3">
-                                                <label class="form-label">Gender</label>
-                                                <div class="form-control">Male
-                                                </div>
+                                                <label class="form-label">성별</label>
+                                                <div class="form-control" th:if="${user.gender == 'Man'     }" th:text="남성"></div>
+                                                <div class="form-control" th:if="${user.gender == 'Woman'   }" th:text="여성"></div>
+                                                <div class="form-control" th:if="${user.gender == 'Private' }" th:text="비공개"></div>
                                             </div>
                                             <div class="col-md-6 mb-3">
-                                                <label class="form-label">Date of birth</label>
-                                                <div class="form-control">1993</div>
+                                                <label class="form-label">나이</label>
+                                                <div class="form-control" th:text="${user.age}"></div>
                                             </div>
                                             <div class="col-md-3 mb-3">
-                                                <label class="form-label">City</label>
-                                                <div class="form-control">서울시
+                                                <label class="form-label">거주 지역</label>
+                                                <div class="form-control" th:text="${user.userLargeGov}">
                                                 </div>
                                             </div>
                                             <div class="col-md-3 mb-3">
-                                                <label class="form-label">State</label>
-                                                <div class="form-control">강남구
+                                                <label class="form-label"></label>
+                                                <div class="form-control" th:text="${user.userSmallGov}">   
+                                                
                                                 </div>
                                             </div>
                                         </div>

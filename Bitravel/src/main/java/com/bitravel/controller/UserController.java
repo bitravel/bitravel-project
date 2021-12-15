@@ -195,14 +195,14 @@ public class UserController {
 	@GetMapping("/mypage")
 //  @PreAuthorize("isAnonymous()")
 //	public String openMyPage(@RequestParam("userEmail") Model model) {
-	public String openMyPage(@RequestParam("userEmail") Model model) {
-		Optional<UserDto> user = userService.getMyUserWithAuthorities();
-		model.addAttribute("user", userService.getUserListByEmail(user.get().getEmail()));
+	public String openMyPage(Model model) {
+		UserDto user = userService.getMyUserWithAuthorities().get();
+//		List<UserDto> userList = userService.getUserListByEmail(user.get().getEmail());
+//		model.addAttribute("userList", userList);
+		model.addAttribute("user", user);
 		return "user/mypage";
 //		userService.getUserListByEmail(user.get().getEmail());
-		// TODO getCurrentUserInfo 만들기
 //		return ResponseEntity.ok(userService.getUserListByEmail(user.get().getEmail()));
-
 	}
 
 	
