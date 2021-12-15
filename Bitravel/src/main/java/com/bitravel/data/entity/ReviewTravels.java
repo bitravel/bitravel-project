@@ -1,7 +1,5 @@
 package com.bitravel.data.entity;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -42,13 +40,17 @@ public class ReviewTravels {
 	private String latitude;
 	private String longitude;
 	
+    @Column(name = "isLiked", columnDefinition = "BIT(1) DEFAULT 0")
+    private boolean isLiked; // 선호 여부
+	
 	@Builder
-	public ReviewTravels(Travel travel, Review review, String travelName, String latitude, String longitude) {
+	public ReviewTravels(Travel travel, Review review, String travelName, String latitude, String longitude, boolean isLiked) {
 		this.travel = travel;
 		this.review = review;
 		this.travelName = travelName;
 		this.latitude = latitude;
 		this.longitude = longitude;
+		this.isLiked = isLiked;
 	}
 	
 	public void update(Travel travel, Review review) {
