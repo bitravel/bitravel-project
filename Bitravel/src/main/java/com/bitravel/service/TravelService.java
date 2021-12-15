@@ -4,12 +4,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.TreeMap;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.json.JSONException;
@@ -25,12 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.bitravel.data.dto.TravelSimpleDto;
 import com.bitravel.data.dto.WeatherDto;
 import com.bitravel.data.entity.Travel;
-import com.bitravel.data.entity.TravelCountAge;
-import com.bitravel.data.entity.TravelCountGender;
 import com.bitravel.data.entity.TravelImage;
 import com.bitravel.data.entity.UserTravel;
-import com.bitravel.data.repository.TravelCountAgeRepository;
-import com.bitravel.data.repository.TravelCountGenderRepository;
 import com.bitravel.data.repository.TravelImageRepository;
 import com.bitravel.data.repository.TravelRepository;
 import com.bitravel.data.repository.UserTravelRepository;
@@ -50,8 +44,6 @@ public class TravelService {
 	private final UserTravelRepository userTravelRepository;
 	private final TravelRepository travelRepository;
 	private final TravelImageRepository travelImageRepository;
-	private final TravelCountAgeRepository travelCountAgeRepository;
-	private final TravelCountGenderRepository travelCountGenderRepository;
 
 	/**
 	 * 여행지 생성
@@ -74,129 +66,6 @@ public class TravelService {
 	}
 	
 	/**
-	 * 내가 가장 선호하는 카테고리의 여행지 리스트
-	 */
-	public Page<Travel> findFavoriteCategoryList (Pageable pageable) {
-		String myEmail = SecurityUtil.getCurrentEmail().get();
-		List<UserTravel> utlist = userTravelRepository.findByUserEmail(myEmail);
-		HashMap<String, Integer> userPref = new HashMap<>();
-		
-		for(int i=0;i<utlist.size();i++) {
-			Travel now = travelRepository.getById(utlist.get(i).getTravelId());
-			// 카테고리별 개수 세기
-			if(now.getMiddleCategory()!=null && now.getMiddleCategory().trim().length()>0) {
-				userPref.put(now.getSmallCategory(), userPref.getOrDefault(userPref.get(now.getSmallCategory()), 0)+1);
-			}
-		}
-		
-		Iterator<String> mapIter = userPref.keySet().iterator();
-		String result = "";
-		int max = 0;
-		while(mapIter.hasNext()) {
-			String key = mapIter.next();
-			Integer value = userPref.get(key);
-			if(value>max) {
-				max = value;
-				result = key;
-			}		
-		}
-		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
-		Sort sort = Sort.by(Direction.DESC, "travelView").and(Sort.by(Direction.ASC, "travelName"));
-		pageable = PageRequest.of(page, 9, sort);
-		return travelRepository.findBySmallCategory(result, pageable);
-	}
-	
-	/**
-	 * 나와 비슷한 나이/성별의 사람들이 선호하는 지역 확인
-	 */
-	@Transactional(readOnly = true)
-	public List<Travel> findSimiliarAgeGenderTaste(int age, String gender) {
-		age = age/10;
-		if(age==0)
-			age=1;
-		else if (age>7)
-			age=7;
-		String ageKey = age*10 + "대";
-		TravelCountAge tca = travelCountAgeRepository.getById(ageKey);
-		TravelCountAge allAge = travelCountAgeRepository.getById("전체");
-		
-		if(gender.equals("Man")) {
-			gender = "남자";
-		} else if(gender.equals("Woman")) {
-			gender = "여자";
-		} else {
-			gender = "전체";
-		}
-		TravelCountGender tcg = travelCountGenderRepository.getById(gender);
-		
-		TreeMap<Double, String> rank = new TreeMap<>();
-		
-		if(Math.pow(tca.getSeoul()*tcg.getSeoul(),0.5)>allAge.getSeoul()) {
-			rank.put(tca.getSeoul()*tcg.getSeoul()/allAge.getSeoul(), "서울");
-		}
-		if(Math.pow(tca.getBusan()*tcg.getBusan(),0.5)>allAge.getBusan()) {
-			rank.put(tca.getBusan()*tcg.getBusan()/allAge.getBusan(), "부산");
-		}
-		if(Math.pow(tca.getDaegu()*tcg.getDaegu(),0.5)>allAge.getDaegu()) {
-			rank.put(tca.getDaegu()*tcg.getDaegu()/allAge.getDaegu(), "대구");
-		}
-		if(Math.pow(tca.getDaejeon()*tcg.getDaejeon(),0.5)>allAge.getDaejeon()) {
-			rank.put(tca.getDaejeon()*tcg.getDaejeon()/allAge.getDaejeon(), "대전");
-		}
-		if(Math.pow(tca.getGwangju()*tcg.getGwangju(),0.5)>allAge.getGwangju()) {
-			rank.put(tca.getGwangju()*tcg.getGwangju()/allAge.getGwangju(), "광주");
-		}
-		if(Math.pow(tca.getIncheon()*tcg.getIncheon(),0.5)>allAge.getIncheon()) {
-			rank.put(tca.getIncheon()*tcg.getIncheon()/allAge.getIncheon(), "인천");
-		}
-		if(Math.pow(tca.getUlsan()*tcg.getUlsan(),0.5)>allAge.getUlsan()) {
-			rank.put(tca.getUlsan()*tcg.getUlsan()/allAge.getUlsan(), "울산");
-		}
-		if(Math.pow(tca.getSejong()*tcg.getSejong(),0.5)>allAge.getSejong()) {
-			rank.put(tca.getSejong()*tcg.getSejong()/allAge.getSejong(), "세종");
-		}
-		if(Math.pow(tca.getGyeonggi()*tcg.getGyeonggi(),0.5)>allAge.getGyeonggi()) {
-			rank.put(tca.getGyeonggi()*tcg.getGyeonggi()/allAge.getGyeonggi(), "경기");
-		}
-		if(Math.pow(tca.getGangwon()*tcg.getGangwon(),0.5)>allAge.getGangwon()) {
-			rank.put(tca.getGangwon()*tcg.getGangwon()/allAge.getGangwon(), "강원");
-		}
-		if(Math.pow(tca.getChungbuk()*tcg.getChungbuk(),0.5)>allAge.getChungbuk()) {
-			rank.put(tca.getChungbuk()*tcg.getChungbuk()/allAge.getChungbuk(), "충북");
-		}
-		if(Math.pow(tca.getChungnam()*tcg.getChungnam(),0.5)>allAge.getChungnam()) {
-			rank.put(tca.getChungnam()*tcg.getChungnam()/allAge.getChungnam(),"충남");
-		}
-		if(Math.pow(tca.getJeonbuk()*tcg.getJeonbuk(),0.5)>allAge.getJeonbuk()) {
-			rank.put(tca.getJeonbuk()*tcg.getJeonbuk()/allAge.getJeonbuk(),"전북");
-		}
-		if(Math.pow(tca.getJeonnam()*tcg.getJeonnam(),0.5)>allAge.getJeonnam()) {
-			rank.put(tca.getJeonnam()*tcg.getJeonnam()/allAge.getJeonnam(), "전남");
-		}
-		if(Math.pow(tca.getGyeongbuk()*tcg.getGyeongbuk(),0.5)>allAge.getGyeongbuk()) {
-			rank.put(tca.getGyeongbuk()*tcg.getGyeongbuk()/allAge.getGyeongbuk(), "경북");
-		}
-		if(Math.pow(tca.getGyeongnam()*tcg.getGyeongnam(),0.5)>allAge.getGyeongnam()) {
-			rank.put(tca.getGyeongnam()*tcg.getGyeongnam()/allAge.getGyeongnam(), "경남");
-		}
-		if(Math.pow(tca.getJeju()*tcg.getJeju(),0.5)>allAge.getJeju()) {
-			rank.put(tca.getJeju()*tcg.getJeju()/allAge.getJeju(), "제주");
-		}
-		
-		List<Travel> travel = new ArrayList<>();		
-		Double prev = rank.firstKey();
-		for(int i=1;i<rank.size();i++) {
-			prev = rank.floorKey(prev);
-			travel.addAll(travelRepository.findByLargeGov(rank.get(prev)));
-			if(i>=2) {
-				break;
-			} 
-		}
-		return travel;
-	}
-	
-	
-	/**
 	 * 여행지 이름 검색 결과 조회
 	 */
 	public Page<Travel> findByName(String keyword, Pageable pageable) {
@@ -216,15 +85,6 @@ public class TravelService {
 		addImage(entity);
 		return entity;
 	}
-	
-	/**
-	 * 전체 여행지 방문 순위
-	 */
-//	@Transactional
-//	public List<Travel> findRankingOfAll() {
-		//List<>
-		
-//	}
 	
 	/**
 	 * 조회수 증가 없이 여행지 상세 정보 조회 (여행지 ID)
@@ -303,6 +163,15 @@ public class TravelService {
 		Sort sort = Sort.by(Direction.ASC, "travelView", "travelName");
 		return travelRepository.findByLargeGovAndSmallGov(largeGov, smallGov, sort)
 				.stream().map(TravelSimpleDto::new).collect(Collectors.toList());
+	}
+	
+	/**
+	 * 리뷰별 여행지 상세 정보 조회 (여행지 ID)
+	 */
+	@Transactional
+	public Travel findByTravelId(Long id) {
+		Travel entity = travelRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+		return entity;
 	}
 
 	/**
@@ -478,13 +347,13 @@ public class TravelService {
 	
 	private void addImage (Travel entity) {
 		if(entity.getTravelImage()==null) {
-			List<TravelImage> ti = travelImageRepository.findByIsUpdatedAndTravelName(false, entity.getTravelName());
-			if(ti.size()==1) {
-				entity.setTravelImage(ti.get(0).getTravelImage());
+			Optional<TravelImage> ti = travelImageRepository.findByIsUpdatedAndTravelName(false, entity.getTravelName());
+			if(ti.isPresent()) {
+				entity.setTravelImage(ti.get().getTravelImage());
 				travelRepository.save(entity);
-				ti.get(0).setUpdated(true);
-				travelImageRepository.save(ti.get(0));
-			}
+				ti.get().setUpdated(true);
+				travelImageRepository.save(ti.get());
+			}	
 		}
 	}
 	
