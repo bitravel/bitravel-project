@@ -21,6 +21,7 @@ public class ReviewResponseDto {
     private Timestamp reviewDate; // 작성날짜
     private int reviewRecom; // 추천수
     private String thumbNail; //썸네일
+    private String userImage; //유저 프로필 이미지
     
     public ReviewResponseDto(Review entity) {
     	this.reviewTitle = entity.getReviewTitle();
@@ -33,6 +34,7 @@ public class ReviewResponseDto {
     	this.userEmail = entity.getUserEmail();
     	this.nickname = entity.getNickname();
     	this.thumbNail = entity.getThumbNail();
+    	this.userImage = entity.getUserImage();
     	
     }  
 }
