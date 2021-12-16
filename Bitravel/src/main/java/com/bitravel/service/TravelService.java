@@ -241,6 +241,7 @@ public class TravelService {
 	@Transactional
 	public Travel findByTravelId(Long id) {
 		Travel entity = travelRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+		addImage(entity);
 		return entity;
 	}
 
