@@ -3,22 +3,6 @@
 /**
  * 후기 상세 조회
  */
-function reviewTravelImage() {
-	fetch(`/api/reviews/travels/${id}`).then(response => {
-		if (!response.ok) {
-			throw new Error('Request failed...');
-		}
-		return response.json();
-	}).then(json => {
-		json = JSON.stringify(json);
-		json.replace('[', '{').replace(']', '}');
-		const newList = JSON.parse(json);
-		console.table(json.travelImage);
-		console.table(newList.travelImage);
-	}).catch(error => {
-		alert('불러오기에 실패했습니다.\n' + error);
-	})
-}
 function reviewList() {
 
 	fetch(`/api/reviews/${id}`).then(response => {

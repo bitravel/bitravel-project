@@ -71,7 +71,7 @@
                         <div class="swiper-wrapper">
                             <div class="swiper-slide rounded-xl overflow-hidden" th:each="list: ${tList}" style="text-align:center; font-weight:bold; font-size:20px;">
                                 <span>[[${list.travelName}]]</span><br>
-                                <img th:src="${list.travelImage}" onerror="this.src='/assets/img/800x600/2.jpg'" alt="" class="img-fluid rounded-xl position-relative">
+                                <img th:src="${list.travelImage}" onerror="this.src='/assets/img/800x600/2.jpg'" alt="여행지 사진" class="img-fluid rounded-xl position-relative"/>
                             </div>
                         </div>
                         <div class="swiper-pagination swiperProgress-pagination swiper-pagination-progressbar"></div>
@@ -80,19 +80,28 @@
                         <div class="swiper-button-prev swiperProgress-button-prev bg-white size-60"></div>
                     </div>
                     
+                    
+                    
 					<!-- 메인 Content -->
                     <div class="form-group">
                         <div class="col-xl-9 mx-auto">
-                        	<div class="form-control">
-                        	<div class="form-group" style="min-height: 300px">
-                        		<div class="col-sm-10 mb-5">
-                        			<p id="reviewContent" style="word-break:break-word;"></p>
-                        		</div>
-					    	</div>
-					    	</div>
-                            <hr class="one" style="height:3px">
+                        		<div class="container py-2 pb-0 mt-1">
+	                            	<h4 class="box-title pull-left border-bottom border-3 border-one">후기 내용</h4>
+	                       		</div>
+	                        	<form class="form-horizontal form-view">
+		                        	<div class="form-group">
+		                        		<div class="col-sm mb-5">
+		                        			<p id="reviewContent" style="word-break:break-word;"></p>
+		                        		</div>
+							    	</div>
+						    	</form>
+					    	
+					    	
 							<!-- 지도 -->
 							<div class="input-group align-items-center justify-content-center pt-1" style="display: flex;">
+								<div class="container py-2 pb-0 mt-1">
+	                            	<h4 class="box-title pull-left border-bottom border-3 border-one">지도 보기</h4>
+	                            </div>
 							    <div class="py-2 pb-0 " th:each="list: ${tList}">
 							    	<button class="me-3 mb-4 py-3 btn btn-info waves-effect waves-light" th:attr="onclick=|panTo('${list.latitude}', '${list.longitude}', '${list.travelName}')|">[[${list.travelName}]]</button>
 							    </div>
@@ -100,15 +109,13 @@
 						    <div class="d-flex align-items-center justify-content-center mb-4 pt-2">
 						    <div id="map" style="width:800px;height:400px;"></div>
 						    </div>
-						    
-						    <hr class="one" style="height:3px">
                             
                             <!-- 댓글 -->
                             <div class="container col-lg-12 col-10 col-sm-12 mt-3 mb-3">
                             <div class="box-content">
 								<div class="card-content">
 									<div class="clearfix">
-										<h4 class="box-title pull-left">댓글</h4>
+										<h4 class="box-title pull-left border-bottom border-3 border-one">댓글</h4>
 										<!-- /.box-title -->
 									</div>
 									<form class="form-horizontal form-view" >
