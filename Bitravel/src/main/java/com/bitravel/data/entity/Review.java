@@ -63,8 +63,9 @@ public class Review {
     
     private String thumbNail;
     
+    private String userImage; //작성자 프로필 사진
     @Builder
-    public Review(String reviewTitle, String reviewContent, String userEmail,Long reviewId, int reviewView, int reviewRecom, int reviewLevel, Timestamp reviewDate, String nickname, String thumbNail) {
+    public Review(String reviewTitle, String reviewContent, String userEmail,Long reviewId, int reviewView, int reviewRecom, int reviewLevel, Timestamp reviewDate, String nickname, String thumbNail, String userImage ) {
     	this.reviewTitle = reviewTitle;
     	this.reviewContent = reviewContent;
     	this.reviewId = reviewId;
@@ -75,6 +76,7 @@ public class Review {
     	this.userEmail = userEmail;
     	this.nickname = nickname;
     	this.thumbNail = thumbNail;
+    	this.userImage = userImage;
     }
     
     public void update(String reviewTitle, String reviewContent) {
