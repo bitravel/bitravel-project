@@ -6,7 +6,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,7 +71,7 @@ public class BoardService {
     	Date start = new Date(System.currentTimeMillis()-86400000L*3); // 현재 3일 기준
     	Date end = new Date();
     	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
-    	pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardView"));
+    	pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardView", "boardDate"));
     	// 해당 기간 중 조회수 10 이상인 글 반환
     	return boardRepository.findByBoardDateBetweenAndBoardViewGreaterThan(start, end, pageable, 10);
     }
@@ -82,7 +81,7 @@ public class BoardService {
      */
     @Transactional
     public Page<Board> findBoards(String keyword, Pageable pageable) {
-    	Sort sort = Sort.by(Sort.Direction.DESC, "boardView").and(Sort.by(Direction.DESC, "boardDate"));
+    	Sort sort = Sort.by(Sort.Direction.DESC, "boardId");
     	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
     	pageable = PageRequest.of(page, 10, sort);
     	
@@ -94,7 +93,7 @@ public class BoardService {
      */
     @Transactional
     public List<Board> findBoards(String keyword) { 	
-    	Sort sort = Sort.by(Sort.Direction.DESC, "boardView");
+    	Sort sort = Sort.by(Sort.Direction.DESC, "boardView", "boardDate");
         return boardRepository.findByNicknameContainingOrBoardTitleContainingOrBoardContentContaining(keyword, keyword, keyword, sort);
     }
     
