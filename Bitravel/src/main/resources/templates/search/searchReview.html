@@ -1,0 +1,98 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+    layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title th:text="'&ldquo;'+${keyword}+'&rdquo; 후기 검색 결과 :: Bitravel'">후기 검색 결과 :: Bitravel</title>
+</head>
+
+<body>
+    <br>
+    <th:block layout:fragment="content">
+        <!--메인 -->
+        <main class="main-content position-relative z-index-2 bg-white" id="main-content">
+            <section class="position-relative bg-light">
+                <div class="container pt-11 pb-7 pb-lg-9">
+                    <div class="row pt-lg-5">
+                        <div class="col-lg-8">
+                            <h2 class="display-4" th:text="'&ldquo;'+${keyword}+'&rdquo; 키워드 후기 검색 결과'"></h2>
+                            <br>
+                            <h5 th:text="'총 '+${count}+'개 후기'"></h5>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <br>
+        <section class="position-relative overflow-hidden">
+            <div class="container mt-5">
+                <div class="row me-2" id="list">
+                    <div class="bg-white col-sm-4 mb-5" th:each="list, index: ${reviewList}">
+                        <div class="vh-auto bg-white">
+                            <article class="card-hover border-0 me-3 d-flex">
+                                <a th:href="@{'/review/'+${list.reviewId}}" class="stretched-link"></a>
+                                <div class="card-body position-relative p-0">
+                                    <div class="d-block position-relative overflow-hidden mb-4">
+                                        <img style="width:90%;max-height:400px;" th:src="${list.thumbNail}"
+                                            onerror="this.src='/assets/img/800x600/2.jpg'" class="img-fluid img-zoom"
+                                            alt="후기">
+                                    </div>
+                                    <h5 class="mb-3">[[${list.reviewTitle}]]</h5>
+                                    <div class="blog-content" style="min-height:130px;width:90%;">
+                                        <div class="text-primary fw-semibold small pb-2" th:text="${#dates.format(list.reviewDate, 'yyyy-MM-dd')}+'&nbsp;&nbsp;&nbsp;조회수 '+${list.reviewView}"></div>
+                                        <p th:text="${#strings.abbreviate(list.reviewContent, 75)}" class="mb-4" style="word-break:break-word;"></p>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <nav aria-label="Page navigation example">
+            <br>
+            <ul class="pagination justify-content-center" th:with="start=${T(Math).floor(reviewList.number/10) * 10 + 1},
+              						last=${start + 9 < reviewList.totalPages ? start + 9 : reviewList.totalPages}">
+
+                <!-- first page -->
+                <li class="page-item">
+                    <a class="page-link" th:href="@{/search/review/(page=1, keyword=${param.keyword})}" aria-label="First">
+                        <span aria-hidden="true"> FIRST </span>
+                    </a>
+                </li>
+
+                <!-- previous page -->
+                <li class="page-item" th:class="${reviewList.first} ? 'disabled'">
+                    <a class="page-link" th:href="${reviewList.first} ? '#' : @{/search/review/(page=${reviewList.number}, keyword=${param.keyword})}"
+                        aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                <!-- present page -->
+                <li th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == reviewList.number + 1} ? 'active'">
+                            <a class="page-link" th:text="${page}" th:href="@{/search/review/(page=${page}, keyword=${param.keyword})}">&nbsp;</a>
+                            </li>
+							
+							<!-- next page -->
+                            <li class="page-item" th:class="${reviewList.last} ? 'disabled'">
+                                <a class="page-link" th:href="${reviewList.last} ? '#' : @{/search/review/(page=${reviewList.number + 2}, keyword=${param.keyword})}" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                            
+                            <!-- last page -->
+                            <li class="page-item">
+						      <a class="page-link" th:href="@{/search/review/(page=${reviewList.totalPages}, keyword=${param.keyword})}" aria-label="Last">
+						        <span aria-hidden="true">LAST</span>
+						      </a>
+						    </li>
+						    
+                        </ul>
+                    </nav>
+                    <br><br>
+    </th:block>
+</body>
+
+</html>

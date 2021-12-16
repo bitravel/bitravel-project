@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.bitravel.data.dto.TravelSimpleDto;
 import com.bitravel.data.dto.UserDto;
 import com.bitravel.data.entity.Board;
+import com.bitravel.data.entity.Review;
 import com.bitravel.service.BoardService;
 import com.bitravel.service.ReviewService;
 import com.bitravel.service.TravelService;
@@ -44,6 +45,7 @@ public class SearchPageController {
     	model.addAttribute("keyword", keyword);
     	long all = 0;
     	List<TravelSimpleDto> tList = travelService.findByName(keyword);
+    	List<Review> rList = reviewService.findReviews(keyword);
     	List<Board> bList = boardService.findBoards(keyword);
     	List<UserDto> uList = userService.getUserListBynickname(keyword);
     	
@@ -55,20 +57,29 @@ public class SearchPageController {
     	}
     	
     	all += tList.size();
+    	all += rList.size();
     	all += bList.size();
     	all += uList.size();
     	
     	model.addAttribute("count", all);
     	model.addAttribute("tcount", tList.size());
+    	model.addAttribute("rcount", rList.size());
     	model.addAttribute("bcount", bList.size());
     	model.addAttribute("ucount", uList.size());
     	
     	if(tList.size()>10)
     		tList = tList.subList(0, 10);
+    	if(rList.size()>10)
+    		rList = rList.subList(0, 10);
     	if(bList.size()>10)
     		bList = bList.subList(0, 10);
     	if(uList.size()>10)
     		uList = uList.subList(0, 10);
+    	
+    	for(int i=0;i<rList.size();i++) {
+    		Review now = rList.get(i);
+    		now.setReviewContent(TagUtil.getText(now.getReviewContent()));
+    	}
     	
     	for(int i=0;i<bList.size();i++) {
     		Board now = bList.get(i);
@@ -76,6 +87,7 @@ public class SearchPageController {
     	}
     	
     	model.addAttribute("travelList", tList);
+    	model.addAttribute("reviewList", rList);
     	model.addAttribute("boardList", bList);
     	model.addAttribute("userList", uList);
     	return "search/searchList";
@@ -98,6 +110,29 @@ public class SearchPageController {
     /**
      * 후기 검색 결과 전체 보기
      */
+    @GetMapping("/search/review")
+    public String openSearchReview(Model model, @RequestParam(value = "keyword") String keyword,
+    		@PageableDefault(size = 9, sort = "reviewId", direction = Sort.Direction.DESC) Pageable review) {
+    	model.addAttribute("keyword", keyword);
+    	List<Review> rList = reviewService.findReviews(keyword);
+    	long all = rList.size();
+    	
+    	for(int i=0;i<rList.size();i++) {
+    		Review now = rList.get(i);
+    		now.setReviewContent(TagUtil.getText(now.getReviewContent()));
+    	}
+    	
+    	// 리스트 편집한 결과를 토대로 Page 새로 만들기
+    	Sort sort = Sort.by(Sort.Direction.DESC, "reviewView").and(Sort.by(Direction.DESC, "reviewDate"));
+    	int page = (review.getPageNumber() == 0) ? 0 : (review.getPageNumber() - 1);
+    	review = PageRequest.of(page, 15, sort);
+    	Page<Review> rpage = new PageImpl<>(rList.subList((int) review.getOffset(), (int) Math.min(review.getOffset() + review.getPageSize(), all)), review, all);
+    	
+    	
+    	model.addAttribute("reviewList", rpage);
+    	model.addAttribute("count", all);
+    	return "search/searchReview";
+    }
     
     /**
      * 게시물 검색 결과 전체 보기
@@ -125,6 +160,7 @@ public class SearchPageController {
     	model.addAttribute("count", all);
     	return "search/searchBoard";
     }
+
     
     /**
      * 회원 검색 결과 전체 보기

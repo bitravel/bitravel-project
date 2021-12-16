@@ -122,6 +122,12 @@ public class ReviewService {
         return reviewRepository.findByNicknameContainingOrReviewTitleContainingOrReviewContentContaining(keyword, keyword, keyword, pageable);
     }
     
+    @Transactional
+    public List<Review> findReviews(String keyword) {
+    	Sort sort = Sort.by(Sort.Direction.DESC, "reviewView", "reviewDate");
+        return reviewRepository.findByNicknameContainingOrReviewTitleContainingOrReviewContentContaining(keyword, keyword, keyword, sort);
+    }
+    
     /**
      * 후기 닉네임 검색 결과 조회
      */
