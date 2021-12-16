@@ -39,13 +39,13 @@
                 <div class="swiper-wrapper">
                     <div class="swiper-slide" th:each="list, index: ${travelList}">
                         <div class="vh-auto bg-white">
-                            <article class="card-hover border-0 me-4 d-flex" style="min-height:350px;">
+                            <article class="card-hover border-0 me-4 d-flex" style="min-height:430px;">
                                 <a th:href="@{'/travel/'+${list.travelId}}" class="stretched-link"></a>
                                 <div class="card-body position-relative p-0">
                                     <div class="d-block position-relative mb-4">
-                                        <img style="min-height:200px;max-height:300px;max-width:300px;" th:src="${list.travelImage}"
-                                            onerror="this.src='/assets/img/800x600/2.jpg'" class="img-fluid img-zoom"
-                                            alt="프로필">
+                                        <img style="min-height:200px;max-height:300px;"
+                                            th:src="${list.travelImage}" onerror="this.src='/assets/img/800x600/2.jpg'"
+                                            class="img-fluid img-zoom" alt="여행지">
                                     </div>
                                     <h5 class="mb-3">[[${list.travelName}]]</h5>
                                     <div class="blog-content">
@@ -70,6 +70,41 @@
             </div>
         </div>
 
+        <div class="container pb-4 mb-2 mt-5">
+            <h4 class="mb-5 fw-bold">후기 검색 결과 (총 <span th:text="${rcount}"></span>개)</h4>
+            <!-- Swiper -->
+            <div class="swiper-container swiper-3">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" th:each="list, index: ${reviewList}">
+                        <div class="vh-auto bg-white">
+                            <article class="card-hover border-0 me-3 d-flex">
+                                <a th:href="@{'/review/'+${list.reviewId}}" class="stretched-link"></a>
+                                <div class="card-body position-relative p-0">
+                                    <div class="d-block position-relative mb-4">
+                                        <img style="min-height:200px;max-height:300px;" th:src="${list.thumbNail}"
+                                            onerror="this.src='/assets/img/800x600/2.jpg'" class="img-fluid img-zoom"
+                                            alt="후기">
+                                    </div>
+                                    <h5 class="mb-3">[[${list.reviewTitle}]]</h5>
+                                    <div class="blog-content" style="min-height:150px;">
+                                        <div class="text-primary fw-semibold small pb-2" th:text="${#dates.format(list.reviewDate, 'yyyy-MM-dd')}+'&nbsp;&nbsp;&nbsp;조회수 '+${list.reviewView}"></div>
+                                        <p th:text="${#strings.abbreviate(list.reviewContent, 75)}" class="mb-4" style="word-break:break-word;"></p>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+                <p th:if="${rcount==0}">검색 결과가 없습니다.</p>
+                <a th:if="${rcount>10}" class="fw-bold text-dark fs-5" th:href="@{'./search/review'(keyword=${param.keyword}, page=1)}"> → 후기 검색결과 더 보기</a> 
+                <br><br><br>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination swiper3-pagination"></div>
+                <!-- Add Arrows -->
+                <!--<div th:if="${bcount>3}" class="swiper-scrollbar"></div>-->
+            </div>
+        </div>
+
         <div class="container pb-4 mb-2 mt-4">
             <h4 class="mb-5 fw-bold">게시판 검색 결과 (총 <span th:text="${bcount}"></span>개)</h4>
             <!-- Swiper -->
@@ -77,7 +112,7 @@
                 <div class="swiper-wrapper">
                     <div class="swiper-slide" th:each="list, index: ${boardList}">
                         <div class="vh-auto bg-white">
-                            <article class="card-hover border-0 me-3 d-flex" style="min-height:250px;">
+                            <article class="card-hover border-0 me-5 d-flex" style="min-height:200px;">
                                 <a th:href="@{'/board/'+${list.boardId}}" class="stretched-link"></a>
                                 <div class="card-body position-relative p-0">
                                     <h5 class="mb-3">[[${list.boardTitle}]]</h5>
