@@ -200,7 +200,7 @@
 			if(!id)
 				location.href = '/review';
 			else
-				location.href = '/review/'+id;
+				location.href = 'javascript:history.back(-1)';
 			
 		}
 		/**
