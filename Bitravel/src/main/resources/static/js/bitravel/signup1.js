@@ -114,7 +114,7 @@ $(document).ready(function () {
 		var password = document.getElementById('signUpPassword').value;
 		var confirm = document.getElementById('signUpConfirmPassword').value;
 		if(password.length==0 || confirm.length==0) {
-			document.getElementById('validatePassword').innerHTML = "";
+			document.getElementById('validatePassword').innerHTML = "비밀번호를 입력해 주세요.";
 		} else if(password.length>0 && confirm.length>0 && password!=confirm) {
 			document.getElementById('validatePassword').innerHTML = "<span class='text-danger'>두 비밀번호가 다릅니다.</span>";
 		} else {
@@ -126,7 +126,7 @@ $(document).ready(function () {
 		var password = document.getElementById('signUpPassword').value;
 		var confirm = document.getElementById('signUpConfirmPassword').value;
 		if(password.length==0 || confirm.length==0) {
-			document.getElementById('validatePassword').innerHTML = "";
+			document.getElementById('validatePassword').innerHTML = "비밀번호를 입력해 주세요.";
 		} else if(password.length>0 && confirm.length>0 && password!=confirm) {
 			document.getElementById('validatePassword').innerHTML = "<span class='text-danger'>두 비밀번호가 다릅니다.</span>";
 		} else {
@@ -277,6 +277,7 @@ function isValid() {
 		return false;
 	} else if (form.signUpMail.value.trim().length < 5
 		|| !form.signUpMail.value.trim().includes("@")
+		|| !form.signUpMail.value.trim().includes(".")
 		|| form.signUpMail.value.trim().endsWith("@")
 		|| !/^[a-z0-9()]+$/i.test(form.signUpMail.value.trim().slice(-2, -1))) {
 		alert('올바른 이메일 형식이 아닙니다.');
@@ -284,8 +285,9 @@ function isValid() {
 		return false;
 	}
 
-	if (!form.signUpPassword.value.trim()) {
+	if (!form.signUpPassword.value.trim()||!form.signUpConfirmPassword.value.trim()) {
 		alert('비밀번호를 입력해 주세요.');
+		form.signUpConfirmPassword.value = '';
 		form.signUpPassword.value = '';
 		form.signUpPassword.focus();
 		return false;
