@@ -109,6 +109,30 @@ $(document).ready(function () {
 			});
 		}
 	});
+
+	$('#signUpPassword').on("change", function () {
+		var password = document.getElementById('signUpPassword').value;
+		var confirm = document.getElementById('signUpConfirmPassword').value;
+		if(password.length==0 || confirm.length==0) {
+			document.getElementById('validatePassword').innerHTML = "";
+		} else if(password.length>0 && confirm.length>0 && password!=confirm) {
+			document.getElementById('validatePassword').innerHTML = "<span class='text-danger'>두 비밀번호가 다릅니다.</span>";
+		} else {
+			document.getElementById('validatePassword').innerHTML = "<span class='text-success'>두 비밀번호가 같습니다.</span>";
+		}
+	});
+
+	$('#signUpConfirmPassword').on("change", function () {
+		var password = document.getElementById('signUpPassword').value;
+		var confirm = document.getElementById('signUpConfirmPassword').value;
+		if(password.length==0 || confirm.length==0) {
+			document.getElementById('validatePassword').innerHTML = "";
+		} else if(password.length>0 && confirm.length>0 && password!=confirm) {
+			document.getElementById('validatePassword').innerHTML = "<span class='text-danger'>두 비밀번호가 다릅니다.</span>";
+		} else {
+			document.getElementById('validatePassword').innerHTML = "<span class='text-success'>두 비밀번호가 같습니다.</span>";
+		}
+	});
 });
 
 /**
