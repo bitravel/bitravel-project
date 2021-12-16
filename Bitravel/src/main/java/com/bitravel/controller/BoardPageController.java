@@ -31,7 +31,7 @@ public class BoardPageController {
         
     	model.addAttribute("boardList", boardService.findAll(pageable));
     	
-    	return "redirect:board/boardList";
+    	return "redirect:board/list";
     }
     
     @GetMapping("/list")
