@@ -495,8 +495,6 @@ public class TravelService {
 		for(int i=0;i<all.size();i++) {
 			if(visitedSet.contains(all.get(i).getTravelId())) {
 				all.remove(i);
-			} else {
-				addImage(all.get(i));
 			}
 		}
 
