@@ -269,9 +269,9 @@
  			//tag = "<label for= reviewTravel' name='line'>여행지</label>\n";
  			tag = "<div style='display: flex;'>\n";
 			tag += "<div class='blog-content justify-content-center'><div class='d-flex justify-content-md-evenly text-primary fw-semibold small pb-2  border-primary'>";
-			tag += "<input type='radio' class='btn-check' id='like" + allSelect + "' value='like0' name='card2' autocomplete='off'> <label class='btn btn-rise btn-outline-info m-2 p-0 size-40 d-flex rounded-circle' for='like0'>";
+			tag += "<input type='radio' class='btn-check' id='like" + allSelect + "' value='like" + allSelect + "' name='card" + allSelect + "' autocomplete='off'> <label class='btn btn-rise btn-outline-info m-2 p-0 size-40 d-flex rounded-circle' for='like" + allSelect + "'>";
 			tag += "<div class='btn-rise-bg bg-info'></div><div class='btn-rise-text'><i class='fs-5 bi bi-hand-thumbs-up'></i></div></label>";
-			tag += "<input type='radio' class='btn-check' id='dislike" + allSelect + "' value='dislike0' name='card2' autocomplete='off'><label class='btn btn-rise btn-outline-danger m-2 p-0 size-40 d-flex rounded-circle' for='dislike0'>";
+			tag += "<input type='radio' class='btn-check' id='dislike" + allSelect + "' value='dislike" + allSelect + "' name='card" + allSelect + "' autocomplete='off'><label class='btn btn-rise btn-outline-danger m-2 p-0 size-40 d-flex rounded-circle' for='dislike" + allSelect + "'>";
 			tag += "<div class='btn-rise-bg bg-tint-danger'></div><div class='btn-rise-text'><i class='fs-5 bi bi-hand-thumbs-down'></i></div></label></div></div>";
  			tag += "<input type='hidden' id='travelId" + allSelect + "'class='form-control'placeholder='여행지 Id'/>\n";
  			tag += "<input type='text' id='travelName" + allSelect + "' class='form-control mb-2' placeholder='여행지를 선택해 주세요.' readonly/>\n ";
