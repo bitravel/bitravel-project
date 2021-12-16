@@ -149,8 +149,9 @@ public class TravelService {
 		
 		for(int i=0;i<save.length;i++) {
 			Optional<Travel> now = travelRepository.findById(save[i][1]);
-			if(now.isPresent())
+			if(now.isPresent()) {
 				travel.add(now.get());
+			}
 		}
 
 
@@ -441,7 +442,7 @@ public class TravelService {
 	}
 
 	// 내가 아직 방문하지 않은 특정 광역자치단체의 여행지 검색
-	@Transactional(readOnly = true)
+	@Transactional
 	public List<TravelSimpleDto> findNotVisitedTravelByLargeGov(String largeGov, Long id) {
 		String myEmail = SecurityUtil.getCurrentEmail().get();
 		List<UserTravel> list = userTravelRepository.findByUserEmailAndIsVisited(myEmail, false);
@@ -472,7 +473,7 @@ public class TravelService {
 	}
 
 	// 내가 아직 방문하지 않은 특정 기초자치단체의 여행지 검색
-	@Transactional(readOnly = true)
+	@Transactional
 	public List<TravelSimpleDto> findNotVisitedTravelBySmallGov(String largeGov, String smallGov, Long id) {
 		String myEmail = SecurityUtil.getCurrentEmail().get();
 		List<UserTravel> list = userTravelRepository.findByUserEmailAndIsVisited(myEmail, false);
@@ -493,6 +494,8 @@ public class TravelService {
 		for(int i=0;i<all.size();i++) {
 			if(visitedSet.contains(all.get(i).getTravelId())) {
 				all.remove(i);
+			} else {
+				addImage(all.get(i));
 			}
 		}
 

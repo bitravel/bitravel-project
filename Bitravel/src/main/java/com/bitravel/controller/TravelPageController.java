@@ -79,9 +79,9 @@ public class TravelPageController {
     	String largeGov = now.getLargeGov();
     	String smallGov = now.getSmallGov();
     	List<TravelSimpleDto> tlist = null;
-    	if(largeGov.equals("서울")||largeGov.equals("부산")||largeGov.equals("대구")
-    		||largeGov.equals("인천")&&!smallGov.equals("강화군")||largeGov.equals("대전")||largeGov.equals("광주")
-    		||largeGov.equals("울산")) {
+    	if(largeGov.equals("서울")||largeGov.equals("부산")&&!smallGov.equals("기장군")||largeGov.equals("대구")&&!smallGov.equals("달성군")
+    		||largeGov.equals("인천")&&(!smallGov.equals("강화군")||!smallGov.equals("옹진군"))||largeGov.equals("대전")||largeGov.equals("광주")
+    		||largeGov.equals("울산")&&!smallGov.equals("울주군")) {
     		tlist = travelService.findNotVisitedTravelByLargeGov(largeGov, id);
     		} else {
     			tlist = travelService.findNotVisitedTravelBySmallGov(largeGov, smallGov, id);
