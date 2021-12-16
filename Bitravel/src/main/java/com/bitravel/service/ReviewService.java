@@ -49,10 +49,12 @@ public class ReviewService {
     	// 1. 리뷰 저장
     	String nowUserEmail = SecurityUtil.getCurrentEmail().get();
     	params.setUserEmail(nowUserEmail);
+    	
     	if (SecurityUtil.getCurrentEmail().get().equals("anonymousUser")) {
     		params.setNickname("비회원");
     	} else {
     		params.setNickname(userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get().getNickname());
+    		params.setUserImage(userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get().getUserImage());
     	}
     	Review review = reviewRepository.save(params.toEntity());
     	review.getReviewId();

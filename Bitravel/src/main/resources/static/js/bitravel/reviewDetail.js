@@ -19,8 +19,12 @@ function reviewList() {
 			const elem = document.getElementById(key);
 			if (elem) {
 				elem.innerHTML = json[key];
+				if(json.userImage){
+				$("#userImage").attr("src", json.userImage)
+				} else {
+				$("#userImage").attr("src", "/assets/img/avatar/2.jpg")
+				}
 			}
-
 		});
 
 	}).catch(error => {

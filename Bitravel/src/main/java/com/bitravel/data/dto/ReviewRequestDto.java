@@ -55,4 +55,8 @@ public class ReviewRequestDto {
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
 	}
+	
+	public void setUserImage(String userImage) {
+		this.userImage = userImage;
+	}
 }
