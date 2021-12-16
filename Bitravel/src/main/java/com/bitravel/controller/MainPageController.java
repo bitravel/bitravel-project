@@ -17,13 +17,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.bitravel.data.dto.UserDto;
+import com.bitravel.data.entity.Review;
 import com.bitravel.data.entity.Travel;
-import com.bitravel.data.entity.User;
-import com.bitravel.service.BoardService;
 import com.bitravel.service.ReviewService;
 import com.bitravel.service.TravelService;
 import com.bitravel.service.UserService;
 import com.bitravel.util.SecurityUtil;
+import com.bitravel.util.TagUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,6 @@ public class MainPageController {
 
 	private final TravelService travelService;
 	private final ReviewService reviewService;
-	private final BoardService boardService;
 	private final UserService userService;
 
 	@Transactional
@@ -89,6 +88,23 @@ public class MainPageController {
 		} catch(Exception e) {
 			log.info(e+"*##################");
 		}
+		
+		// 다섯번째
+		List<Review> favlist = reviewService.findAllForMe();
+		for(int i=0;i<favlist.size();i++) {
+			Review now = favlist.get(i);
+			now.setReviewContent(TagUtil.getText(now.getReviewContent()));
+		}
+		model.addAttribute("List5", favlist);
+		
+		// 여섯번째
+		List<Review> anolist = reviewService.findAllForMain();
+		for(int i=0;i<anolist.size();i++) {
+			Review now = anolist.get(i);
+			now.setReviewContent(TagUtil.getText(now.getReviewContent()));
+		}
+		
+		model.addAttribute("List6", anolist);
 
 		return "index";
 	}
