@@ -281,7 +281,8 @@ public class TravelService {
 	public Page<Travel> findByLargeGov(String largeGov, Pageable pageable) {
 
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
-		pageable = PageRequest.of(page, 9, Sort.by(Sort.Direction.ASC, "travelId"));
+		Sort sort = Sort.by(Direction.DESC, "travelView").and(Sort.by(Direction.ASC, "travelName"));
+		pageable = PageRequest.of(page, 9, sort);
 
 		return travelRepository.findByLargeGov(largeGov, pageable);
 	}
@@ -306,7 +307,8 @@ public class TravelService {
 	public Page<Travel> findBySmallGov(String largeGov, String smallGov, Pageable pageable) {
 
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
-		pageable = PageRequest.of(page, 9, Sort.by(Sort.Direction.ASC, "travelId"));
+		Sort sort = Sort.by(Direction.DESC, "travelView").and(Sort.by(Direction.ASC, "travelName"));
+		pageable = PageRequest.of(page, 9, sort);
 
 		return travelRepository.findByLargeGovAndSmallGov(largeGov, smallGov, pageable);
 	}
@@ -328,7 +330,7 @@ public class TravelService {
 	 * 지역별 인기 여행지 조회 (Simple DTO)
 	 */
 	public List<TravelSimpleDto> findTravelsByRegion(String largeGov, String smallGov) {
-		Sort sort = Sort.by(Direction.ASC, "travelView", "travelName");
+		Sort sort = Sort.by(Direction.DESC, "travelView").and(Sort.by(Direction.ASC, "travelName"));
 		return travelRepository.findByLargeGovAndSmallGov(largeGov, smallGov, sort)
 				.stream().map(TravelSimpleDto::new).collect(Collectors.toList());
 	}
