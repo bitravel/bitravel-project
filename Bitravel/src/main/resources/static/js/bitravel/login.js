@@ -54,7 +54,7 @@ async function loginToken(param) {
 		// js에서는 Http only를 설정할 수 없고, server에서 설정할 수 있어야 하나
 		// 현재 spring에서 state-less 설정이 되어 있고 Spring security 적용 중이어 cookie를 다루는 것이 까다롭다.
 		// 시간대는 UTC 기준이다. (한국보다 9시간 느림)
-		document.cookie = "Authorization=" + json.token + "; expires=" + now.toUTCString() + "; path=/; domain=192.169.0.18;secure=true;";
+		document.cookie = "Authorization=" + json.token + "; expires=" + now.toUTCString() + "; path=/; domain=192.168.0.18;secure=true;";
 
 		if (history.length > 2)
 			history.back();
