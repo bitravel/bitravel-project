@@ -33,7 +33,7 @@ public class TravelPageController {
         
     	model.addAttribute("travelList", travelService.findAll(pageable));
     	
-    	return "travel/list";
+    	return "travel/travelList";
     }
     
     /**
@@ -44,7 +44,7 @@ public class TravelPageController {
     	
     	model.addAttribute("travelList", travelService.findByLargeGov(large, pageable));
     	model.addAttribute("largeGov", large);
-    	return "travel/listLarge";
+    	return "travel/travelListLarge";
     }
     
     /**
@@ -56,7 +56,7 @@ public class TravelPageController {
     	model.addAttribute("travelList", travelService.findBySmallGov(large, small, pageable));
     	model.addAttribute("largeGov", large);
     	model.addAttribute("smallGov", small);
-    	return "travel/listSmall";
+    	return "travel/travelListSmall";
     }
     
     /**
@@ -66,7 +66,7 @@ public class TravelPageController {
     public String openTravelWrite(@RequestParam(required = false) final Long id, Model model) {
 
     	model.addAttribute("id", id);
-        return "travel/write";
+        return "travel/travelWrite";
     }
     
     /**
@@ -91,7 +91,7 @@ public class TravelPageController {
     	model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
     	model.addAttribute("name", now.getTravelName());
         
-        return "travel/detail";
+        return "travel/travelDetail";
     }
 
 }

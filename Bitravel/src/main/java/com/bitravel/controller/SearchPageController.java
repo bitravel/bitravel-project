@@ -78,7 +78,7 @@ public class SearchPageController {
     	model.addAttribute("travelList", tList);
     	model.addAttribute("boardList", bList);
     	model.addAttribute("userList", uList);
-    	return "/search/list";
+    	return "search/searchList";
     }
     
     /**
@@ -92,7 +92,7 @@ public class SearchPageController {
     	long all = tList.size();
     	model.addAttribute("travelList", travelService.findByName(keyword, travel));
     	model.addAttribute("count", all);
-    	return "/search/travel";
+    	return "search/searchTravel";
     }
     
     /**
@@ -123,7 +123,7 @@ public class SearchPageController {
     	
     	model.addAttribute("boardList", bpage);
     	model.addAttribute("count", all);
-    	return "/search/board";
+    	return "search/searchBoard";
     }
     
     /**
@@ -152,6 +152,6 @@ public class SearchPageController {
     	
     	model.addAttribute("userList", upage);
     	model.addAttribute("count", all);
-    	return "/search/user";
+    	return "search/searchUser";
     }
 }

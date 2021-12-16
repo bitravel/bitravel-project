@@ -31,7 +31,7 @@ public class BoardPageController {
         
     	model.addAttribute("boardList", boardService.findAll(pageable));
     	
-    	return "redirect:board/list";
+    	return "redirect:board/boardList";
     }
     
     @GetMapping("/list")
@@ -39,7 +39,7 @@ public class BoardPageController {
         
     	model.addAttribute("boardList", boardService.findAll(pageable));
     	
-    	return "board/list";
+    	return "board/boardList";
     }
     
     @GetMapping("/best")
@@ -47,7 +47,7 @@ public class BoardPageController {
         
     	model.addAttribute("boardList", boardService.findBestList(pageable));
     	
-    	return "board/best";
+    	return "board/boardBest";
     }
 
     /**
@@ -56,7 +56,7 @@ public class BoardPageController {
     @GetMapping("/write")
     public String openBoardWrite(@RequestParam(required = false) final Long id, Model model) {
         model.addAttribute("id", id);
-        return "board/write";
+        return "board/boardWrite";
     }
     
     /**
@@ -66,7 +66,7 @@ public class BoardPageController {
     public String openWriting(@PathVariable final Long id, Model model, @RequestParam(value = "page") @Nullable final Long page) {
         model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
         model.addAttribute("title", boardService.findByIdNoViewCount(id).getBoardTitle());
-        return "board/detail";
+        return "board/boardDetail";
     }
    
     
@@ -77,7 +77,7 @@ public class BoardPageController {
     public String openDetailWritingOfAll(@PathVariable final Long id, Model model, @RequestParam(value = "page") @Nullable final Long page) {
         model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
         model.addAttribute("title", boardService.findByIdNoViewCount(id).getBoardTitle());
-        return "board/detail";
+        return "board/boardDetail";
     }
     
     /**
@@ -87,7 +87,7 @@ public class BoardPageController {
     public String openDetailWritingOfN(@PathVariable final Long id, Model model, @RequestParam(value = "page") @Nullable final Long page) {
         model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
         model.addAttribute("title", boardService.findByIdNoViewCount(id).getBoardTitle());
-        return "board/detail";
+        return "board/boardDetail";
     }
     
     /**
@@ -97,7 +97,7 @@ public class BoardPageController {
     public String openDetailWritingOfT(@PathVariable final Long id, Model model, @RequestParam(value = "page") @Nullable final Long page) {
         model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
         
-        return "board/detail";
+        return "board/boardDetail";
     }
     
     /**
@@ -107,7 +107,7 @@ public class BoardPageController {
     public String openDetailWritingOfTC(@PathVariable final Long id, Model model, @RequestParam(value = "page") @Nullable final Long page) {
         model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
         model.addAttribute("title", boardService.findByIdNoViewCount(id).getBoardTitle());
-        return "board/detail";
+        return "board/boardDetail";
     }
     
     /**
@@ -117,7 +117,7 @@ public class BoardPageController {
 	@ApiOperation(value = "게시글 통합 검색 목록", notes = "게시글을 닉네임 또는 제목 또는 내용으로 조회하는 API.")
 	public String findBoards(@RequestParam(value = "keyword") String keyword, Model model, @PageableDefault(size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
     	model.addAttribute("boardList", boardService.findBoards(keyword, pageable));
-		return "board/list";
+		return "board/boardList";
 	}
     /**
 	 * 게시글 닉네임 검색
@@ -126,7 +126,7 @@ public class BoardPageController {
 	@ApiOperation(value = "게시글 닉네임 검색 목록", notes = "게시글을 닉네임으로 조회하는 API.")
 	public String findBoardsByNickname(@RequestParam(value = "keyword") String keyword, Model model, @PageableDefault(size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
     	model.addAttribute("boardList", boardService.findBoardsByNickname(keyword, pageable));
-		return "board/list";
+		return "board/boardList";
 	}
 	
 	/**
@@ -136,7 +136,7 @@ public class BoardPageController {
 	@ApiOperation(value = "게시글 제목 검색 목록", notes = "게시글을 제목으로 조회하는 API.")
 	public String findBoardsByTitle(@RequestParam(value = "keyword") String keyword, Model model, @PageableDefault(size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
     	model.addAttribute("boardList", boardService.findBoardsByTitle(keyword, pageable));
-		return "board/list";
+		return "board/boardList";
 	}
 	
 	/**
@@ -146,7 +146,7 @@ public class BoardPageController {
 	@ApiOperation(value = "게시글 제목+내용 검색 목록", notes = "게시글을 제목 또는 내용으로 조회하는 API.")
 	public String findBoardsByTitleAndContent(@RequestParam(value = "keyword") String keyword, Model model, @PageableDefault(size = 10, sort = "boardId", direction = Sort.Direction.DESC) Pageable pageable) {
     	model.addAttribute("boardList", boardService.findBoardsByTitleAndContent(keyword, pageable));
-		return "board/list";
+		return "board/boardList";
 	}
 
 }
