@@ -4,8 +4,6 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.bitravel.data.entity.Board;
-import com.bitravel.data.entity.BoardComment;
 import com.bitravel.data.entity.Review;
 import com.bitravel.data.entity.ReviewComment;
 
