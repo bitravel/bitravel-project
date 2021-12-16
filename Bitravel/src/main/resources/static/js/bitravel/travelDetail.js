@@ -221,13 +221,14 @@ function findWeather(travel) {
 				return false;
 			}
 			var row = JSON.parse(obj);
-			if (row['fcstTime'] == nowH)
+			if (row['fcstTime'] == nowH) {
 				if (row['category'] == "SKY") {
 					skyList.push(row['fcstValue']);
 				} else if (row['category'] == "PTY") {
 					ptyList.push(row['fcstValue']);
 					i++;
 				}
+			}
 		});
 		for (var i = 0; i < 3; i++) {
 			var id = 'weather' + i;
@@ -257,7 +258,7 @@ function findWeather(travel) {
 				if (ptyList[i] == '0') {
 					value = "흐림";
 					tag += "cloud-fill";
-				} else if (pytList[i] == '1') {
+				} else if (ptyList[i] == '1') {
 					value = "흐리고 비";
 					tag += "cloud-rain-fill";
 				} else if (ptyList[i] == '2') {
