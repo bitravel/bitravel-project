@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 
 public class ReviewRequestDto {
 	
+	private String userImage; //작성자 프로필 사진
 	private String userEmail; // 작성자 이메일
 	private String nickname; // 작성자 닉네임
     private String reviewTitle; // 제목
@@ -38,8 +39,8 @@ public class ReviewRequestDto {
                 .userEmail(userEmail)
                 .nickname(nickname)
                 .thumbNail(thumbNail)
+                .userImage(userImage)
                 //.reviewLevel(reviewLevel)
-        		//.travelSet(travel)
                 .build();
     }
 

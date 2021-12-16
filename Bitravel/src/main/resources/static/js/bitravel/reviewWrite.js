@@ -217,13 +217,23 @@
         		$("#travelId0").val(travelId);
             	$("#travelName0").val(travelName);
         	}else if(allSelect == 2){
-        		$("#myModal_1").modal("hide");
-        		$("#travelId1").val(travelId);
-            	$("#travelName1").val(travelName);
+				if($("#travelId0").val() !== travelId){
+	        		$("#myModal_1").modal("hide");
+	        		$("#travelId1").val(travelId);
+	            	$("#travelName1").val(travelName);
+				} else {
+					alert("이미 선택한 여행지 입니다.")
+					return false;	
+				}
         	}else {
-        		$("#myModal_1").modal("hide");
-        		$("#travelId2").val(travelId);
-            	$("#travelName2").val(travelName);
+				if($("#travelId0").val() !== travelId && $("#travelId1").val() !== travelId){
+	        		$("#myModal_1").modal("hide");
+	        		$("#travelId2").val(travelId);
+	            	$("#travelName2").val(travelName);
+				} else {
+					alert("이미 선택한 여행지 입니다.")
+					return false;
+				}
        		}	
         }
 		
