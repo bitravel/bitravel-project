@@ -2,6 +2,7 @@ package com.bitravel.service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashSet;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -136,12 +137,17 @@ public class ReviewService {
 		String myEmail = SecurityUtil.getCurrentEmail().get();
 		List<Review> favReviews = new ArrayList<Review>();
 		List<UserTravel> myFav = userTravelRepository.findByUserEmailAndIsLiked(myEmail, true);
+		LinkedHashSet<Long> duplCheck = new LinkedHashSet<>();
 		if(myFav.size()>0) {
 
 			for(int i=0;i<myFav.size();i++) {
 				List<ReviewTravels> now = reviewTravelRepository.findByTravel(travelRepository.getById(myFav.get(i).getTravelId()));
 				for(int j=0;j<now.size();j++) {
-					favReviews.add(now.get(j).getReview());
+					Review nowR = now.get(i).getReview();
+					if(!duplCheck.contains(nowR.getReviewId())) {
+						favReviews.add(nowR);
+						duplCheck.add(nowR.getReviewId());
+					}	
 				}
 			}
 		}
