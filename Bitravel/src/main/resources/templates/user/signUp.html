@@ -100,15 +100,21 @@
 			<div class="container py-9 pt-lg-12 position-relative z-index-1">
 				<div class="row align-items-center justify-content-center">
 					<div class=" col-xl-4 col-lg-5 col-md-6 col-sm-8 z-index-2">
-
-						<h2 class="mb-1 display-6">Welcome to Bitravel!</h2>
-						<p class="mb-5 text-muted">회원 정보를 입력해주세요.</p>
+						<div>
+							<a href="/" class="mb-3"><img src="/assets/img/logo/bitravel-logo.svg" alt=""
+									class="img-fluid" style="min-width:300px;"></a></div>
+						<br>
+						<br>
+						<br>
+						<h2 class="mb-2 display-6">회원 가입</h2>
+						<p class="mb-4 text-muted">서비스 이용에 필요한 회원 정보를 입력해 주세요.</p>
+						<br>
 						<div class="position-relative" style="text-align: center">
 							<div>
 								<!-- 프로필 사진 업로드 -->
 								<form id="image-form" method="post" enctype="multipart/form-data">
 									<div class="round photo profile-pic" id="profile-pic"
-										style="background-image: url(/assets/img/avatar/1.jpg); ">
+										style="background-image: url(/assets/img/avatar/2.jpg); ">
 										<div class="icon_camera">
 											<i class="bi bi-camera upload-button"></i>
 											<input class="file-upload" type="file" accept="image/*" id="g_img[]"
@@ -143,21 +149,19 @@
 										</span> <input type="password" class="form-control" id="signUpPassword"
 											name="password" placeholder="비밀번호를 입력하세요.">
 									</div>
-																		<!--input-with-icon-->
+									<!--input-with-icon-->
 									<div class="input-icon-group mb-1">
-										<span class="input-icon"> <svg
-												xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-												fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
-                                                    <path
+										<span class="input-icon"> <svg xmlns="http://www.w3.org/2000/svg" width="16"
+												height="16" fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
+												<path
 													d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8zm4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5z" />
-                                                    <path
-													d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
-                                                </svg>
-										</span> <input type="password" class="form-control"
-											id="signUpConfirmPassword" placeholder="비밀번호를 다시 입력하세요.">
+												<path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+											</svg>
+										</span> <input type="password" class="form-control" id="signUpConfirmPassword"
+											placeholder="비밀번호를 다시 입력하세요.">
 									</div>
 									<div id="validatePassword" class="mb-3">
-										
+
 									</div>
 									<!--input-with-icon-->
 									<div class="input-icon-group mb-3">
