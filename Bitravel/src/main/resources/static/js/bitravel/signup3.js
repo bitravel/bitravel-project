@@ -11,7 +11,7 @@ $(document).ready(function () {
 	* 처음 여행지 리스트를 불러와서 card div로 띄우기
 	*/
 	const rowStart = '<article class="ml-10 mr-10 border-0 d-flex" id="article';
-	const rowStart1 = '" style="width:70%;margin-bottom:40px;">\n<div class="card-body card-hover position-relative p-0 m-4" id="card';
+	const rowStart1 = '" style="width:80%;margin-bottom:40px;">\n<div class="card-body card-hover position-relative p-0 m-3" id="card';
 
 	const cardRear = '<input type="radio" class="btn-check" id="like';
 	const cardRear1 = '" value="like'
@@ -61,14 +61,14 @@ $(document).ready(function () {
 				tag += '">\n';
 			} else {
 				var cardId = 'card' + allCards;
-				newElement.setAttribute('class', 'card-body card-hover position-relative p-0 m-4');
+				newElement.setAttribute('class', 'card-body card-hover position-relative p-0 m-3');
 				newElement.setAttribute('id', cardId);
 			}
 
 			tag += ('<input type="hidden" id="travel' + allCards + '" value="' + item.travelId + '">');
 			tag += '<div class="d-block position-relative overflow-hidden mb-3">\n';
 			tag += '<img src="';
-			tag += item.travelImage + '" class="img-fluid img-zoom" style="max-height:200px;" alt="" onerror="errorImage(this)"></div>';
+			tag += item.travelImage + '" class="img-fluid img-zoom" style="width:100%" alt="" onerror="errorImage(this)"></div>';
 			tag += ('<h5 class="mb-2 text-center fw-bold">' + item.travelName + '</h5>\n');
 			tag += '<div class="blog-content justify-content-center">\n';
 			tag += '<div class="d-flex justify-content-md-evenly text-primary fw-semibold small pb-2  border-primary">';
