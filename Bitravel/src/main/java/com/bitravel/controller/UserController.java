@@ -194,19 +194,6 @@ public class UserController {
 	public ResponseEntity<Boolean> deleteUserByList(@RequestBody List<Long> list) {
 		return ResponseEntity.ok(userService.deleteUserByList(list));
 	}
-	
-	@GetMapping("/mypage")
-//  @PreAuthorize("isAnonymous()")
-//	public String openMyPage(@RequestParam("userEmail") Model model) {
-	public String openMyPage(Model model) {
-		UserDto user = userService.getMyUserWithAuthorities().get();
-//		List<UserDto> userList = userService.getUserListByEmail(user.get().getEmail());
-//		model.addAttribute("userList", userList);
-		model.addAttribute("user", user);
-		return "user/mypage";
-//		userService.getUserListByEmail(user.get().getEmail());
-//		return ResponseEntity.ok(userService.getUserListByEmail(user.get().getEmail()));
-	}
 
-	
+
 }
