@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bitravel.data.dto.LoginDto;
 import com.bitravel.data.dto.TokenDto;
@@ -42,21 +41,26 @@ import lombok.extern.slf4j.Slf4j;
 public class UserController {
 
 	private final UserService userService;
+	private final TokenProvider tokenProvider;
 
 	@PostMapping("/login")
 	public ResponseEntity<TokenDto> login(@RequestBody LoginDto loginDto, HttpServletResponse response) throws IOException {
-		log.info(loginDto.getEmail()+" "+loginDto.getPassword()+" check");
+		log.info(loginDto.getEmail()+" check");
 		try {
 			TokenDto tokenInfo = userService.getUserAuthentication(loginDto);
 			if(tokenInfo==null) {
 				response.setStatus(401);
 				return null;
 			}
-			String jwt = tokenInfo.getToken();	
-			jwt = "Bearer "+jwt;
+			String jwt = tokenInfo.getToken();
+			jwt = "Bearer"+jwt;
 			tokenInfo.setToken(jwt);
+			
+			tokenProvider.createCookie(response, jwt);
+			
 			return ResponseEntity.ok(tokenInfo);
 		} catch (Exception e) {
+			log.info(e.getMessage());
 			response.setStatus(500);
 			return null;
 		}
@@ -73,7 +77,6 @@ public class UserController {
 			}
 		}
 		String jwt = bearerToken.substring(1);
-		log.info("token: "+jwt);
 		if(userService.CancelUserAuthentication(jwt)) {
 			// 실제 구현 완료하고 나면 반드시 redirect해야 함
 			return "redirect:/";

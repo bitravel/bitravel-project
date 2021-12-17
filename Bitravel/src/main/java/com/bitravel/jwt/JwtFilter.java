@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -38,6 +39,9 @@ public class JwtFilter extends GenericFilterBean {
 			// 검증한 결과에 따른 인증 결과를 사이트 구현에 반영함
 			Authentication authentication = tokenProvider.getAuthentication(jwt);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
+			
+			tokenProvider.createCookie((HttpServletResponse) response, "Bearer"+jwt);
+			
 			log.debug("Security Context에 '{}' 인증정보를 저장했습니다, uri: {}", authentication.getName(), requestURI);
 		} else {
 			log.debug("유효한 jwt 토큰이 없습니다, uri: {}", requestURI);
@@ -59,8 +63,8 @@ public class JwtFilter extends GenericFilterBean {
 				break;
 			}
 		}
-		if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("=Bearer ")) {
-			return bearerToken.substring(8);
+		if(StringUtils.hasText(bearerToken) && bearerToken.startsWith("=Bearer")) {
+			return bearerToken.substring(7);
 		}
 		return null;
 	}

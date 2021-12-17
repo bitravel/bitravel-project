@@ -67,7 +67,7 @@ public class UserService {
 		
 		// 현재 브라우저에 인증 결과를 바탕으로 권한 설정함 (Admin / user 등)
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		
+
 		// 현재 회원임을 증명할 수 있는 토큰 생성
 		String jwt = tokenProvider.createToken(authentication);
 		
@@ -79,22 +79,22 @@ public class UserService {
 	@Transactional
 	public boolean CancelUserAuthentication (String jwt) {
 		// 어차피 내부든 쿠키든 저장이 안되므로 소용없음 다시 리셋됨 (11월 17일 현재 상황 기준)
-		
+
 		// 유저에게 받아온 토큰 맨 앞자리의 'Bearer ' 문자열 삭제
-		if(StringUtils.hasText(jwt) && jwt.startsWith("Bearer "))
-			jwt = jwt.substring(7);
-		else {
+		if(StringUtils.hasText(jwt) && jwt.startsWith("Bearer")) {
+			jwt = jwt.substring(6);
+		} else {
 			log.info("유효한 header를 찾을 수 없음");
 			return false;
 		}
-					
+
 		try {
 			// 로그아웃 후에는 해당 토큰 만료 전이라도 인증할 수 없게 해야 하므로 redis의 예외 테이블에 map 형태로 저장함
 			// redis에서는 유효기간 이후에 토큰이 저절로 사라짐
 			ValueOperations<String, String> logoutValueOperations = redisTemplate.opsForValue();
 			// 검색이 편리하도록 key와 value를 동일하게 설정
 			logoutValueOperations.set(jwt, jwt);
-			
+
 			// 이 토큰을 쓰고 있던 유저를 검색함 (필수는 아니고 logout 성공 여부 확인용)
 			User user = (User) tokenProvider.getAuthentication(jwt).getPrincipal();
 			log.info("로그아웃 유저 아이디 : '{}', 유저 이름 : '{}'", user.getEmail(),	user.getNickname());
@@ -112,7 +112,7 @@ public class UserService {
 		if(userRepository.findOneWithAuthoritiesByEmail(userDto.getEmail()).orElse(null) != null) {
 			throw new RuntimeException("이미 가입되어 있는 회원입니다.");
 		}
-		
+
 		// 회원 맞는 경우 관리자인지 확인 
 		Authority authority;
 		if(userDto.getEmail().equals("admin")) {
@@ -124,10 +124,10 @@ public class UserService {
 					.roleName("ROLE_USER")
 					.build();
 		}
-		
+
 		// 암호화 시작 전 회원의 비밀번호 확인
 		log.info(userDto.getPassword());
-		
+
 		// user dto의 내용을 토대로 entity 생성
 		User user = User.builder()
 				.email(userDto.getEmail())
@@ -145,7 +145,7 @@ public class UserService {
 				.build();
 		return userRepository.save(user);
 	}
-	
+
 	/**
 	 * UserTravel 신규 등록
 	 */
@@ -153,13 +153,13 @@ public class UserService {
 	public UserTravel saveUserTravel(UserTravel param) {		
 		return userTravelRepository.save(param);
 	}
-	
+
 	// 회원 이메일로 찾기
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Optional<UserDto> getUserWithAuthorities(String email) {
 		return userRepository.findOneWithAuthoritiesByEmail(email).map(UserDto::new);
 	}
-	
+
 	// 회원 닉네임으로 찾기
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Optional<UserDto> getUserByNickname(String nickname) {
@@ -186,7 +186,7 @@ public class UserService {
 		List<User> list = userRepository.findAll(sort);
 		return list.stream().map(UserDto::new).collect(Collectors.toList());
 	}
-	
+
 	// 회원 닉네임으로 검색한 결과 불러오기
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public List<UserDto> getUserListBynickname(String nickname) {
@@ -195,7 +195,7 @@ public class UserService {
 		List<User> list = userRepository.findByNicknameContaining(nickname, sort);
 		return list.stream().map(UserDto::new).collect(Collectors.toList());
 	}
-	
+
 	// 회원 본명으로 검색한 결과 불러오기
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public List<UserDto> getUserListByrealname(String realname) {
@@ -204,7 +204,7 @@ public class UserService {
 		List<User> list = userRepository.findByRealNameContaining(realname);
 		return list.stream().map(UserDto::new).collect(Collectors.toList());
 	}
-	
+
 	// 회원 이메일으로 검색한 결과 불러오기
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public List<UserDto> getUserListByEmail(String email) {
@@ -256,7 +256,7 @@ public class UserService {
 		userRepository.deleteById(user.getUserId());
 		return true;
 	}
-	
+
 	// 회원정보 삭제하기
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public boolean deleteUserByList(List<Long> list) {
@@ -268,7 +268,7 @@ public class UserService {
 		}
 		return true;
 	}
-	
+
 	// 포인트만 수정하기
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Boolean updatePoint(String email, Integer point) {
@@ -281,11 +281,11 @@ public class UserService {
 		userRepository.save(user);
 		return true;
 	}
-	
+
 	public Page<User> findUsersByNickname(String keyword, Pageable pageable) {
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
 		pageable = PageRequest.of(page, 9, Sort.by(Sort.Direction.ASC, "userId"));
 		return userRepository.findByNicknameContaining(keyword, pageable);
 	}
-	
+
 }

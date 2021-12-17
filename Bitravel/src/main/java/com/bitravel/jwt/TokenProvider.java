@@ -1,16 +1,20 @@
 package com.bitravel.jwt;
 
+import java.net.URLEncoder;
 import java.security.Key;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -44,7 +48,7 @@ public class TokenProvider implements InitializingBean {
 	// 로그아웃된 토큰들을 보관하는 redis db에 접근하는 repository
 	@Autowired
 	private final StringRedisTemplate redisTemplate;
-	
+
 	@Autowired
 	private UserRepository userRepository;
 
@@ -86,6 +90,20 @@ public class TokenProvider implements InitializingBean {
 				.compact();
 	}
 
+	public void createCookie(HttpServletResponse response, String token) {
+		try {
+			ResponseCookie cookie = ResponseCookie.from(JwtFilter.AUTHORIZATION_HEADER, URLEncoder.encode(token, "UTF-8"))
+					.httpOnly(true)
+					.secure(false)
+					.maxAge(tokenValidityInMilliseconds/1000)
+					.path("/")
+					.build();
+			response.addHeader("Set-Cookie", cookie.toString());
+		} catch (Exception e) {
+			log.info(e.getMessage());
+		}
+	}
+
 	public Authentication getAuthentication(String token) {
 		// client에서 받아온 토큰 문자열을 분해하여 필요한 값만 찾음
 		Claims claims = Jwts
@@ -119,7 +137,6 @@ public class TokenProvider implements InitializingBean {
 			// Client의 header에서 가져온 토큰을 분해하여 정보 추출
 			Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
 			// 로그아웃된 토큰 저장소에 존재하는 토큰인지 확인
-			
 			ValueOperations<String, String> logoutValueOperations = redisTemplate.opsForValue();
 			if(logoutValueOperations.get(token) != null) {
 				log.info("로그아웃된 토큰");
