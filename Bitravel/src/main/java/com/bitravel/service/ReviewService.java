@@ -143,7 +143,7 @@ public class ReviewService {
 			for(int i=0;i<myFav.size();i++) {
 				List<ReviewTravels> now = reviewTravelRepository.findByTravel(travelRepository.getById(myFav.get(i).getTravelId()));
 				for(int j=0;j<now.size();j++) {
-					Review nowR = now.get(i).getReview();
+					Review nowR = now.get(j).getReview();
 					if(!duplCheck.contains(nowR.getReviewId())) {
 						favReviews.add(nowR);
 						duplCheck.add(nowR.getReviewId());
