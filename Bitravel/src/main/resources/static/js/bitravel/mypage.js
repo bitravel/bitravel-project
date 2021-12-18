@@ -37,13 +37,6 @@ $(document).ready(function () {
 
 		const userSmallGov = document.getElementById('userSmallGov');
 
-//		if (userLargeGov.value == "") {
-//			userSmallGov.disabled = true;
-//			userSmallGov.disabled = 'disabled';
-//		} else {
-//			userSmallGov.disabled = '';
-//			userSmallGov.disabled = false;
-
 			var url = '/api/regions/list/' + userLargeGov.value;
 			fetch(url).then(response => {
 
@@ -66,6 +59,79 @@ $(document).ready(function () {
 			}).catch(error => {
 				alert('리스트 불러오기에 실패했습니다.');
 			});
+	});
+	
+	// 비밀번호 변경 값 보내기
+//	$("#updatePassword").click(function() {
+//		$.ajax({
+//			type: "POST",
+//			url: "/mypage/setting",
+//			data: {},
+//			dataType: "",
+//			success: function(data) {
+//        	console.log(data);
+//    		}
+//		});
+//	})
+	
+	//비밀번호 확인
+//	$("#updatePassword").click(function() {
+//		//비밀번호 공백 확
+//	})
+	
+	
+
+	// 입력 정보 유효성 검사
+	let checkBtn  = document.getElementById('updatePassword');
+	let changePw  = document.getElementById('changePassword');
+	let confirmPw = document.getElementById('confirmPassword');
+	
+	checkBtn.addEventListener("click", function() {
+		changePw.value.replace(" ","")
+		confirmPw.value.replace(" ","")
+		
+		if(changePw.value || confirmPw.value) {
+			alert('비밀번호를 입력하세요.');
+			changePw.value = '';
+			confirmPw.value = '';
+			changePw.focus();
+			return false;
+		}
+		if (changePw.value != confirmPw.value) {
+			alert('입력된 두 비밀번호가 다릅니다.');
+			changePw.value = '';
+			confirmPw.value = '';
+			changePw.focus();
+			return false;
+		}
+		if (changePw.value.length < 6) {
+			alert('비밀번호를 6자 이상으로 입력하세요.');
+			changePw.value = '';
+			confirmPw.value = '';
+			changePw.focus();
+			return false;
+		}
+		
+//		if (!form.signUpPassword.value.trim() || !form.signUpConfirmPassword.value.trim()) {
+//			alert('비밀번호를 입력해 주세요.');
+//			form.signUpConfirmPassword.value = '';
+//			form.signUpPassword.value = '';
+//			form.signUpPassword.focus();
+//			return false;
+//		} else if (form.signUpConfirmPassword.value.trim() != form.signUpPassword.value.trim()) {
+//			alert('입력된 두 비밀번호가 다릅니다.')
+//			form.signUpPassword.value = '';
+//			form.signUpConfirmPassword.value = '';
+//			form.signUpPassword.focus();
+//			return false;
+//		} else if (form.signUpPassword.value.trim().length < 6) {
+//			alert('비밀번호가 너무 짧습니다. 6자 이상으로 입력해 주세요.');
+//			form.signUpPassword.value = '';
+//			form.signUpConfirmPassword.value = '';
+//			form.signUpPassword.focus();
+//			return false;
 //		}
 	});
+
+	
 });

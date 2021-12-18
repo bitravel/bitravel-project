@@ -2,6 +2,7 @@ package com.bitravel.service;
 
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,9 +28,8 @@ public class MypageService {
 	// 회원정보 수정
 	@Transactional()
 	public User updateUser(UserDto userDto) {
-		Optional<User> userTemp = userRepository.findOneWithAuthoritiesByEmail(userDto.getEmail());
+		User user = userRepository.findOneWithAuthoritiesByEmail(userDto.getEmail()).get();
 		
-		User user = userTemp.get();
 		user.setGender(      userDto.getGender());
 		user.setNickname(    userDto.getNickname());
 		user.setUserLargeGov(userDto.getUserLargeGov());
@@ -48,5 +48,18 @@ public class MypageService {
 		userRepository.save(user);
 		return true;
 	}
+	
+//	@Autowired
+//	PasswordEncoder passwordEncoder1;
+//	public User save(User user, String role, String type) {
+//			// TODO Auto-generated method stub
+//			user.setPassword(passwordEncoder.encode(user.getPassword()));
+//			user.setuserNonExpired(true);
+//			user.setuserNonLocked(true);
+//			user.setCredentialsNonExpired(true);
+//			user.setEnabled(true);
+//			user.setType(type);
+//			return user.save(user, role);
+//		}
 
 }
