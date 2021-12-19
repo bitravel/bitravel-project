@@ -308,6 +308,8 @@
                         </a>
                     </div>
                 </div>
+                <p th:if="${rcount==0}" class="fs-5">현재 등록된 후기가 없습니다.<br>가장 먼저 나의 관심 여행지 방문 후기를 작성해 보세요.</p>
+                <br>
                 <div class="row justify-content-center">
                     <div class="col-12 position-relative">
                         <div class="swiper-container swiper-auto shadow-lg">
@@ -371,10 +373,10 @@
 
                         <!--Swiper buttons-->
 
-                        <div
+                        <div th:unless="${rcount==0}"
                             class="swiperAuto-button-next swiper-button-next me-1 me-sm-0 end-0 size-40 z-index-3 bg-primary text-white">
                         </div>
-                        <div
+                        <div th:unless="${rcount==0}"
                             class="swiperAuto-button-prev swiper-button-prev ms-1 ms-sm-0 start-0 size-40 bg-primary text-white">
                         </div>
                     </div>

@@ -103,7 +103,7 @@ public class MainPageController {
 			Review now = anolist.get(i);
 			now.setReviewContent(TagUtil.getText(now.getReviewContent()));
 		}
-		
+		model.addAttribute("rcount", anolist.size());
 		model.addAttribute("List6", anolist);
 
 		return "index";
