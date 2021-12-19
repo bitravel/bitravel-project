@@ -92,24 +92,48 @@ function loadLargeSelect(largeId, smallId) {
 // Select 하나 추가하기
 function addSelect() {
 	var allSelect = (document.getElementsByTagName('select').length) / 2;
+	for(var i =0;i<allSelect;i++) {
+		if(!document.getElementById('selectGroup'+i)) {
+			allSelect = i;
+			break;
+		}
+	}
+
 
 	if (allSelect == 10) {
 		alert('최대 10곳까지 등록할 수 있습니다.');
 		return false;
 	}
-
+	console.log("check");
 	var largeId = 'largeSelect' + allSelect;
 	var smallId = 'smallSelect' + allSelect;
 	tag = "<select id='largeSelect" + allSelect + "' name='large' class='form-control large'>\n";
 	tag += "<option value=''>시/도</option></select>&nbsp;&nbsp;&nbsp;\n<select id='smallSelect" + allSelect;
-	tag += "' name='small' class='form-control small'><option value=''>시/군/구</option></select>&nbsp;&nbsp;&nbsp;\n<button type='button' onclick='addSelect()' class='btn btn-secondary' id='add'>+ 추가</button>\n";
+	tag += "' name='small' class='form-control small'><option value=''>시/군/구</option></select>&nbsp;&nbsp;&nbsp;\n<button type='button' onclick='addSelect()' class='btn btn-secondary' id='add";
+	tag += allSelect + "'>+ 추가</button>\n";
+	tag += "&nbsp;&nbsp;&nbsp;<button type='button' onclick='deleteSelect(this)' class='btn btn-secondary' id='delete";
+	tag += allSelect + "'>- 삭제</button>";
 	var div = document.getElementById('only-select');
 	var newElement = document.createElement('div');
-	newElement.setAttribute('id', 'selectGroup');
+	newElement.setAttribute('id', 'selectGroup'+allSelect);
 	newElement.setAttribute('class', 'd-flex justify-content-xl-center mb-1 pt-1');
 	newElement.innerHTML = tag;
 	div.appendChild(newElement);
 	loadLargeSelect(largeId, smallId);
+}
+
+function deleteSelect(button) {
+	var id = button.id;
+	var allSelect = (document.getElementsByTagName('select').length) / 2;
+	if (allSelect == 1)
+		return false;
+	console.log(id);
+	var num = id.slice(-1);
+	console.log(num);
+	var select = 'selectGroup'+id.slice(-1);
+	var ele = document.getElementById(select);
+	ele.remove();
+	return true;
 }
 
 //유효성 검사
