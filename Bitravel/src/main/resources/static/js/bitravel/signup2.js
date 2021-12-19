@@ -140,6 +140,7 @@ function deleteSelect(button) {
 function isValid() {
 	var flag = 0;
 	var all = 1;
+	var dupl = 0;
 	var id = "";
 	$("select[name='large']").each(function () {
 		var idNow = $(this).attr('id');
@@ -153,14 +154,23 @@ function isValid() {
 		}
 	});
 
+	var set = new Set();
+
 	$("select[name='small']").each(function () {
 		var idNow = $(this).attr('id');
 		var now = document.getElementById(idNow).value;
+		console.log(set.has(now));
 		if (now == "") {
 			all = 0;
 			if (id == "")
 				id = idNow;
 			return false;
+		} else if(set.has(now)) {
+			dupl = 1;
+			id = idNow;
+			return false;
+		} else {
+			set.add(now);
 		}
 	});
 
@@ -171,6 +181,12 @@ function isValid() {
 	}
 	if (!all) {
 		alert('선호 여행 지역 선택을 모두 완료해 주세요.')
+		document.getElementById(id).focus();
+		return false;
+	}
+
+	if (dupl) {
+		alert("중복된 지역을 선택할 수 없습니다.");
 		document.getElementById(id).focus();
 		return false;
 	}
