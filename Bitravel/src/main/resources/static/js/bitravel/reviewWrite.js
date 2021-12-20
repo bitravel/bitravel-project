@@ -196,10 +196,6 @@
 		**/
 		
 		function goBack() {
-			
-			if(!id)
-				location.href = '/review';
-			else
 				location.href = 'javascript:history.back(-1)';
 			
 		}
