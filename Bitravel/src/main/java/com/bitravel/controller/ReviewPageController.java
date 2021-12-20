@@ -102,7 +102,6 @@ public class ReviewPageController {
         Review review = reviewRepository.getById(id);
         List<ReviewTravels> thisReview = reviewService.findByReview(review);
         List<Travel> list = new ArrayList<>();
-        model.addAttribute("rtList", reviewService.findByReview(review));
         for(int i=0;i<thisReview.size();i++) {
 			ReviewTravels now = thisReview.get(i);
 			Travel travel = travelService.findByTravelId(now.getTravel().getTravelId());
@@ -118,43 +117,95 @@ public class ReviewPageController {
         return "review/reviewDetail";
     }
     /**
-     * 후기 상세 페이지
+     * 후기 전체 검색 상세 페이지
      */
     @GetMapping("/search/all/{id}")
     public String openDetailWritingOfAll(@PathVariable final Long id, Model model, @RequestParam(value = "page") @Nullable final Long page) {
         model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
         Review review = reviewRepository.getById(id);
-        model.addAttribute("rtList", reviewService.findByReview(review));
+        List<ReviewTravels> thisReview = reviewService.findByReview(review);
+        List<Travel> list = new ArrayList<>();
+        for(int i=0;i<thisReview.size();i++) {
+			ReviewTravels now = thisReview.get(i);
+			Travel travel = travelService.findByTravelId(now.getTravel().getTravelId());
+			list.add(travel);
+			if(i==0) {
+				model.addAttribute("initLat", travel.getLatitude());
+				model.addAttribute("initLong", travel.getLongitude());
+				model.addAttribute("initName", travel.getTravelName());
+			}
+        }
+        model.addAttribute("tsize", list.size());
+        model.addAttribute("tList", list);
         return "review/reviewDetail";
     }
     /**
-     * 후기 상세 페이지
+     * 후기 닉네임 검색 상세 페이지
      */
     @GetMapping("/search/nickname/{id}")
     public String openDetailWritingOfN(@PathVariable final Long id, Model model, @RequestParam(value = "page") @Nullable final Long page) {
         model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
         Review review = reviewRepository.getById(id);
-        model.addAttribute("rtList", reviewService.findByReview(review));
+        List<ReviewTravels> thisReview = reviewService.findByReview(review);
+        List<Travel> list = new ArrayList<>();
+        for(int i=0;i<thisReview.size();i++) {
+			ReviewTravels now = thisReview.get(i);
+			Travel travel = travelService.findByTravelId(now.getTravel().getTravelId());
+			list.add(travel);
+			if(i==0) {
+				model.addAttribute("initLat", travel.getLatitude());
+				model.addAttribute("initLong", travel.getLongitude());
+				model.addAttribute("initName", travel.getTravelName());
+			}
+        }
+        model.addAttribute("tsize", list.size());
+        model.addAttribute("tList", list);
         return "review/reviewDetail";
     }
     /**
-     * 후기 상세 페이지
+     * 후기 제목 검색 상세 페이지
      */
     @GetMapping("/search/title/{id}")
     public String openDetailWritingOfT(@PathVariable final Long id, Model model, @RequestParam(value = "page") @Nullable final Long page) {
         model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
         Review review = reviewRepository.getById(id);
-        model.addAttribute("rtList", reviewService.findByReview(review));
+        List<ReviewTravels> thisReview = reviewService.findByReview(review);
+        List<Travel> list = new ArrayList<>();
+        for(int i=0;i<thisReview.size();i++) {
+			ReviewTravels now = thisReview.get(i);
+			Travel travel = travelService.findByTravelId(now.getTravel().getTravelId());
+			list.add(travel);
+			if(i==0) {
+				model.addAttribute("initLat", travel.getLatitude());
+				model.addAttribute("initLong", travel.getLongitude());
+				model.addAttribute("initName", travel.getTravelName());
+			}
+        }
+        model.addAttribute("tsize", list.size());
+        model.addAttribute("tList", list);
         return "review/reviewDetail";
     }
     /**
-     * 후기 상세 페이지
+     * 후기 제목,내용 검색 상세 페이지
      */
     @GetMapping("/search/titleandcontent/{id}")
     public String openDetailWritingOfTC(@PathVariable final Long id, Model model, @RequestParam(value = "page") @Nullable final Long page) {
         model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
         Review review = reviewRepository.getById(id);
-        model.addAttribute("rtList", reviewService.findByReview(review));
+        List<ReviewTravels> thisReview = reviewService.findByReview(review);
+        List<Travel> list = new ArrayList<>();
+        for(int i=0;i<thisReview.size();i++) {
+			ReviewTravels now = thisReview.get(i);
+			Travel travel = travelService.findByTravelId(now.getTravel().getTravelId());
+			list.add(travel);
+			if(i==0) {
+				model.addAttribute("initLat", travel.getLatitude());
+				model.addAttribute("initLong", travel.getLongitude());
+				model.addAttribute("initName", travel.getTravelName());
+			}
+        }
+        model.addAttribute("tsize", list.size());
+        model.addAttribute("tList", list);
         return "review/reviewDetail";
     }
     /**
