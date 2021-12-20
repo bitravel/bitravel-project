@@ -40,9 +40,11 @@ public class SearchPageController {
      */
     @GetMapping("/search")
     public String openSearchPage(Model model, @RequestParam(value = "keyword") String keyword) {
+    	keyword = keyword.trim();
     	model.addAttribute("keyword", keyword);
+    	String tkeyword = keyword.replaceAll(" ", "");
     	long all = 0;
-    	List<TravelSimpleDto> tList = travelService.findByName(keyword);
+    	List<TravelSimpleDto> tList = travelService.findByName(tkeyword);
     	List<Review> rList = reviewService.findReviews(keyword);
     	List<Board> bList = boardService.findBoards(keyword);
     	List<UserDto> uList = userService.getUserListBynickname(keyword);
