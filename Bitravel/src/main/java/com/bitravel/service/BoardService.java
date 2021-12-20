@@ -68,7 +68,7 @@ public class BoardService {
      */
     @Transactional(readOnly = true)
     public Page<Board> findBestList(Pageable pageable) {
-    	Date start = new Date(System.currentTimeMillis()-86400000L*3); // 현재 3일 기준
+    	Date start = new Date(System.currentTimeMillis()-86400000L*30); // 현재 3일 기준
     	Date end = new Date();
     	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
     	pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "boardView", "boardDate"));
