@@ -42,7 +42,7 @@ layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layo
                             <div class="card-body position-relative p-0">
                                 <div class="d-block position-relative overflow-hidden mb-4">
                                     <img th:src="${list.travelImage}" onerror="this.src='/assets/img/800x600/2.jpg'"
-                                        style="width:90%;max-height:400px;" class="img-fluid img-zoom" alt="여행지 이미지">
+                                        style="max-width:90%;max-height:350px;" class="img-fluid img-zoom" alt="여행지 이미지">
                                 </div>
                                 <h5 class="mb-3">[[${list.travelName}]]</h5>
                                 <div class="blog-content">

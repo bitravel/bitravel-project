@@ -142,18 +142,18 @@ layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layo
     <div class="container pb-5 mb-5">
         <h2 class="mb-5"><span id="travelName1"></span> 관련 인기 후기</h2>
         <!-- Swiper -->
-        <div class="swiper-container swiper-3">
+        <div class="swiper-container swiper-3" style="min-height:350px;">
             <div class="swiper-wrapper">
                 <div th:if="${not #lists.isEmpty(reviewList)}" th:each="list, index: ${reviewList}" class="swiper-slide">
                     <div class="vh-20 bg-white">
                         <article class="card-hover border-0 d-flex">
-                            <a href="#" class="stretched-link"></a>
-                            <div class="card-body position-relative p-0">
+                            <a th:href="@{'/review/'+${list.reviewId}}" class="stretched-link"></a>
+                            <div class="card-body position-relative p-0" >
                                 <div class="d-block position-relative overflow-hidden mb-4">
-                                    <img style="width:90%;max-height:400px;" th:src="${list.thumbNail}"
+                                    <img style="max-width:90%;max-height:270px;" th:src="${list.thumbNail}"
                                             onerror="this.src='/assets/img/800x600/2.jpg'" class="img-fluid img-zoom" alt="">
                                 </div>
-                                <h5 class="mb-3">[[${list.reviewTitle}]]</h5>
+                                <h5 class="mb-3 text-dark">[[${list.reviewTitle}]]</h5>
                                 <div class="blog-content">
                                     <div class="text-primary fw-semibold small pb-2" th:text="${#dates.format(list.reviewDate, 'yyyy-MM-dd &nbsp;HH:mm')}+'&nbsp;&nbsp;&nbsp;&nbsp;조회수 '+${list.reviewView}"></div>
                                 </div>
