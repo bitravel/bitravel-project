@@ -154,7 +154,7 @@ layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layo
                                             onerror="this.src='/assets/img/800x600/2.jpg'" class="img-fluid img-zoom" alt="">
                                 </div>
                                 <h5 class="mb-3 text-dark">[[${list.reviewTitle}]]</h5>
-                                <div class="blog-content">
+                                <div class="blog-content mb-1">
                                     <div class="text-primary fw-semibold small pb-2" th:text="${#dates.format(list.reviewDate, 'yyyy-MM-dd &nbsp;HH:mm')}+'&nbsp;&nbsp;&nbsp;&nbsp;조회수 '+${list.reviewView}"></div>
                                 </div>
                             </div>
