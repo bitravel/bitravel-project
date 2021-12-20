@@ -99,7 +99,6 @@ function addSelect() {
 		}
 	}
 
-
 	if (allSelect == 10) {
 		alert('최대 10곳까지 등록할 수 있습니다.');
 		return false;
@@ -204,13 +203,14 @@ function save(userEmail) {
 		return false;
 	console.log('validated');
 
-	var allSelect = (document.getElementsByTagName('select').length) / 2;
-
 	var resultList = new Array();
 
-	for (var i = 0; i < allSelect; i++) {
+	for (var i = 0; i < 10; i++) {
 		var largeId = 'largeSelect' + i;
 		var smallId = 'smallSelect' + i;
+
+		if(!document.getElementById(largeId))
+			continue;
 
 		var data = new Object();
 
@@ -220,8 +220,6 @@ function save(userEmail) {
 
 		resultList.push(data);
 	}
-
-	const param = JSON.stringify(resultList);
 
 	fetch('/api/regions', {
 		method: 'POST', /*데이터 생성은 무조건 post 방식 이용*/
