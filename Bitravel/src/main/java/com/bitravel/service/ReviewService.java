@@ -18,6 +18,7 @@ import com.bitravel.data.dto.ReviewResponseDto;
 import com.bitravel.data.entity.Review;
 import com.bitravel.data.entity.ReviewTravels;
 import com.bitravel.data.entity.Travel;
+import com.bitravel.data.entity.User;
 import com.bitravel.data.entity.UserTravel;
 import com.bitravel.data.repository.ReviewCommentRepository;
 import com.bitravel.data.repository.ReviewRepository;
@@ -57,9 +58,11 @@ public class ReviewService {
 		if (SecurityUtil.getCurrentEmail().get().equals("anonymousUser")) {
 			params.setNickname("비회원");
 		} else {
-			params.setNickname(userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get().getNickname());
-			params.setUserImage(userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get().getUserImage());
-			int age = userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get().getAge();
+			User user = userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get();
+			params.setNickname(user.getNickname());
+			params.setUserImage(user.getUserImage());
+			user.changePoint(30);
+			int age = user.getAge();
     		age = age/10;
     		if(age==0)
     			age=1;
@@ -311,13 +314,16 @@ public class ReviewService {
 	@Transactional
 	public Boolean deleteById(Long id) {
 		Review entity = reviewRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
+		String nowEmail = SecurityUtil.getCurrentEmail().get();
 		// 글쓴이 또는 admin만 수정할 수 있게 함
-		if(SecurityUtil.getCurrentEmail().get().equals("admin")) {
+		if(nowEmail.equals("admin")) {
 			log.info("관리자 권한으로 글을 삭제합니다. 글 번호 : "+id);
-		} else if(!entity.getUserEmail().equals(SecurityUtil.getCurrentEmail().get())) {
+		} else if(!entity.getUserEmail().equals(nowEmail)) {
 			log.info("유효하지 않은 삭제 요청입니다.");
 			return false;
 		}
+		User user = userRepository.findOneWithAuthoritiesByEmail(nowEmail).get();
+		user.changePoint(-30);
 		rCommentRepository.deleteAllByReview(entity);
 		reviewRepository.deleteById(id);
 		return true;
