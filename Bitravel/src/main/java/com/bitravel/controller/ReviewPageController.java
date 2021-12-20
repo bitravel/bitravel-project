@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -25,6 +26,7 @@ import com.bitravel.service.ReviewService;
 import com.bitravel.service.TravelService;
 import com.bitravel.service.UserService;
 import com.bitravel.util.SecurityUtil;
+import com.bitravel.util.TagUtil;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -48,7 +50,13 @@ public class ReviewPageController {
     	model.addAttribute("reviewList", reviewService.findAll(pageable));
         
         //한달간 조회수 높은 후기
-        model.addAttribute("viewList", reviewService.findViewAll(pageable));
+    	Page<Review> rList = reviewService.findViewAll(pageable);
+    	List<Review> rrList = rList.getContent().subList(0, 5);
+    	for(int i=0; i<rList.getContent().size(); i++) {
+    		Review now = rrList.get(i);
+    		now.setReviewContent(TagUtil.getText(now.getReviewContent()));
+    	}
+        model.addAttribute("viewList", rList);
         
         //나이대별 최신 후기
         Optional<UserDto> tmp = userService.getUserWithAuthorities(SecurityUtil.getCurrentEmail().get());
