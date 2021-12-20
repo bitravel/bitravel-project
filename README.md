@@ -51,11 +51,11 @@ https://docs.google.com/spreadsheets/d/1xrJY5oFsCTjjSEwxY2uCujWKFVm5Q1uY/edit?rt
 * __게시물/후기 기능__ : @RestController 및 Pageable interface 활용
 * __지도 열람 기능__ : Kakao Maps API 기반 지정 여행지 위치 표시 구현
 * __여행지 날씨 기능__ : 기상청 단기예보/중기예보 API 기반 json data parsing
-* __Custom error page__ : 주요 Status code 대응 (404, 500, 401, 403)
+* __Custom error page__ : 주요 Status code 대응 (404, 500, 401, 403, 400)
 * __JAR Build__ : Gradle 기반 JAR build 및 Quality Test 준비
 
 ## Status
-* 현재 Front - Back 기능 구현 진행 중 (~ 12. 17.)
-* 최종 발표일 (미정,  12. 28 ~ 30 예정)
+* 현재 Front - Back 기능 구현 진행 중 (~ 12. 23.)
+* 최종 발표일 (12. 29)
 
 powered by spacekay 
