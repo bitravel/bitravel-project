@@ -68,7 +68,7 @@ $(document).ready(function () {
 			tag += ('<input type="hidden" id="travel' + allCards + '" value="' + item.travelId + '">');
 			tag += '<div class="d-block position-relative overflow-hidden mb-3">\n';
 			tag += '<img src="';
-			tag += item.travelImage + '" class="img-fluid img-zoom" style="width:100%;max-height:300px;" alt="" onerror="errorImage(this)"></div>';
+			tag += item.travelImage + '" class="img-fluid img-zoom" style="max-width:100%;max-height:300px;" alt="" onerror="errorImage(this)"></div>';
 			tag += ('<h5 class="mb-2 text-center fw-bold">' + item.travelName + '</h5>\n');
 			tag += '<div class="blog-content justify-content-center">\n';
 			tag += '<div class="d-flex justify-content-md-evenly text-primary fw-semibold small pb-2  border-primary">';
@@ -118,7 +118,6 @@ $(document).ready(function () {
 				}
 			});
 		});
-
 
 	}).catch(error => {
 		alert('리스트 불러오기에 실패했습니다.\n' + error);
