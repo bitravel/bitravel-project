@@ -63,6 +63,67 @@ function closeModal() {
 }
 
 /**
+ * 글 신고하기
+ */
+function reportPost() {
+	var url = '/api/reports/post';
+
+	var reason = prompt("신고 사유를 입력해 주세요.");
+
+	if(!reason)
+		return false;
+
+	if (!confirm("입력하신 사유로 신고하시겠습니까?\n신고 사유 : " + reason)) {
+		return false;
+	}
+
+	const params = {
+		reportType: 'b',
+		reportTitle: reason,
+		postId: id
+	};
+
+	fetch(url, {
+		method: 'POST', /*데이터 생성은 무조건 post 방식 이용*/
+		headers: {
+			'Content-Type': 'application/json',
+		}, /*API 호출 시, GET 방식이 아닌 요청은 Content-Type을 application/json으로 설정한다. */
+		body: JSON.stringify(params), /*데이터 전달에 사용되는 옵션으로, params 객체에 담긴 게시글 정보를 API 서버로 전달한다.*/
+
+	}).then(response => {
+		if (!response.ok) {
+			alert("해당 글을 신고할 수 없습니다.");
+			return false;
+		}
+		alert('게시물 신고를 완료하였습니다.');
+	}).catch(error => {
+		alert('오류가 발생하였습니다. \n' + error);
+	});
+
+}
+
+function reportComment(cid) {
+
+	if(!confirm("해당 댓글을 신고하시겠습니까?"))
+		return false;
+
+	var url = '/api/reports/comment/' + 'b' + cid;
+	console.log(url);
+
+	fetch(url, {
+	}).then(response => {
+		if (!response.ok) {
+			alert("해당 댓글을 신고할 수 없습니다.");
+			return false;
+		}
+		alert('댓글 신고를 완료하였습니다.');
+	}).catch(error => {
+		alert('오류가 발생하였습니다. \n' + error);
+	});
+}
+
+
+/**
  * 댓글 유효성 검사
  */
 function isValid() {
@@ -115,7 +176,7 @@ function insertComment() {
 			content.value = "";
 		},
 		error: function (xhr, status, error) {
-			alert("일시적인 오류가 발생하였습니다."+error);
+			alert("일시적인 오류가 발생하였습니다." + error);
 			return false;
 		}
 	});
@@ -223,7 +284,8 @@ function printCommentList() {
 										<tr class="form-control mb-2">
 											<td style="width:20%;"><span class="fw-bold">${obj.nickname}</span></td>
 											<td style="width:78%;"><span class="desc">${obj.commentContent}</span></td>			
-											<td style="width:2%;"><button type="button" onclick="openModal(${obj.bcommentId}, '${obj.commentContent}', '${obj.userEmail}' )" class="btn btn-sm btn-outline-default btn-circle"><i class="bi bi-pencil-fill" aria-hidden="true"></i></button></td>
+											<td style="width:1%;"><button type="button" onclick="openModal(${obj.bcommentId}, '${obj.commentContent}', '${obj.userEmail}' )" class="btn btn-sm btn-outline-default btn-circle"><i class="bi bi-pencil-fill" aria-hidden="true"></i></button></td>
+											<td style="width:1%;"><button type="button" onclick="reportComment(${obj.bcommentId}, '${obj.userEmail}' )" class="btn btn-sm btn-outline-default btn-circle"><i class="bi bi-emoji-expressionless-fill" aria-hidden="true"></i></button></td>
 										</tr>
 									`;
 			});
