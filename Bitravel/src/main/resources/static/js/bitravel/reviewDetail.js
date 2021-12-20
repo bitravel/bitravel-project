@@ -235,23 +235,23 @@ function printCommentList() {
  * 뒤로가기
  */
 function goList() {
-	const url = window.location.href;
-	location.href = url.slice(0, url.indexOf(id)) + '' + window.location.search;
-	/* location.href = "javascript:history.back(-1)";*/
+//	const url = window.location.href;
+//	location.href = url.slice(0, url.indexOf(id)) + '' + window.location.search;
+	location.href = "javascript:history.back(-1)";
 }
 
 /**
  * 수정하기
  */
 function goWrite() {
-	fetch(`/api/reviews/writer/${id}`).then(response => {
+	fetch(`/api/reviews/modify/${id}`).then(response => {
 		if (response.status == 401) {
 			alert("해당 글을 수정할 권한이 없습니다.");
 			return false;
 		} else if (!response.ok) {
 			throw new Error('Request failed...');
 		}
-		location.href = `/review/write?id=${id}`;
+		location.href = `/review/modify?id=${id}`;
 	});
 }
 
@@ -260,7 +260,7 @@ function goWrite() {
  */
 function deleteBoard() {
 	
-	fetch(`/api/reviews/writer/${id}`).then(response => {
+	fetch(`/api/reviews/modify/${id}`).then(response => {
 		if (response.status == 401) {
 			alert("해당 글을 수정할 권한이 없습니다.");
 			return false;

@@ -67,7 +67,7 @@ public class ReviewController {
 	/**
      * 후기 수정/삭제 가능 여부 조회
      */
-    @GetMapping("/reviews/writer/{id}")
+    @GetMapping("/reviews/modify/{id}")
     @ApiOperation(value = "글 내용 조회", notes = "개별 글의 정보를 조회하는 API. Board entity 클래스의 bid값을 기준으로 데이터를 가져온다.")
     public ResponseEntity<?> checkWriter(@PathVariable final Long id) {    	
     	if(reviewService.detail(id).getUserEmail().equals(SecurityUtil.getCurrentEmail().get())) {
