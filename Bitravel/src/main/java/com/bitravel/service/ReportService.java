@@ -103,7 +103,7 @@ public class ReportService {
 				if(bc.isEmpty())
 					return false;
 				Long boardId = bc.get().getBoard().getBoardId();
-				reportContent = "/board/detail/"+boardId;
+				reportContent = "/board/"+boardId;
 				reportedEmail = bc.get().getUserEmail();
 				reportTitle = "여행 게시판 댓글 신고";
 
@@ -112,7 +112,7 @@ public class ReportService {
 				if(rc.isEmpty())
 					return false;
 				Long reviewId = rc.get().getReview().getReviewId();
-				reportContent = "/review/detail/"+reviewId;
+				reportContent = "/review/"+reviewId;
 				reportedEmail = rc.get().getUserEmail();
 				reportTitle = "후기 게시판 댓글 신고";
 			} else {
