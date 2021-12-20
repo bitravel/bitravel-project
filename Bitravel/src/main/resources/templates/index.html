@@ -312,7 +312,58 @@
                 <br>
                 <div class="row justify-content-center">
                     <div class="col-12 position-relative">
-                        <div class="swiper-container swiper-2 shadow-lg" id="swiper5">
+                                                <div th:unless="${rcount>1}" class="swiper-container swiper-1 shadow-lg" id="swiper6">
+                                                        <div class="swiper-wrapper">
+                                <!--Testimonial slide-->
+                                <div class="swiper-slide" th:each="list, index: ${List6}">
+                                    <div
+                                        class="d-flex align-items-center flex-column bg-white overflow-hidden flex-lg-row">
+                                        <div class="col-lg-6 px-0 mb-4 mb-md-0">
+                                            <div class="position-relative">
+                                                <!--testimonial Image-->
+                                                <img th:src="${list.thumbNail}" onerror="this.src='/assets/img/800x600/2.jpg'" style="height:350px;" class="img-fluid" alt="">
+
+                                                <!--Testimonial image divider-->
+                                                <svg class="position-absolute d-none d-lg-block end-0 top-0 h-100 me-n1"
+                                                    preserveAspectRatio="none" width="58" height="583"
+                                                    viewBox="0 0 58 583" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                        d="M0 583L9.66667 534.417C19.3333 485.833 38.6667 388.667 39.7407 291.5C40.8148 194.333 23.6296 97.1667 15.037 48.5833L6.44444 -1.62125e-05H58V48.5833C58 97.1667 58 194.333 58 291.5C58 388.667 58 485.833 58 534.417V583H0Z"
+                                                        fill="white" />
+                                                </svg>
+
+                                                <!--Testimonial image small device divider-->
+                                                <svg class="position-absolute bottom-0 start-0 mb-n1 d-lg-none"
+                                                    width="100%" height="48" preserveAspectRatio="none"
+                                                    viewBox="0 0 1200 64" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg">
+                                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                                        d="M0 0L100 10.6667C200 21.3333 400 42.6667 600 43.8519C800 45.037 1000 26.0741 1100 16.5926L1200 7.11111V64H1100C1000 64 800 64 600 64C400 64 200 64 100 64H0L0 0Z"
+                                                        fill="white" />
+                                                </svg>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6 mx-auto px-0">
+                                            
+                                            <blockquote class="blockquote text-center mb-0 px-4 py-4">
+
+                                                <!--Testimonial Comapny Logo -->
+                                                <div class="mb-3 h-auto mx-auto">
+                                                    <h4><a class="fw-bold text-dark" th:href="@{'/review/'+${list.reviewId}}">[[${list.reviewTitle}]]</a></h4>
+                                                </div>
+                                                <br>
+                                                <!-- Footer -->
+                                                <footer class="blockquote-footer pb-4 pb-lg-0">
+                                                    <span class="h5">[[${list.nickname}]]</span>
+                                                </footer>
+                                            </blockquote>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div th:if="${rcount>1}" class="swiper-container swiper-2 shadow-lg" id="swiper5">
                             <div class="swiper-wrapper">
                                 <!--Testimonial slide-->
                                 <div class="swiper-slide" th:each="list, index: ${List5}">
