@@ -83,9 +83,10 @@ public class Review {
     	this.age = age;
     }
     
-    public void update(String reviewTitle, String reviewContent) {
+    public void update(String reviewTitle, String reviewContent, String thumbNail) {
     	this.reviewTitle = reviewTitle;
     	this.reviewContent = reviewContent;
+    	this.thumbNail = thumbNail;
     }
     
     @OneToMany(mappedBy ="review", cascade=CascadeType.ALL) //ReviewTravels 테이블의 review필드에 맵핑

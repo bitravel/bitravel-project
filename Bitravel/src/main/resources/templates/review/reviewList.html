@@ -125,7 +125,7 @@
             <span th:if="${#authentication.principal.age>=40 && #authentication.principal.age<50}" th:text="40대 "></span>
             <span th:if="${#authentication.principal.age>=50 && #authentication.principal.age<60}" th:text="50대 "></span>
             <span th:if="${#authentication.principal.age>=60 && #authentication.principal.age<70}" th:text="60대 "></span>
-            <span th:if="${#authentication.principal.age>=70}" th:text="70대 이상 "></span> 회원들의 최신 여행 후기</h2>
+            <span th:if="${#authentication.principal.age>=70}">70대 이상</span> 회원들의 최신 여행 후기</h2>
             <!-- Swiper -->
             <div class="swiper-container swiper-3">
                 <div class="swiper-wrapper">
