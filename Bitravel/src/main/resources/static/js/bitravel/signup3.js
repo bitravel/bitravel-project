@@ -185,7 +185,7 @@ function save() {
 		} else if (document.getElementById(dislikeNow).checked) {
 			var data = new Object();
 
-			data.userEmail = userMail;
+			data.userEmail = userEmail;
 			data.travelId = document.getElementById(travelNow).value;
 			data.isLiked = '0';
 			data.isVisited = '0';
