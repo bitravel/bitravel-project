@@ -166,8 +166,6 @@ public class TravelService {
 		age = age/10;
 		if(age==0)
 			age=1;
-		else if (age>7)
-			age=7;
 		String ageKey = age*10 + "대";
 		if (age>=7)
 			ageKey = "70세이상";
