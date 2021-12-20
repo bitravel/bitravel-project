@@ -19,10 +19,10 @@ function reviewList() {
 			const elem = document.getElementById(key);
 			if (elem) {
 				elem.innerHTML = json[key];
-				if(json.userImage){
-				$("#userImage").attr("src", json.userImage)
+				if (json.userImage) {
+					$("#userImage").attr("src", json.userImage)
 				} else {
-				$("#userImage").attr("src", "/assets/img/avatar/2.jpg")
+					$("#userImage").attr("src", "/assets/img/avatar/2.jpg")
 				}
 			}
 		});
@@ -37,7 +37,7 @@ function reviewList() {
  * 댓글 수정 창
  */
 function openModal(commentId, email, content) {
-	
+
 	fetch(`/api/user`).then(response => {
 		if (!response.ok) {
 			return false;
@@ -50,13 +50,13 @@ function openModal(commentId, email, content) {
 			alert("해당 댓글을 수정할 권한이 없습니다.");
 			return false;
 		}
-	
-	$("#commentModal").modal("toggle");
 
-	document.getElementById("modalContent").value = content;
+		$("#commentModal").modal("toggle");
 
-	document.getElementById("btnCommentUpdate").setAttribute("onclick", "updateComment(" + commentId + ")");
-	document.getElementById("btnCommentDelete").setAttribute("onclick", "deleteComment(" + commentId + ")");
+		document.getElementById("modalContent").value = content;
+
+		document.getElementById("btnCommentUpdate").setAttribute("onclick", "updateComment(" + commentId + ")");
+		document.getElementById("btnCommentDelete").setAttribute("onclick", "deleteComment(" + commentId + ")");
 	});
 }
 
@@ -97,7 +97,7 @@ function insertComment() {
 
 	var uri = `/api/reviews/comments/${id}`;
 	var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "POST" };
-	var params = { "reviewId": id , "commentContent": content.value };
+	var params = { "reviewId": id, "commentContent": content.value };
 	console.log(params);
 	$.ajax({
 		url: uri,
@@ -105,7 +105,7 @@ function insertComment() {
 		headers: headers,
 		dataType: 'json',
 		data: JSON.stringify(params),
-		success: function(response) {
+		success: function (response) {
 			if (response.result == false) {
 				alert("댓글 등록에 실패하였습니다.");
 				return false;
@@ -113,7 +113,7 @@ function insertComment() {
 			printCommentList();
 			content.value = "";
 		},
-		error: function(xhr, status, error) {
+		error: function (xhr, status, error) {
 			alert("에러가 발생하였습니다.");
 			return false;
 		}
@@ -126,7 +126,7 @@ function insertComment() {
 function updateComment(commentId) {
 
 	var content = document.getElementById("modalContent");
-	
+
 	if (!content.value.trim()) {
 		alert('내용을 입력해 주세요.');
 		content.value = '';
@@ -139,7 +139,7 @@ function updateComment(commentId) {
 		content.focus();
 		return false;
 	}
-	
+
 	var uri = `/api/reviews/comments/${commentId}`;
 	var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "PATCH" };
 	var params = { "commentId": commentId, "commentContent": content.value };
@@ -150,7 +150,7 @@ function updateComment(commentId) {
 		headers: headers,
 		dataType: "json",
 		data: JSON.stringify(params),
-		success: function(response) {
+		success: function (response) {
 			if (response.result == false) {
 				alert("댓글 수정에 실패하였습니다.");
 				return false;
@@ -159,7 +159,7 @@ function updateComment(commentId) {
 			printCommentList();
 			$("#commentModal").modal("hide");
 		},
-		error: function(xhr, status, error) {
+		error: function (xhr, status, error) {
 			alert("에러가 발생하였습니다.");
 			return false;
 		}
@@ -178,26 +178,26 @@ function deleteComment(commentId) {
 	var uri = `/api/reviews/comments/` + commentId;
 	var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "DELETE" };
 
-				$.ajax({
-					url: uri,
-					type: "DELETE",
-					headers: headers,
-					dataType: "json",
-					success: function(response) {
-						if (response.result == false) {
-							alert("댓글 삭제에 실패하였습니다.");
-							return false;
-						}
-				
-						printCommentList();
-						$("#commentModal").modal("hide");
-					},
-					error: function(xhr, status, error) {
-						alert("에러가 발생하였습니다.");
-						return false;
-					}
-				});
+	$.ajax({
+		url: uri,
+		type: "DELETE",
+		headers: headers,
+		dataType: "json",
+		success: function (response) {
+			if (response.result == false) {
+				alert("댓글 삭제에 실패하였습니다.");
+				return false;
 			}
+
+			printCommentList();
+			$("#commentModal").modal("hide");
+		},
+		error: function (xhr, status, error) {
+			alert("에러가 발생하였습니다.");
+			return false;
+		}
+	});
+}
 
 
 /**
@@ -218,12 +218,12 @@ function printCommentList() {
 		} else {
 			json.forEach((obj) => {
 				html += `
-								<tr class="form-control mb-2">
-									<td style="width:20%;"><span class="fw-bold">${obj.nickname}</span></td>
-	    							<td style="width:78%;"><span class="desc">${obj.commentContent}</span></td>
-	    							<td style="width:2%;"><button type="button" onclick="openModal(${obj.rcommentId}, '${obj.userEmail}', '${obj.commentContent}' )" class="btn btn-sm btn-outline-default btn-circle"><i class="bi bi-pencil-fill" aria-hidden="true"></i></button></td>
-								</tr>
-							`;
+										<tr class="form-control mb-2">
+											<td style="width:20%;"><span class="fw-bold">${obj.nickname}</span></td>
+											<td style="width:78%;"><span class="desc">${obj.commentContent}</span></td>
+											<td style="width:2%;"><button type="button" onclick="openModal(${obj.rcommentId}, '${obj.userEmail}', '${obj.commentContent}' )" class="btn btn-sm btn-outline-default btn-circle"><i class="bi bi-pencil-fill" aria-hidden="true"></i></button></td>
+										</tr>
+									`;
 			});
 		}
 		$(".notice-list").html(html);
@@ -235,8 +235,8 @@ function printCommentList() {
  * 뒤로가기
  */
 function goList() {
-//	const url = window.location.href;
-//	location.href = url.slice(0, url.indexOf(id)) + '' + window.location.search;
+	//	const url = window.location.href;
+	//	location.href = url.slice(0, url.indexOf(id)) + '' + window.location.search;
 	location.href = "javascript:history.back(-1)";
 }
 
@@ -259,7 +259,7 @@ function goWrite() {
  * 삭제하기
  */
 function deleteBoard() {
-	
+
 	fetch(`/api/reviews/modify/${id}`).then(response => {
 		if (response.status == 401) {
 			alert("해당 글을 수정할 권한이 없습니다.");
@@ -272,39 +272,39 @@ function deleteBoard() {
 		if (!confirm(`${id}번 게시글을 삭제할까요?`)) {
 			return false;
 		}
-	
+
 		fetch(`/api/reviews/${id}`, {
 			method: 'DELETE',
 			headers: { 'Content-Type': 'application/json' },
-	
+
 		}).then(response => {
 			if (!response.ok) {
 				throw new Error('삭제가 불가능합니다. 관리자에게 문의하세요.');
 			}
-	
+
 			alert('삭제되었습니다.');
 			goList();
-	
+
 		}).catch(error => {
 			alert('오류가 발생하였습니다.');
 		});
 	});
 }
 
-/*지도 map*/
 
 var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-    mapOption = { 
-        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
-    };
+	mapOption = {
+		center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+		level: 3 // 지도의 확대 레벨
+	};
 
 var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
+
 function panTo(latitude, longitude, travelName) {
-    // 이동할 위도 경도 위치를 생성합니다 
-    var moveLatLon = new kakao.maps.LatLng(latitude, longitude);
-    
+	// 이동할 위도 경도 위치를 생성합니다 
+	var moveLatLon = new kakao.maps.LatLng(latitude, longitude);
+
 	var markerPosition = new kakao.maps.LatLng(latitude, longitude);
 
 	// 마커를 생성합니다
@@ -330,10 +330,10 @@ function panTo(latitude, longitude, travelName) {
 		content: content,
 		yAnchor: 1
 	});
-    // 지도 중심을 부드럽게 이동시킵니다
-    // 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
-    map.panTo(moveLatLon);            
-}        
+	// 지도 중심을 부드럽게 이동시킵니다
+	// 만약 이동할 거리가 지도 화면보다 크면 부드러운 효과 없이 이동합니다
+	map.panTo(moveLatLon);
+}
 
 
 

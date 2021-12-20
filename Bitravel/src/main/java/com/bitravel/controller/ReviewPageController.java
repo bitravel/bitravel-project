@@ -21,7 +21,6 @@ import com.bitravel.data.entity.Review;
 import com.bitravel.data.entity.ReviewTravels;
 import com.bitravel.data.entity.Travel;
 import com.bitravel.data.repository.ReviewRepository;
-import com.bitravel.data.repository.TravelRepository;
 import com.bitravel.service.ReviewService;
 import com.bitravel.service.TravelService;
 import com.bitravel.service.UserService;
@@ -39,7 +38,6 @@ public class ReviewPageController {
 	private final ReviewService reviewService;
 	private final ReviewRepository reviewRepository;
 	private final TravelService travelService;
-	private final TravelRepository travelRepository;
 	private final UserService userService;
     /**
      * 후기 리스트 페이지
@@ -107,9 +105,16 @@ public class ReviewPageController {
         model.addAttribute("rtList", reviewService.findByReview(review));
         for(int i=0;i<thisReview.size();i++) {
 			ReviewTravels now = thisReview.get(i);
-			list.add(travelService.findByTravelId(now.getTravel().getTravelId()));
-			model.addAttribute("tList", list);
+			Travel travel = travelService.findByTravelId(now.getTravel().getTravelId());
+			list.add(travel);
+			if(i==0) {
+				model.addAttribute("initLat", travel.getLatitude());
+				model.addAttribute("initLong", travel.getLongitude());
+				model.addAttribute("initName", travel.getTravelName());
+			}
         }
+        model.addAttribute("tsize", list.size());
+        model.addAttribute("tList", list);
         return "review/reviewDetail";
     }
     /**

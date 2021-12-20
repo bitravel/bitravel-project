@@ -1,169 +1,185 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" layout:decorator="layout1" 
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" layout:decorator="layout1"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-    
-    <head>
-        <title>여행 후기 게시판 :: BITravel</title>
-    </head>
-   
-     <th:block layout:fragment="modal-board">
-		<div id="commentModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel" aria-hidden="true">
-		    <div class="modal-dialog" role="document">
-		        <div class="modal-content">
-		            <div class="modal-body">
-		                <form>
-		                    <div class="form-group">
-		                        <label for="modalContent" class="col-form-label">내용</label>
-		                        <textarea id="modalContent" class="form-control" placeholder="내용을 입력해 주세요."></textarea>
-		                    </div>
-		                </form>
-		            </div>
-		            <div class="modal-footer">
-		                <button type="button" id="btnModalCancel" class="btn btn-default waves-effect waves-light" data-bs-dismiss="modal">취소하기</button>
-		                <button type="button" id="btnCommentUpdate" class="btn btn-primary waves-effect waves-light" onclick="updateComment()">수정하기</button>
-		                <button type="button" id="btnCommentDelete" class="btn btn-danger waves-effect waves-light">삭제하기</button>
-		            </div>
-		        </div>
-		    </div>
+
+<head>
+	<title>여행 후기 게시판 :: BITravel</title>
+</head>
+
+<th:block layout:fragment="modal-board">
+	<div id="commentModal" class="modal" tabindex="-1" role="dialog" aria-labelledby="commentModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label for="modalContent" class="col-form-label">내용</label>
+							<textarea id="modalContent" class="form-control" placeholder="내용을 입력해 주세요."></textarea>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" id="btnModalCancel" class="btn btn-default waves-effect waves-light"
+						data-bs-dismiss="modal">취소하기</button>
+					<button type="button" id="btnCommentUpdate" class="btn btn-primary waves-effect waves-light"
+						onclick="updateComment()">수정하기</button>
+					<button type="button" id="btnCommentDelete"
+						class="btn btn-danger waves-effect waves-light">삭제하기</button>
+				</div>
+			</div>
 		</div>
-	</th:block>	
-            <!--Main content start-->
-    <th:block layout:fragment="content">
-        <main>
-            <section id="article-header" class="position-relative bg-tint-primary" >
-                <div class="container pt-11 pt-lg-14 pb-7 pb-lg-12 position-relative" style="max-width:1000px">
-                    <article class="row pb-7">
-                        <div class="col-lg-10 col-xl-8">
-                            <div class="position-relative pb-3 pb-lg-0">
-                                <div class="d-flex align-items-center w-100">
-                                	<small class="text-muted">작성일: </small>
-                                    <small id="reviewDate" class="text-muted"></small>
-                                </div>
+	</div>
+</th:block>
+<!--Main content start-->
+<th:block layout:fragment="content">
+	<main>
+		<section id="article-header" class="position-relative bg-tint-primary">
+			<div class="container pt-11 pt-lg-14 pb-7 pb-lg-12 position-relative" style="max-width:1000px">
+				<article class="row pb-7">
+					<div class="col-lg-10 col-xl-8">
+						<div class="position-relative pb-3 pb-lg-0">
+							<div class="d-flex align-items-center w-100">
+								<small class="text-muted">작성일: </small>
+								<small id="reviewDate" class="text-muted"></small>
+							</div>
 
-                                <div>
-                                    <h2 id="reviewTitle" class="my-3 display-2">
-                                    </h2>
-                                    <div class="d-flex mb-0 small align-items-center" >
-                                        <img id="userImage" src="" onerror="this.src='/assets/img/avatar/2.jpg'" alt="" class="size-60 rounded-circle me-2">
-                                        <span class="text-muted d-inline-block"><a id="nickname" href="#!"
-                                                class="text-dark" style="font-size:18px;"></a></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="one" style="height:3px">
-                    </article>
-                    <!--/.article-->
-                </div>
-
-                <!--Divider-->
-                <svg class="position-absolute start-0 bottom-0 text-white" preserveAspectRatio="none" width="100%"
-                    height="120" viewBox="0 0 800 240" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M800 240H0L800 0V240Z" fill="currentColor" />
-                </svg>
-            </section>
-            </main>
-            <!--/.Article header-end-->
-			
-            
-                <div class="container pb-4">
-                    <div class="swiper-container swiper-progress rounded-xl overflow-hidden shadow-lg mt-n15 mb-4"  style="max-width:1000px">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide rounded-xl overflow-hidden" th:each="list: ${tList}" style="text-align:center; font-weight:bold; font-size:20px;">
-                                <span>[[${list.travelName}]]</span><br>
-                                <img th:src="${list.travelImage}" onerror="this.src='/assets/img/800x600/2.jpg'" alt="여행지 사진" class="img-fluid rounded-xl position-relative"/>
-                            </div>
-                        </div>
-                        <div class="swiper-pagination swiperProgress-pagination swiper-pagination-progressbar"></div>
-                        <!-- Add Arrows -->
-                        <div class="swiper-button-next swiperProgress-button-next bg-white size-60"></div>
-                        <div class="swiper-button-prev swiperProgress-button-prev bg-white size-60"></div>
-                    </div>
-                    
-                    
-                    
-					<!-- 메인 Content -->
-                    <div class="form-group">
-                        <div class="col-xl-9 mx-auto">
-                        		<div class="container py-2 pb-0 mt-1">
-	                            	<h4 class="box-title pull-left border-bottom border-3 border-one">후기 내용</h4>
-	                       		</div>
-	                        	<form class="form-horizontal form-view">
-		                        	<div class="form-group">
-		                        		<div class="col-sm mb-5">
-		                        			<p id="reviewContent" style="word-break:break-word;"></p>
-		                        		</div>
-							    	</div>
-						    	</form>
-					    	
-					    	
-							<!-- 지도 -->
-							<div class="input-group align-items-center justify-content-center pt-1" style="display: flex;">
-								<div class="container py-2 pb-0 mt-1">
-	                            	<h4 class="box-title pull-left border-bottom border-3 border-one">지도 보기</h4>
-	                            </div>
-							    <div class="py-2 pb-0 " th:each="list: ${tList}">
-							    	<button class="me-3 mb-4 py-3 btn btn-info waves-effect waves-light" th:attr="onclick=|panTo('${list.latitude}', '${list.longitude}', '${list.travelName}')|">[[${list.travelName}]]</button>
-							    </div>
-						    </div>
-						    <div class="d-flex align-items-center justify-content-center mb-4 pt-2">
-						    <div id="map" style="width:800px;height:400px;"></div>
-						    </div>
-                            
-                            <!-- 댓글 -->
-                            <div class="container col-lg-12 col-10 col-sm-12 mt-3 mb-3">
-                            <div class="box-content">
-								<div class="card-content">
-									<div class="clearfix">
-										<h4 class="box-title pull-left border-bottom border-3 border-one">댓글</h4>
-										<!-- /.box-title -->
-									</div>
-									<form class="form-horizontal form-view" >
-										<div class="input-group mb-2">
-											<input type="text" id="content" class="form-control" 
-												onkeydown="javascript: if (event.keyCode == 13) {insertComment();}">
-											<input type="text" style="width:0px; visibility: hidden;">
-												<button type="button" class="btn-primary btn-lg" style="font-size:medium;" 
-												onclick="insertComment()">등록
-												</button>
-										</div>
-										<table class="notice-list" style="width:100%; table-layout:fixed;"></table>
-									</form>
+							<div>
+								<h2 id="reviewTitle" class="my-3 display-2">
+								</h2>
+								<div class="d-flex mb-0 small align-items-center">
+									<img id="userImage" src="#" onerror="this.src='/assets/img/avatar/2.jpg'" alt=""
+										class="size-60 rounded-circle me-2">
+									<span class="text-muted d-inline-block"><a id="nickname" href="#!" class="text-dark"
+											style="font-size:18px;"></a></span>
 								</div>
 							</div>
-							</div>
-                        </div>
-                    </div>
-                </div>
-            
-            <div class="btn_wrap text-center" style="margin-bottom:50px;">
-			<a href="javascript: void(0);" onclick="goList();" class="btn btn-default waves-effect waves-light">뒤로가기</a>
-			<a href="javascript: void(0);" onclick="goWrite();"class="btn btn-primary waves-effect waves-light">수정하기</a>
-			<button type="button" onclick="deleteBoard();" class="btn btn-danger waves-effect waves-light">삭제하기</button>
+						</div>
+					</div>
+					<hr class="one" style="height:3px">
+				</article>
+				<!--/.article-->
 			</div>
-    </th:block>
-    
+
+			<!--Divider-->
+			<svg class="position-absolute start-0 bottom-0 text-white" preserveAspectRatio="none" width="100%"
+				height="120" viewBox="0 0 800 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M800 240H0L800 0V240Z" fill="currentColor" />
+			</svg>
+		</section>
+	</main>
+	<!--/.Article header-end-->
+
+
+	<div class="container pb-4">
+		<div class="swiper-container swiper-progress rounded-xl overflow-hidden shadow-lg mt-n15 mb-4"
+			style="max-width:1000px;">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide rounded-xl overflow-hidden" th:each="list: ${tList}"
+					style="text-align:center; font-weight:bold; font-size:20px;">
+					<a th:href="@{'/travel/'+${list.travelId}}" class="stretched-link"></a>
+					<span class="fs-4">[[${list.travelName}]]</span><br>
+					<img th:src="${list.travelImage}" onerror="this.src='/assets/img/800x600/2.jpg'" style="max-height:400px" alt="여행지 사진"
+						class="img-fluid rounded-xl position-relative" />
+				</div>
+			</div>
+			<div th:if="${tsize>1}" class="swiper-pagination swiperProgress-pagination swiper-pagination-progressbar"></div>
+			<!-- Add Arrows -->
+			<div th:if="${tsize>1}" class="swiper-button-next swiperProgress-button-next bg-white size-60"></div>
+			<div th:if="${tsize>1}" class="swiper-button-prev swiperProgress-button-prev bg-white size-60"></div>
+		</div>
+
+
+
+		<!-- 메인 Content -->
+		<div class="form-group">
+			<div class="col-xl-9 mx-auto">
+				<div class="container py-2 pb-0 mt-1 mb-3">
+					<h4 class="box-title pull-left border-bottom border-3 border-one">후기 내용</h4>
+				</div>
+				<form class="form-horizontal form-view">
+					<div class="form-group">
+						<div class="col-sm mb-5">
+							<p id="reviewContent" style="word-break:break-word;"></p>
+						</div>
+					</div>
+				</form>
+
+
+				<!-- 지도 -->
+				<div class="input-group align-items-center justify-content-center pt-1" style="display: flex;">
+					<div class="container py-2 pb-0 mt-1 mb-3">
+						<h4 class="box-title pull-left border-bottom border-3 border-one">지도 보기</h4>
+					</div>
+					<div class="py-2 pb-0 " th:each="list: ${tList}">
+						<button class="me-3 mb-4 py-3 btn btn-info waves-effect waves-light"
+							th:attr="onclick=|panTo('${list.latitude}', '${list.longitude}', '${list.travelName}')|">[[${list.travelName}]]</button>
+					</div>
+				</div>
+				<div class="d-flex align-items-center justify-content-center mb-4 pt-2">
+					<div id="map" style="width:800px;height:400px;"></div>
+				</div>
+
+				<!-- 댓글 -->
+				<div class="container col-lg-12 col-10 col-sm-12 mt-3 mb-3">
+					<div class="box-content">
+						<div class="card-content">
+							<div class="clearfix">
+								<h4 class="box-title pull-left border-bottom border-3 border-one">댓글</h4>
+								<!-- /.box-title -->
+							</div>
+							<form class="form-horizontal form-view">
+								<div class="input-group mb-2">
+									<input type="text" id="content" class="form-control"
+										onkeydown="javascript: if (event.keyCode == 13) {insertComment();}">
+									<input type="text" style="width:0px; visibility: hidden;">
+									<button type="button" class="btn-primary btn-lg" style="font-size:medium;"
+										onclick="insertComment()">등록
+									</button>
+								</div>
+								<table class="notice-list" style="width:100%; table-layout:fixed;"></table>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="btn_wrap text-center" style="margin-bottom:50px;">
+		<a href="javascript: void(0);" onclick="goList();" class="btn btn-default waves-effect waves-light">뒤로가기</a>
+		<a href="javascript: void(0);" onclick="goWrite();" class="btn btn-primary waves-effect waves-light">수정하기</a>
+		<button type="button" onclick="deleteBoard();" class="btn btn-danger waves-effect waves-light">삭제하기</button>
+	</div>
+</th:block>
+
 <th:block layout:fragment="script">
-   	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=49a54be512f7802900fb1719a37bc2ba"></script>
+	<script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=49a54be512f7802900fb1719a37bc2ba"></script>
 	<script th:inline="javascript" src="/js/bitravel/reviewDetail.js"></script>
- 	
-    <script th:inline="javascript">
-	/*<![CDATA[*/
+
+	<script th:inline="javascript">
+		/*<![CDATA[*/
 		var id;
-		
-    	window.onload = () => {
-    		id = /*[[ ${id} ]]*/;
-     		reviewList();
-     		printCommentList();
-    	}
-    	
+
+		window.onload = () => {
+			id = /*[[ ${id} ]]*/;
+			var initLat = /*[[${initLat}]]*/;
+			var initLong = /*[[${initLong}]]*/;
+			var initName = /*[[${initName}]]*/;
+			reviewList();
+			printCommentList();
+			panTo(initLat, initLong, initName);
+		}
+
     	/**
 		* 모달창 앞으로 이동
 		**/
 
 		$('#commentModal').appendTo("body")
 
-    /*]]>*/
-    </script>
+		/*]]>*/
+	</script>
 </th:block>
+
 </html>
