@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bitravel.data.dto.TravelSimpleDto;
 import com.bitravel.data.entity.Travel;
+import com.bitravel.service.ReviewService;
 import com.bitravel.service.TravelService;
 
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class TravelPageController {
 	
 	private final TravelService travelService;
+	private final ReviewService reviewService;
 	
     /**
      * 여행지 전체 리스트 페이지
@@ -90,6 +92,8 @@ public class TravelPageController {
     	model.addAttribute("travelList", tlist);
     	model.addAttribute("id", id);  //model을 통해서 id값 넣어줌
     	model.addAttribute("name", now.getTravelName());
+    	
+    	model.addAttribute("reviewList", reviewService.find20ByTravel(id));
         
         return "travel/travelDetail";
     }

@@ -137,6 +137,39 @@ public class ReviewService {
 		else
 			return all;
 	}
+	
+	/**
+	 * 특정 여행지 관련 후기 최대 20개 조회
+	 */
+	@Transactional
+	public List<Review> find20ByTravel(Long id) {
+		List<ReviewTravels> all = reviewTravelRepository.findByTravel(travelRepository.getById(id));
+		List<Review> reviews = new ArrayList<>();
+		for(int i=0;i<all.size();i++) {
+			try {
+			reviews.add(reviewRepository.getById(all.get(i).getReview().getReviewId()));
+			} catch (Exception e) {
+				log.info("삭제된 리뷰");
+			}
+		}
+		
+		Collections.sort(reviews, new Comparator<Review>() {
+			@Override
+			public int compare(Review o1, Review o2) {
+				if(o1.getReviewView()==o2.getReviewView()) {
+					return o2.getReviewDate().compareTo(o1.getReviewDate());
+				} else {
+					return o2.getReviewView()-o1.getReviewView();
+				}
+			}	
+		});
+		
+		if(reviews.size()>20)
+			return reviews.subList(0, 20);
+		else
+			return reviews;
+	}
+	
 
 	/**
 	 * 내가 선호하는 여행지들 후기 조회 (Pageable X)
