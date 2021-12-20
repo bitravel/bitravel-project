@@ -23,11 +23,9 @@ public class ReviewRequestDto {
     private Integer reviewLevel; // 글 레벨 (답글 여부 확인)
     private List<Long> travelId; // 부여된 여행지 정보들
     private String thumbNail; // 썸네일 경로
-    private List<String> travelName; //여행지 이름
-    private List<String> latitude; // 위도
-    private List<String> longitude; // 경도
     private List<String> isLiked; // 선호도
     private List<String> travelImage; //여행지 사진
+    private int age;
     
     @JsonIgnore
     private List<ReviewTravels> reviewTravels;
@@ -40,6 +38,7 @@ public class ReviewRequestDto {
                 .nickname(nickname)
                 .thumbNail(thumbNail)
                 .userImage(userImage)
+                .age(age)
                 //.reviewLevel(reviewLevel)
                 .build();
     }
@@ -58,5 +57,9 @@ public class ReviewRequestDto {
 	
 	public void setUserImage(String userImage) {
 		this.userImage = userImage;
+	}
+	
+	public void setAge(int age) {
+		this.age = age;
 	}
 }

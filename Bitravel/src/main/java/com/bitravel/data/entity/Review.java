@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -64,8 +65,10 @@ public class Review {
     private String thumbNail;
     
     private String userImage; //작성자 프로필 사진
+    
+    private int age; //작성자 나이
     @Builder
-    public Review(String reviewTitle, String reviewContent, String userEmail,Long reviewId, int reviewView, int reviewRecom, int reviewLevel, Timestamp reviewDate, String nickname, String thumbNail, String userImage ) {
+    public Review(String reviewTitle, String reviewContent, String userEmail,Long reviewId, int reviewView, int reviewRecom, int reviewLevel, Timestamp reviewDate, String nickname, String thumbNail, String userImage, int age ) {
     	this.reviewTitle = reviewTitle;
     	this.reviewContent = reviewContent;
     	this.reviewId = reviewId;
@@ -77,6 +80,7 @@ public class Review {
     	this.nickname = nickname;
     	this.thumbNail = thumbNail;
     	this.userImage = userImage;
+    	this.age = age;
     }
     
     public void update(String reviewTitle, String reviewContent) {
@@ -84,7 +88,7 @@ public class Review {
     	this.reviewContent = reviewContent;
     }
     
-    @OneToMany(mappedBy ="review") //ReviewTravels 테이블의 review필드에 맵핑
+    @OneToMany(mappedBy ="review", cascade=CascadeType.ALL) //ReviewTravels 테이블의 review필드에 맵핑
     private List<ReviewTravels> reviewTravels = new ArrayList<>();
    
     //조회수 증가
