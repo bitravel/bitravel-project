@@ -2,6 +2,7 @@ package com.bitravel.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.bitravel.data.dto.UserDto;
 import com.bitravel.data.entity.Review;
 import com.bitravel.data.entity.ReviewTravels;
 import com.bitravel.data.entity.Travel;
@@ -21,6 +23,8 @@ import com.bitravel.data.repository.ReviewRepository;
 import com.bitravel.data.repository.TravelRepository;
 import com.bitravel.service.ReviewService;
 import com.bitravel.service.TravelService;
+import com.bitravel.service.UserService;
+import com.bitravel.util.SecurityUtil;
 
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -34,12 +38,25 @@ public class ReviewPageController {
 	private final ReviewRepository reviewRepository;
 	private final TravelService travelService;
 	private final TravelRepository travelRepository;
+	private final UserService userService;
     /**
      * 후기 리스트 페이지
      */
     @GetMapping("")
     public String review (Model model, @PageableDefault(size = 5, sort = "reviewId", direction = Sort.Direction.DESC) Pageable pageable) {
-        model.addAttribute("reviewList", reviewService.findAll(pageable));
+    	//최신후기
+    	model.addAttribute("reviewList", reviewService.findAll(pageable));
+        
+        //한달간 조회수 높은 후기
+        model.addAttribute("viewList", reviewService.findViewAll(pageable));
+        
+        //나이대별 최신 후기
+        Optional<UserDto> tmp = userService.getUserWithAuthorities(SecurityUtil.getCurrentEmail().get());
+		if(tmp.isPresent()) {
+			UserDto now = tmp.get();
+			
+			model.addAttribute("ageList", reviewService.findAgeAll(now.getAge(), pageable));
+		}
     	return "review/reviewList";
     }
     
@@ -59,6 +76,15 @@ public class ReviewPageController {
     public String openReviewWrite(@RequestParam(required = false) final Long id, Model model) {
     	model.addAttribute("id", id);
     	return "review/reviewWrite";
+    }
+    
+    /**
+     * 후기 수정 페이지
+     */
+    @GetMapping("/modify")
+    public String openReviewModify(@RequestParam(required = false) final Long id, Model model) {
+    	model.addAttribute("id", id);
+    	return "review/reviewModify";
     }
     
     /**

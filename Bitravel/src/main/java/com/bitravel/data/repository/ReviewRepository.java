@@ -1,5 +1,6 @@
 package com.bitravel.data.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -20,4 +21,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long>{
 	Page<Review> findByReviewTitleContaining(String keyword, Pageable pageable);
 	
 	Page<Review> findByReviewTitleContainingOrReviewContentContaining(String reviewTitle, String reviewContent, Pageable pageable);
+
+	Page<Review> findByReviewDateBetween(Date start, Date end, Pageable pageable);
+
+	Page<Review> findByAge(int age, Pageable pageable);
 }
