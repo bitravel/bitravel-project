@@ -105,7 +105,7 @@
                     <div class="col-12 position-relative">
 
                         <!--Projects swiper slider-->
-                        <div class="swiper-container swiper-3 overflow-visible">
+                        <div class="swiper-container swiper-3 overflow-visible" id="swiper1">
                             <div class="swiper-wrapper">
                                 <!--Swiper-slide-->
                                 <div class="swiper-slide" th:each="list, index: ${List1}">
@@ -142,7 +142,7 @@
                             <span th:if="${#authentication.principal.age>=40 && #authentication.principal.age<50}" th:text="40대 "></span>
                             <span th:if="${#authentication.principal.age>=50 && #authentication.principal.age<60}" th:text="50대 "></span>
                             <span th:if="${#authentication.principal.age>=60 && #authentication.principal.age<70}" th:text="60대 "></span>
-                            <span th:if="${#authentication.principal.age>=70}" th:text="70대 이상 "></span>
+                            <span th:if="${#authentication.principal.age>=70}">70대 이상</span>
                             <span th:if="${#authentication.principal.gender == 'Man' }" th:text="남성"></span>
                             <span th:if="${#authentication.principal.gender == 'Woman' }" th:text="여성"></span> 선호 지역 여행지</h2>
                             
@@ -162,7 +162,7 @@
                     <div class="col-12 position-relative">
 
                         <!--Projects swiper slider-->
-                        <div class="swiper-container swiper-3 overflow-visible">
+                        <div class="swiper-container swiper-3 overflow-visible" id="swiper1">
                             <div class="swiper-wrapper">
                             <!--Swiper-slide-->
                                 <div class="swiper-slide" th:each ="list, index: ${List2}">
@@ -211,7 +211,7 @@
                     <div class="col-12 position-relative">
 
                         <!--Projects swiper slider-->
-                        <div class="swiper-container swiper-3 overflow-visible">
+                        <div class="swiper-container swiper-3 overflow-visible" id="swiper3">
                             <div class="swiper-wrapper">
 
                                 <!--Swiper-slide-->
@@ -257,7 +257,7 @@
                     <div class="col-12 position-relative">
 
                         <!--Projects swiper slider-->
-                        <div class="swiper-container swiper-3 overflow-visible">
+                        <div class="swiper-container swiper-3 overflow-visible" id="swiper4">
                             <div class="swiper-wrapper">
 
                                 <!--Swiper-slide-->
@@ -295,7 +295,7 @@
 
             <div class="container position-relative z-index-1 py-7 py-lg-12">
                 <div class="row mb-7 align-items-end justify-content-between">
-                    <div class="col-lg-7 mb-4 mb-lg-0">
+                    <div class="col-lg-7">
                         <h2 class="mb-2 display-4" data-aos="fade-right">관심 여행지 최신 후기</h2>
                         <p class="mb-0 lead w-lg-80" data-aos="fade-right" data-aos-delay="150">
                             나의 관심 여행지를 방문한 회원들의 후기를 확인해 보세요.
@@ -308,11 +308,11 @@
                         </a>
                     </div>
                 </div>
-                <p th:if="${rcount==0}" class="fs-5">현재 등록된 후기가 없습니다.<br>가장 먼저 나의 관심 여행지 방문 후기를 작성해 보세요.</p>
+                <p th:if="${rcount==0}" class="fs-5">현재 나의 관심 여행지에 등록된 후기가 없습니다.<br>가장 먼저 나의 관심 여행지 방문 후기를 작성해 보세요.</p>
                 <br>
                 <div class="row justify-content-center">
                     <div class="col-12 position-relative">
-                        <div class="swiper-container swiper-auto shadow-lg">
+                        <div class="swiper-container swiper-2 shadow-lg" id="swiper5">
                             <div class="swiper-wrapper">
                                 <!--Testimonial slide-->
                                 <div class="swiper-slide" th:each="list, index: ${List5}">
@@ -352,32 +352,16 @@
                                                 <div class="mb-3 h-auto mx-auto">
                                                     <h4><a class="fw-bold text-dark" th:href="@{'/review/'+${list.reviewId}}">[[${list.reviewTitle}]]</a></h4>
                                                 </div>
-                                                <!-- Text -->
-                                                <p class="mb-5 w-lg-80 mx-auto">
-                                                    <a th:href="@{'/review/'+${list.reviewId}}">
-                                                <span th:text="${#strings.abbreviate(list.reviewContent, 130)}" class="text-dark">
-                                                    
-                                                </span>
-                                                    </a>
-                                                </p>
+                                                <br>
                                                 <!-- Footer -->
                                                 <footer class="blockquote-footer pb-4 pb-lg-0">
-                                                    <span class="h5 fw-bold">[[${list.nickname}]]</span>
+                                                    <span class="h5">[[${list.nickname}]]</span>
                                                 </footer>
                                             </blockquote>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <!--Swiper buttons-->
-
-                        <div th:unless="${rcount==0}"
-                            class="swiperAuto-button-next swiper-button-next me-1 me-sm-0 end-0 size-40 z-index-3 bg-primary text-white">
-                        </div>
-                        <div th:unless="${rcount==0}"
-                            class="swiperAuto-button-prev swiper-button-prev ms-1 ms-sm-0 start-0 size-40 bg-primary text-white">
                         </div>
                     </div>
                 </div>
@@ -410,7 +394,7 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-12 position-relative">
-                        <div class="swiper-container swiper-auto shadow-lg">
+                        <div class="swiper-container swiper-2 shadow-lg" id="swiper6">
                             <div class="swiper-wrapper">
                                 <!--Testimonial slide-->
                                 <div class="swiper-slide" th:each="list, index: ${List6}">
@@ -450,32 +434,16 @@
                                                 <div class="mb-3 h-auto mx-auto">
                                                     <h4><a class="fw-bold text-dark" th:href="@{'/review/'+${list.reviewId}}">[[${list.reviewTitle}]]</a></h4>
                                                 </div>
-                                                <!-- Text -->
-                                                <p class="mb-5 w-lg-80 mx-auto">
-                                                    <a th:href="@{'/review/'+${list.reviewId}}">
-                                                <span th:text="${#strings.abbreviate(list.reviewContent, 130)}" class="text-dark">
-                                                    
-                                                </span>
-                                                    </a>
-                                                </p>
+                                                <br>
                                                 <!-- Footer -->
                                                 <footer class="blockquote-footer pb-4 pb-lg-0">
-                                                    <span class="h5 fw-bold">[[${list.nickname}]]</span>
+                                                    <span class="h5">[[${list.nickname}]]</span>
                                                 </footer>
                                             </blockquote>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <!--Swiper buttons-->
-
-                        <div
-                            class="swiperAuto-button-next swiper-button-next me-1 me-sm-0 end-0 size-40 z-index-3 bg-primary text-white">
-                        </div>
-                        <div
-                            class="swiperAuto-button-prev swiper-button-prev ms-1 ms-sm-0 start-0 size-40 bg-primary text-white">
                         </div>
                     </div>
                 </div>
