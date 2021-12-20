@@ -170,7 +170,8 @@ public class TravelService {
 			age=7;
 		String ageKey = age*10 + "대";
 		if (age>=7)
-			ageKey += " 이상";
+			ageKey = "70세이상";
+		log.info(ageKey);
 		TravelCountAge tca = travelCountAgeRepository.getById(ageKey);
 		TravelCountAge allAge = travelCountAgeRepository.getById("전체");
 
