@@ -113,7 +113,7 @@
                                         class="card-over d-block card-hover overflow-hidden">
                                         <img th:src="${list.travelImage}" alt=""
                                             onerror="this.src='/assets/img/800x600/2.jpg'" class="img-fluid img-zoom"
-                                            style="max-height:300px;">
+                                            style="max-height:275px;">
                                         <div class="card-overlay p-4 d-flex align-items-end text-white">
                                             <ul class="list-unstyled overlay-items">
                                                 <li>
@@ -168,7 +168,7 @@
                                 <div class="swiper-slide" th:each ="list, index: ${List2}">
                                     <a th:href="@{'/travel/'+${list.travelId}}" class="card-over d-block card-hover overflow-hidden">
                                         <img th:src="${list.travelImage}" alt="" onerror="this.src='/assets/img/800x600/2.jpg'" 
-                                        class="img-fluid img-zoom" style="max-height:300px;">
+                                        class="img-fluid img-zoom" style="max-height:275px;">
                                         <div class="card-overlay p-4 d-flex align-items-end text-white">
                                             <ul class="list-unstyled overlay-items">
                                                 <li>
@@ -218,7 +218,7 @@
                                 <div class="swiper-slide" th:each ="list, index: ${List3}">
                                     <a th:href="@{'/travel/'+${list.travelId}}" class="card-over d-block card-hover overflow-hidden">
                                         <img th:src="${list.travelImage}" alt="" onerror="this.src='/assets/img/800x600/2.jpg'" 
-                                        class="img-fluid img-zoom" style="max-height:300px;">
+                                        class="img-fluid img-zoom" style="max-height:275px;">
                                         <div class="card-overlay p-4 d-flex align-items-end text-white">
                                             <ul class="list-unstyled overlay-items">
                                                 <li>
@@ -264,7 +264,7 @@
                                 <div class="swiper-slide" th:each ="list, index: ${List4}">
                                     <a th:href="@{'/travel/'+${list.travelId}}" class="card-over d-block card-hover overflow-hidden">
                                         <img th:src="${list.travelImage}" alt="" onerror="this.src='/assets/img/800x600/2.jpg'" 
-                                        class="img-fluid img-zoom" style="max-height:300px;">
+                                        class="img-fluid img-zoom" style="max-height:275px;">
                                         <div class="card-overlay p-4 d-flex align-items-end text-white">
                                             <ul class="list-unstyled overlay-items">
                                                 <li>
@@ -321,7 +321,7 @@
                                         <div class="col-lg-6 px-0 mb-4 mb-md-0">
                                             <div class="position-relative">
                                                 <!--testimonial Image-->
-                                                <img th:src="${list.thumbNail}" onerror="this.src='/assets/img/800x600/2.jpg'" class="img-fluid" alt="">
+                                                <img th:src="${list.thumbNail}" onerror="this.src='/assets/img/800x600/2.jpg'" class="img-fluid" style="max-height:345px;" alt="">
 
                                                 <!--Testimonial image divider-->
                                                 <svg class="position-absolute d-none d-lg-block end-0 top-0 h-100 me-n1"
@@ -419,7 +419,7 @@
                                         <div class="col-lg-6 px-0 mb-4 mb-md-0">
                                             <div class="position-relative">
                                                 <!--testimonial Image-->
-                                                <img th:src="${list.thumbNail}" onerror="this.src='/assets/img/800x600/2.jpg'" class="img-fluid" alt="">
+                                                <img th:src="${list.thumbNail}" onerror="this.src='/assets/img/800x600/2.jpg'" style="max-height:345px;" class="img-fluid" alt="">
 
                                                 <!--Testimonial image divider-->
                                                 <svg class="position-absolute d-none d-lg-block end-0 top-0 h-100 me-n1"
@@ -547,7 +547,7 @@
 </th:block>
     <!-- scripts -->
     <th:block layout:fragment="script">
-    <script src="assets/vendor/masterslider/masterslider.min.js"></script>
+   <!-- <script src="assets/vendor/masterslider/masterslider.min.js"></script>-->
 </th:block>
 
 </html>
