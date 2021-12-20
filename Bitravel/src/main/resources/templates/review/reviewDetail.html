@@ -79,10 +79,10 @@
 			<div class="swiper-wrapper">
 				<div class="swiper-slide rounded-xl overflow-hidden" th:each="list: ${tList}"
 					style="text-align:center; font-weight:bold; font-size:20px;">
-					<a th:href="@{'/travel/'+${list.travelId}}" class="stretched-link"></a>
 					<span class="fs-4">[[${list.travelName}]]</span><br>
+					<a th:href="@{'/travel/'+${list.travelId}}">
 					<img th:src="${list.travelImage}" onerror="this.src='/assets/img/800x600/2.jpg'" style="max-height:400px" alt="여행지 사진"
-						class="img-fluid rounded-xl position-relative" />
+						class="img-fluid rounded-xl position-relative" /></a>
 				</div>
 			</div>
 			<div th:if="${tsize>1}" class="swiper-pagination swiperProgress-pagination swiper-pagination-progressbar"></div>
