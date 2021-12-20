@@ -2,6 +2,7 @@ package com.bitravel.service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.List;
 
@@ -58,6 +59,14 @@ public class ReviewService {
 		} else {
 			params.setNickname(userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get().getNickname());
 			params.setUserImage(userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get().getUserImage());
+			int age = userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get().getAge();
+    		age = age/10;
+    		if(age==0)
+    			age=1;
+    		else if (age>7)
+    			age=7;
+    		int ageKey = age*10;
+    		params.setAge(ageKey);
 		}
 		Review review = reviewRepository.save(params.toEntity());
 		review.getReviewId();
@@ -168,6 +177,31 @@ public class ReviewService {
 		else
 			return favReviews;
 	}
+	
+	/**
+     * 후기 월간 조회수 상위 조회
+     */
+    @Transactional
+    public Page<Review> findViewAll(Pageable pageable) {
+    	Date start = new Date(System.currentTimeMillis()-86400000L*30); // 현재 30일 기준
+    	Date end = new Date();
+    	pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "reviewView"));
+    	return reviewRepository.findByReviewDateBetween(start, end, pageable);
+    }
+    /**
+     * 나이대별 최신 후기 조회
+     */
+    @Transactional
+    public Page<Review> findAgeAll(int age, Pageable pageable) {
+    	age = age/10;
+		if(age==0)
+			age=1;
+		else if (age>7)
+			age=7;
+		int ageKey = age*10;
+    	pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "reviewDate"));
+    	return reviewRepository.findByAge(ageKey, pageable);
+    }
 
 	/**
 	 * 후기 통합 검색 결과 조회
@@ -233,7 +267,6 @@ public class ReviewService {
 			log.info("유효하지 않은 수정 요청입니다.");
 			return false;
 		}
-		//여행지 수정은 보류..
 
 		entity.update(params.getReviewTitle(), params.getReviewContent());
 		return true;
