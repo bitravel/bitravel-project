@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="kr" xmlns:th="http://www.thymeleaf.org" layout:decorator="layout1"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+    <head>
+    	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!-- include summernote css/js-->
+		<link href="/css/summernote-lite.css" rel="stylesheet">
+		<!--File uploader-->
+	    <link href="https://unpkg.com/filepond/dist/filepond.css" rel="stylesheet" />
+	    <link href="https://unpkg.com/filepond-plugin-file-poster/dist/filepond-plugin-file-poster.css" rel="stylesheet">
+	    <link href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css"
+	        rel="stylesheet">
+		
+        <!--모달-->
+        <style> .note-dialog .modal-dialog{ z-index:1050;} .modal-nav </style>
+
+        <title>여행 후기 작성 페이지 :: BITravel</title>
+    </head>
+	
+        <!--Main content-->
+    <th:block layout:fragment="content">
+        <main class="main-content position-relative z-index-2 bg-white" id="main-content">
+            <section class="position-relative bg-light">
+                <div class="container  pt-11 pb-7 pb-lg-9">
+                    <div class="row pt-lg-5">
+                        <div class="col-lg-8">
+                            <h2 class="display-4">여행후기 작성</h2>
+                            <p>여행의 추억들을 기록해 보세요. </p>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+            
+            <!-- 글작성 창 시작-->
+            <section class="position-relative">
+                <div class="container py-3 py-lg-5">
+                    <div class="row mb-4 justify-content-center">
+					<!-- 모달 버튼 -->
+                        <form id="form" class="form-horizontal" name="only-form">
+						<div class="form-group">
+							<div>
+								<input type="text" id="reviewTitle" class="form-control mb-2" placeholder="제목을 입력해 주세요." />
+							</div>
+						</div>
+
+						<div class="form-group mb-5">
+							<div>
+								<textarea id="summernote" name="editordata"></textarea>
+							</div>
+						</div>
+
+						<div class="btn_wrap text-center">
+							<button type="button" onclick="goBack();"
+								class="btn btn-outline-secondary waves-effect waves-light">뒤로가기</button>
+							<button type="button" onclick="save();"
+								class="btn btn-secondary waves-effect waves-light">저장하기</button>
+						</div>
+						</form>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </th:block>
+        <!-- 글작성 창 종료 -->
+<th:block layout:fragment="script">
+	<script th:inline="javascript" src="/js/bitravel/reviewModify.js"></script>
+	<script src="/js/summernote-lite.js"></script>
+	<script src="/js/summernote-ko-KR.js"></script>
+    <script th:inline="javascript">
+	/*<![CDATA[*/
+		/**
+		* 모달창 앞으로 이동
+		**/
+
+		$('#myModal_1').appendTo("body") 
+		
+		/**
+		* 썸머노트 에디터
+		**/
+		
+		var id;
+		
+		$(document).ready(function() {
+			
+			 id = /*[[ ${id} ]]*/;
+			
+			 $('#summernote').summernote({
+		    		placeholder: '내용을 입력하세요. (10자 이상)',
+		    		minHeight: 370,
+		    		maxHeight: null,
+		    		focus: true,
+		    		lang: 'ko-KR',
+	    			callbacks : { //다중 이미지 처리 반복문..
+						onImageUpload : function(files, editor, welEditable) {
+							for (var i = 0; i < files.length; i++) {
+								sendFile(files[i], this);
+							}
+						}
+					}
+		    	});
+			 console.log("인식여부");
+	         findreview();
+		});
+		/*]]>*/
+    </script>
+</th:block>
+</html>
