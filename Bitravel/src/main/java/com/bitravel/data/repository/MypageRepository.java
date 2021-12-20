@@ -16,8 +16,6 @@ public interface MypageRepository extends JpaRepository<User, Long>{
 	@EntityGraph(attributePaths = "authorities")
 	Optional<User> findOneWithAuthoritiesByEmail(String email);
 		
-	// SQL은 테이블의 컬럼명이 snack_id이기 때문에 조건절에 snack_id
-	// SQL 쿼리
 	@Modifying
 	@Transactional
 	@Query(value = " update                                 "
@@ -29,8 +27,7 @@ public interface MypageRepository extends JpaRepository<User, Long>{
 				, nativeQuery = true)
 	public int updatePassword(@Param(value = "user") UserDto user);
 	
-
-
+	
 }
 
 
