@@ -49,12 +49,12 @@ public class ReviewPageController {
         
         //한달간 조회수 높은 후기
     	Page<Review> rList = reviewService.findViewAll(pageable);
-    	List<Review> rrList = rList.getContent().subList(0, 5);
+    	List<Review> subList = rList.getContent().subList(0, 5);
     	for(int i=0; i<rList.getContent().size(); i++) {
-    		Review now = rrList.get(i);
+    		Review now = subList.get(i);
     		now.setReviewContent(TagUtil.getText(now.getReviewContent()));
     	}
-        model.addAttribute("viewList", rList);
+        model.addAttribute("viewList", subList);
         
         //나이대별 최신 후기
         Optional<UserDto> tmp = userService.getUserWithAuthorities(SecurityUtil.getCurrentEmail().get());
