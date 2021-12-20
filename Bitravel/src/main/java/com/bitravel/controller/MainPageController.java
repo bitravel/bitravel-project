@@ -104,6 +104,7 @@ public class MainPageController {
 			now.setReviewContent(TagUtil.getText(now.getReviewContent()));
 		}
 		model.addAttribute("rcount", favlist.size());
+		model.addAttribute("rcount2", anolist.size());
 		model.addAttribute("List6", anolist);
 
 		return "index";
