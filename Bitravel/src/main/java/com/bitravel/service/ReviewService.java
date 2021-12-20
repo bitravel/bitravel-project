@@ -301,7 +301,7 @@ public class ReviewService {
 			return false;
 		}
 
-		entity.update(params.getReviewTitle(), params.getReviewContent());
+		entity.update(params.getReviewTitle(), params.getReviewContent(), params.getThumbNail());
 		return true;
 	}
 
