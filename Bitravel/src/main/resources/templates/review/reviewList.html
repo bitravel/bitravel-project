@@ -38,9 +38,9 @@
                         <div class="card rounded-0 shadow-lg flex-md-row flex-column overflow-hidden border-0 bg-white">
                             <div class="col-md-6">
                                 <div
-                                    class="d-flex flex-column border-end-lg align-items-center justify-content-center h-100 bg-light">
+                                    class="d-flex flex-column border-end-lg align-items-center justify-content-center h-100 bg-light" style="max-height: 500px; min-height: 500px">
                                     <img th:src="${list.thumbNail}" onerror="this.src='/assets/img/avatar/2.jpg'" alt=""
-                                        class="w-75 w-lg-75 h-auto">
+                                        style="height: 500px; max-width: 100%;">
                                 </div>
                             </div>
                             <div class="card-body h-100 p-4 py-5 py-md-7 px-md-5 flex-grow-1 ">
@@ -49,16 +49,15 @@
                                         <img src="/assets/img/avatar/2.jpg" alt=""
                                             class="avatar lg p-1 bg-white shadow-lg rounded-circle mb-4">
                                     </div>
-                                    <div class="ps-md-6">
-                                        <p class="fs-5 text-dark mb-4">
+                                    <div class="ps-md-6" style="word-break:break-word;">
+                                        <p class="fs-3 text-dark mb-4 fw-bold">
                                            [[${list.reviewTitle}]]
                                         </p>
-                                        <div class="mb-5" style="text-overflow: ellipsis; width:300px; height:100px; overflow:hidden; display:block;">
-                                            <h5 class="mb-2 text-dark" th:utext="${list.reviewContent}"></h5>
+                                        <div class="mb-5" >
+                                            <h5 class="mb-2 text-dark" th:utext="${#strings.abbreviate(list.reviewContent, 75)}"></h5>
                                         </div>
                                         <a th:href="@{'/review/'+${list.reviewId}(page=${reviewList.number+1})}" class="btn btn-outline-secondary btn-hover-arrow">
                                             <span>자세히 보기</span>
-
                                         </a>
                                     </div>
                                 </div>
