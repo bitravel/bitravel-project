@@ -49,26 +49,32 @@ public class ReportService {
 	public Boolean savePostReport(ReportDto param) {
 		
 		Report entity = null;
-		String reportContent = null;	
+		String reportContent = null;
+		String nowEmail = SecurityUtil.getCurrentEmail().get();
 		try {		
 			if(param.getReportType().equals("b")) {
-				reportContent = "/board/detail/"+param.getPostId();
+				reportContent = "/board/"+param.getPostId();
+				
 				entity = Report.builder()
 						.reportTitle(param.getReportTitle())
 						.reportContent(reportContent)
 						.reportedEmail(boardRepository.findById(Long.parseLong(param.getPostId())).get().getUserEmail())
-						.reporterEmail(SecurityUtil.getCurrentEmail().get())
+						.reporterEmail(nowEmail)
 						.build();
 			} else if (param.getReportType().equals("r")) {
-				reportContent = "/review/detail/"+param.getPostId();
+				reportContent = "/review/"+param.getPostId();
 				entity = Report.builder()
 						.reportTitle(param.getReportTitle())
 						.reportContent(reportContent)
 						.reportedEmail(reviewRepository.findById(Long.parseLong(param.getPostId())).get().getUserEmail())
-						.reporterEmail(SecurityUtil.getCurrentEmail().get())
+						.reporterEmail(nowEmail)
 						.build();
 			} else {
 				return false;
+			}
+			
+			if(entity.getReportedEmail().equals(nowEmail)) {
+				throw new Exception("same email");
 			}
 			
 			reportRepository.save(entity);
@@ -113,12 +119,18 @@ public class ReportService {
 				return false;
 			}
 			
+			String nowEmail = SecurityUtil.getCurrentEmail().get();
+			
+			if(reportedEmail.equals(nowEmail)) {
+				throw new Exception("same email");
+			}
+			
 			entity = Report.builder()
 					.reportComment(cid)
 					.reportTitle(reportTitle)
 					.reportContent(reportContent)
 					.reportedEmail(reportedEmail)
-					.reporterEmail(SecurityUtil.getCurrentEmail().get())
+					.reporterEmail(nowEmail)
 					.build();
 			
 			reportRepository.save(entity);
