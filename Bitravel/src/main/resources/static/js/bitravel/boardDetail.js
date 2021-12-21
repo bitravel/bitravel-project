@@ -63,6 +63,9 @@ function openModal(commentId, content, email) {
 	});
 }
 
+/**
+ * 비회원 댓글 작성 막기
+ */
 function initComment() {
 	fetch(`/api/user`).then(response => {
 		if (!response.ok) {
