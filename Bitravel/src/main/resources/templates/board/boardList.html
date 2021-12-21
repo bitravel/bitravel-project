@@ -56,7 +56,7 @@
                                             [[${list.boardTitle}]]
                                         </a>
                                     </td>
-                                    <td>[[${list.nickname}]]</td>
+                                    <td><a class="text-dark" th:href="@{'/user?email='+${list.userEmail}}">[[${list.nickname}]]</a></td>
                                     <td class="text-center small" th:text="${#dates.format(list.boardDate, 'yyyy-MM-dd HH:mm')}">
                             		[[${list.boardDate}]]</td>
                             	<td class="text-center">[[${list.boardView}]]</td>

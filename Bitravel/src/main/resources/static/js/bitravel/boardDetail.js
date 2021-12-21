@@ -14,6 +14,10 @@ function findBoard() {
 		json.boardDate = moment(json.boardDate).format('YYYY-MM-DD HH:mm:ss');
 		Object.keys(json).forEach(key => {
 			const elem = document.getElementById(key);
+			if(key=="userEmail") {
+				var atag = document.getElementById("nickname");
+				atag.href = '/user?email='+json[key];
+			}
 			if (elem) {
 				elem.innerHTML = json[key];
 			}
@@ -284,7 +288,7 @@ function printCommentList() {
 			json.forEach((obj) => {
 				html += `
 										<tr class="form-control mb-2">
-											<td style="width:20%;"><span class="fw-bold">${obj.nickname}</span></td>
+											<td style="width:20%;"><a class="fw-bold text-dark" href="/user?email=${obj.userEmail}">${obj.nickname}</a></td>
 											<td style="width:78%;"><span class="desc">${obj.commentContent}</span></td>			
 											<td style="width:1%;"><button type="button" onclick="openModal(${obj.bcommentId}, '${obj.commentContent}', '${obj.userEmail}' )" class="btn btn-sm btn-outline-default btn-circle"><i class="bi bi-pencil-fill" aria-hidden="true"></i></button></td>
 											<td style="width:1%;"><button type="button" onclick="reportComment(${obj.bcommentId}, '${obj.userEmail}' )" class="btn btn-sm btn-outline-default btn-circle"><i class="bi bi-emoji-expressionless-fill" aria-hidden="true"></i></button></td>
