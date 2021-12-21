@@ -1,6 +1,7 @@
 package com.bitravel.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -32,6 +33,7 @@ public class ReviewController {
 	 * 후기 작성
 	 */
 	@PostMapping("/reviews")
+	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	@ApiOperation(value = "후기 작성", notes = "후기 내용을 저장하는 API. Review entity 클래스로 데이터를 저장한다.")
 	public Long save(@RequestBody final ReviewRequestDto params) {
 		return reviewService.save(params);
@@ -41,6 +43,7 @@ public class ReviewController {
 	 * 후기 수정
 	 */
 	@PatchMapping("/reviews/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	@ApiOperation(value = "후기 수정", notes = "후기 내용을 수정하는 API. Review entity 클래스로 데이터를 수정한다.<br>이때엔 정보를 등록할 때와는 다르게 bid 값을 함깨 보내줘야한다.")
 	public Boolean update(@PathVariable final Long id, @RequestBody final ReviewRequestDto params) {
 		return reviewService.update(id, params);
@@ -57,6 +60,7 @@ public class ReviewController {
 	 * 후기 삭제
 	 */
 	@DeleteMapping("/reviews/{id}")
+	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	@ApiOperation(value = "후기 삭제", notes = "후기 내용을 삭제하는 API. Review entity 클래스의 bid 값으로 데이터를 삭제한다.")
 	public Boolean deleteById(@PathVariable Long id) {	
 		return reviewService.deleteById(id);
