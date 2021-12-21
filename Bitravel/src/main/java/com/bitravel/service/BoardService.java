@@ -169,6 +169,15 @@ public class BoardService {
         return true;
     }
     
+	/**
+	 * 후기 회원별 검색 결과 리스트
+	 */
+	@Transactional
+	public List<Board> findBoardsByEmail(String keyword) {
+		List<Board> list = boardRepository.findByUserEmailOrderByBoardDateAsc(keyword);
+		return list;
+	}	
+    
     /**
      * 게시글 삭제
      */

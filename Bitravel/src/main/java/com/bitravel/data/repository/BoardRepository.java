@@ -27,5 +27,7 @@ public interface BoardRepository extends JpaRepository<Board, Long>{
 			String boardContent, Sort sort);
 	
 	Page<Board> findByBoardDateBetweenAndBoardViewGreaterThan(Date start, Date end, Pageable pageable, int value);
+
+	List<Board> findByUserEmailOrderByBoardDateAsc(String keyword);
 	
 }

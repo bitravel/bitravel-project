@@ -10,10 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.bitravel.data.dto.UserDto;
+import com.bitravel.data.entity.Board;
 import com.bitravel.data.entity.Review;
+import com.bitravel.service.BoardService;
 import com.bitravel.service.ReviewService;
 import com.bitravel.service.UserService;
 import com.bitravel.util.SecurityUtil;
+import com.bitravel.util.TagUtil;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +26,7 @@ public class UserPageController {
 
 	private final UserService userService;
 	private final ReviewService reviewService;
+	private final BoardService boardService;
 
 	@GetMapping("/login")
 	@PreAuthorize("isAnonymous()")
@@ -66,9 +70,20 @@ public class UserPageController {
 			return "user/mypage";
 		}
 		model.addAttribute("user", tmp.get());
+		
 		// 내가 작성한 리뷰 불러오기
 		List<Review> reviewList = reviewService.findReviewsByEmail(email);
+		model.addAttribute("rcount", reviewList.size());
 		model.addAttribute("reviewList", reviewList);
+		
+		// 내가 작성한 게시글 불러오기
+		List<Board> boardList = boardService.findBoardsByEmail(email);
+		model.addAttribute("bcount", boardList.size());
+		for(int i=0;i<boardList.size();i++) {
+			boardList.get(i).setBoardContent(TagUtil.getText(boardList.get(i).getBoardContent()));
+		}
+		model.addAttribute("boardList", boardList);
+		
 		if(SecurityUtil.getCurrentEmail().get().equals(email))
 			return "redirect:/mypage";
 		else
