@@ -22,23 +22,31 @@
 								<div class="h-lg-100">
 									<div class="card bg-gradient-light h-lg-100 p-3">
 										<div>
-												<div class="m-5 size-170  rounded-circle shadow bg-no-repat overflow-hidden bg-contain">
-													<img th:src="${user.userImage}" onerror="this.onerror=null; this.src='/assets/img/avatar/2.jpg';" alt="" style="width: 100%; height: 100%;">
-												</div>										
-											<h4 class="d-flex justify-content-center m-3 fw-bold" th:text="${user.nickname}"></h4>
+											<div
+												class="m-5 size-170  rounded-circle shadow bg-no-repat overflow-hidden bg-contain">
+												<img th:src="${user.userImage}"
+													onerror="this.onerror=null; this.src='/assets/img/avatar/2.jpg';"
+													alt="" style="width: 100%; height: 100%;">
+											</div>
+											<h4 class="d-flex justify-content-center m-3 fw-bold"
+												th:text="${user.nickname}"></h4>
 											<ul class="list-unstyled py-0 ps-0 pe-3">
 												<li class="d-flex align-items-stretch mb-1" style="height: 30px;">
-													<p class="small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;등급 :&nbsp;</p>
+													<p class="small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;등급
+														:&nbsp;</p>
 													<small class="d-flex mb-3" th:text="${user.level}"></small>
 												</li>
 												<li class="d-flex align-items-stretch mb-1" style="height: 30px;">
-													<p class="small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;포인트 :&nbsp;</p>
+													<p class="small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;포인트
+														:&nbsp;</p>
 													<small class="d-flex mb-3" th:text="${user.point}"></small>
 												</li>
 												<li class="d-flex align-items-stretch mb-2" style="height: 30px;">
 													<i class="bi bi-globe me-2 align-middle text-muted"></i>
-<!-- 													<a onclick="location.href='mailto:${user.email}'" class="small link-hover-decoration" th:text="${user.email}"></a> -->
-													<a th:href="@{'mailto:' + ${user.email}}" class="small link-hover-decoration text-dark" th:text="${user.email}"></a>
+													<!-- 													<a onclick="location.href='mailto:${user.email}'" class="small link-hover-decoration" th:text="${user.email}"></a> -->
+													<a th:href="@{'mailto:' + ${user.email}}"
+														class="small link-hover-decoration text-dark"
+														th:text="${user.email}"></a>
 												</li>
 											</ul>
 										</div>
@@ -47,7 +55,7 @@
 							</div>
 							<div class="col-lg-9">
 								<div class="d-flex flex-column h-100">
-									<nav class="nav mb-5 nav-pills">
+									<nav class="nav mb-3 nav-pills">
 										<a href="/mypage" class="nav-link active"> <i
 												class="bi bi-person-circle me-2 align-middle"></i>나의 정보</a>
 										<a href="/mypage/setting" class="nav-link"><i
@@ -72,9 +80,12 @@
 
 											<div class="col-md-6 mb-3">
 												<label class="form-label">성별</label>
-												<div class="form-control" th:if="${user.gender == 'Man'	 }" th:text="남성"></div>
-												<div class="form-control" th:if="${user.gender == 'Woman'   }" th:text="여성"></div>
-												<div class="form-control" th:if="${user.gender == 'Private' }" th:text="비공개"></div>
+												<div class="form-control" th:if="${user.gender == 'Man'	 }"
+													th:text="남성"></div>
+												<div class="form-control" th:if="${user.gender == 'Woman'   }"
+													th:text="여성"></div>
+												<div class="form-control" th:if="${user.gender == 'Private' }"
+													th:text="비공개"></div>
 											</div>
 											<div class="col-md-6 mb-3">
 												<label class="form-label">나이</label>
@@ -87,8 +98,8 @@
 											</div>
 											<div class="col-md-3 mb-3">
 												<label class="form-label"></label>
-												<div class="form-control" th:text="${user.userSmallGov}">   
-												
+												<div class="form-control" th:text="${user.userSmallGov}">
+
 												</div>
 											</div>
 										</div>
@@ -113,8 +124,7 @@
 						</div>
 					</div>
 					<div class="col-md-4">
-						<div
-							class="position-relative d-flex justify-content-md-end align-items-center">
+						<div class="position-relative d-flex justify-content-md-end align-items-center">
 							<!--Buttons navigation-->
 							<div
 								class="swiper3-button-prev swiper-button-prev mt-0 position-static rounded-pill size-50 border border-primary text-primary bg-transparent me-2">
@@ -125,9 +135,9 @@
 						</div>
 					</div>
 				</div>
-				
-<!-- 				<th:block th:if="${#lists.size(reviewList) eq null}"> -->
-<!-- 				<th:block th:if="${reviewList == null"> -->
+
+				<!-- 				<th:block th:if="${#lists.size(reviewList) eq null}"> -->
+				<!-- 				<th:block th:if="${reviewList == null"> -->
 				<th:block th:if="${#lists.size(reviewList) ne 0}">
 					<div class="swiper-container swiper-3 overflow-visible">
 						<div class="swiper-wrapper">
