@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -37,7 +37,7 @@ public class MainPageController {
 	private final ReviewService reviewService;
 	private final UserService userService;
 
-	@Transactional
+	@Transactional(readOnly = true)
 	@GetMapping("")
 	public String openIndexPage(Model model, @PageableDefault(size = 30, sort = "travelView", direction = Sort.Direction.DESC) Pageable travel) {
 		
