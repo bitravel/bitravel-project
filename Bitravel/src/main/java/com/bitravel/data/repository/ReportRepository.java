@@ -30,5 +30,5 @@ public interface ReportRepository extends JpaRepository<Report, Long>{
 	List<Report> findByCheckResultContaining(String checkResult, Sort sort);
 	
 	List<Report> findByCheckResultIsNull();
-	List<Report> findByCheckResultIsNotNull();
+	List<Report> findByCheckResultIsNotNull(Sort sort);
 }

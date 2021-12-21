@@ -2,6 +2,7 @@ package com.bitravel.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
@@ -38,7 +39,8 @@ public class ReportService {
 	 */
 	@Transactional(readOnly = true)
 	public List<Report> ListAll() {
-		List<Report> list = reportRepository.findAll();
+		Sort sort = Sort.by(Sort.Direction.DESC, "reportDate");
+		List<Report> list = reportRepository.findAll(sort);
 		return list;
 	}
 
@@ -179,7 +181,8 @@ public class ReportService {
 	 */
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public List<Report> getReportListByTitle(String keyword) {
-		return reportRepository.findByReportTitleContaining(keyword);
+		Sort sort = Sort.by(Sort.Direction.DESC, "reportDate");
+		return reportRepository.findByReportTitleContaining(keyword, sort);
 	}
 	
 	/**
@@ -187,7 +190,8 @@ public class ReportService {
 	 */
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public List<Report> getReportListByContent(String keyword) {
-		return reportRepository.findByReportContentContaining(keyword);
+		Sort sort = Sort.by(Sort.Direction.DESC, "reportDate");
+		return reportRepository.findByReportContentContaining(keyword, sort);
 	}
 	
 	/**
@@ -195,7 +199,8 @@ public class ReportService {
 	 */
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public List<Report> getReportListByReporter(String keyword) {
-		return reportRepository.findByReporterEmailContaining(keyword);
+		Sort sort = Sort.by(Sort.Direction.DESC, "reportDate");
+		return reportRepository.findByReporterEmailContaining(keyword, sort);
 	}
 	
 	/**
@@ -203,7 +208,8 @@ public class ReportService {
 	 */
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public List<Report> getReportListByReported(String keyword) {
-		return reportRepository.findByReportedEmailContaining(keyword);
+		Sort sort = Sort.by(Sort.Direction.DESC, "reportDate");
+		return reportRepository.findByReportedEmailContaining(keyword, sort);
 	}
 	
 	/**
@@ -219,7 +225,8 @@ public class ReportService {
 	 */
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public List<Report> getReportListChecked() {
-		return reportRepository.findByCheckResultIsNotNull();
+		Sort sort = Sort.by(Sort.Direction.DESC, "reportDate");
+		return reportRepository.findByCheckResultIsNotNull(sort);
 	}
 	
 	/**
