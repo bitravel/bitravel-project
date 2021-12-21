@@ -61,14 +61,12 @@ public class UserPageController {
 	public String openAdminPage() {
 		return "user/admin";
 	}
-
+	
 	@GetMapping("/user")
+	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	public String openUserPage(@RequestParam String email, Model model) {
 		// 개인정보 불러오기
 		Optional<UserDto> tmp = userService.getUserWithAuthorities(email);
-		if(tmp.isEmpty()) {
-			return "user/mypage";
-		}
 		model.addAttribute("user", tmp.get());
 		
 		// 내가 작성한 리뷰 불러오기
@@ -84,7 +82,7 @@ public class UserPageController {
 		}
 		model.addAttribute("boardList", boardList);
 		
-		if(SecurityUtil.getCurrentEmail().get().equals(email))
+		if(email.equals("admin") || tmp.isEmpty() || SecurityUtil.getCurrentEmail().get().equals(email))
 			return "redirect:/mypage";
 		else
 			return "user/userPage";
