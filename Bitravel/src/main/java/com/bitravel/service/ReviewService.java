@@ -63,13 +63,13 @@ public class ReviewService {
 			params.setUserImage(user.getUserImage());
 			user.changePoint(30);
 			int age = user.getAge();
-    		age = age/10;
-    		if(age==0)
-    			age=1;
-    		else if (age>7)
-    			age=7;
-    		int ageKey = age*10;
-    		params.setAge(ageKey);
+			age = age/10;
+			if(age==0)
+				age=1;
+			else if (age>7)
+				age=7;
+			int ageKey = age*10;
+			params.setAge(ageKey);
 		}
 		Review review = reviewRepository.save(params.toEntity());
 		review.getReviewId();
@@ -140,7 +140,7 @@ public class ReviewService {
 		else
 			return all;
 	}
-	
+
 	/**
 	 * 특정 여행지 관련 후기 최대 20개 조회
 	 */
@@ -150,12 +150,12 @@ public class ReviewService {
 		List<Review> reviews = new ArrayList<>();
 		for(int i=0;i<all.size();i++) {
 			try {
-			reviews.add(reviewRepository.getById(all.get(i).getReview().getReviewId()));
+				reviews.add(reviewRepository.getById(all.get(i).getReview().getReviewId()));
 			} catch (Exception e) {
 				log.info("삭제된 리뷰");
 			}
 		}
-		
+
 		Collections.sort(reviews, new Comparator<Review>() {
 			@Override
 			public int compare(Review o1, Review o2) {
@@ -166,13 +166,13 @@ public class ReviewService {
 				}
 			}	
 		});
-		
+
 		if(reviews.size()>20)
 			return reviews.subList(0, 20);
 		else
 			return reviews;
 	}
-	
+
 
 	/**
 	 * 내가 선호하는 여행지들 후기 조회 (Pageable X)
@@ -196,7 +196,7 @@ public class ReviewService {
 				}
 			}
 		}
-		
+
 		Collections.sort(favReviews, new Comparator<Review>() {
 			@Override
 			public int compare(Review o1, Review o2) {
@@ -207,37 +207,37 @@ public class ReviewService {
 				}
 			}		
 		});
-		
+
 		if(favReviews.size()>20)
 			return favReviews.subList(0, 20);
 		else
 			return favReviews;
 	}
-	
+
 	/**
-     * 후기 월간 조회수 상위 조회
-     */
-    @Transactional
-    public Page<Review> findViewAll(Pageable pageable) {
-    	Date start = new Date(System.currentTimeMillis()-86400000L*30); // 현재 30일 기준
-    	Date end = new Date();
-    	pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "reviewView"));
-    	return reviewRepository.findByReviewDateBetween(start, end, pageable);
-    }
-    /**
-     * 나이대별 최신 후기 조회
-     */
-    @Transactional
-    public Page<Review> findAgeAll(int age, Pageable pageable) {
-    	age = age/10;
+	 * 후기 월간 조회수 상위 조회
+	 */
+	@Transactional
+	public Page<Review> findViewAll(Pageable pageable) {
+		Date start = new Date(System.currentTimeMillis()-86400000L*30); // 현재 30일 기준
+		Date end = new Date();
+		pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "reviewView"));
+		return reviewRepository.findByReviewDateBetween(start, end, pageable);
+	}
+	/**
+	 * 나이대별 최신 후기 조회
+	 */
+	@Transactional
+	public Page<Review> findAgeAll(int age, Pageable pageable) {
+		age = age/10;
 		if(age==0)
 			age=1;
 		else if (age>7)
 			age=7;
 		int ageKey = age*10;
-    	pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "reviewDate"));
-    	return reviewRepository.findByAge(ageKey, pageable);
-    }
+		pageable = PageRequest.of(0, 5, Sort.by(Sort.Direction.DESC, "reviewDate"));
+		return reviewRepository.findByAge(ageKey, pageable);
+	}
 
 	/**
 	 * 후기 통합 검색 결과 조회
@@ -271,17 +271,14 @@ public class ReviewService {
 	public Page<Review> findReviewsByTitle(String keyword, Pageable pageable) {
 		return reviewRepository.findByReviewTitleContaining(keyword, pageable);
 	}
-	
+
 	/**
 	 * 후기 회원별 검색 결과 리스트
 	 */
 	@Transactional
 	public List<Review> findReviewsByEmail(String keyword) {
 		List<Review> list = reviewRepository.findByUserEmailOrderByReviewDateAsc(keyword);
-		if(list.size()>20)
-			return list.subList(0, 20);
-		else
-			return list;
+		return list;
 	}
 
 	/**
