@@ -7,9 +7,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bitravel.data.dto.UserDto;
+import com.bitravel.data.dto.UserUpdateDto;
 import com.bitravel.data.entity.Review;
 import com.bitravel.data.entity.User;
 import com.bitravel.service.MypageService;
@@ -48,7 +50,7 @@ public class MypageController {
 	}
 	
 	@PostMapping("/update")
-	public String updateMyPage(@ModelAttribute("user") UserDto userDto, Model model) {
+	public String updateMyPage(@RequestBody UserUpdateDto userDto, Model model) {
 		User user = mypageService.updateUser(userDto);
 		model.addAttribute("user", user);
 		return "redirect:/mypage/setting";

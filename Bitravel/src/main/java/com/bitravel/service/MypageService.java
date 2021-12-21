@@ -10,7 +10,8 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bitravel.data.dto.UserDto;
+import com.bitravel.controller.UserController;
+import com.bitravel.data.dto.UserUpdateDto;
 import com.bitravel.data.entity.Review;
 import com.bitravel.data.entity.User;
 import com.bitravel.data.repository.MypageRepository;
@@ -18,7 +19,9 @@ import com.bitravel.data.repository.ReviewRepository;
 import com.bitravel.data.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class MypageService {
@@ -30,13 +33,14 @@ public class MypageService {
 
 	// 회원정보 수정
 	@Transactional()
-	public User updateUser(UserDto userDto) {
+	public User updateUser(UserUpdateDto userDto) {
+		log.info(userDto.getEmail());
 		User user = userRepository.findOneWithAuthoritiesByEmailAndActivated(userDto.getEmail(), true).get();
-		
-		user.setGender(      userDto.getGender());
+
 		user.setNickname(    userDto.getNickname());
 		user.setUserLargeGov(userDto.getUserLargeGov());
 		user.setUserSmallGov(userDto.getUserSmallGov());
+		user.setUserImage(userDto.getUserImage());
 		
 		return mypageRepository.save(user);
 	}
