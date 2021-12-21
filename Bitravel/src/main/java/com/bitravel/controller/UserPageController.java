@@ -16,11 +16,13 @@ public class UserPageController {
     }
     
     @GetMapping("/signup")
+    @PreAuthorize("isAnonymous()")
     public String openFirstSignUpPage() {
     	return "user/signUp";
     }
     
     @GetMapping("/signup/second")
+    @PreAuthorize("isAnonymous()")
     public String openSecondSignUpPage
     (@RequestParam("userEmail") String email, Model model) {
     	model.addAttribute("userEmail", email);
@@ -28,30 +30,17 @@ public class UserPageController {
     }
     
     @GetMapping("/signup/third")
+    @PreAuthorize("isAnonymous()")
     public String openThirdSignUpPage
     (@RequestParam("userEmail") String email, Model model) {
     	model.addAttribute("userEmail", email);
     	return "user/signUp3";
     }
-    
-    
+        
     @GetMapping("/admin")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public String openAdminPage() {
     	return "user/admin";
-    }
-    
-//    @GetMapping("/mypage")
-//    //@PreAuthorize("isAnonymous()")
-//    public String openMyPage() {
-//        return "user/mypage";
-//    }
-    
-    @GetMapping("/mypageSetting")
-    //@PreAuthorize("isAnonymous()")
-    public String openMyPageSetting() {
-        return "user/mypageSetting";
-    }
-    
+    }   
 	
 }
