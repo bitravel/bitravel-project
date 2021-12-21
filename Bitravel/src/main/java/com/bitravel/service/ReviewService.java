@@ -133,7 +133,7 @@ public class ReviewService {
 	 */
 	@Transactional
 	public List<Review> findAllForMain() {
-		Sort sort = Sort.by(Sort.Direction.DESC, "reviewView", "reviewDate");
+		Sort sort = Sort.by(Sort.Direction.DESC, "reviewDate");
 		List<Review> all = reviewRepository.findAll(sort);
 		if(all.size()>20)
 			return all.subList(0, 20);
