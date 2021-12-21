@@ -112,7 +112,7 @@ public class ReviewService {
 	/**
 	 * 후기 여행지 정보 조회
 	 */
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<ReviewTravels> findByReview(Review id) {
 		return reviewTravelRepository.findByReview(id);
 	}
@@ -121,7 +121,7 @@ public class ReviewService {
 	/**
 	 * 후기 리스트 조회
 	 */
-	@Transactional
+	@Transactional(readOnly = true)
 	public Page<Review> findAll(Pageable pageable) {
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
 		pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "reviewId"));
@@ -131,7 +131,7 @@ public class ReviewService {
 	/**
 	 * 후기 통합 검색 결과 조회 (Pageable X)
 	 */
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<Review> findAllForMain() {
 		Sort sort = Sort.by(Sort.Direction.DESC, "reviewDate");
 		List<Review> all = reviewRepository.findAll(sort);
@@ -144,7 +144,7 @@ public class ReviewService {
 	/**
 	 * 특정 여행지 관련 후기 최대 20개 조회
 	 */
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<Review> find20ByTravel(Long id) {
 		List<ReviewTravels> all = reviewTravelRepository.findByTravel(travelRepository.getById(id));
 		List<Review> reviews = new ArrayList<>();
@@ -177,7 +177,7 @@ public class ReviewService {
 	/**
 	 * 내가 선호하는 여행지들 후기 조회 (Pageable X)
 	 */
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<Review> findAllForMe() {
 		String myEmail = SecurityUtil.getCurrentEmail().get();
 		List<Review> favReviews = new ArrayList<Review>();
@@ -213,7 +213,7 @@ public class ReviewService {
 	/**
 	 * 후기 월간 조회수 상위 조회
 	 */
-	@Transactional
+	@Transactional(readOnly = true)
 	public Page<Review> findViewAll(Pageable pageable) {
 		Date start = new Date(System.currentTimeMillis()-86400000L*30); // 현재 30일 기준
 		Date end = new Date();
@@ -223,7 +223,7 @@ public class ReviewService {
 	/**
 	 * 나이대별 최신 후기 조회
 	 */
-	@Transactional
+	@Transactional(readOnly = true)
 	public Page<Review> findAgeAll(int age, Pageable pageable) {
 		age = age/10;
 		if(age==0)
@@ -238,7 +238,7 @@ public class ReviewService {
 	/**
 	 * 후기 통합 검색 결과 조회
 	 */
-	@Transactional
+	@Transactional(readOnly = true)
 	public Page<Review> findReviews(String keyword, Pageable pageable) {
 
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
@@ -246,7 +246,7 @@ public class ReviewService {
 		return reviewRepository.findByNicknameContainingOrReviewTitleContainingOrReviewContentContaining(keyword, keyword, keyword, pageable);
 	}
 
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<Review> findReviews(String keyword) {
 		Sort sort = Sort.by(Sort.Direction.DESC, "reviewView", "reviewDate");
 		return reviewRepository.findByNicknameContainingOrReviewTitleContainingOrReviewContentContaining(keyword, keyword, keyword, sort);
@@ -255,7 +255,7 @@ public class ReviewService {
 	/**
 	 * 후기 닉네임 검색 결과 조회
 	 */
-	@Transactional
+	@Transactional(readOnly = true)
 	public Page<Review> findReviewsByNickname(String keyword, Pageable pageable) {
 		return reviewRepository.findByNicknameContaining(keyword, pageable);
 	}
@@ -263,7 +263,7 @@ public class ReviewService {
 	/**
 	 * 후기 제목 검색 결과 조회
 	 */
-	@Transactional
+	@Transactional(readOnly = true)
 	public Page<Review> findReviewsByTitle(String keyword, Pageable pageable) {
 		return reviewRepository.findByReviewTitleContaining(keyword, pageable);
 	}
@@ -271,7 +271,7 @@ public class ReviewService {
 	/**
 	 * 후기 회원별 검색 결과 리스트
 	 */
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<Review> findReviewsByEmail(String keyword) {
 		List<Review> list = reviewRepository.findByUserEmailOrderByReviewDateAsc(keyword);
 		return list;
@@ -280,7 +280,7 @@ public class ReviewService {
 	/**
 	 * 후기 제목+내용 검색 결과 조회
 	 */
-	@Transactional
+	@Transactional(readOnly = true)
 	public Page<Review> findReviewsByTitleAndContent(String keyword, Pageable pageable) {
 		return reviewRepository.findByReviewTitleContainingOrReviewContentContaining(keyword, keyword, pageable);
 	}
@@ -288,7 +288,7 @@ public class ReviewService {
 	/**
 	 * 후기 상세 정보 조회
 	 */
-	@Transactional
+	@Transactional(readOnly = true)
 	public ReviewResponseDto detail(Long id) {
 		Review entity = reviewRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
 		entity.increaseView();
