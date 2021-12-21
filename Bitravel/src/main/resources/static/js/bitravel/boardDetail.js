@@ -14,9 +14,9 @@ function findBoard() {
 		json.boardDate = moment(json.boardDate).format('YYYY-MM-DD HH:mm:ss');
 		Object.keys(json).forEach(key => {
 			const elem = document.getElementById(key);
-			if(key=="userEmail") {
+			if (key == "userEmail") {
 				var atag = document.getElementById("nickname");
-				atag.href = '/user?email='+json[key];
+				atag.href = '/user?email=' + json[key];
 			}
 			if (elem) {
 				elem.innerHTML = json[key];
@@ -39,10 +39,15 @@ function openModal(commentId, content, email) {
 		if (!response.ok) {
 			alert("로그인을 해주세요.");
 			return false;
+		} else {
+			return response.json();
 		}
-		return response.json();
+
 	}).then(json => {
 		console.log(json.email);
+
+		if (!json.email)
+			return false;
 
 		if (json.email != email && json.email != 'admin') {
 			alert("해당 댓글을 수정할 권한이 없습니다.");
@@ -58,6 +63,16 @@ function openModal(commentId, content, email) {
 	});
 }
 
+function initComment() {
+	fetch(`/api/user`).then(response => {
+		if (!response.ok) {
+			document.getElementById('content').disabled = true;
+			return false;
+		}
+		return true;
+	});
+}
+
 /**
  * 댓글 수정 창 닫기
  */
@@ -70,11 +85,17 @@ function closeModal() {
  * 글 신고하기
  */
 function reportPost() {
+
+	if (document.getElementById('content').disabled) {
+		alert('로그인을 해주세요.');
+		return false;
+	}
+
 	var url = '/api/reports/post';
 
 	var reason = prompt("신고 사유를 입력해 주세요.");
 
-	if(!reason)
+	if (!reason)
 		return false;
 
 	if (!confirm("입력하신 사유로 신고하시겠습니까?\n신고 사유 : " + reason)) {
@@ -111,7 +132,12 @@ function reportPost() {
  */
 function reportComment(cid) {
 
-	if(!confirm("해당 댓글을 신고하시겠습니까?"))
+	if (document.getElementById('content').disabled) {
+		alert('로그인을 해주세요.');
+		return false;
+	}
+
+	if (!confirm("해당 댓글을 신고하시겠습니까?"))
 		return false;
 
 	var url = '/api/reports/comment/' + 'b' + cid;
@@ -134,7 +160,12 @@ function reportComment(cid) {
  */
 function isValid() {
 
-	const form = document.getElementById('content');
+	if (document.getElementById('content').disabled) {
+		alert('로그인을 해주세요.');
+		return false;
+	}
+
+	const content = document.getElementById('content');
 
 	if (!content.value.trim()) {
 		alert('내용을 입력해 주세요.');
@@ -287,13 +318,13 @@ function printCommentList() {
 		} else {
 			json.forEach((obj) => {
 				html += `
-										<tr class="form-control mb-2">
-											<td style="width:20%;"><a class="fw-bold text-dark" href="/user?email=${obj.userEmail}">${obj.nickname}</a></td>
-											<td style="width:78%;"><span class="desc">${obj.commentContent}</span></td>			
-											<td style="width:1%;"><button type="button" onclick="openModal(${obj.bcommentId}, '${obj.commentContent}', '${obj.userEmail}' )" class="btn btn-sm btn-outline-default btn-circle"><i class="bi bi-pencil-fill" aria-hidden="true"></i></button></td>
-											<td style="width:1%;"><button type="button" onclick="reportComment(${obj.bcommentId}, '${obj.userEmail}' )" class="btn btn-sm btn-outline-default btn-circle"><i class="bi bi-emoji-expressionless-fill" aria-hidden="true"></i></button></td>
-										</tr>
-									`;
+											<tr class="form-control mb-2">
+												<td style="width:20%;"><a class="fw-bold text-dark" href="/user?email=${obj.userEmail}">${obj.nickname}</a></td>
+												<td style="width:78%;"><span class="desc">${obj.commentContent}</span></td>			
+												<td style="width:1%;"><button type="button" onclick="openModal(${obj.bcommentId}, '${obj.commentContent}', '${obj.userEmail}' )" class="btn btn-sm btn-outline-default btn-circle"><i class="bi bi-pencil-fill" aria-hidden="true"></i></button></td>
+												<td style="width:1%;"><button type="button" id="reportC" onclick="reportComment(${obj.bcommentId}, '${obj.userEmail}' )" class="btn btn-sm btn-outline-default btn-circle"><i class="bi bi-emoji-expressionless-fill" aria-hidden="true"></i></button></td>
+											</tr>
+										`;
 			});
 		}
 		$(".notice-list").html(html);
