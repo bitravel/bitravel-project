@@ -55,12 +55,12 @@
 
                 <div class="collapse navbar-collapse" id="mainNavbarTheme">
                     <ul class="navbar-nav mx-auto">
-                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="/travel"
+                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle fs-5 fw-bold" href="/travel"
                                 role="button">여행지
                             </a></li>
-                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="/review"
+                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle fs-5 fw-bold" href="/review"
                                 role="button">후기</a></li>
-                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="/board"
+                        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle fs-5 fw-bold" href="/board"
                                 role="button">게시판
                             </a></li>
                     </ul>
@@ -70,7 +70,7 @@
                     <a href="#" class="btn btn-secondary rounded-pill py-0 ps-0 pe-3" data-bs-auto-close="outside"
                         data-bs-toggle="dropdown">
                         <img th:src="${#authentication.principal.userImage}" onerror="this.src='/assets/img/avatar/2.jpg'" alt="" class="avatar sm rounded-circle me-1">
-                            <small sec:authentication="principal.nickname"></small>
+                            <span sec:authentication="principal.nickname"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs p-0">
                             <a href="/mypage" class="dropdown-header border-bottom p-4">
@@ -107,7 +107,7 @@
                         <a href="#" class="btn btn-secondary rounded-pill py-0 ps-0 pe-2" data-bs-auto-close="outside"
                             data-bs-toggle="dropdown">
                             <img src="/assets/img/avatar/2.jpg" alt="" class="avatar sm rounded-circle me-1">
-                            <small>로그인</small>
+                            로그인
                         </a>
                         <div class="dropdown-menu dropdown-menu-end dropdown-menu-xs p-0">
                             <span class="d-block text-center mt-4 mb-2 text-muted">
