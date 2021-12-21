@@ -109,7 +109,7 @@ public class UserService {
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public User signup(UserDto userDto) {
 		// 이메일 기준으로 회원 중복여부 확인
-		if(userRepository.findOneWithAuthoritiesByEmailAndActivated(userDto.getEmail(), true).orElse(null) != null) {
+		if(userRepository.findOneWithAuthoritiesByEmail(userDto.getEmail()).orElse(null) != null) {
 			throw new RuntimeException("이미 가입되어 있는 회원입니다.");
 		}
 
