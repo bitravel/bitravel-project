@@ -200,11 +200,7 @@ public class ReviewService {
 		Collections.sort(favReviews, new Comparator<Review>() {
 			@Override
 			public int compare(Review o1, Review o2) {
-				if(o1.getReviewView()==o2.getReviewView()) {
-					return o2.getReviewDate().compareTo(o1.getReviewDate());
-				} else {
-					return o2.getReviewView()-o1.getReviewView();
-				}
+				return o2.getReviewDate().compareTo(o1.getReviewDate());
 			}		
 		});
 
