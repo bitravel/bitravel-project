@@ -109,7 +109,7 @@ public class UserService {
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public User signup(UserDto userDto) {
 		// 이메일 기준으로 회원 중복여부 확인
-		if(userRepository.findOneWithAuthoritiesByEmailAndActivated(userDto.getEmail(), true).orElse(null) != null) {
+		if(userRepository.findOneWithAuthoritiesByEmail(userDto.getEmail()).orElse(null) != null) {
 			throw new RuntimeException("이미 가입되어 있는 회원입니다.");
 		}
 
@@ -163,7 +163,7 @@ public class UserService {
 	// 회원 닉네임으로 찾기
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Optional<UserDto> getUserByNickname(String nickname) {
-		return userRepository.findOneByNicknameAndActivated(nickname, true).map(UserDto::new);
+		return userRepository.findOneByNickname(nickname).map(UserDto::new);
 	}
 
 	// 자기 자신 (로그인된 정보) 불러오기
