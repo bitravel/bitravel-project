@@ -37,6 +37,19 @@ function reviewList() {
 }
 
 /**
+ * 비회원 댓글 작성 막기
+ */
+function initComment() {
+	fetch(`/api/user`).then(response => {
+		if (!response.ok) {
+			document.getElementById('content').disabled = true;
+			return false;
+		}
+		return true;
+	});
+}
+
+/**
  * 댓글 수정 창
  */
 function openModal(commentId, email, content) {
