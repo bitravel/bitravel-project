@@ -79,7 +79,7 @@ public class BoardService {
     /**
      * 게시글 통합 검색 결과 조회
      */
-    @Transactional
+    @Transactional(readOnly = true)
     public Page<Board> findBoards(String keyword, Pageable pageable) {
     	Sort sort = Sort.by(Sort.Direction.DESC, "boardId");
     	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
@@ -91,7 +91,7 @@ public class BoardService {
     /**
      * 게시글 통합 검색 결과 조회 (Pageable X)
      */
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Board> findBoards(String keyword) { 	
     	Sort sort = Sort.by(Sort.Direction.DESC, "boardView", "boardDate");
         return boardRepository.findByNicknameContainingOrBoardTitleContainingOrBoardContentContaining(keyword, keyword, keyword, sort);
@@ -100,7 +100,7 @@ public class BoardService {
     /**
      * 게시글 닉네임 검색 결과 조회
      */
-    @Transactional
+    @Transactional(readOnly = true)
     public Page<Board> findBoardsByNickname(String keyword, Pageable pageable) {
     	
     	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
@@ -112,7 +112,7 @@ public class BoardService {
     /**
      * 게시글 제목 검색 결과 조회
      */
-    @Transactional
+    @Transactional(readOnly = true)
     public Page<Board> findBoardsByTitle(String keyword, Pageable pageable) {
     	
     	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
@@ -124,7 +124,7 @@ public class BoardService {
     /**
      * 게시글 제목+내용 검색 결과 조회
      */
-    @Transactional
+    @Transactional(readOnly = true)
     public Page<Board> findBoardsByTitleAndContent(String keyword, Pageable pageable) {
     	
     	int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
@@ -136,7 +136,7 @@ public class BoardService {
     /**
      * 게시글 상세 정보 조회
      */
-    @Transactional
+    @Transactional(readOnly = true)
     public BoardResponseDto findById(Long id) {
     	Board entity = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
     	entity.increaseView();
@@ -146,7 +146,7 @@ public class BoardService {
     /**
      * 게시글 상세 정보 조회 (조회수 증가 X)
      */
-    @Transactional
+    @Transactional(readOnly = true)
     public BoardResponseDto findByIdNoViewCount(Long id) {
     	Board entity = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
     	return new BoardResponseDto(entity);
@@ -172,7 +172,7 @@ public class BoardService {
 	/**
 	 * 후기 회원별 검색 결과 리스트
 	 */
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<Board> findBoardsByEmail(String keyword) {
 		List<Board> list = boardRepository.findByUserEmailOrderByBoardDateAsc(keyword);
 		return list;
