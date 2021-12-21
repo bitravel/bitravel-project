@@ -109,7 +109,7 @@ public class UserService {
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public User signup(UserDto userDto) {
 		// 이메일 기준으로 회원 중복여부 확인
-		if(userRepository.findOneWithAuthoritiesByEmail(userDto.getEmail()).orElse(null) != null) {
+		if(userRepository.findOneWithAuthoritiesByEmailAndActivated(userDto.getEmail(), true).orElse(null) != null) {
 			throw new RuntimeException("이미 가입되어 있는 회원입니다.");
 		}
 
@@ -157,13 +157,13 @@ public class UserService {
 	// 회원 이메일로 찾기
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Optional<UserDto> getUserWithAuthorities(String email) {
-		return userRepository.findOneWithAuthoritiesByEmail(email).map(UserDto::new);
+		return userRepository.findOneWithAuthoritiesByEmailAndActivated(email, true).map(UserDto::new);
 	}
 
 	// 회원 닉네임으로 찾기
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Optional<UserDto> getUserByNickname(String nickname) {
-		return userRepository.findOneByNickname(nickname).map(UserDto::new);
+		return userRepository.findOneByNicknameAndActivated(nickname, true).map(UserDto::new);
 	}
 
 	// 자기 자신 (로그인된 정보) 불러오기
@@ -183,7 +183,7 @@ public class UserService {
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public List<UserDto> getAllUserList() {
 		Sort sort = Sort.by(Direction.ASC, "userId");
-		List<User> list = userRepository.findAll(sort);
+		List<User> list = userRepository.findByActivated(true, sort);
 		return list.stream().map(UserDto::new).collect(Collectors.toList());
 	}
 
@@ -192,7 +192,7 @@ public class UserService {
 	public List<UserDto> getUserListBynickname(String nickname) {
 		// 인기도 등 다른 조건으로 정렬하는 기능 추가할 수 있음
 		Sort sort = Sort.by(Direction.DESC, "point");
-		List<User> list = userRepository.findByNicknameContaining(nickname, sort);
+		List<User> list = userRepository.findByNicknameContainingAndActivated(nickname, true, sort);
 		return list.stream().map(UserDto::new).collect(Collectors.toList());
 	}
 
@@ -201,7 +201,7 @@ public class UserService {
 	public List<UserDto> getUserListByrealname(String realname) {
 		// 인기도 등 다른 조건으로 정렬하는 기능 추가할 수 있음
 		// Sort sort = Sort.by(Direction.ASC, "userId");
-		List<User> list = userRepository.findByRealNameContaining(realname);
+		List<User> list = userRepository.findByRealNameContainingAndActivated(realname,true);
 		return list.stream().map(UserDto::new).collect(Collectors.toList());
 	}
 
@@ -210,14 +210,14 @@ public class UserService {
 	public List<UserDto> getUserListByEmail(String email) {
 		// 인기도 등 다른 조건으로 정렬하는 기능 추가할 수 있음
 		// Sort sort = Sort.by(Direction.ASC, "userId");
-		List<User> list = userRepository.findByEmailContaining(email);
+		List<User> list = userRepository.findByEmailContainingAndActivated(email, true);
 		return list.stream().map(UserDto::new).collect(Collectors.toList());
 	}
 
 	// 회원정보 입력받은 내용으로 수정하기
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public User updateUser(UserDto userDto) {
-		Optional<User> userTemp = userRepository.findOneWithAuthoritiesByEmail(userDto.getEmail());
+		Optional<User> userTemp = userRepository.findOneWithAuthoritiesByEmailAndActivated(userDto.getEmail(), true);
 		if(userTemp.isEmpty()) {
 			return null;
 		}
@@ -235,7 +235,7 @@ public class UserService {
 	// 비밀번호만 수정하기
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Boolean updateUserPassword(String email, String password) {
-		Optional<User> userTemp = userRepository.findOneWithAuthoritiesByEmail(email);
+		Optional<User> userTemp = userRepository.findOneWithAuthoritiesByEmailAndActivated(email, true);
 		if(userTemp.isEmpty()) {
 			return false;
 		}
@@ -245,10 +245,39 @@ public class UserService {
 		return true;
 	}
 
-	// 회원정보 삭제하기
+	
+	// 회원 탈퇴하기
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public boolean deleteUser(String email) {
-		Optional<User> userTemp = userRepository.findOneWithAuthoritiesByEmail(email);
+		Optional<User> userTemp = userRepository.findOneWithAuthoritiesByEmailAndActivated(email, true);
+		if(userTemp.isEmpty()) {
+			return false;
+		}
+		User user = userTemp.get();
+		user.setActivated(false);
+		return true;
+	}
+
+	// 회원 여러명 한번에 탈퇴시키기
+	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public boolean deleteUserByList(List<Long> list) {
+		try {
+			for(int i=0;i<list.size();i++) {
+				Optional<User> tmp = userRepository.findById(list.get(i));
+				User user = tmp.get();
+				user.setActivated(false);
+			}
+		} catch (IllegalArgumentException e) {
+			log.info("올바르지 않은 삭제 요청");
+			return false;
+		}
+		return true;
+	}
+	
+	// 회원정보 완전히 삭제하기
+	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+	public boolean deleteUserComplete(String email) {
+		Optional<User> userTemp = userRepository.findOneWithAuthoritiesByEmailAndActivated(email, true);
 		if(userTemp.isEmpty()) {
 			return false;
 		}
@@ -257,9 +286,9 @@ public class UserService {
 		return true;
 	}
 
-	// 회원정보 삭제하기
+	// 회원정보 여러개 완전히 삭제하기
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-	public boolean deleteUserByList(List<Long> list) {
+	public boolean deleteUserByListComplete(List<Long> list) {
 		try {
 			userRepository.deleteAllById(list);
 		} catch (IllegalArgumentException e) {
@@ -272,7 +301,7 @@ public class UserService {
 	// 포인트만 수정하기
 	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Boolean updatePoint(String email, Integer point) {
-		Optional<User> userTemp = userRepository.findOneWithAuthoritiesByEmail(email);
+		Optional<User> userTemp = userRepository.findOneWithAuthoritiesByEmailAndActivated(email, true);
 		if(userTemp.isEmpty()) {
 			return false;
 		}
@@ -285,7 +314,7 @@ public class UserService {
 	public Page<User> findUsersByNickname(String keyword, Pageable pageable) {
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
 		pageable = PageRequest.of(page, 9, Sort.by(Sort.Direction.ASC, "userId"));
-		return userRepository.findByNicknameContaining(keyword, pageable);
+		return userRepository.findByNicknameContainingAndActivated(keyword, true, pageable);
 	}
 
 }

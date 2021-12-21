@@ -14,15 +14,20 @@ import com.bitravel.data.entity.User;
 // Entity가 하나 추가될 때마다 별개의 Repository class가 필요함
 public interface UserRepository extends JpaRepository<User, Long>{
 	@EntityGraph(attributePaths = "authorities")
+	Optional<User> findOneWithAuthoritiesByEmailAndActivated(String email, Boolean bool);
+	
+	@EntityGraph(attributePaths = "authorities")
 	Optional<User> findOneWithAuthoritiesByEmail(String email);
 	
-	List<User> findByNicknameContaining(String keyword, Sort sort);
+	List<User> findByNicknameContainingAndActivated(String keyword, Boolean bool, Sort sort);
 	
-	List<User> findByEmailContaining(String keyword);
+	List<User> findByEmailContainingAndActivated(String keyword, Boolean bool);
 	
-	List<User> findByRealNameContaining(String keyword);
+	List<User> findByRealNameContainingAndActivated(String keyword, Boolean bool);
 	
-	Optional<User> findOneByNickname(String keyword);
+	Optional<User> findOneByNicknameAndActivated(String keyword, Boolean bool);
 	
-	Page<User> findByNicknameContaining(String keyword, Pageable pageable);
+	Page<User> findByNicknameContainingAndActivated(String keyword, Boolean bool, Pageable pageable);
+	
+	List<User> findByActivated(Boolean bool, Sort sort);
 }
