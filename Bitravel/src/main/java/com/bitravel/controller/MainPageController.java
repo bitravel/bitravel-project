@@ -5,14 +5,13 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.transaction.annotation.Transactional;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -23,7 +22,6 @@ import com.bitravel.service.ReviewService;
 import com.bitravel.service.TravelService;
 import com.bitravel.service.UserService;
 import com.bitravel.util.SecurityUtil;
-import com.bitravel.util.TagUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -91,18 +89,10 @@ public class MainPageController {
 		
 		// 다섯번째
 		List<Review> favlist = reviewService.findAllForMe();
-		for(int i=0;i<favlist.size();i++) {
-			Review now = favlist.get(i);
-			now.setReviewContent(TagUtil.getText(now.getReviewContent()));
-		}
 		model.addAttribute("List5", favlist);
 		
 		// 여섯번째
 		List<Review> anolist = reviewService.findAllForMain();
-		for(int i=0;i<anolist.size();i++) {
-			Review now = anolist.get(i);
-			now.setReviewContent(TagUtil.getText(now.getReviewContent()));
-		}
 		model.addAttribute("rcount", favlist.size());
 		model.addAttribute("rcount2", anolist.size());
 		model.addAttribute("List6", anolist);
