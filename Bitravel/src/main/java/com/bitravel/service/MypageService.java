@@ -1,8 +1,16 @@
 package com.bitravel.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,8 +19,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bitravel.data.dto.UserDto;
+import com.bitravel.data.entity.Review;
 import com.bitravel.data.entity.User;
 import com.bitravel.data.repository.MypageRepository;
+import com.bitravel.data.repository.ReviewRepository;
+import com.bitravel.data.repository.ReviewTravelRepository;
 import com.bitravel.data.repository.UserRepository;
 
 import lombok.AllArgsConstructor;
@@ -24,6 +35,7 @@ public class MypageService {
 	private UserRepository userRepository;
 	private PasswordEncoder passwordEncoder;
 	private MypageRepository mypageRepository;
+	private final ReviewRepository reviewRepository;
 
 	// 회원정보 수정
 	@Transactional()
@@ -48,6 +60,15 @@ public class MypageService {
 		userRepository.save(user);
 		return true;
 	}
+
+	//내가 작성한 리뷰 리스트 조회
+	@Transactional
+	public List<Review> getMyReview(String userEmail) {
+		List<Review> myReview = new ArrayList<Review>();
+		myReview = reviewRepository.findByUserEmailOrderByReviewDateAsc(userEmail);
+		return myReview;
+	}
+	
 	
 //	@Autowired
 //	PasswordEncoder passwordEncoder1;
@@ -61,5 +82,4 @@ public class MypageService {
 //			user.setType(type);
 //			return user.save(user, role);
 //		}
-
 }
