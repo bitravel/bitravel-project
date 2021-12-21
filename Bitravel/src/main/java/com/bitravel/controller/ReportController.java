@@ -3,6 +3,7 @@ package com.bitravel.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,7 @@ public class ReportController {
 	 * 전체 신고 내역 검색 (최대 1000개, 그 외에 찾고 싶은 것은 검색으로)
 	 */
 	@GetMapping("/reports/list")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@ApiOperation(value = "전체 신고 목록 검색", notes = "전체 신고 목록을 최대 1000개까지 출력하는 API. Report entity 클래스의 모든 데이터를 가져온다.")
 	public List<Report> ListAll() {
 		List<Report> list = reportService.ListAll();
@@ -45,6 +47,7 @@ public class ReportController {
 	 * 제목으로 검색 (최대 1000개, 그 외에 찾고 싶은 것은 키워드를 세분화해서)
 	 */
 	@GetMapping("/reports/search/title")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@ApiOperation(value = "신고 제목 검색 목록", notes = "신고 제목으로 검색한 목록을 최대 1000개까지 출력하는 API. Report entity 클래스 데이터를 가져온다.")
 	public List<Report> ListByTitle(String keyword) {
 		List<Report> list = reportService.getReportListByTitle(keyword);
@@ -58,6 +61,7 @@ public class ReportController {
 	 * 내용으로 검색 (최대 1000개, 그 외에 찾고 싶은 것은 키워드를 세분화해서)
 	 */
 	@GetMapping("/reports/search/content")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@ApiOperation(value = "신고 내용 검색 목록", notes = "신고 내용으로 검색한 목록을 출력하는 API. Report entity 클래스 데이터를 가져온다.")
 	public List<Report> ListByContent(String keyword) {
 		List<Report> list = reportService.getReportListByContent(keyword);
@@ -71,6 +75,7 @@ public class ReportController {
 	 * 신고한 유저로 검색 (최대 1000개, 그 외에 찾고 싶은 것은 키워드를 세분화해서)
 	 */
 	@GetMapping("/reports/search/reporter")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@ApiOperation(value = "신고한 유저 검색 목록", notes = "신고한 유저로 검색한 목록을 출력하는 API. Report entity 클래스 데이터를 가져온다.")
 	public List<Report> ListByReporter(String keyword) {
 		List<Report> list = reportService.getReportListByReporter(keyword);
@@ -84,6 +89,7 @@ public class ReportController {
 	 * 신고당한 유저로 검색 (최대 1000개, 그 외에 찾고 싶은 것은 키워드를 세분화해서)
 	 */
 	@GetMapping("/reports/search/reported")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@ApiOperation(value = "신고당한 유저 검색 목록", notes = "신고당한 유저로 검색한 목록을 출력하는 API. Report entity 클래스 데이터를 가져온다.")
 	public List<Report> ListByReported(String keyword) {
 		List<Report> list = reportService.getReportListByReported(keyword);
@@ -97,6 +103,7 @@ public class ReportController {
 	 * 미처리 내역 검색 (최대 1000개, 그 외에 찾고 싶은 것은 키워드를 세분화해서)
 	 */
 	@GetMapping("/reports/notchecked")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@ApiOperation(value = "미처리 신고 목록", notes = "아직 처리 결과가 없는 신고 목록을 출력하는 API. Report entity 클래스 데이터를 가져온다.")
 	public List<Report> ListNotChecked() {
 		List<Report> list = reportService.getReportListNotChecked();
@@ -110,6 +117,7 @@ public class ReportController {
 	 * 처리 완료 내역 검색 (최대 1000개, 그 외에 찾고 싶은 것은 키워드를 세분화해서)
 	 */
 	@GetMapping("/reports/checked")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@ApiOperation(value = "처리 완료 신고 목록", notes = "처리 결과가 존재하는 신고 목록을 출력하는 API. Report entity 클래스 데이터를 가져온다.")
 	public List<Report> ListChecked() {
 		List<Report> list = reportService.getReportListChecked();
@@ -123,7 +131,7 @@ public class ReportController {
 	 * 게시물/후기 신고하기
 	 */
 	@PostMapping("/reports/post")
-	@ApiOperation(value = "기초자치단체 목록 검색", notes = "전체 기초자치단체 목록을 출력하는 API. Report entity 클래스의 데이터를 가져온다.")
+	@ApiOperation(value = "게시물/후기 신고하기", notes = "게시물을 신고하는 API. Report entity 클래스의 데이터를 작성한다.")
 	public ResponseEntity<ReportDto> reportPost(@RequestBody ReportDto param) {
 		
 		if(reportService.isReportedPost(param))
@@ -140,7 +148,7 @@ public class ReportController {
 	 * 댓글 신고하기
 	 */
 	@GetMapping("/reports/comment/{cid}")
-	@ApiOperation(value = "기초자치단체 목록 검색", notes = "전체 기초자치단체 목록을 출력하는 API. Report entity 클래스의 모든 데이터를 가져온다.")
+	@ApiOperation(value = "댓글 신고하기", notes = "댓글을 신고하는 API. Report entity 클래스의 데이터를 작성한다.")
 	public ResponseEntity<Report> reportComment(@PathVariable final String cid) {
 		
 		if(reportService.isReportedComment(cid)) {
@@ -157,7 +165,8 @@ public class ReportController {
 	 * 신고내역 처리 완료하기
 	 */
 	@PostMapping("/reports/check")
-	@ApiOperation(value = "기초자치단체 목록 검색", notes = "전체 기초자치단체 목록을 출력하는 API. Report entity 클래스의 모든 데이터를 가져온다.")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	@ApiOperation(value = "신고내역 처리 완료하기", notes = "신고 내용을 처리하는 API. Report entity 클래스의 데이터를 수정한다.")
 	public ResponseEntity<?> checkReport(@RequestBody final ReportCheckDto param) {
 		
 		if(reportService.checkReport(param))
