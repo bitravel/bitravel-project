@@ -25,7 +25,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
 	
 	List<User> findByRealNameContainingAndActivated(String keyword, Boolean bool);
 	
-	Optional<User> findOneByNicknameAndActivated(String keyword, Boolean bool);
+	Optional<User> findOneByNickname(String keyword);
 	
 	Page<User> findByNicknameContainingAndActivated(String keyword, Boolean bool, Pageable pageable);
 	

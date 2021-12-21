@@ -163,7 +163,7 @@ public class UserService {
 	// 회원 닉네임으로 찾기
 	@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
 	public Optional<UserDto> getUserByNickname(String nickname) {
-		return userRepository.findOneByNicknameAndActivated(nickname, true).map(UserDto::new);
+		return userRepository.findOneByNickname(nickname).map(UserDto::new);
 	}
 
 	// 자기 자신 (로그인된 정보) 불러오기
