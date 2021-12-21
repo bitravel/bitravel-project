@@ -68,8 +68,8 @@
 	        */
 	       function isValid() {
 	       
-	         	const form = document.getElementById('form');
-	       
+	        const form = document.getElementById('form');
+			
 	       	if (!form.reviewTitle.value.trim()) {
 	       		alert('제목을 입력해 주세요.');
 	       		form.reviewTitle.value = '';
@@ -84,6 +84,11 @@
 	       		form.summernote.focus();
 	       		return false;
 	       	}
+
+			var result = confirm("여행지를 정확히 선택 하셨나요?\n여행지는 수정이 불가능 합니다.");			
+			if (!result) {
+				return false;
+			}
 	       
 	       	return true;
 	       }
