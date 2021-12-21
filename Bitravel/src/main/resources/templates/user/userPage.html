@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" layout:decorator="layout1"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title th:text="${user.nickname}+'의 여행수첩 :: Bitravel'">회원별 페이지 :: Bitravel</title>
+</head>
+
+<th:block layout:fragment="content">
+	<br>
+	<!--메인 -->
+	<main class="main-content" id="main-content">
+		<section class="position-relative">
+			<div class="container position-relative">
+				<div class="overflow-hidden">
+
+					<!--Profile info header-->
+					<div class="position-relative pb-5 pb-lg-1">
+						<div class="row">
+							<div class="col-lg-3 mb-5 mb-lg-0">
+								<div class="h-lg-100">
+									<div class="card bg-gradient-light h-lg-100 p-3">
+										<div>
+											<div
+												class="m-5 size-170  rounded-circle shadow bg-no-repat overflow-hidden bg-contain">
+												<img th:src="${user.userImage}"
+													onerror="this.onerror=null; this.src='/assets/img/avatar/2.jpg';"
+													alt="" style="width: 100%; height: 100%;">
+											</div>
+											<h4 class="d-flex justify-content-center m-3 fw-bold"
+												th:text="${user.nickname}"></h4>
+											<ul class="list-unstyled py-0 ps-0 pe-3">
+												<li class="d-flex align-items-stretch mb-1" style="height: 30px;">
+													<p class="small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;레벨
+														:&nbsp;</p>
+													<small class="d-flex mb-3" th:text="${user.level}"></small>
+												</li>
+												<li class="d-flex align-items-stretch mb-1" style="height: 30px;">
+													<p class="small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;포인트
+														:&nbsp;</p>
+													<small class="d-flex mb-3" th:text="${user.point}"></small>
+												</li>
+												<li class="d-flex align-items-stretch mb-2" style="height: 30px;">
+													<i class="bi bi-globe me-2 align-middle text-muted"></i>
+													<!-- 													<a onclick="location.href='mailto:${user.email}'" class="small link-hover-decoration" th:text="${user.email}"></a> -->
+													<a th:href="@{'mailto:' + ${user.email}}"
+														class="small link-hover-decoration text-dark"
+														th:text="${user.email}"></a>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-9">
+								<div class="d-flex flex-column h-100">
+									<nav class="nav mb-3 nav-pills">
+										<p href="#" class="nav-link active"> <i
+												class="bi bi-person-circle me-2 align-middle"></i>[[${user.nickname}]]의
+											여행수첩</p>
+									</nav>
+
+									<div class="card shadow-sm p-3 h-100">
+										<h5 class="mb-4">기본 정보</h5>
+
+										<div class="row align-items-center">
+											<div class="col-md-6 mb-3">
+												<label class="form-label">이름</label>
+												<div class="form-control" th:text="${user.realname}">
+												</div>
+											</div>
+											<div class="col-md-6 mb-3">
+												<label class="form-label">이메일</label>
+												<div class="form-control" th:text="${user.email}">
+												</div>
+											</div>
+
+
+											<div class="col-md-6 mb-3">
+												<label class="form-label">성별</label>
+												<div class="form-control" th:if="${user.gender == 'Man'	 }"
+													th:text="남성"></div>
+												<div class="form-control" th:if="${user.gender == 'Woman'   }"
+													th:text="여성"></div>
+												<div class="form-control" th:if="${user.gender == 'Private' }"
+													th:text="비공개"></div>
+											</div>
+											<div class="col-md-6 mb-3">
+												<label class="form-label">나이</label>
+												<div class="form-control" th:text="${user.age}"></div>
+											</div>
+											<div class="col-md-3 mb-3">
+												<label class="form-label">거주 지역</label>
+												<div class="form-control" th:text="${user.userLargeGov}">
+												</div>
+											</div>
+											<div class="col-md-3 mb-3">
+												<label class="form-label"></label>
+												<div class="form-control" th:text="${user.userSmallGov}">
+
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<br>
+		<!--내가 작성한 후기-->
+		<section class="overflow-hidden position-relative">
+			<div class="position-absolute start-0 top-0 w-100 h-50 "></div>
+			<div class="container py-3 mt-5 position-relative">
+				<div class="row align-items-center">
+					<div class="col-md-8">
+						<div data-aos data-aos-once="false">
+							<h3 class="splitting-down display-4" data-splitting>[[${user.nickname}]]님이
+								작성한 후기</h3>
+							<br>
+							<p>총 [[${rcount}]]개</p>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="position-relative d-flex justify-content-md-end align-items-center">
+							<!--Buttons navigation-->
+							<div
+								class="swiper3-button-prev swiper-button-prev mt-0 position-static rounded-pill size-50 border border-primary text-primary bg-transparent me-2">
+							</div>
+							<div
+								class="swiper3-button-next swiper-button-next mt-0 position-static rounded-pill size-50 border border-primary text-primary bg-transparent">
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- 				<th:block th:if="${#lists.size(reviewList) eq null}"> -->
+				<!-- 				<th:block th:if="${reviewList == null"> -->
+				<th:block th:if="${#lists.size(reviewList) ne 0}">
+					<div class="swiper-container swiper-3 overflow-visible">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide" th:each="list: ${reviewList}">
+								<div class="vh-auto bg-white">
+									<article class="card-hover border-0 d-flex">
+										<a th:href="@{'/review/'+${list.reviewId}}" class="stretched-link"></a>
+										<div class="card-body position-relative m-1 form-control" >
+											<div style="min-height:100px;">
+											<h5 class="p-1">[[${list.reviewTitle}]]</h5>
+											<div class="blog-content">
+											<!-- <p class="mb-4">[[${list.reviewContent}]]</p> -->
+											<div class="text-primary fw-semibold small p-2" th:text="${#dates.format(list.reviewDate, 'yyyy-MM-dd')}">
+													[[${list.reviewDate}]]</div>
+											</div>
+											</div>
+											<div class="d-block position-relative overflow-hidden mb-4" style="text-align: center;">
+												<img th:src="${list.thumbNail}" onerror="this.onerror=null; this.src='/assets/img/800x600/2.jpg';" style="height:300px " class="img-fluid img-zoom" alt="">
+											</div>
+										</div>
+									</article>
+								</div>
+							</div>
+						</div>
+					</div>
+				</th:block>
+				<th:block th:unless="${#lists.size(reviewList) ne 0}">
+					<div class="swiper-container swiper-3 overflow-visible">
+						게시글이 없습니다.
+					</div>
+				</th:block>
+			</div>
+		</section>
+
+
+		<!--내가 작성한 게시글-->
+		<section class="overflow-hidden position-relative">
+			<div class="position-absolute start-0 top-0 w-100 h-50 "></div>
+			<div class="container py-7 mt-3 position-relative">
+				<div class="row align-items-center">
+					<div class="col-md-8">
+						<div data-aos data-aos-once="false">
+							<h3 class="splitting-down display-4" data-splitting>[[${user.nickname}]]님이
+								작성한 게시물</h3>
+							<br>
+							<p>총 [[${bcount}]]개</p>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="position-relative d-flex justify-content-md-end align-items-center">
+							<!--Buttons navigation-->
+							<div
+								class="swiper3-button-prev swiper-button-prev mt-0 position-static rounded-pill size-50 border border-primary text-primary bg-transparent me-2">
+							</div>
+							<div
+								class="swiper3-button-next swiper-button-next mt-0 position-static rounded-pill size-50 border border-primary text-primary bg-transparent">
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<th:block th:if="${#lists.size(boardList) ne 0}">
+					<div class="swiper-container swiper-3 overflow-visible">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide" th:each="list: ${boardList}">
+								<div class="vh-auto bg-white">
+									<article class="card-hover border-0 d-flex">
+										<a th:href="@{'/board/'+${list.boardId}}" class="stretched-link"></a>
+										<div class="card-body position-relative m-1 form-control" >
+											<div style="min-height:70px;">
+											<h5 class="p-2">[[${list.boardTitle}]]</h5>
+											</div>
+											<div class="text-primary fw-semibold small p-2 border-top" th:text="${#dates.format(list.boardDate, 'yyyy-MM-dd')}">
+													[[${list.boardDate}]]</div>
+											<div class="blog-content" style="min-height:150px;">
+											<p class="p-2" th:text="${#strings.abbreviate(list.boardContent, 105)}"></p>
+											</div>
+											</div>
+									</article>
+								</div>
+							</div>
+						</div>
+					</div>
+				</th:block>
+				<th:block th:unless="${#lists.size(boardList) ne 0}">
+					<div class="swiper-container swiper-3 overflow-visible">
+						게시글이 없습니다.
+					</div>
+				</th:block>
+			</div>
+		</section>
+
+
+
+	</main>
+</th:block>
+
+</html>
