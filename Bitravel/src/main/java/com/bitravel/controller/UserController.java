@@ -114,7 +114,7 @@ public class UserController {
     }
 
 	@GetMapping("/user")
-	//@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	public ResponseEntity<UserDto> myUserInfo() {
 		Optional<UserDto> userInfo = userService.getMyUserWithAuthorities();
 		if(userInfo.isEmpty())
@@ -124,13 +124,11 @@ public class UserController {
 	}
 
 	@GetMapping("/signup")
-	//@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	public ResponseEntity<UserDto> isUsedNickname(String nickname) {
 		return ResponseEntity.ok(userService.getUserByNickname(nickname).get());
 	}
 
 	@PostMapping("/user/details")
-	//@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	public ResponseEntity<UserDto> userInfoEmail(String email) {
 		Optional<UserDto> userInfo = userService.getUserWithAuthorities(email);
 		if(userInfo.isEmpty())
@@ -139,8 +137,8 @@ public class UserController {
 			return ResponseEntity.ok(userInfo.get());
 	}
 
-	//@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping("/user/{uid}")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public ResponseEntity<UserDto> userInfoById(@PathVariable("uid") Long uid) {
 		return ResponseEntity.ok(userService.getAnyUserById(uid).get());
 	}
@@ -161,11 +159,13 @@ public class UserController {
 	}
 	
 	@GetMapping("/user/search/realname")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public ResponseEntity<List<UserDto>> userListByRealname(String keyword) {
 		return ResponseEntity.ok(userService.getUserListByrealname(keyword));
 	}
 	
 	@GetMapping("/user/search/email")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public ResponseEntity<List<UserDto>> userListByEmail(String keyword) {
 		return ResponseEntity.ok(userService.getUserListByEmail(keyword));
 	}
