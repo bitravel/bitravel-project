@@ -39,7 +39,7 @@
                             <div class="col-md-6">
                                 <div
                                     class="d-flex flex-column border-end-lg align-items-center justify-content-center h-100 bg-light" style="max-height: 500px; min-height: 500px">
-                                    <img th:src="${list.thumbNail}" onerror="this.src='/assets/img/avatar/2.jpg'" alt=""
+                                    <img th:src="${list.thumbNail}" onerror="this.onerror=null; this.src='/assets/img/avatar/2.jpg';" alt=""
                                         style="height: 500px; max-width: 100%;">
                                 </div>
                             </div>
@@ -95,7 +95,7 @@
                                 <a th:href="@{'/review/'+${list.reviewId}(page=${reviewList.number+1})}" class="stretched-link"></a>
                                 <div class="card-body position-relative p-0" >
                                     <div class="d-block position-relative overflow-hidden mb-4" style="text-align: center;">
-                                        <img th:src="${list.thumbNail}" onerror="this.src='/assets/img/avatar/2.jpg'" style="height:400px " class="img-fluid img-zoom" alt="">
+                                        <img th:src="${list.thumbNail}" onerror="this.onerror=null; this.src='/assets/img/avatar/2.jpg';" style="height:400px " class="img-fluid img-zoom" alt="">
                                     </div>
                                     <h5 class="mb-3">[[${list.reviewTitle}]]</h5>
                                     <div class="blog-content">
@@ -135,7 +135,7 @@
                                 <a th:href="@{'/review/'+${list.reviewId}(page=${reviewList.number+1})}" class="stretched-link"></a>
                                 <div class="card-body position-relative p-0">
                                     <div class="d-block position-relative overflow-hidden mb-4" style="text-align: center;">
-                                        <img th:src="${list.thumbNail}" onerror="this.src='/assets/img/avatar/2.jpg'" style="height:400px " class="img-fluid img-zoom" alt="">
+                                        <img th:src="${list.thumbNail}" onerror="this.onerror=null; this.src='/assets/img/avatar/2.jpg';" style="height:400px " class="img-fluid img-zoom" alt="">
                                     </div>
                                     <h5 class="mb-3">[[${list.reviewTitle}]]</h5>
                                     <div class="blog-content">
