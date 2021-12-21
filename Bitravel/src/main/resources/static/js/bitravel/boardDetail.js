@@ -86,11 +86,6 @@ function closeModal() {
  */
 function reportPost() {
 
-	if (document.getElementById('content').disabled) {
-		alert('로그인을 해주세요.');
-		return false;
-	}
-
 	var url = '/api/reports/post';
 
 	var reason = prompt("신고 사유를 입력해 주세요.");
@@ -131,11 +126,6 @@ function reportPost() {
  * 댓글 신고하기
  */
 function reportComment(cid) {
-
-	if (document.getElementById('content').disabled) {
-		alert('로그인을 해주세요.');
-		return false;
-	}
 
 	if (!confirm("해당 댓글을 신고하시겠습니까?"))
 		return false;
