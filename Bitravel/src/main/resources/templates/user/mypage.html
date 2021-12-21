@@ -47,7 +47,7 @@
 <!-- 											</th:block> -->
 <!-- 											<th:block th:unless="${user.userImage eq ''}"> -->
 												<div class="m-5 size-170  rounded-circle shadow bg-no-repat overflow-hidden bg-contain">
-													<img th:src="${user.userImage}" onerror="this.src='/assets/img/bitravel/user_default.png'" alt="" style="width: 100%; height: 100%;">
+													<img th:src="${user.userImage}" onerror="this.onerror=null; this.src='/assets/img/bitravel/user_default.png';" alt="" style="width: 100%; height: 100%;">
 												</div>
 <!-- 											</th:block> -->
 <!-- 											<img th:src="@{/assets/img/bitravel/user_default.png}"> -->
@@ -182,7 +182,7 @@
 										<a th:href="@{'/review/'+${list.reviewId}}" class="stretched-link"></a>
 										<div class="card-body position-relative p-0" >
 											<div class="d-block position-relative overflow-hidden mb-4" style="text-align: center;">
-												<img th:src="${list.thumbNail}" onerror="this.src='/assets/img/avatar/2.jpg'" style="height:400px " class="img-fluid img-zoom" alt="">
+												<img th:src="${list.thumbNail}" onerror="this.onerror=null; this.src='/assets/img/avatar/2.jpg';" style="height:400px " class="img-fluid img-zoom" alt="">
 											</div>
 											<h5 class="mb-3">[[${list.reviewTitle}]]</h5>
 											<div class="blog-content">
