@@ -24,6 +24,9 @@ function reviewList() {
 				} else {
 					$("#userImage").attr("src", "/assets/img/avatar/2.jpg")
 				}
+				if (json.userEmail) {
+					$("#nickname").attr("href", "/user?email="+json.userEmail)
+				}
 			}
 		});
 
@@ -283,7 +286,7 @@ function printCommentList() {
 			json.forEach((obj) => {
 				html += `
 										<tr class="form-control mb-2">
-											<td style="width:20%;"><span class="fw-bold">${obj.nickname}</span></td>
+											<td style="width:20%;"><span class="fw-bold"><a class="text-dark" href="/user?email=${obj.userEmail}">${obj.nickname}</a></span></td>
 											<td style="width:78%;"><span class="desc">${obj.commentContent}</span></td>
 											<td style="width:1%;"><button type="button" onclick="openModal(${obj.rcommentId}, '${obj.userEmail}', '${obj.commentContent}' )" class="btn btn-sm btn-outline-default btn-circle"><i class="bi bi-pencil-fill" aria-hidden="true"></i></button></td>
 											<td style="width:1%;"><button type="button" onclick="reportComment(${obj.rcommentId}, '${obj.userEmail}' )" class="btn btn-sm btn-outline-default btn-circle"><i class="bi bi-emoji-expressionless-fill" aria-hidden="true"></i></button></td>
