@@ -102,13 +102,15 @@ function reportPost() {
 
 }
 
+/**
+ * 댓글 신고하기
+ */
 function reportComment(cid) {
 
 	if(!confirm("해당 댓글을 신고하시겠습니까?"))
 		return false;
 
 	var url = '/api/reports/comment/' + 'b' + cid;
-	console.log(url);
 
 	fetch(url, {
 	}).then(response => {
