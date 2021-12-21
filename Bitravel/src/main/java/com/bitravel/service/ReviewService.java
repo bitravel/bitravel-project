@@ -58,7 +58,7 @@ public class ReviewService {
 		if (SecurityUtil.getCurrentEmail().get().equals("anonymousUser")) {
 			params.setNickname("비회원");
 		} else {
-			User user = userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get();
+			User user = userRepository.findOneWithAuthoritiesByEmailAndActivated(nowUserEmail, true).get();
 			params.setNickname(user.getNickname());
 			params.setUserImage(user.getUserImage());
 			user.changePoint(30);
@@ -322,7 +322,7 @@ public class ReviewService {
 			log.info("유효하지 않은 삭제 요청입니다.");
 			return false;
 		}
-		User user = userRepository.findOneWithAuthoritiesByEmail(nowEmail).get();
+		User user = userRepository.findOneWithAuthoritiesByEmailAndActivated(nowEmail, true).get();
 		user.changePoint(-30);
 		rCommentRepository.deleteAllByReview(entity);
 		reviewRepository.deleteById(id);
