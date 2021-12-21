@@ -271,6 +271,18 @@ public class ReviewService {
 	public Page<Review> findReviewsByTitle(String keyword, Pageable pageable) {
 		return reviewRepository.findByReviewTitleContaining(keyword, pageable);
 	}
+	
+	/**
+	 * 후기 회원별 검색 결과 리스트
+	 */
+	@Transactional
+	public List<Review> findReviewsByEmail(String keyword) {
+		List<Review> list = reviewRepository.findByUserEmailOrderByReviewDateAsc(keyword);
+		if(list.size()>20)
+			return list.subList(0, 20);
+		else
+			return list;
+	}
 
 	/**
 	 * 후기 제목+내용 검색 결과 조회

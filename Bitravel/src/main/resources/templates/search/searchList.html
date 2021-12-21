@@ -143,7 +143,7 @@
                     <div class="swiper-slide" th:each="list, index: ${userList}">
                         <div class="vh-auto bg-white">
                             <article class="card-hover border-0 d-flex" style="min-height:250px;">
-                                <a th:href="@{'/user/'+${list.userId}}" class="stretched-link"></a>
+                                <a th:href="@{'/user?email='+${list.email}}" class="stretched-link"></a>
                                 <div class="card-body position-relative p-0">
                                     <div class="d-block position-relative mb-4">
                                         <img style="height:250px;width:250px;" th:src="${list.userImage}" onerror="this.src='/assets/img/avatar/2.jpg'" class="img-fluid img-zoom" alt="프로필">
