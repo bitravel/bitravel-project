@@ -51,7 +51,7 @@ public class ReviewPageController {
         //한달간 조회수 높은 후기
     	Page<Review> rList = reviewService.findViewAll(pageable);
     	List<Review> subList = rList.getContent().subList(0, 5);
-    	for(int i=0; i<rList.getContent().size(); i++) {
+    	for(int i=0; i<subList.size(); i++) {
     		Review now = subList.get(i);
     		now.setReviewContent(TagUtil.getText(now.getReviewContent()));
     	}
