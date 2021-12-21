@@ -81,11 +81,12 @@
 					style="text-align:center; font-weight:bold; font-size:20px;">
 					<span class="fs-4">[[${list.travelName}]]</span><br>
 					<a th:href="@{'/travel/'+${list.travelId}}">
-					<img th:src="${list.travelImage}" onerror="this.src='/assets/img/800x600/2.jpg'" style="max-height:400px" alt="여행지 사진"
-						class="img-fluid rounded-xl position-relative" /></a>
+						<img th:src="${list.travelImage}" onerror="this.src='/assets/img/800x600/2.jpg'"
+							style="max-height:400px" alt="여행지 사진" class="img-fluid rounded-xl position-relative" /></a>
 				</div>
 			</div>
-			<div th:if="${tsize>1}" class="swiper-pagination swiperProgress-pagination swiper-pagination-progressbar"></div>
+			<div th:if="${tsize>1}" class="swiper-pagination swiperProgress-pagination swiper-pagination-progressbar">
+			</div>
 			<!-- Add Arrows -->
 			<div th:if="${tsize>1}" class="swiper-button-next swiperProgress-button-next bg-white size-60"></div>
 			<div th:if="${tsize>1}" class="swiper-button-prev swiperProgress-button-prev bg-white size-60"></div>
@@ -149,9 +150,11 @@
 	</div>
 
 	<div class="btn_wrap text-center" style="margin-bottom:50px;">
-		<a href="javascript: void(0);" onclick="goList();" class="btn btn-default waves-effect waves-light">뒤로가기</a>
-		<a href="javascript: void(0);" onclick="goWrite();" class="btn btn-primary waves-effect waves-light">수정하기</a>
-		<button type="button" onclick="deleteBoard();" class="btn btn-danger waves-effect waves-light">삭제하기</button>
+		<a href="javascript: void(0);" onclick="goList();" class="btn btn-default waves-effect waves-light me-2">뒤로가기</a>
+		<a href="javascript: void(0);" onclick="reportPost();"
+			class="btn btn-outline-secondary waves-effect waves-light me-2">신고하기</a>
+		<a href="javascript: void(0);" onclick="goWrite();" class="btn btn-primary waves-effect waves-light me-2">수정하기</a>
+		<button type="button" onclick="deleteBoard();" class="btn btn-danger waves-effect waves-light me-2">삭제하기</button>
 	</div>
 </th:block>
 
