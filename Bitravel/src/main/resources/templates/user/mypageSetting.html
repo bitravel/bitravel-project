@@ -1,137 +1,256 @@
 <!doctype html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>마이 페이지 :: BITravel</title>
-	</head>
-	
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" layout:decorator="layout1"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>마이 페이지 :: BITravel</title>
 	<style>
-	.form-control[readonly] {
-		background-color: #9297ad !important;
-		opacity: 1;
-	}
+		.form-control[readonly] {
+			background-color: #9297ad !important;
+			opacity: 1;
+		}
+
+		.round {
+			border-radius: 30px !important;
+			-moz-border-radius: 30px !important;
+			-khtml-border-radius: 30px !important;
+			-webkit-border-radius: 30px !important;
+		}
+
+		.photo {
+			display: inline-block;
+			vertical-align: middle;
+			margin: 0;
+			text-align: center;
+
+			background-size: 200px;
+			background-position: center center;
+			background-repeat: no-repeat;
+			width: 150px;
+			height: 150px;
+			margin: 0 auto 20px;
+			position: relative;
+		}
+
+		.icon_camera {
+			position: absolute;
+			bottom: -2px;
+			right: -5px;
+			min-width: 8px;
+			height: 30px;
+			line-height: 20px;
+			margin-top: -11px;
+			padding: 0 6px;
+			font-weight: normal;
+			font-size: 25px;
+			color: white;
+			text-align: center;
+			text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+			background: #4287f5;
+			border: 1px solid #166df7;
+			border-radius: 11px;
+			background-image: -webkit-linear-gradient(top, #4287f5, #166df7);
+			background-image: -moz-linear-gradient(top, #4287f5, #166df7);
+			background-image: -o-linear-gradient(top, #4287f5, #166df7);
+			background-image: linear-gradient(to bottom, #4287f5, #166df7);
+			-webkit-box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
+			box-shadow: inset 0 0 1px 1px rgba(255, 255, 255, 0.1), 0 1px rgba(0, 0, 0, 0.12);
+		}
+
+
+		/* 이미지 */
+		.profile-pic {
+			max-width: 200px;
+			max-height: 200px;
+			display: block;
+		}
+
+		.file-upload {
+			display: none;
+		}
+
+
+		.upload-button:hover {
+			transition: all .3s cubic-bezier(.175, .885, .32, 1.275);
+			color: #999;
+		}
 	</style>
-	
-	<!--메인 -->
-	<th:block layout:fragment="content">
-		<main class="main-content" id="main-content">
-			<section class="position-relative bg-white">
-				<div class="container position-relative pt-3 pb-4">
-					<div class="row">
-						<div class="col-md-6">
-							<nav class="d-md-flex" aria-label="breadcrumb">
-								<ol class="breadcrumb mb-0">
-									<li class="breadcrumb-item">
-										<a href="#!">Home</a>
-									</li>
-									<li class="breadcrumb-item active">
-										Profile
-									</li>
-								</ol>
-							</nav>
-						</div>
-					</div>
-					<!--/.row-->
+</head>
 
-				</div>
-			</section>
-			<section class="position-relative">
-				<div class="container position-relative">
-					<div class="overflow-hidden">
-						<!--Profile info header-->
-						<div class="position-relative pb-7 pb-lg-12">
-							<div class="row">
-								<div class="col-lg-9 mx-auto">
-									<div class="pt-5 d-flex flex-column h-100">
-										<nav class="nav mb-5 nav-pills">
-											<a href="/mypage" class="nav-link"><i class="bi bi-person-circle me-2 align-middle"></i>나의 정보</a>
-											<a href="/mypage/setting" class="nav-link active"><i class="bi bi-gear me-2 align-middle"></i>회원정보 수정</a>
-										</nav>
-										<div class="card border-light p-3 mb-3">
-											<h5 class="mb-4">회원정보 수정</h5>
 
-											<!-- 개인정보 수정 -->
-											<form action="/mypage/update" method="post">
-												<input type="hidden" th:field="${user.email}">
-												<div class="row align-items-center">
-													<div class="col-md-12">
-														<div class="row">
-															<div class="col-md-6 mb-4">
-																<input type="file" class="size-190" id="update_profile" accept="image/png, image/jpeg, image/gif">
-															</div>
-														</div>
-													</div>
-													<div class="col-md-6 mb-3">
-														<label class="form-label" for="realname">이름</label>
-														<input type="text" class="form-control" th:field="${user.realname}" disabled>
-													</div>
-													<div class="col-md-6 mb-3">
-														<label class="form-label" for="email">이메일</label>
-														<input type="text" class="form-control" th:field="${user.email}" disabled>
-													</div>
-													<div class="col-md-6 mb-3">
-														<label class="form-label" for="gender">성별</label>
-														<select name="gender" data-choices='{"searchEnabled":false}' class="form-control">
-															<option th:value="Man"     th:selected="${user.gender}=='Man'"    >남성</option>
-															<option th:value="Woman"   th:selected="${user.gender}=='Woman'"  >여성</option>
-															<option th:value="Private" th:selected="${user.gender}=='Private'">비공개</option>
-														</select>
-													</div>
-													<div class="col-md-6 mb-3">
-														<label class="form-label" for="age">나이</label>
-														<input type="text" class="form-control" th:field="${user.age}" disabled>
-													</div>
-													<div class="col-md-6 mb-3">
-														<label class="form-label" for="nickname">닉네임</label>
-														<input type="text" class="form-control" th:field="${user.nickname}">
-													</div>
-													<div class="col-md-3 mb-3">
-														<label class="form-label" for="country">거주지역</label>
-														<select name="userLargeGov" id="userLargeGov" class="form-control">
-															<option th:value="${user.userLargeGov}"><th:block th:text="${user.userLargeGov}"/></option>
-														</select>
-													</div>
-													<div class="col-md-3 mb-3">
-														<label class="form-label" for="country"></label>
-														<select name="userSmallGov" id="userSmallGov" class="form-control">
-															<option th:value="${user.userSmallGov}"><th:block th:text="${user.userSmallGov}"/></option>
-														</select>
-													</div>
-													<div class="mb-3 d-flex flex-row-reverse">
-														<div class="form-check">
-															<input type="checkbox" class="form-check-input " value="" id="foreignCheck">
-															<label class="form-check-label small" for="flexCheckDefault">해외 거주</label>
-														</div>
-													</div>
-												</div>
-												<hr class="mt-5 mb-3">
-												<div class="text-end">
-													<button type="submit" class="btn btn-outline-primary">저장</button>
-												</div>
-											</form>
-											<!-- /개인정보 수정 -->
+<!--메인 -->
+<th:block layout:fragment="content">
+	<br>
+	<main class="main-content" id="main-content">
+		<section class="position-relative">
+			<div class="container position-relative">
+				<div class="overflow-hidden">
+
+					<!--Profile info header-->
+					<div class="position-relative pb-7 pb-lg-12">
+						<div class="row">
+							<div class="col-lg-3 mb-5 mb-lg-0">
+								<div class="h-lg-100">
+									<div class="card bg-gradient-light h-lg-100 p-3">
+										<div>
+											<div
+												class="m-5 size-170  rounded-circle shadow bg-no-repat overflow-hidden bg-contain">
+												<img th:src="${user.userImage}"
+													onerror="this.onerror=null; this.src='/assets/img/avatar/2.jpg';"
+													alt="" style="width: 100%; height: 100%;">
+											</div>
+											<h4 class="d-flex justify-content-center m-3 fw-bold"
+												th:text="${user.nickname}"></h4>
+											<ul class="list-unstyled py-0 ps-0 pe-3">
+												<li class="d-flex align-items-stretch mb-1" style="height: 30px;">
+													<p class="small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;등급
+														:&nbsp;</p>
+													<small class="d-flex mb-3" th:text="${user.level}"></small>
+												</li>
+												<li class="d-flex align-items-stretch mb-1" style="height: 30px;">
+													<p class="small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;포인트
+														:&nbsp;</p>
+													<small class="d-flex mb-3" th:text="${user.point}"></small>
+												</li>
+												<li class="d-flex align-items-stretch mb-2" style="height: 30px;">
+													<i class="bi bi-globe me-2 align-middle text-muted"></i>
+													<!-- 													<a onclick="location.href='mailto:${user.email}'" class="small link-hover-decoration" th:text="${user.email}"></a> -->
+													<a th:href="@{'mailto:' + ${user.email}}"
+														class="small link-hover-decoration text-dark"
+														th:text="${user.email}"></a>
+												</li>
+											</ul>
 										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-9">
+								<div class="d-flex flex-column h-100">
+									<nav class="nav mb-3 nav-pills">
+										<a href="/mypage" class="nav-link"><i
+												class="bi bi-person-circle me-2 align-middle"></i>나의 정보</a>
+										<a href="/mypage/setting" class="nav-link active"><i
+												class="bi bi-gear me-2 align-middle"></i>회원정보 수정</a>
+									</nav>
+									<div class="card shadow-sm p-3 mb-3">
+										<h5 class="mb-4">회원정보 수정</h5>
+										<br>
+										<!-- 프로필 사진 업로드 -->
+										<form id="image-form" method="post" enctype="multipart/form-data">
+											<div class="round photo profile-pic" id="profile-pic"
+												style="background-image: url(/assets/img/avatar/2.jpg);">
+												<div class="icon_camera">
+													<i class="bi bi-camera upload-button"></i>
+													<input class="file-upload" type="file" accept="image/*" id="g_img[]"
+														name="g_img[]" />
+												</div>
+											</div>
+											<div class="photo small d-block" style="height:50px; width:230px;">
+												프로필 이미지를 등록해 주세요.<br>(최대 용량 10MB, 정사각형 권장)
+											</div>
+										</form>
 
-										<!--Password card-->
-										<div class="card border-light p-3 mb-3">
-											<h5 class="mb-4">비밀번호 변경하기</h5>
-												<div class="row">
-													<div class="col-md-4 mb-3">
-														<label for="update_pass_current" class="form-label">현재 비밀번호</label>
-														<input type="password" class="form-control" name = "password" placeholder="현재 암호를 입력하세요.">
-													</div>
-													<div class="col-md-4 mb-3">
-														<label for="update_pass_new" class="form-label">새로운 비밀번호</label>
-														<input type="password" class="form-control" id = "changePassword" placeholder="새 암호를 6자 이상 입력하세요" >
-													</div>
-													<div class="col-md-4 mb-3">
-														<label for="update_pass_new_confirm" class="form-label">새로운 비밀번호 재확인</label>
-														<input type="password" class="form-control" id = "confirmPassword" placeholder="새 암호를 한번더 입력하세요">
+										<!-- 개인정보 수정 -->
+										<form method="post" id="user-update-form">
+											<input type="hidden" name="nicknameValidation" value="checked"> <br>
+											<input type="hidden" id="userImage" name="userImage"
+												th:value="${user.userImage}" />
+											<div class="row align-items-center">
+												<div class="col-md-6 mb-3">
+													<label class="form-label" for="realname">이름</label>
+													<input type="text" class="form-control" th:field="${user.realname}"
+														disabled>
+												</div>
+												<div class="col-md-6 mb-3">
+													<label class="form-label" for="email">이메일</label>
+													<input type="text" name="email" id="email" class="form-control"
+														th:field="${user.email}" disabled>
+												</div>
+												<div class="col-md-6 mb-3">
+													<label class="form-label" for="gender">성별</label>
+													<select name="gender" data-choices='{"searchEnabled":false}'
+														class="form-control" disabled>
+														<option th:value="Man" th:selected="${user.gender}=='Man'">남성
+														</option>
+														<option th:value="Woman" th:selected="${user.gender}=='Woman'">
+															여성</option>
+														<option th:value="Private"
+															th:selected="${user.gender}=='Private'">비공개</option>
+													</select>
+												</div>
+												<div class="col-md-6 mb-3">
+													<label class="form-label" for="age">나이</label>
+													<input type="text" class="form-control" th:field="${user.age}"
+														disabled>
+												</div>
+												<div class="col-md-3 mb-3">
+													<label class="form-label" for="nickname">닉네임</label>
+													<input type="text" class="form-control" name="nickname"
+														th:field="${user.nickname}">
+												</div>
+												<div class="col-md-3 mb-3">
+													<label class="form-label text-white" for="nickname">체크버튼</label>
+													<button class="btn btn-dark" type="button" id="nicknameCheck"
+														onclick="isValidNickname()">닉네임
+														중복 확인</button>
+												</div>
+												<div class="col-md-3 mb-3">
+													<label class="form-label" for="country">거주지역</label>
+													<select name="userLargeGov" id="userLargeGov" class="form-control">
+														<option th:value="${user.userLargeGov}">
+															<th:block th:text="@{${user.userLargeGov}+' (수정 전)'}" />
+														</option>
+													</select>
+												</div>
+												<div class="col-md-3 mb-3">
+													<label class="form-label" for="country"></label>
+													<select name="userSmallGov" id="userSmallGov" class="form-control">
+														<option th:value="${user.userSmallGov}">
+															<th:block th:text="@{${user.userSmallGov}+' (수정 전)'}" />
+														</option>
+													</select>
+												</div>
+												<div class="mb-3 d-flex flex-row-reverse">
+													<div class="form-check">
+														<input type="checkbox" class="form-check-input " value=""
+															id="foreignCheck">
+														<label class="form-check-label small" for="flexCheckDefault">해외
+															거주</label>
 													</div>
 												</div>
 												<div class="text-end">
-													<button type="button" id="updatePassword" class="btn btn-outline-primary">비밀번호 변경</button>
+													<button type="button" onclick="save();"
+														class="btn btn-outline-primary">저장</button>
 												</div>
+											</div>
+										</form>
+										<!-- /개인정보 수정 -->
+									</div>
+									<!--Password card-->
+									<div class="card shadow-sm p-3 mt-3">
+										<h5 class="mb-4">비밀번호 변경하기</h5>
+										<div class="row">
+											<div class="col-md-4 mb-3">
+												<label for="update_pass_current" class="form-label">현재 비밀번호</label>
+												<input type="password" class="form-control" name="password"
+													placeholder="현재 암호를 입력하세요.">
+											</div>
+											<div class="col-md-4 mb-3">
+												<label for="update_pass_new" class="form-label">새로운 비밀번호</label>
+												<input type="password" class="form-control" id="changePassword"
+													placeholder="새 암호를 6자 이상 입력하세요">
+											</div>
+											<div class="col-md-4 mb-3">
+												<label for="update_pass_new_confirm" class="form-label">새로운 비밀번호
+													재확인</label>
+												<input type="password" class="form-control" id="confirmPassword"
+													placeholder="새 암호를 한번더 입력하세요">
+											</div>
+										</div>
+										<div class="text-end">
+											<button type="button" id="updatePassword"
+												class="btn btn-outline-primary">비밀번호 변경</button>
 										</div>
 									</div>
 								</div>
@@ -139,13 +258,14 @@
 						</div>
 					</div>
 				</div>
-			</section>
-		</main>
-	</th:block>
-	<!--메인 -->
-	
-	<th:block layout:fragment="script">
-		<script type="text/javascript" src="/js/bitravel/mypage.js"></script>
-	</th:block>
+			</div>
+		</section>
+	</main>
+</th:block>
+<!--메인 -->
+
+<th:block layout:fragment="script">
+	<script type="text/javascript" src="/js/bitravel/mypage.js"></script>
+</th:block>
 
 </html>

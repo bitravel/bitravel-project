@@ -4,32 +4,13 @@
 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>마이 페이지 :: BITravel</title>
+	<title>마이 페이지 :: Bitravel</title>
 </head>
 
 <th:block layout:fragment="content">
+	<br>
 	<!--메인 -->
 	<main class="main-content" id="main-content">
-		<section class="position-relative bg-white">
-			<div class="container position-relative pt-3 pb-4">
-				<div class="row">
-					<div class="col-md-6">
-						<nav class="d-md-flex" aria-label="breadcrumb">
-							<ol class="breadcrumb mb-0">
-								<li class="breadcrumb-item">
-									<a href="#!">Home</a>
-								</li>
-								<li class="breadcrumb-item active">
-									Profile
-								</li>
-							</ol>
-						</nav>
-					</div>
-				</div>
-				<!--/.row-->
-
-			</div>
-		</section>
 		<section class="position-relative">
 			<div class="container position-relative">
 				<div class="overflow-hidden">
@@ -41,59 +22,40 @@
 								<div class="h-lg-100">
 									<div class="card bg-gradient-light h-lg-100 p-3">
 										<div>
-											<!--profile image-->
-<!-- 											<th:block th:if="${user.userImage eq ''}"> -->
-<!-- 												<div class="m-7 lp-10 size-140 rounded-circle shadow bg-no-repat overflow-hidden bg-contain" style="background-image: url(assets/img/bitravel/user_default.png);"></div> -->
-<!-- 											</th:block> -->
-<!-- 											<th:block th:unless="${user.userImage eq ''}"> -->
-												<div class="m-5 size-170  rounded-circle shadow bg-no-repat overflow-hidden bg-contain">
-													<img th:src="${user.userImage}" onerror="this.onerror=null; this.src='/assets/img/bitravel/user_default.png';" alt="" style="width: 100%; height: 100%;">
-												</div>
-<!-- 											</th:block> -->
-<!-- 											<img th:src="@{/assets/img/bitravel/user_default.png}"> -->
-											
-											<h4 class="d-flex justify-content-center mb-2" th:text="${user.nickname}"></h4>
-											<ul class="list-unstyledclass="btn btn-secondary rounded-pill py-0 ps-0 pe-3"">
+											<div
+												class="m-5 size-170  rounded-circle shadow bg-no-repat overflow-hidden bg-contain">
+												<img th:src="${user.userImage}"
+													onerror="this.onerror=null; this.src='/assets/img/avatar/2.jpg';"
+													alt="" style="width: 100%; height: 100%;">
+											</div>
+											<h4 class="d-flex justify-content-center m-3 fw-bold"
+												th:text="${user.nickname}"></h4>
+											<ul class="list-unstyled py-0 ps-0 pe-3">
 												<li class="d-flex align-items-stretch mb-1" style="height: 30px;">
-													<p class="small">등급 :&nbsp;</p>
+													<p class="small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;등급
+														:&nbsp;</p>
 													<small class="d-flex mb-3" th:text="${user.level}"></small>
 												</li>
 												<li class="d-flex align-items-stretch mb-1" style="height: 30px;">
-													<p class="small">포인트 :&nbsp;</p>
+													<p class="small">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;포인트
+														:&nbsp;</p>
 													<small class="d-flex mb-3" th:text="${user.point}"></small>
 												</li>
 												<li class="d-flex align-items-stretch mb-2" style="height: 30px;">
 													<i class="bi bi-globe me-2 align-middle text-muted"></i>
-<!-- 													<a onclick="location.href='mailto:${user.email}'" class="small link-hover-decoration" th:text="${user.email}"></a> -->
-													<a th:href="@{'mailto:' + ${user.email}}" class="small link-hover-decoration" th:text="${user.email}"></a>
+													<!-- 													<a onclick="location.href='mailto:${user.email}'" class="small link-hover-decoration" th:text="${user.email}"></a> -->
+													<a th:href="@{'mailto:' + ${user.email}}"
+														class="small link-hover-decoration text-dark"
+														th:text="${user.email}"></a>
 												</li>
 											</ul>
-<!-- 											<ul class="list-unstyled border-bottom pb-3 mb-3"> -->
-<!-- 												<li class="d-flex justify-content-between align-items-center mb-2"> -->
-<!-- 													<span class="small">Followers</span> -->
-<!-- 													<span class="fs-5">134</span> -->
-<!-- 												</li> -->
-<!-- 												<li class="d-flex justify-content-between align-items-center mb-2"> -->
-<!-- 													<span class="small">Following</span> -->
-<!-- 													<span class="fs-5">23</span> -->
-<!-- 												</li> -->
-<!-- 											</ul> -->
-<!-- 											<div class="d-grid"> -->
-<!-- 												<button class="btn btn-light border shadow-sm mb-2 py-1" -->
-<!-- 													type="button"><i -->
-<!-- 														class="bi bi-person-plus fs-6 align-middle lh-1"></i> -->
-<!-- 													Follow</button> -->
-<!-- 												<button class="btn btn-primary shadow-sm py-1" type="button"><i -->
-<!-- 														class="bi bi-envelope fs-6 align-middle lh-1"></i> -->
-<!-- 													Message</button> -->
-<!-- 											</div> -->
 										</div>
 									</div>
 								</div>
 							</div>
 							<div class="col-lg-9">
 								<div class="d-flex flex-column h-100">
-									<nav class="nav mb-5 nav-pills">
+									<nav class="nav mb-3 nav-pills">
 										<a href="/mypage" class="nav-link active"> <i
 												class="bi bi-person-circle me-2 align-middle"></i>나의 정보</a>
 										<a href="/mypage/setting" class="nav-link"><i
@@ -118,9 +80,12 @@
 
 											<div class="col-md-6 mb-3">
 												<label class="form-label">성별</label>
-												<div class="form-control" th:if="${user.gender == 'Man'	 }" th:text="남성"></div>
-												<div class="form-control" th:if="${user.gender == 'Woman'   }" th:text="여성"></div>
-												<div class="form-control" th:if="${user.gender == 'Private' }" th:text="비공개"></div>
+												<div class="form-control" th:if="${user.gender == 'Man'	 }"
+													th:text="남성"></div>
+												<div class="form-control" th:if="${user.gender == 'Woman'   }"
+													th:text="여성"></div>
+												<div class="form-control" th:if="${user.gender == 'Private' }"
+													th:text="비공개"></div>
 											</div>
 											<div class="col-md-6 mb-3">
 												<label class="form-label">나이</label>
@@ -133,8 +98,8 @@
 											</div>
 											<div class="col-md-3 mb-3">
 												<label class="form-label"></label>
-												<div class="form-control" th:text="${user.userSmallGov}">   
-												
+												<div class="form-control" th:text="${user.userSmallGov}">
+
 												</div>
 											</div>
 										</div>
@@ -146,20 +111,20 @@
 				</div>
 			</div>
 		</section>
+		<br>
 		<!--내가 작성한 후기-->
 		<section class="overflow-hidden position-relative">
 			<div class="position-absolute start-0 top-0 w-100 h-50 "></div>
-			<div class="container py-7 py-lg-12 position-relative">
+			<div class="container py-5 position-relative">
 				<div class="row mb-4 mb-lg-5 align-items-center">
 					<div class="col-md-8">
-						<div class="mb-3" data-aos data-aos-once="false">
-							<h1 class="mb-3 splitting-down display-4" data-splitting>내가
-								작성한 후기</h1>
+						<div class="mb-2" data-aos data-aos-once="false">
+							<h3 class="splitting-down display-4" data-splitting>내가
+								작성한 후기</h3>
 						</div>
 					</div>
 					<div class="col-md-4">
-						<div
-							class="position-relative d-flex justify-content-md-end align-items-center">
+						<div class="position-relative d-flex justify-content-md-end align-items-center">
 							<!--Buttons navigation-->
 							<div
 								class="swiper3-button-prev swiper-button-prev mt-0 position-static rounded-pill size-50 border border-primary text-primary bg-transparent me-2">
@@ -170,9 +135,9 @@
 						</div>
 					</div>
 				</div>
-				
-<!-- 				<th:block th:if="${#lists.size(reviewList) eq null}"> -->
-<!-- 				<th:block th:if="${reviewList == null"> -->
+
+				<!-- 				<th:block th:if="${#lists.size(reviewList) eq null}"> -->
+				<!-- 				<th:block th:if="${reviewList == null"> -->
 				<th:block th:if="${#lists.size(reviewList) ne 0}">
 					<div class="swiper-container swiper-3 overflow-visible">
 						<div class="swiper-wrapper">
@@ -209,11 +174,11 @@
 		<section class="overflow-hidden position-relative">
 			<div class="position-absolute start-0 top-0 w-100 h-50 ">
 			</div>
-			<div class="container py-7 py-lg-12 position-relative">
+			<div class="container py-8 position-relative">
 				<div class="row mb-4 mb-lg-5 align-items-center">
 					<div class="col-md-8">
-						<div class="mb-3" data-aos data-aos-once="false">
-							<h1 class="mb-3 splitting-down display-4" data-splitting>내가 작성한 게시글
+						<div class="mb-2" data-aos data-aos-once="false">
+							<h1 class="splitting-down display-4" data-splitting>내가 작성한 게시글
 							</h1>
 						</div>
 					</div>
