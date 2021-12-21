@@ -37,7 +37,7 @@
 		<section id="article-header" class="position-relative bg-tint-primary">
 			<div class="container pt-11 pt-lg-14 pb-7 pb-lg-12 position-relative" style="max-width:1000px">
 				<article class="row pb-7">
-					<div class="col-lg-10 col-xl-8">
+					<div>
 						<div class="position-relative pb-3 pb-lg-0">
 							<div class="d-flex align-items-center w-100">
 								<small class="text-muted">작성일:&nbsp; </small>
@@ -53,7 +53,9 @@
 									<img id="userImage" src="#" onerror="this.src='/assets/img/avatar/2.jpg'" alt=""
 										class="size-60 rounded-circle me-2">
 									<span class="text-muted d-inline-block"><a id="nickname" href="#!" class="text-dark"
-											style="font-size:18px;"></a></span>
+											style="font-size:18px; word-break : keep-all;"></a></span>
+											<div class="container px-0" style="text-align:right;"><a href="javascript: void(0);" onclick="reportPost();"
+												class="text-dark">신고하기</a></div>
 								</div>
 							</div>
 						</div>
@@ -150,9 +152,7 @@
 	</div>
 
 	<div class="btn_wrap text-center" style="margin-bottom:50px;">
-		<a href="javascript: void(0);" onclick="goList();" class="btn btn-default waves-effect waves-light me-2">뒤로가기</a>
-		<a href="javascript: void(0);" onclick="reportPost();"
-			class="btn btn-outline-secondary waves-effect waves-light me-2">신고하기</a>
+		<a href="javascript: void(0);" onclick="goList();" class="btn btn-outline-secondary waves-effect waves-light me-2">뒤로가기</a>
 		<a href="javascript: void(0);" onclick="goWrite();" class="btn btn-primary waves-effect waves-light me-2">수정하기</a>
 		<button type="button" onclick="deleteBoard();" class="btn btn-danger waves-effect waves-light me-2">삭제하기</button>
 	</div>
