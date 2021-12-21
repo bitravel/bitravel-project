@@ -43,9 +43,9 @@ public class BoardService {
     	if (SecurityUtil.getCurrentEmail().get().equals("anonymousUser")) {
     		params.setNickname("비회원");
     	} else if(nowUserEmail.equals("admin")) {
-    		params.setNickname(userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get().getNickname());
+    		params.setNickname(userRepository.findOneWithAuthoritiesByEmailAndActivated(nowUserEmail, true).get().getNickname());
     	} else {
-    		User entity = userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get();
+    		User entity = userRepository.findOneWithAuthoritiesByEmailAndActivated(nowUserEmail, true).get();
     		entity.changePoint(20);
     		params.setNickname(entity.getNickname());
     	}
@@ -183,7 +183,7 @@ public class BoardService {
         	log.info("유효하지 않은 삭제 요청입니다.");
         	return false;
         } else {
-        	User user = userRepository.findOneWithAuthoritiesByEmail(myEmail).get();
+        	User user = userRepository.findOneWithAuthoritiesByEmailAndActivated(myEmail, true).get();
             user.changePoint(-20);
         }    
         // 해당 글의 댓글도 같이 삭제해야 함

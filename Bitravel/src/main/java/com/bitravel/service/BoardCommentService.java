@@ -56,9 +56,9 @@ public class BoardCommentService {
     	if (nowUserEmail.equals("anonymousUser")) {
     		params.setNickname("비회원");
     	} else if(nowUserEmail.equals("admin")) {
-    		params.setNickname(userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get().getNickname());
+    		params.setNickname(userRepository.findOneWithAuthoritiesByEmailAndActivated(nowUserEmail, true).get().getNickname());
     	} else {
-    		User entity = userRepository.findOneWithAuthoritiesByEmail(nowUserEmail).get();
+    		User entity = userRepository.findOneWithAuthoritiesByEmailAndActivated(nowUserEmail, true).get();
     		params.setNickname(entity.getNickname());
     		entity.changePoint(2);
     		
@@ -100,7 +100,7 @@ public class BoardCommentService {
         	log.info("유효하지 않은 삭제 요청입니다.");
         	return false;
         } else {
-            User user = userRepository.findOneWithAuthoritiesByEmail(myEmail).get();
+            User user = userRepository.findOneWithAuthoritiesByEmailAndActivated(myEmail, true).get();
             user.changePoint(-2);
         }
     	bCommentRepository.deleteById(id);
