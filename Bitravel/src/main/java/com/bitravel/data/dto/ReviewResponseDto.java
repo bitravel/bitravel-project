@@ -1,10 +1,8 @@
 package com.bitravel.data.dto;
 
 import java.sql.Timestamp;
-import java.util.List;
 
 import com.bitravel.data.entity.Review;
-import com.bitravel.data.entity.ReviewTravels;
 
 import lombok.Getter;
 
