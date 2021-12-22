@@ -102,13 +102,14 @@
 		<div class="box-content">
 			<div class="card-content">
 				<div class="clearfix">
-					<h4 class="box-title pull-left">Comment</h4>
+					<h4 class="box-title pull-left" id=count text=""></h4>
 					<!-- /.box-title -->
 				</div>
 				<form class="form-horizontal form-view">
 					<div class="input-group mb-3">
 						<input type="text" id="content" class="form-control"
 							onkeydown="javascript: if (event.keyCode == 13) {insertComment();}">
+						<input type="text" style="width:0px; visibility: hidden;">
 						<button type="button" class="btn btn-secondary waves-effect waves-light"
 							onclick="insertComment()">
 							<i class="fa fa-commenting" aria-hidden="true"></i>
