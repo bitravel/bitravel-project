@@ -49,7 +49,7 @@ public class ReviewCommentController {
     	
     	String newContent = TagUtil.getText(params.getCommentContent());
     	if(newContent.isBlank())
-    		throw new RuntimeException("너무 제목이 짧습니다.");
+    		throw new RuntimeException("너무 내용이 짧습니다.");
     	params.setCommentContent(newContent);
     	
     	return rCommentService.saveComment(params);
@@ -64,7 +64,7 @@ public class ReviewCommentController {
     public Boolean save(@PathVariable final Long id, @RequestBody final ReviewCommentRequestDto params) {
     	String newContent = TagUtil.getText(params.getCommentContent());
     	if(newContent.isBlank())
-    		throw new RuntimeException("너무 제목이 짧습니다.");
+    		throw new RuntimeException("너무 내용이 짧습니다.");
     	params.setCommentContent(newContent);
     	
     	return rCommentService.update(id, params);
