@@ -206,7 +206,7 @@ function insertComment() {
 			content.value = "";
 		},
 		error: function (xhr, status, error) {
-			alert("일시적인 오류가 발생하였습니다." + error);
+			alert("에러가 발생했습니다.");
 			return false;
 		}
 	});
