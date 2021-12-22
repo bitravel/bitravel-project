@@ -19,6 +19,7 @@ import com.bitravel.data.repository.ReportRepository;
 import com.bitravel.data.repository.ReviewCommentRepository;
 import com.bitravel.data.repository.ReviewRepository;
 import com.bitravel.util.SecurityUtil;
+import com.bitravel.util.TagUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,7 +59,7 @@ public class ReportService {
 				reportContent = "/board/"+param.getPostId();
 				
 				entity = Report.builder()
-						.reportTitle(param.getReportTitle())
+						.reportTitle(TagUtil.getText(param.getReportTitle()))
 						.reportContent(reportContent)
 						.reportedEmail(boardRepository.findById(Long.parseLong(param.getPostId())).get().getUserEmail())
 						.reporterEmail(nowEmail)
@@ -66,7 +67,7 @@ public class ReportService {
 			} else if (param.getReportType().equals("r")) {
 				reportContent = "/review/"+param.getPostId();
 				entity = Report.builder()
-						.reportTitle(param.getReportTitle())
+						.reportTitle(TagUtil.getText(param.getReportTitle()))
 						.reportContent(reportContent)
 						.reportedEmail(reviewRepository.findById(Long.parseLong(param.getPostId())).get().getUserEmail())
 						.reporterEmail(nowEmail)
