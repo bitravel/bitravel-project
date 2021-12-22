@@ -291,8 +291,11 @@ function printCommentList() {
 		}
 	}).then(json => {
 		console.table(json) //확인
+		const count = json.length;
 		let html = '';
-
+		var cCount = document.getElementById("count");
+		cCount.innerText = "댓글(" + count + ")";
+		
 		if (!json.length) {
 			html = '<td colspan="10" style="text-align:center;>등록된 게시글이 없습니다.</td>';
 		} else {
