@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.bitravel.data.dto.LoginDto;
+import com.bitravel.data.dto.PasswordDto;
 import com.bitravel.data.dto.TokenDto;
 import com.bitravel.data.dto.UserDto;
 import com.bitravel.data.entity.Authority;
@@ -310,11 +311,35 @@ public class UserService {
 		userRepository.save(user);
 		return true;
 	}
-
+	
+	// 닉네임으로 회원 검색하기
 	public Page<User> findUsersByNickname(String keyword, Pageable pageable) {
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
 		pageable = PageRequest.of(page, 9, Sort.by(Sort.Direction.ASC, "userId"));
 		return userRepository.findByNicknameContainingAndActivated(keyword, true, pageable);
+	}
+	
+	// 비밀번호 수정 요청이 유효한지 검증
+	@Transactional(readOnly=true)
+	public Integer isValidPassword(PasswordDto params) {
+		
+		if(!params.getNewPassword().equals(params.getConfirmPassword()))
+			return 0;
+		
+		// 로그인 Dto가 들어가면 Dto에 있는 정보들로 이메일-비번 확인 클래스가 확인 시작
+		UsernamePasswordAuthenticationToken authenticationToken = 
+				new UsernamePasswordAuthenticationToken(SecurityUtil.getCurrentEmail().get(), params.getOldPassword());
+		
+		// 위의 클래스에서 확인한 결과를 기반으로 인증 클래스가 인증 결과 반환
+		try {
+			Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+			if(authentication==null)
+				return -1;			
+		} catch (BadCredentialsException e) {
+			return -1;
+		}	
+		
+		return 1;
 	}
 
 }

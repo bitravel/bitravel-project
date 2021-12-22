@@ -2,22 +2,23 @@ package com.bitravel.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.bitravel.data.dto.PasswordDto;
 import com.bitravel.data.dto.UserDto;
 import com.bitravel.data.dto.UserUpdateDto;
 import com.bitravel.data.entity.Board;
 import com.bitravel.data.entity.Review;
 import com.bitravel.data.entity.User;
 import com.bitravel.service.MypageService;
-import com.bitravel.service.ReviewService;
 import com.bitravel.service.UserService;
+import com.bitravel.util.SecurityUtil;
 import com.bitravel.util.TagUtil;
 
 import io.swagger.annotations.Api;
@@ -30,7 +31,6 @@ import lombok.RequiredArgsConstructor;
 public class MypageController {
 
 	private final UserService userService;
-	private final ReviewService reviewService;
 	private final MypageService mypageService;
 	
 	@GetMapping("")
@@ -65,42 +65,21 @@ public class MypageController {
 		model.addAttribute("user", user);
 		return "redirect:/mypage/setting";
 	}
+	
 	@PostMapping("/updatePassword")
-	public String updatePassword(@ModelAttribute("user") UserDto userDto, Model model) {
-		UserDto user = userService.getMyUserWithAuthorities().get();
-		String pw = user.getPassword();
-//		User user = mypageService.updatePassword(userDto);
-//		model.addAttribute("user", user);
-		return "redirect:/mypage/setting";
-	}
-	 
-	/**
-     * 나의 후기 전체 리스트 페이지
-     */
-//    @GetMapping("/")
-//    public String totalMyReview (Model model, @PageableDefault(size = 10, sort = "reviewId", direction = Sort.Direction.DESC) Pageable pageable) {
-//        model.addAttribute("reviewList", reviewService.findAll(pageable));
-//    	return "review/reviewTotalList";
-//    }
-
+	public ResponseEntity<?> updatePassword(@RequestBody PasswordDto params, Model model) {
 	
-//	@PostMapping("/user/modifyPassword")
-//	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-//	public ResponseEntity<Boolean> modifyUserPassword (String email, String password) {
-//		return ResponseEntity.ok(userService.updateUserPassword(email, password));
-//	}
-//
-//	@GetMapping("user/delete")
-//	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
-//	public ResponseEntity<Boolean> deleteUser(String email) {
-//		return ResponseEntity.ok(userService.deleteUser(email));
-//	}
-//	
-//	@PostMapping("user/delete")
-//	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-//	public ResponseEntity<Boolean> deleteUserByList(@RequestBody List<Long> list) {
-//		return ResponseEntity.ok(userService.deleteUserByList(list));
-//	}
-
-	
+		Integer validation = userService.isValidPassword(params);
+		
+		if(validation==-1) {
+			return ResponseEntity.status(401).body(null);
+		} else if(validation==0) {
+			return ResponseEntity.status(400).body(null);
+		}
+		
+		if(userService.updateUserPassword(SecurityUtil.getCurrentEmail().get(), params.getNewPassword()))
+			return ResponseEntity.ok(null);
+		else
+			return ResponseEntity.internalServerError().body(null);
+	}	
 }

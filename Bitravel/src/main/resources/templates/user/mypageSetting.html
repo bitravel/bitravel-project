@@ -169,7 +169,7 @@
 												</div>
 												<div class="col-md-6 mb-3">
 													<label class="form-label" for="gender">성별</label>
-													<select name="gender" data-choices='{"searchEnabled":false}'
+													<select name="gender" data-choices="{'searchEnabled':false}"
 														class="form-control" disabled>
 														<option th:value="Man" th:selected="${user.gender}=='Man'">남성
 														</option>
@@ -191,8 +191,9 @@
 												</div>
 												<div class="col-md-3 col-6 mb-3">
 													<label class="form-label text-white" for="nickname">체크버튼</label>
-													<button class="btn btn-outline-primary btn" style="width:100%;" type="button" id="nicknameCheck"
-														onclick="isValidNickname()">														중복 확인</button>
+													<button class="btn btn-outline-primary btn" style="width:100%;"
+														type="button" id="nicknameCheck" onclick="isValidNickname()"> 중복
+														확인</button>
 												</div>
 												<div class="col-md-3 mb-3">
 													<label class="form-label" for="country">거주지역</label>
@@ -229,28 +230,30 @@
 									<!--Password card-->
 									<div class="card shadow-sm p-3 mt-3">
 										<h5 class="mb-4">비밀번호 변경하기</h5>
-										<div class="row">
-											<div class="col-md-4 mb-3">
-												<label for="update_pass_current" class="form-label">현재 비밀번호</label>
-												<input type="password" class="form-control" name="password"
-													placeholder="현재 암호를 입력하세요.">
+										<form method="post" id="password-update-form">
+											<div class="row">
+												<div class="col-md-4 mb-3">
+													<label for="update_pass_current" class="form-label">현재 비밀번호</label>
+													<input type="password" class="form-control" id="oldPassword"
+														name="oldPassword" placeholder="현재 비밀번호">
+												</div>
+												<div class="col-md-4 mb-3">
+													<label for="update_pass_new" class="form-label">새로운 비밀번호</label>
+													<input type="password" class="form-control" id="newPassword"
+														name="newPassword" placeholder="새로운 비밀번호">
+												</div>
+												<div class="col-md-4 mb-3">
+													<label for="update_pass_new_confirm" class="form-label">새로운 비밀번호
+														확인</label>
+													<input type="password" class="form-control" id="confirmPassword"
+														name="confirmPassword" placeholder="새로운 비밀번호 확인">
+												</div>
 											</div>
-											<div class="col-md-4 mb-3">
-												<label for="update_pass_new" class="form-label">새로운 비밀번호</label>
-												<input type="password" class="form-control" id="changePassword"
-													placeholder="새 암호를 6자 이상 입력하세요">
+											<div class="text-end">
+												<button type="button" id="updatePassword" onclick="savePassword();"
+													class="btn btn-outline-primary">비밀번호 변경</button>
 											</div>
-											<div class="col-md-4 mb-3">
-												<label for="update_pass_new_confirm" class="form-label">새로운 비밀번호
-													재확인</label>
-												<input type="password" class="form-control" id="confirmPassword"
-													placeholder="새 암호를 한번더 입력하세요">
-											</div>
-										</div>
-										<div class="text-end">
-											<button type="button" id="updatePassword"
-												class="btn btn-outline-primary">비밀번호 변경</button>
-										</div>
+										</form>
 									</div>
 								</div>
 							</div>

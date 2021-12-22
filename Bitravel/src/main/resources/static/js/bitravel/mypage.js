@@ -364,3 +364,101 @@ function save() {
 		alert('오류가 발생하였습니다. \n' + error);
 	});
 }
+
+/**
+ * 비밀번호 검증
+ */
+function isVaildPassword() {
+	const form = document.getElementById('password-update-form');
+
+	if (!form.oldPassword.value.trim()) {
+		alert('현재 비밀번호를 입력해 주세요.');
+		form.oldPassword.focus();
+		return false;
+	} else if (form.oldPassword.value.trim().length < 6) {
+		alert('비밀번호 입력 값이 너무 짧습니다.');
+		form.oldPassword.value = '';
+		form.oldPassword.focus();
+		return false;
+	}
+
+	if (!form.newPassword.value.trim()) {
+		alert('새로운 비밀번호를 입력해 주세요.');
+		form.newPassword.focus();
+		return false;
+	} else if (form.newPassword.value.trim().length < 6) {
+		alert('비밀번호 입력 값이 너무 짧습니다.');
+		form.newPassword.value = '';
+		form.confirmPassword.value = '';
+		form.newPassword.focus();
+		return false;
+	}
+
+	if (!form.confirmPassword.value.trim()) {
+		alert('비밀번호 확인 값을 입력해 주세요.');
+		form.confirmPassword.focus();
+		return false;
+	} else if (form.confirmPassword.value.trim().length < 6) {
+		alert('비밀번호 입력 값이 너무 짧습니다.');
+		form.newPassword.value = '';
+		form.confirmPassword.value = '';
+		form.newPassword.focus();
+		return false;
+	}
+	return true;
+}
+
+document.getElementById('password-update-form').addEventListener('keydown', function (event) {
+	if (event.keyCode === 13) {
+		savePassword();
+		event.preventDefault();
+	};
+}, true);
+
+/**
+ * 비밀번호 변경
+ */
+function savePassword() {
+	const form = document.getElementById('password-update-form');
+
+	if (!isVaildPassword()) {
+		return false;
+	}
+
+	var params = {
+		oldPassword: form.oldPassword.value,
+		newPassword: form.newPassword.value,
+		confirmPassword: form.confirmPassword.value
+	};
+
+	fetch('/mypage/updatePassword', {
+		method: 'POST', /*데이터 생성은 무조건 post 방식 이용*/
+		headers: {
+			'Content-Type': 'application/json',
+		}, /*API 호출 시, GET 방식이 아닌 요청은 Content-Type을 application/json으로 설정한다. */
+		body: JSON.stringify(params), /*데이터 전달에 사용되는 옵션으로, params 객체에 담긴 게시글 정보를 API 서버로 전달한다.*/
+
+	}).then(response => {
+
+		if (response.status == 401) {
+			alert("현재 비밀번호가 틀립니다. 확인 후 다시 입력해 주세요.");
+			form.oldPassword.value = "";
+			form.oldPassword.focus();
+			return false;
+		} else if (response.status == 400) {
+			alert("비밀번호 확인 값이 다릅니다. 확인 후 다시 입력해 주세요.");
+			form.newPassword.value = "";
+			form.confirmPassword.value = "";
+			form.newPassword.focus();
+			return false;
+		} else if (!response.ok) {
+			throw new Error('일시적인 오류입니다. 다시 시도해 보세요.');
+		}
+
+		alert('저장되었습니다.');
+		location.href = '/mypage/setting';
+
+	}).catch(error => {
+		alert('오류가 발생하였습니다. \n' + error);
+	});
+}
