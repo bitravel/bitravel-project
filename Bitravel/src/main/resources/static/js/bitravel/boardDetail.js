@@ -188,7 +188,7 @@ function insertComment() {
 	var content = document.getElementById("content");
 
 	var uri = `/api/boards/comments/${id}`;
-	var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "POST" };
+	var headers = {"X-HTTP-Method-Override": "POST" };
 	var params = { "boardId": id, "commentContent": content.value, };
 	$.ajax({
 		url: uri,
@@ -233,7 +233,7 @@ function updateComment(commentId) {
 	}
 
 	var uri = `/api/boards/comments/${commentId}`;
-	var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "PATCH" };
+	var headers = { "X-HTTP-Method-Override": "PATCH" };
 	var params = { "commentId": commentId, "commentContent": content.value };
 
 	$.ajax({
@@ -269,7 +269,7 @@ function deleteComment(commentId) {
 	}
 
 	var uri = '/api/boards/comments/' + commentId;
-	var headers = { "Content-Type": "application/json", "X-HTTP-Method-Override": "DELETE" };
+	var headers = { "X-HTTP-Method-Override": "DELETE" };
 
 	$.ajax({
 		url: uri,
