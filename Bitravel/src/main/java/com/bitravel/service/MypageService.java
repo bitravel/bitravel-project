@@ -11,8 +11,10 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bitravel.data.dto.UserUpdateDto;
+import com.bitravel.data.entity.Board;
 import com.bitravel.data.entity.Review;
 import com.bitravel.data.entity.User;
+import com.bitravel.data.repository.BoardRepository;
 import com.bitravel.data.repository.MypageRepository;
 import com.bitravel.data.repository.ReviewRepository;
 import com.bitravel.data.repository.UserRepository;
@@ -29,6 +31,8 @@ public class MypageService {
 	private PasswordEncoder passwordEncoder;
 	private MypageRepository mypageRepository;
 	private final ReviewRepository reviewRepository;
+	private final BoardRepository boardRepository;
+
 
 	// 회원정보 수정
 	@Transactional()
@@ -55,14 +59,21 @@ public class MypageService {
 		return true;
 	}
 
-	//내가 작성한 리뷰 리스트 조회
+	//내가 작성한 후기리뷰 리스트 조회
 	@Transactional
 	public List<Review> getMyReview(String userEmail) {
 		List<Review> myReview = new ArrayList<Review>();
 		myReview = reviewRepository.findByUserEmailOrderByReviewDateDesc(userEmail);
 		return myReview;
 	}
-	
+
+	//내가 작성한 게시글 리스트 조회
+		@Transactional
+		public List<Board> getMyBoard(String keyword) {
+			List<Board> myBoard = new ArrayList<Board>();
+			myBoard = boardRepository.findByUserEmailOrderByBoardDateDesc(keyword);
+			return myBoard;
+		}
 	
 //	@Autowired
 //	PasswordEncoder passwordEncoder1;
