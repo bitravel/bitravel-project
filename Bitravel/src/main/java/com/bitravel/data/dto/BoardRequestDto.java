@@ -1,7 +1,6 @@
 package com.bitravel.data.dto;
 
 import com.bitravel.data.entity.Board;
-import com.bitravel.util.TagUtil;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -21,7 +20,7 @@ public class BoardRequestDto {
     
     public Board toEntity() {
         return Board.builder()
-                .boardTitle(TagUtil.getText(boardTitle))
+                .boardTitle(boardTitle)
                 .boardContent(boardContent)
                 .userEmail(userEmail)
                 .nickname(nickname)
@@ -35,5 +34,9 @@ public class BoardRequestDto {
 	
 	public void setNickname(String nickname) {
 		this.nickname = nickname;
+	}
+	
+	public void setBoardTitle(String title) {
+		this.boardTitle = title;
 	}
 }

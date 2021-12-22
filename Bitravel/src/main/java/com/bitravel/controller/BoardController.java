@@ -15,6 +15,7 @@ import com.bitravel.data.dto.BoardRequestDto;
 import com.bitravel.data.dto.BoardResponseDto;
 import com.bitravel.service.BoardService;
 import com.bitravel.util.SecurityUtil;
+import com.bitravel.util.TagUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,6 +36,12 @@ public class BoardController {
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @ApiOperation(value = "글 작성", notes = "글 내용을 저장하는 API. Board entity 클래스로 데이터를 저장한다.")
     public Long save(@RequestBody final BoardRequestDto params) {
+    	
+    	String newTitle = TagUtil.getText(params.getBoardTitle());
+    	if(newTitle.isBlank())
+    		throw new RuntimeException("너무 제목이 짧습니다.");
+    	params.setBoardTitle(newTitle);
+    	
         return boardService.save(params);
     }
     
@@ -45,6 +52,11 @@ public class BoardController {
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @ApiOperation(value = "글 수정", notes = "글 내용을 수정하는 API. Board entity 클래스로 데이터를 수정한다.<br>이때엔 정보를 등록할 때와는 다르게 bid 값을 함깨 보내줘야한다.")
     public ResponseEntity<?> save(@PathVariable final Long id, @RequestBody final BoardRequestDto params) {
+    	
+    	String newTitle = TagUtil.getText(params.getBoardTitle());
+    	if(newTitle.isBlank())
+    		throw new RuntimeException("너무 제목이 짧습니다.");
+    	params.setBoardTitle(newTitle);
     	
     	if(boardService.update(id, params)) {
     		return ResponseEntity.ok(null);

@@ -15,6 +15,7 @@ import com.bitravel.data.dto.ReviewRequestDto;
 import com.bitravel.data.dto.ReviewResponseDto;
 import com.bitravel.service.ReviewService;
 import com.bitravel.util.SecurityUtil;
+import com.bitravel.util.TagUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,6 +37,12 @@ public class ReviewController {
 	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	@ApiOperation(value = "후기 작성", notes = "후기 내용을 저장하는 API. Review entity 클래스로 데이터를 저장한다.")
 	public Long save(@RequestBody final ReviewRequestDto params) {
+		
+    	String newTitle = TagUtil.getText(params.getReviewTitle());
+    	if(newTitle.isBlank())
+    		throw new RuntimeException("너무 제목이 짧습니다.");
+    	params.setReviewTitle(newTitle);
+		
 		return reviewService.save(params);
 	}
 
@@ -46,6 +53,12 @@ public class ReviewController {
 	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	@ApiOperation(value = "후기 수정", notes = "후기 내용을 수정하는 API. Review entity 클래스로 데이터를 수정한다.<br>이때엔 정보를 등록할 때와는 다르게 bid 값을 함깨 보내줘야한다.")
 	public Boolean update(@PathVariable final Long id, @RequestBody final ReviewRequestDto params) {
+		
+    	String newTitle = TagUtil.getText(params.getReviewTitle());
+    	if(newTitle.isBlank())
+    		throw new RuntimeException("너무 제목이 짧습니다.");
+    	params.setReviewTitle(newTitle);
+		
 		return reviewService.update(id, params);
 	}
 	/**
