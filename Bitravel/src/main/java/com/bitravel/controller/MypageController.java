@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bitravel.data.dto.UserDto;
 import com.bitravel.data.dto.UserUpdateDto;
+import com.bitravel.data.entity.Board;
 import com.bitravel.data.entity.Review;
 import com.bitravel.data.entity.User;
 import com.bitravel.service.MypageService;
@@ -46,6 +47,9 @@ public class MypageController {
 	public String myPageSetting(Model model) {
 		UserDto user = userService.getMyUserWithAuthorities().get();
 		model.addAttribute("user", user);
+		// 내가 작성한 게시글 불러오기
+		List<Board> boardList = mypageService.getMyBoard(user.getEmail());
+		model.addAttribute("boardList", boardList);
 		return "user/mypageSetting";
 	}
 	

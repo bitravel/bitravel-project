@@ -112,6 +112,7 @@
 			</div>
 		</section>
 		<br>
+		
 		<!--내가 작성한 후기-->
 		<section class="overflow-hidden position-relative">
 			<div class="position-absolute start-0 top-0 w-100 h-50 "></div>
@@ -123,19 +124,8 @@
 								작성한 후기</h3>
 						</div>
 					</div>
-					<div class="col-md-4">
-						<div class="position-relative d-flex justify-content-md-end align-items-center">
-							<!--Buttons navigation-->
-							<div
-								class="swiper3-button-prev swiper-button-prev mt-0 position-static rounded-pill size-50 border border-primary text-primary bg-transparent me-2">
-							</div>
-							<div
-								class="swiper3-button-next swiper-button-next mt-0 position-static rounded-pill size-50 border border-primary text-primary bg-transparent">
-							</div>
-						</div>
-					</div>
 				</div>
-
+				
 				<!-- 				<th:block th:if="${#lists.size(reviewList) eq null}"> -->
 				<!-- 				<th:block th:if="${reviewList == null"> -->
 				<th:block th:if="${#lists.size(reviewList) ne 0}">
@@ -164,7 +154,9 @@
 				</th:block>
 				<th:block th:unless="${#lists.size(reviewList) ne 0}">
 					<div class="swiper-container swiper-3 overflow-visible">
-						게시글이 없습니다.
+						<div class="d-flex justify-content-center align-items-center ">
+							<h3 style="color:#b4b4b4">작성한 후기가 없습니다.</h3>
+						</div>
 					</div>
 				</th:block>
 			</div>
@@ -182,126 +174,40 @@
 							</h1>
 						</div>
 					</div>
-					<div class="col-md-4">
-						<div class="position-relative d-flex justify-content-md-end align-items-center">
-							<!--Buttons navigation-->
-							<div
-								class="swiper3-button-prev swiper-button-prev mt-0 position-static rounded-pill size-50 border border-primary text-primary bg-transparent me-2">
-							</div>
-							<div
-								class="swiper3-button-next swiper-button-next mt-0 position-static rounded-pill size-50 border border-primary text-primary bg-transparent">
+				</div>
+				<!-- 				<th:block th:if="${#lists.size(reviewList) eq null}"> -->
+				<!-- 				<th:block th:if="${reviewList == null"> -->
+				<th:block th:if="${#lists.size(reviewList) ne 0}">
+					<div class="swiper-container swiper-3 overflow-visible">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide" th:each="list: ${boardList}">
+								<div class="vh-auto bg-white">
+									<article class="card-hover border-0 d-flex">
+										<a th:href="@{'/review/'+${list.boardId}}" class="stretched-link"></a>
+										<div class="card-body position-relative p-0" >
+											<div class="d-block position-relative overflow-hidden mb-4" style="text-align: center;">
+												<img th:src="${list.thumbNail}" onerror="this.onerror=null; this.src='/assets/img/avatar/2.jpg';" style="height:400px " class="img-fluid img-zoom" alt="">
+											</div>
+											<h5 class="mb-3">[[${list.boardTitle}]]</h5>
+											<div class="blog-content">
+											<!-- <p class="mb-4">[[${list.reviewContent}]]</p> -->
+											<div class="text-primary fw-semibold small pb-2 border-bottom border-primary" th:text="${#dates.format(list.boardDate, 'yyyy-MM-dd')}">
+													[[${list.boardDate}]]</div>
+											</div>
+										</div>
+									</article>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
-				<div class="swiper-container swiper-3 overflow-visible">
-					<div class="swiper-wrapper">
-
-						<!--Slide-->
-						<div class="swiper-slide">
-
-							<!--Article-->
-							<article class="card-hover position-relative">
-								<div class="d-block overflow-hidden">
-									<img src="assets/img/800x600/2.jpg" alt="" class="img-fluid position-relative">
-								</div>
-								<div class="position-relative p-4">
-									<div class="d-flex justify-content-start w-100 pb-3 align-items-center">
-										<small class="text-muted">후기 이름_1</small>
-									</div>
-									<div class="link-multiline fs-4 fw-semibold">
-										여행지 이름 / 작성자 / 작성자 레벨 / 관력태그 / 좋아요 / 싫어요
-									</div>
-								</div>
-								<a href="#" class="stretched-link"></a>
-							</article>
-						</div>
-						<!--Slide-->
-						<div class="swiper-slide">
-
-							<!--Article-->
-							<article class="card-hover position-relative">
-								<div class="d-block overflow-hidden">
-									<img src="assets/img/800x600/1.jpg" alt="" class="img-fluid position-relative">
-								</div>
-								<div class="position-relative p-4">
-									<div class="d-flex justify-content-start w-100 pb-3 align-items-center">
-										<small class="text-muted">후기 이름_2</small>
-									</div>
-									<div>
-										<div class="link-multiline fs-4 fw-semibold">
-											여행지 이름 / 작성자 / 작성자 레벨 / 관력태그 / 좋아요 / 싫어요
-										</div>
-									</div>
-								</div>
-								<a href="#" class="stretched-link"></a>
-							</article>
-						</div>
-						<!--Slide-->
-						<div class="swiper-slide">
-
-							<!--Article-->
-							<article class="card-hover position-relative">
-								<div class="d-block overflow-hidden">
-									<img src="assets/img/800x600/3.jpg" alt="" class="img-fluid position-relative">
-								</div>
-								<div class="position-relative p-4">
-									<div class="d-flex justify-content-start w-100 pb-3 align-items-center">
-										<small class="text-muted">후기 이름_3</small>
-									</div>
-									<div>
-										<div class="link-multiline fs-4 fw-semibold">
-											여행지 이름 / 작성자 / 작성자 레벨 / 관력태그 / 좋아요 / 싫어요
-										</div>
-									</div>
-								</div>
-								<a href="#" class="stretched-link"></a>
-							</article>
-						</div>
-						<!--Slide-->
-						<div class="swiper-slide">
-
-							<!--Article-->
-							<article class="card-hover position-relative">
-								<div class="d-block overflow-hidden">
-									<img src="assets/img/800x600/4.jpg" alt="" class="img-fluid position-relative">
-								</div>
-								<div class="position-relative p-4">
-									<div class="d-flex justify-content-start w-100 pb-3 align-items-center">
-										<small class="text-muted">후기 이름_4</small>
-									</div>
-									<div>
-										<div class="link-multiline fs-4 fw-semibold">
-											여행지 이름 / 작성자 / 작성자 레벨 / 관력태그 / 좋아요 / 싫어요
-										</div>
-									</div>
-								</div>
-								<a href="#" class="stretched-link"></a>
-							</article>
-						</div>
-						<!--Slide-->
-						<div class="swiper-slide">
-
-							<!--Article-->
-							<article class="card-hover position-relative">
-								<div class="d-block overflow-hidden">
-									<img src="assets/img/800x600/5.jpg" alt="" class="img-fluid position-relative">
-								</div>
-								<div class="position-relative p-4">
-									<div class="d-flex justify-content-start w-100 pb-3 align-items-center">
-										<small class="text-muted">후기 이름_5</small>
-									</div>
-									<div>
-										<div class="link-multiline fs-4 fw-semibold">
-											여행지 이름 / 작성자 / 작성자 레벨 / 관력태그 / 좋아요 / 싫어요
-										</div>
-									</div>
-								</div>
-								<a href="#" class="stretched-link"></a>
-							</article>
+				</th:block>
+				<th:block th:unless="${#lists.size(reviewList) ne 0}">
+					<div class="swiper-container swiper-3 overflow-visible">
+						<div class="d-flex justify-content-center align-items-center ">
+							<h3 style="color:#b4b4b4">작성한 게시글이 없습니다.</h3>
 						</div>
 					</div>
-				</div>
+				</th:block>
 			</div>
 		</section>
 	</main>
