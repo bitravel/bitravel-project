@@ -80,8 +80,10 @@ public class UserPageController {
 				boardList.get(i).setBoardContent(TagUtil.getText(boardList.get(i).getBoardContent()));
 			}
 			model.addAttribute("boardList", boardList);
-
-			if (email.equals("admin") || email.equals("anonymousUser") || tmp.isEmpty()
+			
+			if(email.equals("admin"))
+				return "redirect:/admin";
+			else if (email.equals("anonymousUser") || tmp.isEmpty()
 					|| SecurityUtil.getCurrentEmail().get().equals(email))
 				return "redirect:/mypage";
 			else
