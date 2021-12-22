@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.bitravel.data.dto.ReviewCommentRequestDto;
 import com.bitravel.data.dto.ReviewCommentResponseDto;
 import com.bitravel.service.ReviewCommentService;
+import com.bitravel.util.TagUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -44,7 +45,13 @@ public class ReviewCommentController {
     @PostMapping("/reviews/comments/{id}")
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @ApiOperation(value = "댓글 작성", notes = "댓글 내용을 저장하는 API. ReviewComment entity 클래스로 데이터를 저장한다.")
-    public Long save(@RequestBody final ReviewCommentRequestDto params) {    	
+    public Long save(@RequestBody final ReviewCommentRequestDto params) {
+    	
+    	String newContent = TagUtil.getText(params.getCommentContent());
+    	if(newContent.isBlank())
+    		throw new RuntimeException("너무 제목이 짧습니다.");
+    	params.setCommentContent(newContent);
+    	
     	return rCommentService.saveComment(params);
     }
     
@@ -55,7 +62,12 @@ public class ReviewCommentController {
     @PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
     @ApiOperation(value = "글 수정", notes = "댓글 내용을 수정하는 API. ReviewComment entity 클래스로 데이터를 수정한다.<br>이때엔 정보를 등록할 때와는 다르게 cid 값을 함깨 보내줘야한다.")
     public Boolean save(@PathVariable final Long id, @RequestBody final ReviewCommentRequestDto params) {
-        return rCommentService.update(id, params);
+    	String newContent = TagUtil.getText(params.getCommentContent());
+    	if(newContent.isBlank())
+    		throw new RuntimeException("너무 제목이 짧습니다.");
+    	params.setCommentContent(newContent);
+    	
+    	return rCommentService.update(id, params);
     }
     
     /**

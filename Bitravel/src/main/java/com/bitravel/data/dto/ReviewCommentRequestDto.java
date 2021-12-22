@@ -2,7 +2,6 @@ package com.bitravel.data.dto;
 
 import com.bitravel.data.entity.Review;
 import com.bitravel.data.entity.ReviewComment;
-import com.bitravel.util.TagUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AccessLevel;
@@ -27,7 +26,7 @@ public class ReviewCommentRequestDto {
 	public ReviewComment toEntity() {
 		return ReviewComment.builder()
 				.review(review)
-				.commentContent(TagUtil.getText(commentContent))
+				.commentContent(commentContent)
 				.userEmail(userEmail)
 				.nickname(nickname)
 				//.commentLevel(commentLevel)
