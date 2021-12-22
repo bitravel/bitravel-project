@@ -139,7 +139,7 @@
 										<a th:href="@{'/review/'+${list.reviewId}}" class="stretched-link"></a>
 										<div class="card-body position-relative m-1 form-control" >
 											<div style="min-height:100px;">
-											<h5 class="p-1">[[${list.reviewTitle}]]</h5>
+											<h5 class="p-1">[(${list.reviewTitle})]</h5>
 											<div class="blog-content">
 											<!-- <p class="mb-4">[[${list.reviewContent}]]</p> -->
 											<div class="text-primary fw-semibold small p-2" th:text="${#dates.format(list.reviewDate, 'yyyy-MM-dd')}">
@@ -192,12 +192,12 @@
 										<a th:href="@{'/board/'+${list.boardId}}" class="stretched-link"></a>
 										<div class="card-body position-relative m-1 form-control" >
 											<div style="min-height:70px;">
-											<h5 class="p-2">[[${list.boardTitle}]]</h5>
+											<h5 class="p-2">[(${list.boardTitle})]</h5>
 											</div>
 											<div class="text-primary fw-semibold small p-2 border-top" th:text="${#dates.format(list.boardDate, 'yyyy-MM-dd')}">
 													[[${list.boardDate}]]</div>
 											<div class="blog-content" style="min-height:150px;">
-											<p class="p-2" th:text="${#strings.abbreviate(list.boardContent, 105)}"></p>
+											<p class="p-2" th:utext="${#strings.abbreviate(list.boardContent, 105)}"></p>
 											</div>
 											</div>
 									</article>
