@@ -56,9 +56,14 @@
                                         <div class="mb-5" >
                                             <h5 class="mb-2 text-dark" th:utext="${#strings.abbreviate(list.reviewContent, 75)}"></h5>
                                         </div>
-                                        <a th:href="@{'/review/'+${list.reviewId}(page=${reviewList.number+1})}" class="btn btn-outline-secondary btn-hover-arrow">
+                                        <div class="text-dark fw-semibold small pb-2" th:text="${#dates.format(list.reviewDate, 'yyyy-MM-dd')}">
+                                           [[${list.reviewDate}]]
+                                        </div>
+                                    	<a th:href="@{'/review/'+${list.reviewId}(page=${reviewList.number+1})}" class="btn btn-outline-secondary btn-hover-arrow">
                                             <span>자세히 보기</span>
                                         </a>
+                                    	</div>
+                                        
                                     </div>
                                 </div>
                             </div>
