@@ -184,16 +184,15 @@
 													<input type="text" class="form-control" th:field="${user.age}"
 														disabled>
 												</div>
-												<div class="col-md-3 mb-3">
+												<div class="col-md-3 col-6 mb-3">
 													<label class="form-label" for="nickname">닉네임</label>
 													<input type="text" class="form-control" name="nickname"
 														th:field="${user.nickname}">
 												</div>
-												<div class="col-md-3 mb-3">
+												<div class="col-md-3 col-6 mb-3">
 													<label class="form-label text-white" for="nickname">체크버튼</label>
-													<button class="btn btn-dark" type="button" id="nicknameCheck"
-														onclick="isValidNickname()">닉네임
-														중복 확인</button>
+													<button class="btn btn-dark" style="width:100%;" type="button" id="nicknameCheck"
+														onclick="isValidNickname()">														중복 확인</button>
 												</div>
 												<div class="col-md-3 mb-3">
 													<label class="form-label" for="country">거주지역</label>
