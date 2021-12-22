@@ -42,16 +42,14 @@ public class UserPageController {
 
 	@GetMapping("/signup/second")
 	@PreAuthorize("isAnonymous()")
-	public String openSecondSignUpPage
-	(@RequestParam("userEmail") String email, Model model) {
+	public String openSecondSignUpPage(@RequestParam("userEmail") String email, Model model) {
 		model.addAttribute("userEmail", email);
 		return "user/signUp2";
 	}
 
 	@GetMapping("/signup/third")
 	@PreAuthorize("isAnonymous()")
-	public String openThirdSignUpPage
-	(@RequestParam("userEmail") String email, Model model) {
+	public String openThirdSignUpPage(@RequestParam("userEmail") String email, Model model) {
 		model.addAttribute("userEmail", email);
 		return "user/signUp3";
 	}
@@ -61,31 +59,36 @@ public class UserPageController {
 	public String openAdminPage() {
 		return "user/admin";
 	}
-	
+
 	@GetMapping("/user")
 	@PreAuthorize("hasAnyRole('ROLE_USER','ROLE_ADMIN')")
 	public String openUserPage(@RequestParam String email, Model model) {
-		// 개인정보 불러오기
-		Optional<UserDto> tmp = userService.getUserWithAuthorities(email);
-		model.addAttribute("user", tmp.get());
-		
-		// 내가 작성한 리뷰 불러오기
-		List<Review> reviewList = reviewService.findReviewsByEmail(email);
-		model.addAttribute("rcount", reviewList.size());
-		model.addAttribute("reviewList", reviewList);
-		
-		// 내가 작성한 게시글 불러오기
-		List<Board> boardList = boardService.findBoardsByEmail(email);
-		model.addAttribute("bcount", boardList.size());
-		for(int i=0;i<boardList.size();i++) {
-			boardList.get(i).setBoardContent(TagUtil.getText(boardList.get(i).getBoardContent()));
-		}
-		model.addAttribute("boardList", boardList);
-		
-		if(email.equals("admin") || tmp.isEmpty() || SecurityUtil.getCurrentEmail().get().equals(email))
+		try {
+			// 개인정보 불러오기
+			Optional<UserDto> tmp = userService.getUserWithAuthorities(email);
+			model.addAttribute("user", tmp.get());
+
+			// 내가 작성한 리뷰 불러오기
+			List<Review> reviewList = reviewService.findReviewsByEmail(email);
+			model.addAttribute("rcount", reviewList.size());
+			model.addAttribute("reviewList", reviewList);
+
+			// 내가 작성한 게시글 불러오기
+			List<Board> boardList = boardService.findBoardsByEmail(email);
+			model.addAttribute("bcount", boardList.size());
+			for (int i = 0; i < boardList.size(); i++) {
+				boardList.get(i).setBoardContent(TagUtil.getText(boardList.get(i).getBoardContent()));
+			}
+			model.addAttribute("boardList", boardList);
+
+			if (email.equals("admin") || email.equals("anonymousUser") || tmp.isEmpty()
+					|| SecurityUtil.getCurrentEmail().get().equals(email))
+				return "redirect:/mypage";
+			else
+				return "user/userPage";
+		} catch (Exception e) {
 			return "redirect:/mypage";
-		else
-			return "user/userPage";
+		}
 	}
 
 }
