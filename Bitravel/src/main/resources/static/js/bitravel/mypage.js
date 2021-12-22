@@ -289,7 +289,7 @@ function isValid() {
 	const form = document.getElementById('user-update-form');
 
 	if (form.nicknameValidation.value != 'checked') {
-		alert('닉네임 중복 체크 버튼을 누르세요.');
+		alert('닉네임 중복 확인 버튼을 누르세요.');
 		form.nicknameCheck.focus();
 		return false;
 	}
