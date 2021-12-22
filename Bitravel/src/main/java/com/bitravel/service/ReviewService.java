@@ -273,7 +273,7 @@ public class ReviewService {
 	 */
 	@Transactional(readOnly = true)
 	public List<Review> findReviewsByEmail(String keyword) {
-		List<Review> list = reviewRepository.findByUserEmailOrderByReviewDateAsc(keyword);
+		List<Review> list = reviewRepository.findByUserEmailOrderByReviewDateDesc(keyword);
 		return list;
 	}
 

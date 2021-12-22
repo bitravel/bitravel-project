@@ -174,7 +174,7 @@ public class BoardService {
 	 */
 	@Transactional(readOnly = true)
 	public List<Board> findBoardsByEmail(String keyword) {
-		List<Board> list = boardRepository.findByUserEmailOrderByBoardDateAsc(keyword);
+		List<Board> list = boardRepository.findByUserEmailOrderByBoardDateDesc(keyword);
 		return list;
 	}	
     

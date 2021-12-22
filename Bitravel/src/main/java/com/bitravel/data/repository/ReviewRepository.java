@@ -26,5 +26,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long>{
 
 	Page<Review> findByAge(int age, Pageable pageable);
 	
-	List<Review> findByUserEmailOrderByReviewDateAsc(String userEmail);
+	List<Review> findByUserEmailOrderByReviewDateDesc(String userEmail);
 }
