@@ -16,6 +16,7 @@ import com.bitravel.data.repository.UserRepository;
 import com.bitravel.exception.CustomException;
 import com.bitravel.exception.ErrorCode;
 import com.bitravel.util.SecurityUtil;
+import com.bitravel.util.TagUtil;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -72,7 +73,7 @@ public class ReviewCommentService {
         	log.info("유효하지 않은 수정 요청입니다.");
         	return false;
         }
-        entity.update(params.getCommentContent());
+        entity.update(TagUtil.getText(params.getCommentContent()));
         return true;
     }
     

@@ -29,6 +29,7 @@ import com.bitravel.data.repository.UserTravelRepository;
 import com.bitravel.exception.CustomException;
 import com.bitravel.exception.ErrorCode;
 import com.bitravel.util.SecurityUtil;
+import com.bitravel.util.TagUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -309,7 +310,7 @@ public class ReviewService {
 			return false;
 		}
 
-		entity.update(params.getReviewTitle(), params.getReviewContent(), params.getThumbNail());
+		entity.update(TagUtil.getText(params.getReviewTitle()), params.getReviewContent(), params.getThumbNail());
 		return true;
 	}
 

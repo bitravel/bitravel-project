@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.bitravel.data.entity.Review;
 import com.bitravel.data.entity.ReviewTravels;
+import com.bitravel.util.TagUtil;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AccessLevel;
@@ -32,7 +33,7 @@ public class ReviewRequestDto {
     
     public Review toEntity() {
         return Review.builder()
-                .reviewTitle(reviewTitle)
+                .reviewTitle(TagUtil.getText(reviewTitle))
                 .reviewContent(reviewContent)
                 .userEmail(userEmail)
                 .nickname(nickname)

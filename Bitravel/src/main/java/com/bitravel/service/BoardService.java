@@ -19,6 +19,7 @@ import com.bitravel.data.repository.UserRepository;
 import com.bitravel.exception.CustomException;
 import com.bitravel.exception.ErrorCode;
 import com.bitravel.util.SecurityUtil;
+import com.bitravel.util.TagUtil;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -165,7 +166,7 @@ public class BoardService {
         	log.info("유효하지 않은 수정 요청입니다.");
         	return false;
         }
-        entity.update(params.getBoardTitle(), params.getBoardContent());
+        entity.update(TagUtil.getText(params.getBoardTitle()), params.getBoardContent());
         return true;
     }
     
