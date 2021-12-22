@@ -2,12 +2,8 @@ package com.bitravel.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bitravel.data.dto.UserUpdateDto;
@@ -28,14 +24,13 @@ import lombok.extern.slf4j.Slf4j;
 public class MypageService {
 
 	private UserRepository userRepository;
-	private PasswordEncoder passwordEncoder;
 	private MypageRepository mypageRepository;
 	private final ReviewRepository reviewRepository;
 	private final BoardRepository boardRepository;
 
 
 	// 회원정보 수정
-	@Transactional()
+	@Transactional
 	public User updateUser(UserUpdateDto userDto) {
 		log.info(userDto.getEmail());
 		User user = userRepository.findOneWithAuthoritiesByEmailAndActivated(userDto.getEmail(), true).get();
@@ -44,23 +39,12 @@ public class MypageService {
 		user.setUserLargeGov(userDto.getUserLargeGov());
 		user.setUserSmallGov(userDto.getUserSmallGov());
 		user.setUserImage(userDto.getUserImage());
-		
+
 		return mypageRepository.save(user);
 	}
 
-	// 비밀번호 수정
-	@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-	public Boolean updateUserPassword(String email, String password) {
-		Optional<User> userTemp = userRepository.findOneWithAuthoritiesByEmailAndActivated(email, true);
-		
-		User user = userTemp.get();
-		user.setPassword(passwordEncoder.encode(password));
-		userRepository.save(user);
-		return true;
-	}
-
 	//내가 작성한 후기리뷰 리스트 조회
-	@Transactional
+	@Transactional (readOnly=true)
 	public List<Review> getMyReview(String userEmail) {
 		List<Review> myReview = new ArrayList<Review>();
 		myReview = reviewRepository.findByUserEmailOrderByReviewDateDesc(userEmail);
@@ -68,23 +52,10 @@ public class MypageService {
 	}
 
 	//내가 작성한 게시글 리스트 조회
-		@Transactional
-		public List<Board> getMyBoard(String keyword) {
-			List<Board> myBoard = new ArrayList<Board>();
-			myBoard = boardRepository.findByUserEmailOrderByBoardDateDesc(keyword);
-			return myBoard;
-		}
-	
-//	@Autowired
-//	PasswordEncoder passwordEncoder1;
-//	public User save(User user, String role, String type) {
-//			// TODO Auto-generated method stub
-//			user.setPassword(passwordEncoder.encode(user.getPassword()));
-//			user.setuserNonExpired(true);
-//			user.setuserNonLocked(true);
-//			user.setCredentialsNonExpired(true);
-//			user.setEnabled(true);
-//			user.setType(type);
-//			return user.save(user, role);
-//		}
+	@Transactional (readOnly=true)
+	public List<Board> getMyBoard(String keyword) {
+		List<Board> myBoard = new ArrayList<Board>();
+		myBoard = boardRepository.findByUserEmailOrderByBoardDateDesc(keyword);
+		return myBoard;
+	}
 }
