@@ -18,6 +18,7 @@ import com.bitravel.data.entity.User;
 import com.bitravel.service.MypageService;
 import com.bitravel.service.ReviewService;
 import com.bitravel.service.UserService;
+import com.bitravel.util.TagUtil;
 
 import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
@@ -39,7 +40,15 @@ public class MypageController {
 		model.addAttribute("user", user);
 		// 내가 작성한 리뷰 불러오기
 		List<Review> reviewList = mypageService.getMyReview(user.getEmail());
+		model.addAttribute("rcount", reviewList.size());
 		model.addAttribute("reviewList", reviewList);
+		// 내가 작성한 게시글 불러오기
+		List<Board> boardList = mypageService.getMyBoard(user.getEmail());
+		model.addAttribute("bcount", boardList.size());
+		for(int i=0;i<boardList.size();i++) {
+			boardList.get(i).setBoardContent(TagUtil.getText(boardList.get(i).getBoardContent()));
+		}
+		model.addAttribute("boardList", boardList);
 		return "user/mypage";
 	}
 	
@@ -47,9 +56,6 @@ public class MypageController {
 	public String myPageSetting(Model model) {
 		UserDto user = userService.getMyUserWithAuthorities().get();
 		model.addAttribute("user", user);
-		// 내가 작성한 게시글 불러오기
-		List<Board> boardList = mypageService.getMyBoard(user.getEmail());
-		model.addAttribute("boardList", boardList);
 		return "user/mypageSetting";
 	}
 	
