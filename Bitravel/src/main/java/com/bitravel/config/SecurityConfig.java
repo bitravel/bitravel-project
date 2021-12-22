@@ -1,6 +1,8 @@
 package com.bitravel.config;
 
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.Ordered;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -14,6 +16,7 @@ import com.bitravel.jwt.JwtAuthenticationEntryPoint;
 import com.bitravel.jwt.JwtDeniedHandler;
 import com.bitravel.jwt.JwtSecurityConfig;
 import com.bitravel.jwt.TokenProvider;
+import com.navercorp.lucy.security.xss.servletfilter.XssEscapeServletFilter;
 
 import lombok.AllArgsConstructor;
 
@@ -29,6 +32,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+	
+	// XSS filter 추가
+	@Bean
+	public FilterRegistrationBean<XssEscapeServletFilter> xssFilterBean() {
+		FilterRegistrationBean<XssEscapeServletFilter> registrationBean = new FilterRegistrationBean<>();
+		registrationBean.setFilter(new XssEscapeServletFilter());
+		registrationBean.setOrder(Ordered.LOWEST_PRECEDENCE);
+		registrationBean.addUrlPatterns("/*");
+		return registrationBean;		
 	}
 	
 	// Static path(이미지, CSS 등..)는 보안 과정에서 예외처리해야 함 -> 어떤 접근에서도 사용할 수 있어야 함
