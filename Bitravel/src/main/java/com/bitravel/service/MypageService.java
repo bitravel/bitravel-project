@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.bitravel.controller.UserController;
 import com.bitravel.data.dto.UserUpdateDto;
 import com.bitravel.data.entity.Review;
 import com.bitravel.data.entity.User;
@@ -60,7 +59,7 @@ public class MypageService {
 	@Transactional
 	public List<Review> getMyReview(String userEmail) {
 		List<Review> myReview = new ArrayList<Review>();
-		myReview = reviewRepository.findByUserEmailOrderByReviewDateAsc(userEmail);
+		myReview = reviewRepository.findByUserEmailOrderByReviewDateDesc(userEmail);
 		return myReview;
 	}
 	
