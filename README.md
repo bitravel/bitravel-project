@@ -16,8 +16,7 @@
 * Eclipse EE
 * 대한민국 공공데이터 (Tour API, 기상청 단기예보/중기예보 API)
 * Kakao Maps API
-* Primary Sources (Bootstrap, Font Awesome, Summernote Lite, Assan 4)
-* to be updated...
+* Primary Sources (Bootstrap, Font Awesome, Summernote Lite, Assan 4, Lucy XSS Servlet Filter)
 
 ## 담당 업무
 ### [배승준](https://github.com/seungjunbae)
@@ -55,7 +54,7 @@ https://docs.google.com/spreadsheets/d/1xrJY5oFsCTjjSEwxY2uCujWKFVm5Q1uY/edit?rt
 * __JAR Build__ : Gradle 기반 JAR build 및 Quality Test 준비
 
 ## Status
-* 현재 Front - Back 기능 구현 진행 중 (~ 12. 23.)
-* 최종 발표일 (12. 29)
+* 발표 자료 준비 (12. 23. ~ )
+* 최종 발표일 (12. 29.)
 
 powered by spacekay 
