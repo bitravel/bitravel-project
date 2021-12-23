@@ -137,7 +137,7 @@ public class BoardService {
     /**
      * 게시글 상세 정보 조회
      */
-    @Transactional(readOnly = true)
+    @Transactional
     public BoardResponseDto findById(Long id) {
     	Board entity = boardRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
     	entity.increaseView();

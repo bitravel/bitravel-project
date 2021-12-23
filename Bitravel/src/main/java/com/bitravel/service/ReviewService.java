@@ -289,7 +289,7 @@ public class ReviewService {
 	/**
 	 * 후기 상세 정보 조회
 	 */
-	@Transactional(readOnly = true)
+	@Transactional
 	public ReviewResponseDto detail(Long id) {
 		Review entity = reviewRepository.findById(id).orElseThrow(() -> new CustomException(ErrorCode.POSTS_NOT_FOUND));
 		entity.increaseView();
