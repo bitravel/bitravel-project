@@ -139,12 +139,12 @@ layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layo
         </div>
     </div>
 
-    <div class="container pb-5 mb-5">
+    <div class="container mb-5">
         <h2 class="mb-5"><span id="travelName1"></span> 관련 인기 후기</h2>
         <!-- Swiper -->
-        <div class="swiper-container swiper-3" style="min-height:350px;">
+        <div class="swiper-container swiper-3">
             <div class="swiper-wrapper">
-                <div th:if="${not #lists.isEmpty(reviewList)}" th:each="list, index: ${reviewList}" class="swiper-slide">
+                <div th:if="${not #lists.isEmpty(reviewList)}"  style="min-height:350px;" th:each="list, index: ${reviewList}" class="swiper-slide">
                     <div class="vh-20 bg-white">
                         <article class="card-hover border-0 d-flex">
                             <a th:href="@{'/review/'+${list.reviewId}}" class="stretched-link"></a>
@@ -161,7 +161,13 @@ layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layo
                         </article>
                     </div>
                 </div>
-                <p th:unless="${not #lists.isEmpty(reviewList)}">해당 여행지 관련 등록된 후기가 없습니다.</p>
+                <th:block th:unless="${#lists.size(reviewList) ne 0}">
+					<div class="swiper-container swiper-3 overflow-visible">
+						<div class="d-flex justify-content-center align-items-center ">
+							<h3 style="color:#b4b4b4">해당 여행지 관련 등록된 후기가 없습니다.</h3>
+						</div>
+					</div>
+				</th:block>
             </div>
             <br><br>
         </div>
