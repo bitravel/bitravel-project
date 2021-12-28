@@ -1,6 +1,7 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title th:text="${#strings.abbreviate(name, 20)}+' :: Bitravel 여행지 정보'">
@@ -46,34 +47,36 @@ layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layo
 
     <div class="container py-2 pb-0 mb-5">
         <h2 class="col-12 mb-4 py-3 border-bottom border-4 border-secondary">날씨 정보</h2>
-        <div class="align-items-center text-center">
-            <div class="mb-4 text-center" style="width:13%;display:inline-block;" id="weather0">
+        <div class="align-items-center collapse-sm text-center">
+            <div class="row col-12 justify-content-around">
+            <div class="mb-4 col-4 col-md-3 col-lg-1 text-center" id="weather0" style="min-width:13%;">
                 <div><i class="fs-1 bi bi-sun"></i></div>
                 <div class="label small text-muted">오늘</div>
             </div>
-            <div class="mb-4 text-center" style="width:13%;display:inline-block;" id="weather1">
+            <div class="mb-4 col-4 text-center col-md-3 col-lg-1" id="weather1" style="min-width:13%;">
                 <div class="p-0"><i class="fs-1 bi bi-sun"></i></div>
                 <div class="label small text-muted">내일</div>
             </div>
-            <div class="mb-4 text-center" style="width:13%;display:inline-block;" id="weather2">
+            <div class="mb-4 col-4 text-center col-md-3 col-lg-1" id="weather2" style="min-width:13%;">
                 <div class="p-0"><i class="fs-1 bi bi-sun"></i></div>
                 <div class="label small text-muted">모레</div>
             </div>
-            <div class="mb-4 text-center" style="width:13%;display:inline-block;" id="weather3">
+            <div class="mb-4 col-4 text-center col-md-3 col-lg-1" id="weather3" style="min-width:13%;">
                 <i class="fs-1 bi bi-sun"></i>
                 <div class="label small text-muted">3일 후</div>
             </div>
-            <div class="mb-4 text-center" style="width:13%;display:inline-block;" id="weather4">
+            <div class="mb-4 col-4 text-center col-md-3 col-lg-1" id="weather4" style="min-width:13%;">
                 <i class="fs-1 bi bi-sun"></i>
                 <div class="label small text-muted">4일 후</div>
             </div>
-            <div class="mb-4 text-center" style="width:13%;display:inline-block;" id="weather5">
+            <div class="mb-4 col-4 text-center col-md-3 col-lg-1" id="weather5" style="min-width:13%;">
                 <i class="fs-1 bi bi-sun"></i>
                 <div class="label small text-muted">5일 후</div>
             </div>
-            <div class="mb-4 text-center" style="width:13%;display:inline-block;" id="weather6">
+            <div class="mb-4 col-4 text-center col-md-3 col-lg-1" id="weather6" style="min-width:13%;">
                 <i class="fs-1 bi bi-sun"></i>
                 <div class="label small text-muted">6일 후</div>
+            </div>
             </div>
             <br>
             <a href="https://www.data.go.kr/tcs/dss/selectApiDataDetailView.do?publicDataPk=15084084" target="_blank" class="text-muted small">출처: 대한민국</a>
@@ -84,19 +87,19 @@ layout:decorator="layout1" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layo
     <div class="container py-2 pb-0 mb-10">
         <h2 class="col-12 mb-4 py-3 border-bottom border-4 border-secondary">시설 정보</h2>
         <div class="align-items-center text-center">
-            <div class="col-2 col-xl-2 mb-4 text-center p-0" style="display:inline-block;">
+            <div class="col-4 col-md-2 mb-4 text-center p-0" style="display:inline-block;">
                 <i class="fs-1 fas fa-car-side"></i>
                 <div class="label small mt-2"><span class="text-muted">주차시설</span><br><span id="parking">정보 없음</span></div>
             </div>
-            <div class="col-2 col-xl-2 mb-4 text-center p-0" style="display:inline-block;">
+            <div class="col-4 col-md-2 mb-4 text-center p-0" style="display:inline-block;">
                 <i class="fs-1 fas fa-baby-carriage"></i>
                 <div class="label small mt-2"><span class="text-muted">유모차 동반</span><br><span id="baby">정보 없음</span></div>
             </div>
-            <div class="col-2 col-xl-2 mb-4 text-center p-0" style="display:inline-block;">
+            <div class="col-4 col-md-2 mb-4 text-center p-0" style="display:inline-block;">
                 <i class="fs-1 fas fa-dog"></i>
                 <div class="label small mt-2"><span class="text-muted">애완동물 동반</span><br><span id="pet">정보 없음</span></div>
             </div>
-            <div class="col-2 col-xl-2 mb-4 text-center" style="display:inline-block;">
+            <div class="col-4 col-md-2 mb-4 text-center" style="display:inline-block;">
                 <i class="fs-1 far fa-credit-card"></i>
                 <div class="label small mt-2"><span class="text-muted">신용카드 결제</span><br><span id="card">정보 없음</span></div>
             </div>
