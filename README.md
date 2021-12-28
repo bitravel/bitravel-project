@@ -55,7 +55,7 @@ https://docs.google.com/spreadsheets/d/1xrJY5oFsCTjjSEwxY2uCujWKFVm5Q1uY/edit?rt
 
 ## Deployment
 * __외부 환경 배포__ : AWS EC2 인스턴스 상 MySQL, Redis 구현 후 JAR file 구동 성공
-* __반응형 웹 구현 검증__ : Android, iOS 등 다양한 운영체제 뿐 아니라 Chrome, Firefox 등 복수의 브라우저에서 작동 
+* __반응형 웹 구현 검증__ : Windows 10, Ubuntu Linux, Android, iOS 상 Chrome, Firefox, Safari에서 작동 확인
 
 ## Status
 * 최종 발표 (12. 29.)
