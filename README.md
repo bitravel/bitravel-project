@@ -33,7 +33,7 @@
 https://docs.google.com/spreadsheets/d/1xrJY5oFsCTjjSEwxY2uCujWKFVm5Q1uY/edit?rtpof=true
 
 ## DB 구성
-(2021-12-11 기준. 추후 변경 가능)
+(2021-12-11 기준)
 
 ![bitravel-db](https://blog.kakaocdn.net/dn/kK0nW/btrnBMlCXOl/PU5sPBTAVrTm2E5ZUUuQk0/img.png)
 
@@ -51,10 +51,13 @@ https://docs.google.com/spreadsheets/d/1xrJY5oFsCTjjSEwxY2uCujWKFVm5Q1uY/edit?rt
 * __지도 열람 기능__ : Kakao Maps API 기반 지정 여행지 위치 표시 구현
 * __여행지 날씨 기능__ : 기상청 단기예보/중기예보 API 기반 json data parsing
 * __Custom error page__ : 주요 Status code 대응 (404, 500, 401, 403, 400)
-* __JAR Build__ : Gradle 기반 JAR build 및 Quality Test 준비
+* __JAR Build__ : Gradle 기반 JAR build 및 Quality Test 진행
+
+## Deployment
+* __외부 환경 배포__ : AWS EC2 인스턴스 상 MySQL, Redis 구현 후 JAR file 구동 성공
+* __반응형 웹 구현 검증__ : Android, iOS 등 다양한 운영체제 뿐 아니라 Chrome, Firefox 등 복수의 브라우저에서 작동 
 
 ## Status
-* 발표 자료 준비 (12. 23. ~ )
-* 최종 발표일 (12. 29.)
+* 최종 발표 (12. 29.)
 
 powered by spacekay 
