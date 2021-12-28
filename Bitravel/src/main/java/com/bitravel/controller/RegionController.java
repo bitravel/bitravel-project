@@ -77,7 +77,7 @@ public class RegionController {
 			@Override
 			public int compare(TravelSimpleDto o1, TravelSimpleDto o2) {
 				if(o1.getTravelView()!=o2.getTravelView())
-					return o1.getTravelView()-o2.getTravelView();
+					return o2.getTravelView()-o1.getTravelView();
 				else
 					return o1.getTravelName().compareTo(o2.getTravelName());
 			}
