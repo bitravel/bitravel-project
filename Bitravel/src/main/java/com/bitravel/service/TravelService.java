@@ -105,7 +105,7 @@ public class TravelService {
 		}
 		int page = (pageable.getPageNumber() == 0) ? 0 : (pageable.getPageNumber() - 1);
 		Sort sort = Sort.by(Direction.DESC, "travelView").and(Sort.by(Direction.ASC, "travelName"));
-		pageable = PageRequest.of(page, 30, sort);
+		pageable = PageRequest.of(page, 20, sort);
 		return travelRepository.findBySmallCategory(result, pageable);
 	}
 
@@ -147,14 +147,17 @@ public class TravelService {
 			}	
 		});
 		
-		for(int i=0;i<save.length;i++) {
+		for(int i=0;i<Math.max(save.length, 20);i++) {
 			Optional<Travel> now = travelRepository.findById(save[i][1]);
 			if(now.isPresent()) {
 				travel.add(now.get());
 			}
 		}
-
-
+		
+		if(travel.size()>20) {
+			travel = travel.subList(0, 20);
+		}
+		
 		return travel;
 	}
 
@@ -208,6 +211,11 @@ public class TravelService {
 			travel.addAll(travelRepository.findByLargeGov(rank.get(prev)));		
 			prev = rank.lowerKey(prev);
 		}
+		
+		if(travel.size()>20) {
+			travel = travel.subList(0, 20);
+		}
+		
 		return travel;
 	}
 
@@ -243,15 +251,6 @@ public class TravelService {
 		addImage(entity);
 		return entity;
 	}
-
-	/**
-	 * 전체 여행지 방문 순위
-	 */
-	//	@Transactional
-	//	public List<Travel> findRankingOfAll() {
-	//List<>
-
-	//	}
 
 	/**
 	 * 조회수 증가 없이 여행지 상세 정보 조회 (여행지 ID)
