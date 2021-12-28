@@ -125,7 +125,8 @@
                     <div class="justify-content-center d-lg-none d-md-none d-xl-none">
                         <form action="/board/search/all/list" name="edit" method="GET" class="input-group">
                             <label for="selectSmall" class="mb-2"></label>
-                            <div class="width-80 h-6">
+                            <div class="d-flex">
+                            <div class="width-80">
                                 <select id="selectSmall" onchange="option_bt(this.value);" data-choices='{"searchEnabled":false}' class="form-control form-control-sm">
                                     <option value="all">전체</option>
                                     <option value="title">제목</option>
@@ -134,8 +135,7 @@
                                 </select>
                             </div>
                             &nbsp;&nbsp;
-                            <div>
-                            <input type="text" name="keyword" class="form-control-sm" placeholder="키워드를 입력해 주세요." />
+                            <input type="text" name="keyword" class="form-control-sm width-150" placeholder="키워드를 입력해 주세요." />
                             <button type="submit" class="btn btn-secondary btn-sm">
                                 <span aria-hidden="true" class="">검색</span>
                             </button>
