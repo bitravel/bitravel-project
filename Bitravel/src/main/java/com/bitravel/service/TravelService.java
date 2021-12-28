@@ -147,7 +147,7 @@ public class TravelService {
 			}	
 		});
 		
-		for(int i=0;i<Math.max(save.length, 20);i++) {
+		for(int i=0;i<Math.min(save.length, 20);i++) {
 			Optional<Travel> now = travelRepository.findById(save[i][1]);
 			if(now.isPresent()) {
 				travel.add(now.get());
