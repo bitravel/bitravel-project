@@ -3,11 +3,11 @@ function loadNavbar(largeGov) {
 	var smallList = document.getElementById('smallList');
 	var tag0 = '<li class="col-8 col-sm-6 text-center mt-3"><a class="fs-5 text-muted" href="/travel';
 	var tag3 = '">';
-	var tag2 = '</a>';
+	var tag2 = '</a></li>';
 	var tag = "";
 
-	tag += tag0 + '/list/' + largeGov + tag3 + '< '+largeGov+' 리스트로 돌아가기';
-	tag += tag0 + tag3 + '< '+' 전국 리스트로 돌아가기';
+	tag += tag0 + '/list/' + largeGov + tag3 + '< '+largeGov+' 리스트로 돌아가기' + tag2;
+	tag += tag0 + tag3 + '< '+' 전국 리스트로 돌아가기' +tag2;
 	smallList.innerHTML += tag;
 
 }

@@ -4,12 +4,10 @@
 
 <th:block layout:fragment="content">
 
-    <br>
-
     <!--상단 카로셀 시작-->
     <main class="">
         <!--page-hero-master-slider-->
-        <section class="position-relative overflow-hidden">
+        <section class="position-relative overflow-hidden d-md-block d-none mt-5">
             <div class="container">
                 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-indicators">
@@ -110,10 +108,9 @@
                                 <!--Swiper-slide-->
                                 <div class="swiper-slide" th:each="list, index: ${List1}">
                                     <a th:href="@{'/travel/'+${list.travelId}}"
-                                        class="card-over d-block card-hover overflow-hidden">
+                                        class="card-over d-block card-hover overflow-hidden img-wrapper">
                                         <img th:src="${list.travelImage}" alt=""
-                                            onerror="this.src='/assets/img/800x600/2.jpg'" class="img-fluid img-zoom"
-                                            style="max-height:275px;">
+                                            onerror="this.src='/assets/img/800x600/2.jpg'" class="img-fluid img-zoom">
                                         <div class="card-overlay p-4 d-flex align-items-end text-white">
                                             <ul class="list-unstyled overlay-items">
                                                 <li>
@@ -166,9 +163,9 @@
                             <div class="swiper-wrapper">
                             <!--Swiper-slide-->
                                 <div class="swiper-slide" th:each ="list, index: ${List2}">
-                                    <a th:href="@{'/travel/'+${list.travelId}}" class="card-over d-block card-hover overflow-hidden">
+                                    <a th:href="@{'/travel/'+${list.travelId}}" class="card-over d-block card-hover overflow-hidden img-wrapper">
                                         <img th:src="${list.travelImage}" alt="" onerror="this.src='/assets/img/800x600/2.jpg'" 
-                                        class="img-fluid img-zoom" style="max-height:275px;">
+                                        class="img-fluid img-zoom">
                                         <div class="card-overlay p-4 d-flex align-items-end text-white">
                                             <ul class="list-unstyled overlay-items">
                                                 <li>
@@ -192,7 +189,7 @@
         <section class="position-relative text-white overflow-hidden" th:if="${middleC!=''}" sec:authorize="isAuthenticated()">
             <div class="position-absolute start-0 top-0 w-100 h-100 h-lg-60 bg-secondary"></div>
             <div class="container position-relative z-index-1 pt-7 pt-lg-12">
-                <div class="row mb-7 align-items-end">
+                <div class="row mb-5 align-items-end">
                     <div class="col-lg-9 mb-5 mb-lg-0">
                         <h2 class="mb-3 display-4" data-aos="fade-right">최근 인기 <span >[[${middleC}]] ([[${smallC}]])</span></h2>
                         <p class="mb-0 w-lg-75 lead" data-aos="fade-right" data-aos-delay="150">
@@ -216,9 +213,9 @@
 
                                 <!--Swiper-slide-->
                                 <div class="swiper-slide" th:each ="list, index: ${List3}">
-                                    <a th:href="@{'/travel/'+${list.travelId}}" class="card-over d-block card-hover overflow-hidden">
+                                    <a th:href="@{'/travel/'+${list.travelId}}" class="card-over d-block card-hover overflow-hidden img-wrapper">
                                         <img th:src="${list.travelImage}" alt="" onerror="this.src='/assets/img/800x600/2.jpg'" 
-                                        class="img-fluid img-zoom" style="max-height:275px;">
+                                        class="img-fluid img-zoom">
                                         <div class="card-overlay p-4 d-flex align-items-end text-white">
                                             <ul class="list-unstyled overlay-items">
                                                 <li>
@@ -238,7 +235,7 @@
         <section class="position-relative text-white overflow-hidden">
             <div class="position-absolute start-0 top-0 w-100 h-100 h-lg-60 bg-secondary"></div>
             <div class="container position-relative z-index-1 pt-7 pt-lg-12">
-                <div class="row mb-7 align-items-end">
+                <div class="row mb-5 align-items-end">
                     <div class="col-lg-9 mb-5 mb-lg-0">
                         <h2 class="mb-3 display-4" data-aos="fade-right">Bitravel 회원 선호 여행지</h2>
                         <p class="mb-0 w-lg-75 lead" data-aos="fade-right" data-aos-delay="150">
@@ -262,9 +259,9 @@
 
                                 <!--Swiper-slide-->
                                 <div class="swiper-slide" th:each ="list, index: ${List4}">
-                                    <a th:href="@{'/travel/'+${list.travelId}}" class="card-over d-block card-hover overflow-hidden">
+                                    <a th:href="@{'/travel/'+${list.travelId}}" class="card-over d-block card-hover overflow-hidden img-wrapper">
                                         <img th:src="${list.travelImage}" alt="" onerror="this.src='/assets/img/800x600/2.jpg'" 
-                                        class="img-fluid img-zoom" style="max-height:275px;">
+                                        class="img-fluid img-zoom">
                                         <div class="card-overlay p-4 d-flex align-items-end text-white">
                                             <ul class="list-unstyled overlay-items">
                                                 <li>
@@ -294,7 +291,7 @@
             </svg>
 
             <div class="container position-relative z-index-1 py-7 py-lg-12">
-                <div class="row mb-7 align-items-end justify-content-between">
+                <div class="row mb-5 align-items-end justify-content-between">
                     <div class="col-lg-7">
                         <h2 class="mb-2 display-4" data-aos="fade-right">관심 여행지 최신 후기</h2>
                         <p class="mb-0 lead w-lg-80" data-aos="fade-right" data-aos-delay="150">
@@ -321,7 +318,7 @@
                                         <div class="col-lg-6 px-0 mb-4 mb-md-0">
                                             <div class="position-relative">
                                                 <!--testimonial Image-->
-                                                <img th:src="${list.thumbNail}" onerror="this.src='/assets/img/800x600/2.jpg'" style="height:350px;" class="img-fluid" alt="">
+                                                <img th:src="${list.thumbNail}" onerror="this.src='/assets/img/800x600/2.jpg'" style="height:350px;width:auto;" class="img-fluid" alt="">
 
                                                 <!--Testimonial image divider-->
                                                 <svg class="position-absolute d-none d-lg-block end-0 top-0 h-100 me-n1"
@@ -368,11 +365,11 @@
                                 <!--Testimonial slide-->
                                 <div class="swiper-slide" th:each="list, index: ${List5}">
                                     <div
-                                        class="d-flex align-items-center flex-column bg-white overflow-hidden flex-lg-row">
+                                        class="d-flex align-items-center flex-column bg-white overflow-hidden flex-lg-row"  style="min-height:200px;">
                                         <div class="col-lg-6 px-0 mb-4 mb-md-0">
                                             <div class="position-relative">
                                                 <!--testimonial Image-->
-                                                <img th:src="${list.thumbNail}" onerror="this.src='/assets/img/800x600/2.jpg'" class="img-fluid img-zoom" style="height:210px;" alt="">
+                                                <img th:src="${list.thumbNail}" onerror="this.src='/assets/img/800x600/2.jpg'" style="min-height:200px;" class="img-fluid img-zoom" alt="">
 
                                                 <!--Testimonial image divider-->
                                                 <svg class="position-absolute d-none d-lg-block end-0 top-0 h-100 me-n1"
@@ -429,7 +426,7 @@
             </svg>
 
             <div class="container position-relative z-index-1 py-7 py-lg-12">
-                <div class="row mb-7 align-items-end justify-content-between">
+                <div class="row mb-5 align-items-end justify-content-between">
                     <div class="col-lg-7 mb-4 mb-lg-0">
                         <h2 class="mb-2 display-4" data-aos="fade-right">여행지 최신 후기</h2>
                         <p class="mb-0 lead w-lg-80" data-aos="fade-right" data-aos-delay="150">
@@ -454,7 +451,7 @@
                                         <div class="col-lg-6 px-0 mb-4 mb-md-0">
                                             <div class="position-relative">
                                                 <!--testimonial Image-->
-                                                <img th:src="${list.thumbNail}" onerror="this.src='/assets/img/800x600/2.jpg'" style="height:350px;" class="img-fluid" alt="">
+                                                <img th:src="${list.thumbNail}" onerror="this.src='/assets/img/800x600/2.jpg'" style="height:350px;width:auto;" class="img-fluid" alt="">
 
                                                 <!--Testimonial image divider-->
                                                 <svg class="position-absolute d-none d-lg-block end-0 top-0 h-100 me-n1"
@@ -501,11 +498,11 @@
                                 <!--Testimonial slide-->
                                 <div class="swiper-slide" th:each="list, index: ${List6}">
                                     <div
-                                        class="d-flex align-items-center flex-column bg-white overflow-hidden flex-lg-row">
+                                        class="d-flex align-items-center flex-column bg-white overflow-hidden flex-lg-row" style="min-height:200px;">
                                         <div class="col-lg-6 px-0 mb-4 mb-md-0">
                                             <div class="position-relative">
                                                 <!--testimonial Image-->
-                                                <img th:src="${list.thumbNail}" onerror="this.src='/assets/img/800x600/2.jpg'" style="height:210px;" class="img-fluid" alt="">
+                                                <img th:src="${list.thumbNail}" onerror="this.src='/assets/img/800x600/2.jpg'" style="min-height:200px;" class="img-fluid" alt="">
 
                                                 <!--Testimonial image divider-->
                                                 <svg class="position-absolute d-none d-lg-block end-0 top-0 h-100 me-n1"
@@ -594,7 +591,7 @@
                     </div>
 
                     <div class="row position-relative" sec:authorize="isAuthenticated()">
-                        <div class="col-12 col-md-10 col-lg-9 offset-lg-1">
+                        <div class="col-13 col-md-11 col-lg-10 offset-lg-1">
                             <h3 class="mb-4 display-4" data-aos="fade-down">
                                 Bitravel에 여행 후기 남기기
                             </h3>

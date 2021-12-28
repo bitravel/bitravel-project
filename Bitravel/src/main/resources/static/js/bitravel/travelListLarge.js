@@ -98,7 +98,7 @@ function loadMainList(largeGov) {
 
 function loadNavbar(largeGov) {
 	var smallList = document.getElementById('smallList');
-	var tag0 = '<li class="col-2 col-xl-1 text-center mt-3"><a class="fs-5 fw-bold text-dark" href="/travel';
+	var tag0 = '<li class="col-4 col-lg-2 col-md-3 text-center mt-3"><a class="fs-5 fw-bold text-dark" href="/travel';
 	var tag1 = '" id="navbarDropdown';
 	var tag3 = '">';
 	var tag2 = '</a>';
@@ -124,13 +124,13 @@ function loadNavbar(largeGov) {
 				tag += tag0 + '/list/' + largeGov + '/' + item + tag1 + index + tag3 + item + tag2;
 				tag += '</li>';
 			} else {
-				tag += '<li class="col-2 col-xl-1 text-center mt-3"><span class="fs-5 fw-bold text-dark"';
+				tag += '<li class="col-4 col-lg-2 col-md-3 text-center mt-5"><span class="fs-5 fw-bold text-dark"';
 				tag += tag1 + index + tag3 + item + '</span>';
 				tag += '</li>';
 			}			
 		});
 
-		tag += '<li class="col-2 col-xl-1 text-center mt-3"><a class="fs-5 text-muted" href="/travel'+tag1+'99'+tag3+'< 전국';
+		tag += '<li class="col-4 col-lg-2 col-md-3 text-center mt-3"><a class="fs-5 text-muted" href="/travel'+tag1+'99'+tag3+'< 전국';
 
 		smallList.innerHTML += tag;
 

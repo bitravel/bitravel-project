@@ -29,36 +29,32 @@
     <!--Swiper-slide Auto items per-view-->
     <section class="position-relative overflow-hidden">
         <div class="container col-lg-8 col-md-8 col-xl-8 py-3 py-lg-5">
-            <h2 class="mb-5">최근 한달간 인기 후기</h2>
+            <h2 class="mb-5">최근 한 달간 인기 후기</h2>
             <!-- Swiper -->
             <div class="swiper-container text-white swiper-auto overflow-visible">
                 <div class="swiper-wrapper">
 
                     <div class="swiper-slide" th:each="list: ${viewList}">
-                        <div class="card rounded-0 shadow-lg flex-md-row flex-column overflow-hidden border-0 bg-white">
-                            <div class="col-md-6">
+                        <div class="card rounded-0 shadow-lg flex-lg-row flex-column overflow-hidden border-0 bg-white">
+                            <div class="col-lg-6">
                                 <div
-                                    class="d-flex flex-column border-end-lg align-items-center justify-content-center h-100 bg-light" style="max-height: 500px; min-height: 500px">
-                                    <img th:src="${list.thumbNail}" onerror="this.onerror=null; this.src='/assets/img/avatar/2.jpg';" alt=""
-                                        style="height: 500px; max-width: 100%;">
+                                    class="d-flex flex-column border-end-lg align-items-center justify-content-center h-100 bg-light img-wrapper">
+                                    <img th:src="${list.thumbNail}" onerror="this.onerror=null; this.src='/assets/img/avatar/2.jpg';" alt="" class="img-zoom img-fluid">
                                 </div>
                             </div>
-                            <div class="card-body h-100 p-4 py-5 py-md-7 px-md-5 flex-grow-1 ">
+                            <div class="card-body h-100 p-3 py-5 py-md-7 px-md-4 p-xl-5 flex-grow-1 ">
                                 <div class="d-md-flex align-items-md-center">
-                                    <div class="ms-md-n9">
-                                        <img src="/assets/img/avatar/2.jpg" alt=""
-                                            class="avatar lg p-1 bg-white shadow-lg rounded-circle mb-4">
-                                    </div>
-                                    <div class="ps-md-6" style="word-break:break-word;">
-                                        <p class="fs-3 text-dark mb-4 fw-bold">
+                                    <div class="ps-lg-3" style="word-break:break-word;">
+                                        <div style="min-height:225px;">
+                                        <p class="fs-4 text-dark mb-4 fw-bold">
                                            [[${list.reviewTitle}]]
                                         </p>
-                                        <div class="mb-5" >
-                                            <h5 class="mb-2 text-dark" th:utext="${#strings.abbreviate(list.reviewContent, 75)}"></h5>
+                                        <div class="mb-3" >
+                                            <h6 class="mb-2 text-dark" th:utext="${#strings.abbreviate(list.reviewContent, 50)}"></h6>
                                         </div>
-                                        <div class="text-dark fw-semibold small pb-2" th:text="${#dates.format(list.reviewDate, 'yyyy-MM-dd')}">
+                                        <div class="text-dark fw-semibold small pb-3" th:text="${#dates.format(list.reviewDate, 'yyyy-MM-dd')}">
                                            [[${list.reviewDate}]]
-                                        </div>
+                                        </div></div>
                                     	<a th:href="@{'/review/'+${list.reviewId}(page=${reviewList.number+1})}" class="btn btn-outline-secondary btn-hover-arrow">
                                             <span>자세히 보기</span>
                                         </a>
@@ -81,7 +77,7 @@
 
     <!--Swiper-slide 3 items per-view (minimum - 1024px width)-->
     <section class="position-relative overflow-hidden">
-        <div class="container pb-7 pb-lg-12 mb-2">
+        <div class="container pb-7 pb-lg-12 mt-5">
             <h2 class="mb-4">최신 후기</h2>
             <div class="mb-3 t-right">
             	<a class="fw-bold fs-5 text-dark" href="/review/">후기 전체 보기</a>
@@ -91,11 +87,11 @@
                 <div class="swiper-wrapper">
                 	<div class="swiper-slide" th:each="list: ${reviewList}">
                         <div class="vh-auto bg-white">
-                            <article class="card-hover border-0 d-flex">
+                            <article class="card-hover border-0 d-flex me-4">
                                 <a th:href="@{'/review/'+${list.reviewId}(page=${reviewList.number+1})}" class="stretched-link"></a>
                                 <div class="card-body position-relative p-0" >
-                                    <div class="d-block position-relative overflow-hidden mb-4" style="text-align: center;">
-                                        <img th:src="${list.thumbNail}" onerror="this.onerror=null; this.src='/assets/img/avatar/2.jpg';" style="height:400px " class="img-fluid img-zoom" alt="">
+                                    <div class="d-block position-relative overflow-hidden mb-4 img-wrapper" style="text-align: center;">
+                                        <img th:src="${list.thumbNail}" onerror="this.onerror=null; this.src='/assets/img/800x600/2.jpg';" class="img-fluid img-zoom" alt="">
                                     </div>
                                     <h5 class="mb-3">[[${list.reviewTitle}]]</h5>
                                     <div class="blog-content">
@@ -131,11 +127,11 @@
                 <div class="swiper-wrapper">
                     <div class="swiper-slide" th:each="list: ${ageList}">
                         <div class="vh-auto bg-white">
-                            <article class="card-hover border-0 d-flex">
+                            <article class="card-hover border-0 d-flex me-4">
                                 <a th:href="@{'/review/'+${list.reviewId}(page=${reviewList.number+1})}" class="stretched-link"></a>
                                 <div class="card-body position-relative p-0">
-                                    <div class="d-block position-relative overflow-hidden mb-4" style="text-align: center;">
-                                        <img th:src="${list.thumbNail}" onerror="this.onerror=null; this.src='/assets/img/avatar/2.jpg';" style="height:400px " class="img-fluid img-zoom" alt="">
+                                    <div class="d-block position-relative overflow-hidden mb-4 img-wrapper" style="text-align: center;">
+                                        <img th:src="${list.thumbNail}" onerror="this.onerror=null; this.src='/assets/img/800x600/2.jpg';" class="img-fluid img-zoom" alt="">
                                     </div>
                                     <h5 class="mb-3">[[${list.reviewTitle}]]</h5>
                                     <div class="blog-content">

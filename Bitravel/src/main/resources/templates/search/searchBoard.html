@@ -28,7 +28,7 @@
         <section class="position-relative overflow-hidden">
             <div class="container mt-5">
                 <div class="row me-2" id="list">
-                    <div th:each="list, index: ${boardList}" class="bg-white col-sm-4 mb-5 border-bottom">
+                    <div th:each="list, index: ${boardList}" class="bg-white col-md-6 col-lg-4 mb-5 border-bottom">
                        <article class="card-hover border-0 me-5 d-flex" style="min-height:220px;">
                                 <a th:href="@{'/board/'+${list.boardId}}" class="stretched-link"></a>
                                 <div class="card-body position-relative p-0">

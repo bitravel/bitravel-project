@@ -28,13 +28,13 @@
         <section class="position-relative overflow-hidden">
             <div class="container mt-5">
                 <div class="row me-2" id="list">
-                    <div class="bg-white col-sm-4 mb-5" th:each="list, index: ${reviewList}">
+                    <div class="bg-white col-md-4 mb-5" th:each="list, index: ${reviewList}">
                         <div class="vh-auto bg-white">
                             <article class="card-hover border-0 me-3 d-flex">
                                 <a th:href="@{'/review/'+${list.reviewId}}" class="stretched-link"></a>
                                 <div class="card-body position-relative p-0">
-                                    <div class="d-block position-relative overflow-hidden mb-4">
-                                        <img style="width:90%;max-height:400px;" th:src="${list.thumbNail}"
+                                    <div class="d-block position-relative overflow-hidden mb-4 img-wrapper">
+                                        <img th:src="${list.thumbNail}"
                                             onerror="this.src='/assets/img/800x600/2.jpg'" class="img-fluid img-zoom"
                                             alt="후기">
                                     </div>

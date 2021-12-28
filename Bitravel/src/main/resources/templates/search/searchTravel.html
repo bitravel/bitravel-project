@@ -28,18 +28,18 @@
         <section class="position-relative overflow-hidden">
             <div class="container mt-5">
                 <div class="row me-2" id="list">
-                    <div th:each="list, index: ${travelList}" class="bg-white col-sm-4 mb-5">
+                    <div th:each="list, index: ${travelList}" class="bg-white col-md-4 mb-5">
                         <article class="card-hover border-0 d-flex">
                             <a th:href="@{'/travel/'+${list.travelId}}" class="stretched-link"></a>
                             <div class="card-body position-relative p-0">
-                                <div class="d-block position-relative overflow-hidden mb-4">
+                                <div class="d-block position-relative overflow-hidden mb-4 img-wrapper">
                                     <img th:src="${list.travelImage}" onerror="this.src='/assets/img/800x600/2.jpg'"
-                                        class="img-fluid img-zoom" style="width:90%;max-height:400px;" alt="여행지 이미지">
+                                        class="img-fluid img-zoom" alt="여행지 이미지">
                                 </div>
                                 <h5 class="mb-3">[[${list.travelName}]]</h5>
                                 <div class="blog-content">
                                     <p class="mb-4">[[${list.largeGov}]] [[${list.smallGov}]]</p>
-                                    <div class="text-primary fw-semibold small pb-2 border-bottom">
+                                    <div class="text-primary fw-semibold small pb-2">
                                         조회수 [[${list.travelView}]]</div>
                                 </div>
                             </div>

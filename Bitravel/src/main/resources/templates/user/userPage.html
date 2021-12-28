@@ -136,7 +136,7 @@
 									<article class="card-hover border-0 d-flex">
 										<a th:href="@{'/review/'+${list.reviewId}}" class="stretched-link"></a>
 										<div class="card-body position-relative m-1 form-control" >
-											<div style="min-height:100px;">
+											<div style="min-height:110px;">
 											<h5 class="p-1">[[${list.reviewTitle}]]</h5>
 											<div class="blog-content">
 											<!-- <p class="mb-4">[[${list.reviewContent}]]</p> -->
@@ -144,8 +144,8 @@
 													[[${list.reviewDate}]]</div>
 											</div>
 											</div>
-											<div class="d-block position-relative overflow-hidden mb-4" style="text-align: center;">
-												<img th:src="${list.thumbNail}" onerror="this.onerror=null; this.src='/assets/img/800x600/2.jpg';" style="height:300px " class="img-fluid img-zoom" alt="">
+											<div class="d-block position-relative overflow-hidden img-wrapper" style="text-align: center;">
+												<img th:src="${list.thumbNail}" onerror="this.onerror=null; this.src='/assets/img/800x600/2.jpg';" class="img-fluid img-zoom" alt="">
 											</div>
 										</div>
 									</article>

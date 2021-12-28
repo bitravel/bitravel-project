@@ -49,9 +49,9 @@
                         <article class="card-hover border-0 d-flex">
                             <a th:href="@{'/travel/'+${list.travelId}}" class="stretched-link"></a>
                             <div class="card-body position-relative p-0">
-                                <div class="d-block position-relative overflow-hidden mb-4">
+                                <div class="d-block position-relative overflow-hidden mb-4 img-wrapper">
                                     <img th:src="${list.travelImage}" onerror="this.src='/assets/img/800x600/2.jpg'"
-                                        class="img-fluid img-zoom" style="max-width:90%;max-height:350px;" alt="여행지 이미지">
+                                        class="img-fluid img-zoom" alt="여행지 이미지">
                                 </div>
                                 <h5 class="mb-3">[[${list.travelName}]]</h5>
                                 <div class="blog-content">
