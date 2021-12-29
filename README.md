@@ -1,6 +1,9 @@
 # Bitravel Project
 ### Bitravel Project Main Repository
 
+* [시연 영상 보기](https://www.youtube.com/watch?v=Jzt2YoSWCfM)
+
+
 * [bitravel-resources](https://github.com/bitravel/bitravel-resources) : 데이터 전처리용 Python code 일부, 그 외 어떤 자료건 업로드 가능
 
 ## 사용 기술
@@ -58,6 +61,10 @@ https://docs.google.com/spreadsheets/d/1xrJY5oFsCTjjSEwxY2uCujWKFVm5Q1uY/edit?rt
 * __반응형 웹 구현 검증__ : Windows 10, Ubuntu Linux, Android, iOS 상 Chrome, Firefox, Safari에서 작동 확인
 
 ## Status
-* 최종 발표 (12. 29.)
+* 최종 발표 완료 (12/29)
+
+## Additional Suggestion
+* __기능 고도화__ : 지역 뿐 아니라 테마 등으로 여행지를 분류하여 추천 기능에 반영
+* __모바일 환경 최적화__ : 모바일 환경에서의 View 지속 개선
 
 powered by spacekay 
