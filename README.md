@@ -23,7 +23,7 @@
 
 ## 담당 업무
 ### [배승준](https://github.com/seungjunbae)
-팀 리더, 프로젝트 기획, DB 구성 및 관리, 게시물/후기 관련 기능 FE·BE
+팀 리더, 프로젝트 기획·배포, DB 구성 및 관리, 게시물/후기 관련 기능 FE·BE
 
 ### [김수교](https://github.com/holydonkey2)
 프로젝트 기획, HTML 페이지 레이아웃 구성 및 제작, 메인/마이페이지 관련 기능 FE·BE
