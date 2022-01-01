@@ -361,11 +361,3 @@ function findWeather(travel) {
 
 	});
 }
-
-/**
- * 뒤로가기
- */
-function goBack() {
-	/* location.href = `/board/list?page=[]`; 페이지 넘버를 불러오는걸 모르겠습니다..*/
-	//location.href = "javascript:history.back(-1)";
-}
